@@ -24,6 +24,8 @@
 #include <string>
 #include <vector>
 
+#include "util/macros.h"
+
 namespace var {
 
 // Bitwise masks of displayable targets
@@ -31,6 +33,37 @@ enum DisplayFilter {
     DISPLAY_ON_HTML = 1,
     DISPLAY_ON_PLAIN_TEXT = 2,
     DISPLAY_ON_ALL = 3,
+};
+
+// Implement this class to write variables into different places.
+// If dump() returns false, Variable::dump_exposed() stops and returns -1
+class Dumper {
+public:
+    virtual ~Dumper() {}
+    virtual bool dump(const std::string& name, 
+                      const std::string& description) = 0;
+};
+
+// Options for Variable::dump_exposed()
+struct DumpOptions {
+    // Constructed with default options.
+    DumpOptions();
+
+    // If this is true, string-type values will be quoted
+    bool quote_string;
+
+    // The ? in wildcards. Wildcards in URL need to use another
+    // character becasuse ? is reserved.
+    char question_mask;
+
+    // Dump variables with matched display_filter.
+    DisplayFilter display_filter;
+
+    // Name matched by these wildcards (or exact names) are kept.
+    std::string white_wildcards;
+
+    // Name matched by these wildcards (or exact names) are skipped.
+    std::string black_wildcards;
 };
 
 /**
@@ -47,6 +80,9 @@ enum DisplayFilter {
  *      safely (provided that there's no non-const methods going on).
 */
 class Variable {
+    // Var uses TLS,thus copying/assignment neet to copy TLS stuff as well,
+    // which is heavy. We disable copying/assignment now.
+    DISALLOW_COPY_MOVE_AND_ASSIGN(Variable);
 public:
     Variable() {}
     virtual ~Variable();
@@ -72,19 +108,19 @@ public:
     // Returns 0 on success, otherwise -1.
     ///@todo stringpiece
     int expose(const std::string& name, DisplayFilter display_filter = DISPLAY_ON_ALL) {
-        ///@todo
+        return exposed_impl(std::string(),name,display_filter);
     }
 
     // Expose this variable with a prefix
     // Returns 0 on success, otherwise -1.
     int expose_as(const std::string& prefix, const std::string& name,
                   DisplayFilter display_filter = DISPLAY_ON_ALL) {
-        ///@todo
+        return exposed_impl(prefix,name,display_filter);
     }
 
     // Get exposed name. If this variable is not exposed, the name is empty.
     const std::string& name() const {
-        ///@todo
+        return _name;
     }
 
     // Hide this variable so that it's not counted in *_exposed functions.
@@ -136,9 +172,11 @@ protected:
 
 private:
     std::string _name;
-
-    ///@todo DISALLOW_COPY_AND_ASSIGN
 };
+
+// Make the only use lowercased alphabets / digits / underscores,
+// and append the result to 'out'.
+void to_underscored_name(std::string* out,const std::string& name);
 
 } // end namespace var
 

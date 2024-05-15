@@ -1,0 +1,460 @@
+<!DOCTYPE html><html><head>
+    <!-- PutVarsHeading() return the script to make var plot-able -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script language="javascript" type="text/javascript" src="/js/jquery_min"></script>
+    <script language="javascript" type="text/javascript" src="/js/flot_min"></script>
+    <style type="text/css">
+    ol,ul { list-style:none; }
+    .tabs-menu {
+        position: fixed;    top: 0px;    left: 0px;    height: 40px;
+        width: 100%;
+        clear: both;
+        padding: 0px;
+        margin: 0px;
+        background-color: #606060;
+        border:none;
+        overflow: hidden;
+        box-shadow: 0px 1px 2px #909090;
+        z-index: 5;
+    }
+    .tabs-menu li {
+        float:left;
+        fill:none;
+        border:none;
+        padding:10px 30px 10px 30px;
+        text-align:center;
+        cursor:pointer;
+        color:#dddddd;
+        font-weight: bold;
+        font-family: "Segoe UI", Calibri, Arial;
+    }
+    .tabs-menu li.current {
+        color:#FFFFFF;
+        background-color: #303030;
+    }
+    .tabs-menu li.help {
+        float:right;
+    }
+    .tabs-menu li:hover {
+        background-color: #303030;
+    }
+    </style>
+    <script type="text/javascript">
+    $(function() {
+      $(".tabs-menu li").click(function(event) {
+        window.location.href = $(this).attr('id');
+      });
+    });
+    </script>
+    <style type="text/css">
+    #layer1 { margin:0; padding:0; width:1111px; }
+    .variable {
+      margin:0px;
+      color:#000000;
+      cursor:pointer;
+      position:relative;
+      background-color:#ffffff;
+    }
+    .nonplot-variable {
+      margin:0px;
+      color:#000000;
+      position:relative;
+      background-color:#ffffff;
+    }
+    p {padding: 2px 0; margin: 0px; }
+    .detail {
+      margin: 0px;
+      width: 800px;
+      background-color:#fafafa;
+    }
+    .flot-placeholder {
+      width: 800px;
+      height: 200px;
+      line-height: 1.2em;
+    }
+    </style>
+    <script type="text/javascript">
+    var everEnabled = {}
+    var enabled = {}
+    var hovering_var = ""
+    var timeoutId = {}
+    var lastPlot = {}
+    function prepareGraphs() {
+      $(".detail").hide();
+      $(".variable").click(function() {
+        var mod = $(this).next(".detail");
+        mod.slideToggle("fast");
+        var var_name = mod.children(":first-child").attr("id");
+        if (!everEnabled[var_name]) {
+          everEnabled[var_name] = true;
+          $("<div id='tooltip-" + var_name + "'></div>").css({
+            position: "absolute",
+            display: "none",
+            border: "1px solid #fdd",
+            padding: "2px",
+            "background-color": "#ffffca",
+            opacity: 0.80
+          }).appendTo("body");
+          $("#" + var_name).bind("plothover", function(event, pos, item) {
+            if (item) {
+              hovering_var = var_name;
+              var thePlot = lastPlot[var_name];
+              if (thePlot != null) {
+                item.series.color = "#808080";
+                thePlot.draw();
+              }
+              var x = item.datapoint[0];
+              var y = item.datapoint[1];
+              $("#tooltip-" + var_name)
+                .html(y + "<br/>(" + describeX(x, item.series) + ")")
+                .css({top: item.pageY+5, left: item.pageX+15})
+                .show();
+            } else {
+                hovering_var = "";
+                $("#tooltip-" + var_name).hide();
+            }
+          });
+          $("#" + var_name).bind("mouseleave", function() {
+            $("#tooltip-" + var_name).hide();
+          });
+        }
+        if (!enabled[var_name]) {
+          enabled[var_name] = true;
+          fetchData(var_name);
+        } else {
+          enabled[var_name] = false;
+          clearTimeout(timeoutId[var_name]);
+        }
+      });
+      $(".default_expand").click();
+    }
+    var trendOptions = {
+      colors: ['#F0D06E','#F0B06E','#F0A06E','#F0906E','#F0806E'],
+      legend: {show:false},
+      grid: {hoverable:true},
+      xaxis: { 
+        "ticks": [[29,"-1 day"],[53,"-1 hour"],[113,"-1 minute"]]
+      }
+    }
+    var cdfOptions = {
+      grid: {hoverable: true},
+      lines: {
+        show: true,
+        fill: true
+      },
+      xaxis: {
+        "ticks": [[10,"10%"],[20,"20%"],[30,"30%"],[40,"40%"]
+                   ,[50,"50%"],[60,"60%"],[70,"70%"],[80,"80%"]
+                   ,[90,"90%"],[101,"99.99%"]]
+      }
+    }
+    function describeTrendX(x) {
+      if (x >= 173) {
+        return "just now";
+      } else if (x > 113) {
+        return (x - 173) + " second";
+      } else if (x > 53) {
+        return (x - 114) + " minute";
+      } else if (x > 29) {
+        return (x - 54) + " hour";
+      } else {
+        return (x - 30) + " day";
+      }
+    }
+    function describeCDFX(x) {
+      if (x <= 99) {
+        return x + '%';
+      } else if (x == 100) {
+        return '99.9%';
+      } else if (x == 101) {
+        return '99.99%';
+      } else {
+        return 'unknown ' + x;
+      }
+    }
+    function describeX(x, series) {
+      if (series.data[series.data.length-1][0] == 173) {
+        if (series.label != null) {
+          return series.label + ' ' + describeTrendX(x);
+        } else {
+          return describeTrendX(x);
+        }
+      } else if (series.data[series.data.length-1][0] == 101) {
+        return describeCDFX(x);
+      } else {
+        return x;
+      }
+    }
+    function fetchData(var_name) {
+      function onDataReceived(series) {
+        if (hovering_var != var_name) {
+          if (series.label == 'trend') {
+            lastPlot[var_name] = $.plot("#" + var_name, [series.data], trendOptions);
+            $("#value-" + var_name).html(series.data[series.data.length - 1][1]);
+          } else if (series.label == 'cdf') {
+            lastPlot[var_name] = $.plot("#" + var_name, [series.data], cdfOptions);
+            $("#value-" + var_name).html(series.data[series.data.length - 1][1]);
+          } else {
+            lastPlot[var_name] = $.plot("#" + var_name, series, trendOptions);
+            var newValue = '"[';
+            var i;
+            for (i = 0; i < series.length; ++i) {
+                if (i != 0) newValue += ',';
+                var data = series[i].data;
+                newValue += data[data.length - 1][1];
+            }
+            newValue += ']"';
+            $("#value-" + var_name).html(newValue);
+          }
+        }
+      }
+      $.ajax({
+        url: "/vars/" + var_name + "?series",
+        type: "GET",
+        dataType: "json",
+        success: onDataReceived
+      });
+      if (enabled[var_name]) {
+        timeoutId[var_name] = setTimeout(function(){ fetchData(var_name); }, 1000);
+      }
+    }
+    $(prepareGraphs);
+    </script>
+
+    <!-- default_method() -->
+    <script type="text/javascript">
+    const delayTime = 200;
+    var searching = false;
+    function toURL(text) {
+      if (text == '') {
+        return '/vars';
+      }
+      text = text.replace(/(;|,|\s|\*)+/g, ' ').trim()             .replace(/ /g, '*;*');
+      if (text == '') {
+        return '/vars';
+      }
+      return '/vars/*' + text + '*';
+    }
+    function onDataReceived(searchText, data) {
+      for (var var_name in enabled) {
+        if (enabled[var_name]) {
+          clearTimeout(timeoutId[var_name]);
+        }
+        enabled = {};
+        everEnabled = {};
+      }
+      $(".detail").hide();
+      $('#layer1').html(data);
+      prepareGraphs();
+      window.history.pushState('', '', toURL(searchText));
+      var newSearchText = $('#searchbox').val();
+      if (newSearchText != searchText) {
+        setTimeout(search, delayTime);
+        console.log('text changed during searching, search again');
+      } else {
+        searching = false;
+      }
+    }
+    function search() {
+      var searchText = $('#searchbox').val();
+      $.ajax({
+        url: toURL(searchText) + '?dataonly',
+        type: "GET",
+        dataType: "html",
+        success: function(data) { onDataReceived(searchText, data); },
+        error: function(xhr, ajaxOptions, thrownError) {
+                 onDataReceived(searchText, xhr.responseText);
+               }
+      });
+    }
+    function onQueryChanged() {
+      if (searching) {
+        return;
+      }
+      searching = true;
+      setTimeout(search, delayTime);
+    }
+    </script>
+    </head>
+    <body>
+    <!-- PrintTabsBody() -->
+    <ul class='tabs-menu'>
+    <li id='/status'>status</li>
+    <li id='/vars' class='current'>vars</li>
+    <li id='/connections'>connections</li>
+    <li id='/flags'>flags</li>
+    <li id='/rpcz'>rpcz</li>
+    <li id='/hotspots/cpu'>cpu</li>
+    <li id='/hotspots/heap'>heap</li>
+    <li id='/hotspots/growth'>growth</li>
+    <li id='/hotspots/contention'>contention</li>
+    <li id='/index?as_more'>more</li>
+    <li id='https://github.com/brpc/brpc/blob/master/docs/cn/builtin_service.md' class='help'>?</li>
+    </ul>
+    <div style='height:40px;'></div><p>Search : <input id='searchbox' type='text' onkeyup='onQueryChanged()'></p><div id="layer1">
+    
+    <!-- dump() -->
+    <p class="variable">bthread_count : <span id="value-bthread_count">4</span></p>
+    <div class="detail"><div id="bthread_count" class="flot-placeholder"></div></div>
+    <p class="nonplot-variable">bthread_group_status : <span id="value-bthread_group_status">"1 0 0 0 0 0 0 0 0 "</span></p>
+    <p class="variable">bthread_key_count : <span id="value-bthread_key_count">1</span></p>
+    <div class="detail"><div id="bthread_key_count" class="flot-placeholder"></div></div>
+    <p class="variable">bthread_keytable_count : <span id="value-bthread_keytable_count">1</span></p>
+    <div class="detail"><div id="bthread_keytable_count" class="flot-placeholder"></div></div>
+    <p class="variable">bthread_keytable_memory : <span id="value-bthread_keytable_memory">768</span></p>
+    <div class="detail"><div id="bthread_keytable_memory" class="flot-placeholder"></div></div>
+    <p class="variable">bthread_signal_second : <span id="value-bthread_signal_second">2</span></p>
+    <div class="detail"><div id="bthread_signal_second" class="flot-placeholder"></div></div>
+    <p class="variable">bthread_stack_count : <span id="value-bthread_stack_count">6</span></p>
+    <div class="detail"><div id="bthread_stack_count" class="flot-placeholder"></div></div>
+    <p class="variable">bthread_switch_second : <span id="value-bthread_switch_second">4</span></p>
+    <div class="detail"><div id="bthread_switch_second" class="flot-placeholder"></div></div>
+    <p class="variable">bthread_timer_scheduled_second : <span id="value-bthread_timer_scheduled_second">2</span></p>
+    <div class="detail"><div id="bthread_timer_scheduled_second" class="flot-placeholder"></div></div>
+    <p class="variable">bthread_timer_triggered_second : <span id="value-bthread_timer_triggered_second">2</span></p>
+    <div class="detail"><div id="bthread_timer_triggered_second" class="flot-placeholder"></div></div>
+    <p class="variable">bthread_timer_usage : <span id="value-bthread_timer_usage">5.92471e-05</span></p>
+    <div class="detail"><div id="bthread_timer_usage" class="flot-placeholder"></div></div>
+    <p class="variable">bthread_worker_count : <span id="value-bthread_worker_count">9</span></p>
+    <div class="detail"><div id="bthread_worker_count" class="flot-placeholder"></div></div>
+    <p class="variable">bthread_worker_usage : <span id="value-bthread_worker_usage">0.000176929</span></p>
+    <div class="detail"><div id="bthread_worker_usage" class="flot-placeholder"></div></div>
+    <p class="nonplot-variable">bvar_dump_interval : <span id="value-bvar_dump_interval">10</span></p>
+    <p class="variable">bvar_sampler_collector_usage : <span id="value-bvar_sampler_collector_usage">0.000342588</span></p>
+    <div class="detail"><div id="bvar_sampler_collector_usage" class="flot-placeholder"></div></div>
+    <p class="nonplot-variable">gcc_version : <span id="value-gcc_version">"7.5.0"</span></p>
+    <p class="variable">iobuf_block_count : <span id="value-iobuf_block_count">30</span></p>
+    <div class="detail"><div id="iobuf_block_count" class="flot-placeholder"></div></div>
+    <p class="variable">iobuf_block_count_hit_tls_threshold : <span id="value-iobuf_block_count_hit_tls_threshold">0</span></p>
+    <div class="detail"><div id="iobuf_block_count_hit_tls_threshold" class="flot-placeholder"></div></div>
+    <p class="variable">iobuf_block_memory : <span id="value-iobuf_block_memory">245760</span></p>
+    <div class="detail"><div id="iobuf_block_memory" class="flot-placeholder"></div></div>
+    <p class="variable">iobuf_newbigview_second : <span id="value-iobuf_newbigview_second">0</span></p>
+    <div class="detail"><div id="iobuf_newbigview_second" class="flot-placeholder"></div></div>
+    <p class="nonplot-variable">kernel_version : <span id="value-kernel_version">"Linux zgx-virtual-machine 5.4.0-42-generic #46~18.04.1-Ubuntu SMP Fri Jul 10 07:21:24 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+    "</span></p>
+    <p class="variable">pgrp : <span id="value-pgrp">28939</span></p>
+    <div class="detail"><div id="pgrp" class="flot-placeholder"></div></div>
+    <p class="variable">pid : <span id="value-pid">28939</span></p>
+    <div class="detail"><div id="pid" class="flot-placeholder"></div></div>
+    <p class="variable">ppid : <span id="value-ppid">28884</span></p>
+    <div class="detail"><div id="ppid" class="flot-placeholder"></div></div>
+    <p class="nonplot-variable">process_cmdline : <span id="value-process_cmdline">"./echo_server
+    "</span></p>
+    <p class="variable">process_context_switches_involuntary_second : <span id="value-process_context_switches_involuntary_second">0</span></p>
+    <div class="detail"><div id="process_context_switches_involuntary_second" class="flot-placeholder"></div></div>
+    <p class="variable">process_context_switches_voluntary_second : <span id="value-process_context_switches_voluntary_second">6</span></p>
+    <div class="detail"><div id="process_context_switches_voluntary_second" class="flot-placeholder"></div></div>
+    <p class="variable">process_cpu_usage : <span id="value-process_cpu_usage">0.001</span></p>
+    <div class="detail"><div id="process_cpu_usage" class="flot-placeholder"></div></div>
+    <p class="variable">process_cpu_usage_system : <span id="value-process_cpu_usage_system">0.000</span></p>
+    <div class="detail"><div id="process_cpu_usage_system" class="flot-placeholder"></div></div>
+    <p class="variable">process_cpu_usage_user : <span id="value-process_cpu_usage_user">0.000</span></p>
+    <div class="detail"><div id="process_cpu_usage_user" class="flot-placeholder"></div></div>
+    <p class="variable">process_disk_read_bytes_second : <span id="value-process_disk_read_bytes_second">0</span></p>
+    <div class="detail"><div id="process_disk_read_bytes_second" class="flot-placeholder"></div></div>
+    <p class="variable">process_disk_write_bytes_second : <span id="value-process_disk_write_bytes_second">0</span></p>
+    <div class="detail"><div id="process_disk_write_bytes_second" class="flot-placeholder"></div></div>
+    <p class="variable">process_faults_major : <span id="value-process_faults_major">56</span></p>
+    <div class="detail"><div id="process_faults_major" class="flot-placeholder"></div></div>
+    <p class="variable">process_faults_minor_second : <span id="value-process_faults_minor_second">0</span></p>
+    <div class="detail"><div id="process_faults_minor_second" class="flot-placeholder"></div></div>
+    <p class="variable">process_fd_count : <span id="value-process_fd_count">12</span></p>
+    <div class="detail"><div id="process_fd_count" class="flot-placeholder"></div></div>
+    <p class="variable">process_inblocks_second : <span id="value-process_inblocks_second">0</span></p>
+    <div class="detail"><div id="process_inblocks_second" class="flot-placeholder"></div></div>
+    <p class="variable">process_io_read_bytes_second : <span id="value-process_io_read_bytes_second">554</span></p>
+    <div class="detail"><div id="process_io_read_bytes_second" class="flot-placeholder"></div></div>
+    <p class="variable">process_io_read_second : <span id="value-process_io_read_second">5</span></p>
+    <div class="detail"><div id="process_io_read_second" class="flot-placeholder"></div></div>
+    <p class="variable">process_io_write_bytes_second : <span id="value-process_io_write_bytes_second">138</span></p>
+    <div class="detail"><div id="process_io_write_bytes_second" class="flot-placeholder"></div></div>
+    <p class="variable">process_io_write_second : <span id="value-process_io_write_second">0</span></p>
+    <div class="detail"><div id="process_io_write_second" class="flot-placeholder"></div></div>
+    <p class="variable">process_memory_data_and_stack : <span id="value-process_memory_data_and_stack">120213504</span></p>
+    <div class="detail"><div id="process_memory_data_and_stack" class="flot-placeholder"></div></div>
+    <p class="variable">process_memory_resident : <span id="value-process_memory_resident">24850432</span></p>
+    <div class="detail"><div id="process_memory_resident" class="flot-placeholder"></div></div>
+    <p class="variable">process_memory_shared : <span id="value-process_memory_shared">12771328</span></p>
+    <div class="detail"><div id="process_memory_shared" class="flot-placeholder"></div></div>
+    <p class="variable">process_memory_text : <span id="value-process_memory_text">6361088</span></p>
+    <div class="detail"><div id="process_memory_text" class="flot-placeholder"></div></div>
+    <p class="variable">process_memory_virtual : <span id="value-process_memory_virtual">910184448</span></p>
+    <div class="detail"><div id="process_memory_virtual" class="flot-placeholder"></div></div>
+    <p class="variable">process_nice : <span id="value-process_nice">0</span></p>
+    <div class="detail"><div id="process_nice" class="flot-placeholder"></div></div>
+    <p class="variable">process_outblocks_second : <span id="value-process_outblocks_second">0</span></p>
+    <div class="detail"><div id="process_outblocks_second" class="flot-placeholder"></div></div>
+    <p class="variable">process_priority : <span id="value-process_priority">20</span></p>
+    <div class="detail"><div id="process_priority" class="flot-placeholder"></div></div>
+    <p class="variable">process_thread_count : <span id="value-process_thread_count">12</span></p>
+    <div class="detail"><div id="process_thread_count" class="flot-placeholder"></div></div>
+    <p class="nonplot-variable">process_uptime : <span id="value-process_uptime">211.467102</span></p>
+    <p class="nonplot-variable">process_username : <span id="value-process_username">"zgx"</span></p>
+    <p class="nonplot-variable">process_work_dir : <span id="value-process_work_dir">"/home/zgx/brpc-learn/example/echo_c++"</span></p>
+    <p class="variable">rpc_channel_connection_count : <span id="value-rpc_channel_connection_count">0</span></p>
+    <div class="detail"><div id="rpc_channel_connection_count" class="flot-placeholder"></div></div>
+    <p class="nonplot-variable">rpc_compressions : <span id="value-rpc_compressions">"snappy gzip zlib"</span></p>
+    <p class="variable">rpc_controller_count : <span id="value-rpc_controller_count">1</span></p>
+    <div class="detail"><div id="rpc_controller_count" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_event_thread_second : <span id="value-rpc_event_thread_second">0</span></p>
+    <div class="detail"><div id="rpc_event_thread_second" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_health_check_count : <span id="value-rpc_health_check_count">0</span></p>
+    <div class="detail"><div id="rpc_health_check_count" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_keepwrite_second : <span id="value-rpc_keepwrite_second">0</span></p>
+    <div class="detail"><div id="rpc_keepwrite_second" class="flot-placeholder"></div></div>
+    <p class="nonplot-variable">rpc_load_balancer : <span id="value-rpc_load_balancer">"c_md5 c_murmurhash wrr rr c_ketama random la"</span></p>
+    <p class="nonplot-variable">rpc_naming_service : <span id="value-rpc_naming_service">"https consul redis file list http discovery remotefile"</span></p>
+    <p class="nonplot-variable">rpc_profilers : <span id="value-rpc_profilers">"contention"</span></p>
+    <p class="nonplot-variable">rpc_protocols : <span id="value-rpc_protocols">"baidu_std streaming_rpc hulu_pbrpc sofa_pbrpc rtmp http public_pbrpc nova_pbrpc redis nshead mongo ubrpc_compack memcache nshead_mcpack ubrpc_mcpack2 esp h2"</span></p>
+    <p class="nonplot-variable">rpc_revision : <span id="value-rpc_revision">"|master|5298ec3|2022-12-17T17:41:34+08:00"</span></p>
+    <p class="variable">rpc_server_8000_builtin_service_count : <span id="value-rpc_server_8000_builtin_service_count">20</span></p>
+    <div class="detail"><div id="rpc_server_8000_builtin_service_count" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_connection_count : <span id="value-rpc_server_8000_connection_count">2</span></p>
+    <div class="detail"><div id="rpc_server_8000_connection_count" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_error : <span id="value-rpc_server_8000_error">1</span></p>
+    <div class="detail"><div id="rpc_server_8000_error" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_example_echo_service_echo_concurrency : <span id="value-rpc_server_8000_example_echo_service_echo_concurrency">0</span></p>
+    <div class="detail"><div id="rpc_server_8000_example_echo_service_echo_concurrency" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_example_echo_service_echo_count : <span id="value-rpc_server_8000_example_echo_service_echo_count">0</span></p>
+    <div class="detail"><div id="rpc_server_8000_example_echo_service_echo_count" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_example_echo_service_echo_eps : <span id="value-rpc_server_8000_example_echo_service_echo_eps">0</span></p>
+    <div class="detail"><div id="rpc_server_8000_example_echo_service_echo_eps" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_example_echo_service_echo_error : <span id="value-rpc_server_8000_example_echo_service_echo_error">0</span></p>
+    <div class="detail"><div id="rpc_server_8000_example_echo_service_echo_error" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_example_echo_service_echo_latency : <span id="value-rpc_server_8000_example_echo_service_echo_latency">0.000</span></p>
+    <div class="detail"><div id="rpc_server_8000_example_echo_service_echo_latency" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_example_echo_service_echo_latency_9999 : <span id="value-rpc_server_8000_example_echo_service_echo_latency_9999">0</span></p>
+    <div class="detail"><div id="rpc_server_8000_example_echo_service_echo_latency_9999" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_example_echo_service_echo_latency_cdf : <span id="value-rpc_server_8000_example_echo_service_echo_latency_cdf">"click to view"</span></p>
+    <div class="detail"><div id="rpc_server_8000_example_echo_service_echo_latency_cdf" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_example_echo_service_echo_latency_percentiles : <span id="value-rpc_server_8000_example_echo_service_echo_latency_percentiles">"[0,0,0,0]"</span></p>
+    <div class="detail"><div id="rpc_server_8000_example_echo_service_echo_latency_percentiles" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_example_echo_service_echo_max_latency : <span id="value-rpc_server_8000_example_echo_service_echo_max_latency">0</span></p>
+    <div class="detail"><div id="rpc_server_8000_example_echo_service_echo_max_latency" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_example_echo_service_echo_qps : <span id="value-rpc_server_8000_example_echo_service_echo_qps">0</span></p>
+    <div class="detail"><div id="rpc_server_8000_example_echo_service_echo_qps" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_server_8000_service_count : <span id="value-rpc_server_8000_service_count">1</span></p>
+    <div class="detail"><div id="rpc_server_8000_service_count" class="flot-placeholder"></div></div>
+    <p class="nonplot-variable">rpc_server_8000_start_time : <span id="value-rpc_server_8000_start_time">"2024/05/15-21:09:28"</span></p>
+    <p class="nonplot-variable">rpc_server_8000_uptime : <span id="value-rpc_server_8000_uptime">211.457883</span></p>
+    <p class="variable">rpc_server_count : <span id="value-rpc_server_count">1</span></p>
+    <div class="detail"><div id="rpc_server_count" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_socket_count : <span id="value-rpc_socket_count">3</span></p>
+    <div class="detail"><div id="rpc_socket_count" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_waitepollout_count : <span id="value-rpc_waitepollout_count">0</span></p>
+    <div class="detail"><div id="rpc_waitepollout_count" class="flot-placeholder"></div></div>
+    <p class="variable">rpc_waitepollout_second : <span id="value-rpc_waitepollout_second">0</span></p>
+    <div class="detail"><div id="rpc_waitepollout_second" class="flot-placeholder"></div></div>
+    <p class="variable">rpcz_sampling_ratio : <span id="value-rpcz_sampling_ratio">1.000</span></p>
+    <div class="detail"><div id="rpcz_sampling_ratio" class="flot-placeholder"></div></div>
+    <p class="variable">system_core_count : <span id="value-system_core_count">2</span></p>
+    <div class="detail"><div id="system_core_count" class="flot-placeholder"></div></div>
+    <p class="variable">system_loadavg_15m : <span id="value-system_loadavg_15m">0.270</span></p>
+    <div class="detail"><div id="system_loadavg_15m" class="flot-placeholder"></div></div>
+    <p class="variable">system_loadavg_1m : <span id="value-system_loadavg_1m">0.170</span></p>
+    <div class="detail"><div id="system_loadavg_1m" class="flot-placeholder"></div></div>
+    <p class="variable">system_loadavg_5m : <span id="value-system_loadavg_5m">0.270</span></p>
+    <div class="detail"><div id="system_loadavg_5m" class="flot-placeholder"></div></div>
+    </div></body></html>
+    
