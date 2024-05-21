@@ -193,16 +193,14 @@
         // 这个方法会使 mod 元素以滑动动画的形式在显示和隐藏之间切换。
         // "fast" 参数指定了动画的速度，它是 jQuery 提供的一个预设速度值，通常比默认的滑动速度要快
         mod.slideToggle("fast");
-        /* 
-        从 mod 对象（通常是一个 DOM 元素的 jQuery 引用）中选取其第一个直接子元素，
-        并获取这个子元素的 id 属性值，然后将这个值赋给 var_name 变量
-        如果mod引用的是一个这样的DOM结构
-        <div class="detail">  
-            <div id="bthread_count" class="flot-placeholder">...</div>  
-            <!-- 其他子元素 -->  
-        </div>
-        那么 var_name 将会被赋值为 "bthread_count"。
-        */
+        // 从 mod 对象（通常是一个 DOM 元素的 jQuery 引用）中选取其第一个直接子元素，
+        // 并获取这个子元素的 id 属性值，然后将这个值赋给 var_name 变量
+        // 如果mod引用的是一个这样的DOM结构
+        // <div class="detail">  
+        //     <div id="bthread_count" class="flot-placeholder">...</div>  
+        //     <!-- 其他子元素 -->  
+        // </div>
+        // 那么 var_name 将会被赋值为 "bthread_count"。
         var var_name = mod.children(":first-child").attr("id");
         if (!everEnabled[var_name]) {
           // 将 var_name 添加到 everEnabled 对象中，并设置其值为 true，表示该变量（图表）已经被初始化过
@@ -226,53 +224,85 @@
             opacity: 0.80
           }).appendTo("body");
 
-          // todo
+          // 当鼠标悬停在 Flot 图表上的某个数据点上时，会显示一个包含该点数据的工具提示（tooltip），而当鼠标离开时，工具提示会隐藏
+          // $("#" + var_name)：使用 jQuery 选择器选择 ID 为 var_name 的元素，这通常是 Flot 图表的容器元素
+          // .bind("plothover", function(event, pos, item) { ... })：绑定一个名为 plothover 的事件处理程序到该元素上。
+          // 这个事件是 Flot 图表库特有的，当鼠标在图表上移动时，如果鼠标悬停在某个数据点上，Flot 就会触发这个事件。
+          // 事件处理程序会接收三个参数：event（事件对象）、pos（鼠标位置）和 item（当前悬停的数据点对象）
+          // item.series: 指向数据序列(series)对象的引用，该对象包含了悬停数据点所属的数据序列的信息
+          // item.datapoint：包含了悬停点所在的x值和y值
+          // item.dataindex：表示当前悬停点在数据序列中的索引
+          // item.pageX/pageY：鼠标悬停位置相对于当前文档的坐标
           $("#" + var_name).bind("plothover", function(event, pos, item) {
+            // 如果 item 存在（即鼠标悬停在一个有效的数据点上），则执行以下操作
             if (item) {
+              // 设置 hovering_var 为 var_name，用于跟踪当前正在悬停的图表
               hovering_var = var_name;
               var thePlot = lastPlot[var_name];
+              // 如果 thePlot 不为 null，则改变当前悬停数据点所在序列的颜色为灰色（#808080），并重新绘制图表
+              // 推测这里是用于鼠标悬停时将数据曲线置为灰色
               if (thePlot != null) {
                 item.series.color = "#808080";
                 thePlot.draw();
               }
+              // 从 item.datapoint 中获取 x 和 y 值，用于显示在工具提示中
               var x = item.datapoint[0];
               var y = item.datapoint[1];
+              // 使用 .html() 方法设置工具提示的内容
+              // 使用 .css() 方法设置其位置（基于鼠标的 pageX 和 pageY 值）
+              // 使用 .show() 方法显示工具提示
+              /* 最后标签效果
+                 num value 
+                 (-X seconds/minutes/hours/days)
+              */
               $("#tooltip-" + var_name)
                 .html(y + "<br/>(" + describeX(x, item.series) + ")")
                 .css({top: item.pageY+5, left: item.pageX+15})
                 .show();
             } else {
+                // 如果 item 不存在（即鼠标没有悬停在数据点上），则执行以下操作
+                // 将 hovering_var 重置为空字符串
+                // 使用 .hide() 方法隐藏工具提示
                 hovering_var = "";
                 $("#tooltip-" + var_name).hide();
             }
           });
+          // 当鼠标离开 var_name 指定的图表容器时，这个事件处理程序会被触发。
+          // 使用 .hide() 方法隐藏与图表容器关联的工具提示
           $("#" + var_name).bind("mouseleave", function() {
             $("#tooltip-" + var_name).hide();
           });
         }
         if (!enabled[var_name]) {
+          // 如果var_name变量没有启用，就设置为启用，并调用fetchData()从服务器中获取数据
           enabled[var_name] = true;
           fetchData(var_name);
         } else {
+          // var_name变量已经被启用，则清除相关的定时器
+          // 这里清除定时器是因为鼠标悬停在数据点上时，默认就不要再让数据曲线刷新了
           enabled[var_name] = false;
           clearTimeout(timeoutId[var_name]);
         }
       });
+      // 用于触发页面上所有带有类名 default_expand 的元素的点击事件
       $(".default_expand").click();
     }
+    // 配置jFlot的图标选项
+    // legends: 图例不会显示在图表上
     var trendOptions = {
       colors: ['#F0D06E','#F0B06E','#F0A06E','#F0906E','#F0806E'],
-      legend: {show:false},
+      legend: {show:false},     
       grid: {hoverable:true},
       xaxis: { 
         "ticks": [[29,"-1 day"],[53,"-1 hour"],[113,"-1 minute"]]
       }
     }
+    // 配置jFlot中累积分布函数（CDF）图表的选项
     var cdfOptions = {
       grid: {hoverable: true},
       lines: {
-        show: true,
-        fill: true
+        show: true,     // 图表中会显示线条
+        fill: true      // 线条下方会填充颜色，通常用于显示面积图效果
       },
       xaxis: {
         "ticks": [[10,"10%"],[20,"20%"],[30,"30%"],[40,"40%"]
@@ -280,6 +310,7 @@
                    ,[90,"90%"],[101,"99.99%"]]
       }
     }
+    // 以x轴值为变量输出时间标签
     function describeTrendX(x) {
       if (x >= 173) {
         return "just now";
@@ -293,6 +324,7 @@
         return (x - 30) + " day";
       }
     }
+    // 以x轴为变量输出CDF标签
     function describeCDFX(x) {
       if (x <= 99) {
         return x + '%';
@@ -304,7 +336,11 @@
         return 'unknown ' + x;
       }
     }
+    // http抓包获取series json数据
+    // series.label: trend
+    // series.data: [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],...,[173,0]]
     function describeX(x, series) {
+      // 说明是记录的历史数据
       if (series.data[series.data.length-1][0] == 173) {
         if (series.label != null) {
           return series.label + ' ' + describeTrendX(x);
@@ -312,6 +348,7 @@
           return describeTrendX(x);
         }
       } else if (series.data[series.data.length-1][0] == 101) {
+        // 说明是记录的分位值数据
         return describeCDFX(x);
       } else {
         return x;
@@ -319,37 +356,93 @@
     }
     function fetchData(var_name) {
       function onDataReceived(series) {
+        // 如果不等，说明当前不是正在悬停（hovering）在 var_name 对应的图表上，可以进行数据处理和更新
+        // 否则定时器逻辑setTimeout直接调用
         if (hovering_var != var_name) {
           if (series.label == 'trend') {
+            // 使用$.plot函数在id = var_name(bthread_count)的元素上绘制数据趋势图
+            // $.plot() jFlot库中用来绘制图表的特定函数
+            // "#" + var_name 选择页面上id为var_name的元素，Flot库会在这个元素内渲染图表
+            // 这里采用的是字符串拼接的方式 实际上改为$("#" + var_name)同样可以
+            // $() 是一个函数，它用于选择 DOM（文档对象模型）元素或执行其他 jQuery 功能。
+            // 这个函数是 jQuery 库的核心，它接受一个选择器字符串、
+            // 一个 DOM 元素、一个 jQuery 对象或一个 HTML 字符串作为参数，并返回一个包含匹配元素的 jQuery 对象
+            // trendOptions：绘制选项
             lastPlot[var_name] = $.plot("#" + var_name, [series.data], trendOptions);
+            // 更新(value-bthread_count)元素最新的值
+            // 找到 ID 为 "value-" + var_name 的元素，并将其 HTML 内容设置为 series.data 数组中最后一个数据点的 y 值。
+            // 这通常用于在图表旁边或某个位置显示最新的数据点值
+            // html() 返回的是被选元素内部的HTML内容
+            // 以<span id="value-bthread_count">4</span>举例,就是将4替换为html()中设定的数据值
             $("#value-" + var_name).html(series.data[series.data.length - 1][1]);
           } else if (series.label == 'cdf') {
             lastPlot[var_name] = $.plot("#" + var_name, [series.data], cdfOptions);
             $("#value-" + var_name).html(series.data[series.data.length - 1][1]);
           } else {
+            // 比如同时更新80% 90% 99% 99.9%四个分位值趋势曲线
+            // label标签就是80% 90% 99% 99.9%
+            // 如果series数组包含多个对象，每个对象都有一个 data 属性，并且每个 data 属性都是一个包含多个数据点的数组，
+            // 那么 Flot 图表库将会绘制多条曲线
             lastPlot[var_name] = $.plot("#" + var_name, series, trendOptions);
             var newValue = '"[';
             var i;
+            // series 是一个包含多个数据系列的数组 形式如下  
+            // var series = [  
+            //     {  
+            //         data: [[0, 10], [1, 15], [2, 13], [3, 17], [4, 19]] // 第一个数据系列  
+            //     },  
+            //     {  
+            //         data: [[0, 5], [1, 7], [2, 9], [3, 11], [4, 14]] // 第二个数据系列  
+            //     }  
+            // ]; 
+            // 下面的代码用于提取每个数据系列的最后一个数据点的 y 值，并构建一个新的字符串[,...,]newValue 
             for (i = 0; i < series.length; ++i) {
                 if (i != 0) newValue += ',';
                 var data = series[i].data;
                 newValue += data[data.length - 1][1];
             }
             newValue += ']"';
+            // 假设 HTML 中有一个元素用于显示这个值  
+            // <div id="value-myChart"></div>  
+            // 执行完上面的 JavaScript 代码后，这个 div 的内容将被更新为 [19,14]（这是两个数据系列的最后一个数据点的 y 值）
+                        // 实际例子
+            // <p class="variable">  
+            //     latency_percentiles:  
+            //     <span id="value-echo_latency_percentiles">"[0,0,0,0]"</span>  
+            // </p>  
+            // <div class="detail">  
+            //     <div   
+            //         id="echo_service_echo_latency_percentiles"   
+            //         class="flot-placeholder"  
+            //     >
+            //     </div>  
+            // </div>
+            // 后面的 $("#value-" + var_name).html(newValue) 会将四个label最新的值更新到
+            // value-echo_latency_percentiles标签的值[0,0,0,0]中
             $("#value-" + var_name).html(newValue);
           }
         }
       }
+      // $.ajax：jQuery提供的方法，用于执行异步HTTP请求
+      // url：指示服务器的url地址
+      // type：指定了请求的类型
+      // dataType：告诉jQuery期望从服务器获得的数据是json格式
+      // success：这是一个回调函数，当请求成功(即服务器返回一个200 OK响应)时，
+      // jQuery会调用该函数，它将接收从服务器返回的json格式数据作为参数
       $.ajax({
         url: "/vars/" + var_name + "?series",
         type: "GET",
         dataType: "json",
         success: onDataReceived
       });
+      // timeoutId[var_name] = ...：这行代码将setTimeout返回的ID存储在timeoutId对象中，
+      // 以便在需要时可以使用该ID来取消超时调用（通过clearTimeout函数）
+      // 典型的用于设置周期性或一次性延迟调用的模式
       if (enabled[var_name]) {
         timeoutId[var_name] = setTimeout(function(){ fetchData(var_name); }, 1000);
       }
     }
+    // 调用该函数
     $(prepareGraphs);
     </script>
 
@@ -361,7 +454,7 @@
       if (text == '') {
         return '/vars';
       }
-      text = text.replace(/(;|,|\s|\*)+/g, ' ').trim()             .replace(/ /g, '*;*');
+      text = text.replace(/(;|,|\s|\*)+/g, ' ').trim().replace(/ /g, '*;*');
       if (text == '') {
         return '/vars';
       }
@@ -424,9 +517,34 @@
     <li id='https://github.com/brpc/brpc/blob/master/docs/cn/builtin_service.md' class='help'>?</li>
     </ul>
     <div style='height:40px;'></div><p>Search : <input id='searchbox' type='text' onkeyup='onQueryChanged()'></p><div id="layer1">
-    
     <!-- dump() -->
     <!-- 
+    
+    <p class="variable">  
+        bthread_count :   
+        <span id="value-bthread_count">  
+        4  
+        </span>  
+    </p>
+
+    <p> 标签用于定义段落。段落内的文本可以是纯文本（即不包含在其他 HTML 元素中的文本），也可以是包含在其他 HTML 元素
+    bthread_count : 纯文本 这个冒号通常用于增强可读性，帮助用户或开发者理解该文本后面的内容是某个变量的值
+    <span id="value-bthread_count">4</span> 部分则是一个内联元素，它包含了变量 bthread_count 的当前值（在这个例子中是 4）。
+    <span> 元素本身不改变文本的样式或布局，但它提供了一个明确的、可以通过 ID 选择器（如 $("#value-bthread_count")）
+    来定位和修改该元素内容的途径
+    通过使用 <span> 元素来包含变量的值，可以更方便地通过 jQuery 或其他 JavaScript 库来动态地更新这个值，
+    而不需要修改整个段落的文本内容
+    例子:
+    var newValue = 10; // 假设有一个新的值  
+    $("#value-bthread_count").html(newValue);
+    注释：
+    $ 是 jQuery 的别名，用于选择 DOM 元素。
+    "#value-bthread_count" 是一个选择器，它选择页面上 ID 为 value-bthread_count 的元素。
+    .html(newValue) 是一个 jQuery 方法，用于设置被选元素的 HTML 内容。在这里，它将 
+    <span id="value-bthread_count"> 的内容设置为 newValue 变量的值，即 10
+     -->
+    
+     <!-- 
     <div class="detail">  
         <div id="bthread_count" class="flot-placeholder"></div>  
     </div>
