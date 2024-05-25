@@ -115,7 +115,12 @@
         padding: 0;：内边距为0。
         width: 1111px;：元素宽度为1111像素。
     */
-    #layer1 { margin:0; padding:0; width:1111px; }
+    #layer1 { 
+        margin:0px; 
+        padding:0px; 
+        width:1111px; 
+    }
+
     /* .variable：这是一个类选择器，用于选择类名为variable的元素。样式规则：
         margin: 0px;：外边距为0。
         color: #000000;：文本颜色为黑色。
@@ -185,6 +190,18 @@
     var lastPlot = {}
     function prepareGraphs() {
       $(".detail").hide();
+      // 首次点击.variable类时
+      // 调用以下函数体
+      // 首次调用，初始化plot
+      // 调用fetchData(var_name)
+      // 发送异步http请求
+      // 服务器响应成功，调用onDataReceived,获取后台数据并完成一次渲染
+      // 延时1s，再次调用fetchData()
+      // fetchData()循环调用
+
+      // 再次点击.variable类时
+      // 设置enabled[var_name]为false，中止fetchData()运行
+      // 清除定时器
       $(".variable").click(function() {
         // $(this) 表示当前触发事件的 DOM 元素（通常是一个 jQuery 对象）。.next(".detail") 是一个 jQuery 方法，
         // 用于选择当前元素之后的下一个同辈元素，并且这个同辈元素必须匹配 .detail 这个 CSS 类
@@ -442,7 +459,7 @@
         timeoutId[var_name] = setTimeout(function(){ fetchData(var_name); }, 1000);
       }
     }
-    // 调用该函数
+    // 调用该函数 
     $(prepareGraphs);
     </script>
 
@@ -454,6 +471,22 @@
       if (text == '') {
         return '/vars';
       }
+      // /(;|,|\s|\*)+/g 是一个正则表达式，用于匹配几种不同的字符或字符类，并用 + 指示这些字符或字符类可以连续出现一次或多次
+      // ()表示一个捕获组 捕获组允许你将匹配的一部分（由括号内的模式所匹配）作为一个单独的单元来处理。
+      // 当你想引用或操作被正则表达式匹配的子串时，你可以使用捕获组
+      // / ... /: 这两个斜杠之间的内容是正则表达式的主体
+      // (;|,|\s|\*): 这是一个捕获组（尽管在这个上下文中它并没有被用于捕获），但它包含四个用 | 分隔的模式，表示匹配这四个模式中的任意一个
+      // ;: 匹配分号字符
+      // ,: 匹配逗号字符
+      // \s: 匹配任何空白字符，包括空格、制表符、换行符等
+      // 匹配星号字符。由于星号在正则表达式中通常用作量词，所以这里它前面有一个反斜杠 \ 来转义它，使其表示一个普通的星号字符
+      // +: 这是一个量词，表示前面的模式（在这个例子中是捕获组内的任何一个字符或字符类）可以连续出现一次或多次
+      // g: 这是一个全局标志，表示在整个字符串中搜索匹配项，而不仅仅是第一个
+
+      // replace(/(;|,|\s|\*)+/g, ' '): 将匹配的子串替换为一个空字符''
+      // trim():移除字符串开始和结尾的空白字符（包括空格、制表符、换行符等）
+      // .replace(/ /g, '*;*')  / /g：匹配所有的空格字符  '*;*'：将空格字符替换为*;*
+      // 输入bthread_count 输出/vars/*bthread_count*
       text = text.replace(/(;|,|\s|\*)+/g, ' ').trim().replace(/ /g, '*;*');
       if (text == '') {
         return '/vars';
@@ -461,16 +494,26 @@
       return '/vars/*' + text + '*';
     }
     function onDataReceived(searchText, data) {
+      // 每次进行搜索 都清空原有的定时器
       for (var var_name in enabled) {
         if (enabled[var_name]) {
           clearTimeout(timeoutId[var_name]);
         }
+        // ?? 感觉这里应该放外面
         enabled = {};
         everEnabled = {};
       }
       $(".detail").hide();
+      // 返回的内容data(hmtl形式)
+      // <p class="variable">
+      // bthread_count : <span id="value-bthread_count">4</span>
+      // </p>
+      // <div class="detail">
+      // <div id="bthread_count" class="flot-placeholder"></div>
+      // </div>
       $('#layer1').html(data);
       prepareGraphs();
+      // 同步到浏览器URL输入栏中
       window.history.pushState('', '', toURL(searchText));
       var newSearchText = $('#searchbox').val();
       if (newSearchText != searchText) {
@@ -483,13 +526,14 @@
     function search() {
       var searchText = $('#searchbox').val();
       $.ajax({
+        // < /vars/*bt*?dataonly
         url: toURL(searchText) + '?dataonly',
         type: "GET",
         dataType: "html",
         success: function(data) { onDataReceived(searchText, data); },
         error: function(xhr, ajaxOptions, thrownError) {
                  onDataReceived(searchText, xhr.responseText);
-               }
+        }
       });
     }
     function onQueryChanged() {
@@ -497,6 +541,8 @@
         return;
       }
       searching = true;
+      // 在延迟delayTime后，执行一次search()函数
+      // 实际上就是发送一次异步http请求
       setTimeout(search, delayTime);
     }
     </script>
@@ -516,7 +562,25 @@
     <li id='/index?as_more'>more</li>
     <li id='https://github.com/brpc/brpc/blob/master/docs/cn/builtin_service.md' class='help'>?</li>
     </ul>
+
+    <!-- 
+    <div style='height: 40px;'></div>  
+    <p>  
+    Search :   
+    <input   
+        id='searchbox'   
+        type='text'   
+        onkeyup='onQueryChanged()'  
+    />  
+    </p>  
+    <div id="layer1">  
+    <p class="variable">bthread_count : <span id="value-bthread_count">4</span></p>
+    <div class="detail"><div id="bthread_count" class="flot-placeholder"></div></div>
+    </div>
+    这里可以看出#layer是一个展示搜索结果的容器 可以动态改变
+     -->
     <div style='height:40px;'></div><p>Search : <input id='searchbox' type='text' onkeyup='onQueryChanged()'></p><div id="layer1">
+    
     <!-- dump() -->
     <!-- 
     

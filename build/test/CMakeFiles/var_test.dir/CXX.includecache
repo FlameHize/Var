@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+..//net/http/http_parser.h
+stddef.h
+-
+BaseTsd.h
+-
+sys/inttypes.h
+-
+stdint.h
+-
+
+/home/zgx/project/Var/test/http_parser_test.cc
+gtest/gtest.h
+-
+iostream
+-
+net/http/http_parser.h
+/home/zgx/project/Var/test/net/http/http_parser.h
+
+/home/zgx/project/Var/test/main.cc
+gtest/gtest.h
+-
+

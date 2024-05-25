@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++11 -g -Wall -g  -rdynamic CMakeFiles/var_test.dir/http_parser_test.cc.o CMakeFiles/var_test.dir/main.cc.o  -o ../../bin/var_test -Wl,-rpath,/home/zgx/project/Var/lib -Wl,-Bstatic -lgtest -Wl,-Bdynamic ../../lib/libVar.so -lpthread 
