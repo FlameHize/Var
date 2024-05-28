@@ -1,6 +1,7 @@
 {
     "liveServer.settings.port": 5502,
     "files.associations": {
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "algorithm": "cpp"
     }
 }

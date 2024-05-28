@@ -6,6 +6,22 @@
 
 #IncludeRegexTransform: 
 
+/home/zgx/project/Var/net/http/http_method.cc
+http_method.h
+/home/zgx/project/Var/net/http/http_method.h
+
+/home/zgx/project/Var/net/http/http_method.h
+algorithm
+-
+ctype.h
+-
+stdlib.h
+-
+string.h
+-
+pthread.h
+-
+
 /home/zgx/project/Var/net/http/http_parser.cc
 http_parser.h
 /home/zgx/project/Var/net/http/http_parser.h

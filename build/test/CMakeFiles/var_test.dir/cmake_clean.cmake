@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/var_test.dir/http_method_test.cc.o"
   "CMakeFiles/var_test.dir/http_parser_test.cc.o"
   "CMakeFiles/var_test.dir/main.cc.o"
   "../../bin/var_test.pdb"

@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+..//net/http/http_method.h
+algorithm
+-
+ctype.h
+-
+stdlib.h
+-
+string.h
+-
+pthread.h
+-
+
 ..//net/http/http_parser.h
 stddef.h
 -
@@ -14,6 +26,12 @@ BaseTsd.h
 sys/inttypes.h
 -
 stdint.h
+-
+
+/home/zgx/project/Var/test/http_method_test.cc
+gtest/gtest.h
+-
+net/http/http_method.h
 -
 
 /home/zgx/project/Var/test/http_parser_test.cc

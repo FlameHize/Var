@@ -125,6 +125,33 @@ Var/fast:
 	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/build
 .PHONY : Var/fast
 
+http/http_method.o: http/http_method.cc.o
+
+.PHONY : http/http_method.o
+
+# target to build an object file
+http/http_method.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_method.cc.o
+.PHONY : http/http_method.cc.o
+
+http/http_method.i: http/http_method.cc.i
+
+.PHONY : http/http_method.i
+
+# target to preprocess a source file
+http/http_method.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_method.cc.i
+.PHONY : http/http_method.cc.i
+
+http/http_method.s: http/http_method.cc.s
+
+.PHONY : http/http_method.s
+
+# target to generate assembly for a file
+http/http_method.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_method.cc.s
+.PHONY : http/http_method.cc.s
+
 http/http_parser.o: http/http_parser.cc.o
 
 .PHONY : http/http_parser.o
@@ -161,6 +188,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Var"
 	@echo "... edit_cache"
+	@echo "... http/http_method.o"
+	@echo "... http/http_method.i"
+	@echo "... http/http_method.s"
 	@echo "... http/http_parser.o"
 	@echo "... http/http_parser.i"
 	@echo "... http/http_parser.s"
