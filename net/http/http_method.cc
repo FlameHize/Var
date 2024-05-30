@@ -1,3 +1,4 @@
+#include "macros.h"
 #include "http_method.h"
 
 namespace net {
@@ -6,11 +7,6 @@ struct HttpMethodPair {
     HttpMethod method;
     const char* str;
 };
-
-template<typename T, size_t N>
-constexpr size_t get_array_size(const T(&)[N]) noexcept {
-    return N;
-}
 
 static HttpMethodPair g_method_pairs[] = {
     { HTTP_METHOD_DELETE      ,   "DELETE"      },

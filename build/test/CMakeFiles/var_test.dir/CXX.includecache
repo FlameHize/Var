@@ -28,6 +28,8 @@ sys/inttypes.h
 stdint.h
 -
 
+..//net/http/http_status_code.h
+
 /home/zgx/project/Var/test/http_method_test.cc
 gtest/gtest.h
 -
@@ -41,6 +43,12 @@ iostream
 -
 net/http/http_parser.h
 /home/zgx/project/Var/test/net/http/http_parser.h
+
+/home/zgx/project/Var/test/http_status_code_test.cc
+gtest/gtest.h
+-
+net/http/http_status_code.h
+/home/zgx/project/Var/test/net/http/http_status_code.h
 
 /home/zgx/project/Var/test/main.cc
 gtest/gtest.h

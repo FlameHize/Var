@@ -3,7 +3,12 @@
 
 net/CMakeFiles/Var.dir/http/http_method.cc.o: ../net/http/http_method.cc
 net/CMakeFiles/Var.dir/http/http_method.cc.o: ../net/http/http_method.h
+net/CMakeFiles/Var.dir/http/http_method.cc.o: ../net/http/macros.h
 
 net/CMakeFiles/Var.dir/http/http_parser.cc.o: ../net/http/http_parser.cc
 net/CMakeFiles/Var.dir/http/http_parser.cc.o: ../net/http/http_parser.h
+
+net/CMakeFiles/Var.dir/http/http_status_code.cc.o: ../net/http/http_status_code.cc
+net/CMakeFiles/Var.dir/http/http_status_code.cc.o: ../net/http/http_status_code.h
+net/CMakeFiles/Var.dir/http/http_status_code.cc.o: ../net/http/macros.h
 

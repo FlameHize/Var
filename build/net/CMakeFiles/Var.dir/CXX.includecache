@@ -7,6 +7,8 @@
 #IncludeRegexTransform: 
 
 /home/zgx/project/Var/net/http/http_method.cc
+macros.h
+/home/zgx/project/Var/net/http/macros.h
 http_method.h
 /home/zgx/project/Var/net/http/http_method.h
 
@@ -44,5 +46,21 @@ BaseTsd.h
 sys/inttypes.h
 -
 stdint.h
+-
+
+/home/zgx/project/Var/net/http/http_status_code.cc
+string.h
+-
+pthread.h
+-
+macros.h
+/home/zgx/project/Var/net/http/macros.h
+http_status_code.h
+/home/zgx/project/Var/net/http/http_status_code.h
+
+/home/zgx/project/Var/net/http/http_status_code.h
+
+/home/zgx/project/Var/net/http/macros.h
+string.h
 -
 

@@ -179,6 +179,33 @@ http/http_parser.cc.s:
 	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_parser.cc.s
 .PHONY : http/http_parser.cc.s
 
+http/http_status_code.o: http/http_status_code.cc.o
+
+.PHONY : http/http_status_code.o
+
+# target to build an object file
+http/http_status_code.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_status_code.cc.o
+.PHONY : http/http_status_code.cc.o
+
+http/http_status_code.i: http/http_status_code.cc.i
+
+.PHONY : http/http_status_code.i
+
+# target to preprocess a source file
+http/http_status_code.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_status_code.cc.i
+.PHONY : http/http_status_code.cc.i
+
+http/http_status_code.s: http/http_status_code.cc.s
+
+.PHONY : http/http_status_code.s
+
+# target to generate assembly for a file
+http/http_status_code.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_status_code.cc.s
+.PHONY : http/http_status_code.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -194,6 +221,9 @@ help:
 	@echo "... http/http_parser.o"
 	@echo "... http/http_parser.i"
 	@echo "... http/http_parser.s"
+	@echo "... http/http_status_code.o"
+	@echo "... http/http_status_code.i"
+	@echo "... http/http_status_code.s"
 .PHONY : help
 
 

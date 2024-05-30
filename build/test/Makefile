@@ -179,6 +179,33 @@ http_parser_test.cc.s:
 	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_parser_test.cc.s
 .PHONY : http_parser_test.cc.s
 
+http_status_code_test.o: http_status_code_test.cc.o
+
+.PHONY : http_status_code_test.o
+
+# target to build an object file
+http_status_code_test.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_status_code_test.cc.o
+.PHONY : http_status_code_test.cc.o
+
+http_status_code_test.i: http_status_code_test.cc.i
+
+.PHONY : http_status_code_test.i
+
+# target to preprocess a source file
+http_status_code_test.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_status_code_test.cc.i
+.PHONY : http_status_code_test.cc.i
+
+http_status_code_test.s: http_status_code_test.cc.s
+
+.PHONY : http_status_code_test.s
+
+# target to generate assembly for a file
+http_status_code_test.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_status_code_test.cc.s
+.PHONY : http_status_code_test.cc.s
+
 main.o: main.cc.o
 
 .PHONY : main.o
@@ -221,6 +248,9 @@ help:
 	@echo "... http_parser_test.o"
 	@echo "... http_parser_test.i"
 	@echo "... http_parser_test.s"
+	@echo "... http_status_code_test.o"
+	@echo "... http_status_code_test.i"
+	@echo "... http_status_code_test.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

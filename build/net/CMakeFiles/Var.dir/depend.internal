@@ -4,6 +4,11 @@
 net/CMakeFiles/Var.dir/http/http_method.cc.o
  /home/zgx/project/Var/net/http/http_method.cc
  /home/zgx/project/Var/net/http/http_method.h
+ /home/zgx/project/Var/net/http/macros.h
 net/CMakeFiles/Var.dir/http/http_parser.cc.o
  /home/zgx/project/Var/net/http/http_parser.cc
  /home/zgx/project/Var/net/http/http_parser.h
+net/CMakeFiles/Var.dir/http/http_status_code.cc.o
+ /home/zgx/project/Var/net/http/http_status_code.cc
+ /home/zgx/project/Var/net/http/http_status_code.h
+ /home/zgx/project/Var/net/http/macros.h

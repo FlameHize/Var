@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/zgx/project/Var/net/http/http_method.cc" "/home/zgx/project/Var/build/net/CMakeFiles/Var.dir/http/http_method.cc.o"
   "/home/zgx/project/Var/net/http/http_parser.cc" "/home/zgx/project/Var/build/net/CMakeFiles/Var.dir/http/http_parser.cc.o"
+  "/home/zgx/project/Var/net/http/http_status_code.cc" "/home/zgx/project/Var/build/net/CMakeFiles/Var.dir/http/http_status_code.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
