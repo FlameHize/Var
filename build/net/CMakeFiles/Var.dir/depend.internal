@@ -12,3 +12,7 @@ net/CMakeFiles/Var.dir/http/http_status_code.cc.o
  /home/zgx/project/Var/net/http/http_status_code.cc
  /home/zgx/project/Var/net/http/http_status_code.h
  /home/zgx/project/Var/net/http/macros.h
+net/CMakeFiles/Var.dir/http/http_url.cc.o
+ /home/zgx/project/Var/net/http/http_parser.h
+ /home/zgx/project/Var/net/http/http_url.cc
+ /home/zgx/project/Var/net/http/http_url.h

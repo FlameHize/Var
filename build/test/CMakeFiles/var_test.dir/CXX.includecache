@@ -30,6 +30,14 @@ stdint.h
 
 ..//net/http/http_status_code.h
 
+..//net/http/http_url.h
+string
+-
+ostream
+-
+unordered_map
+-
+
 /home/zgx/project/Var/test/http_method_test.cc
 gtest/gtest.h
 -
@@ -49,6 +57,12 @@ gtest/gtest.h
 -
 net/http/http_status_code.h
 /home/zgx/project/Var/test/net/http/http_status_code.h
+
+/home/zgx/project/Var/test/http_url_test.cc
+gtest/gtest.h
+-
+net/http/http_url.h
+/home/zgx/project/Var/test/net/http/http_url.h
 
 /home/zgx/project/Var/test/main.cc
 gtest/gtest.h

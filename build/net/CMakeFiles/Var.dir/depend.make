@@ -12,3 +12,7 @@ net/CMakeFiles/Var.dir/http/http_status_code.cc.o: ../net/http/http_status_code.
 net/CMakeFiles/Var.dir/http/http_status_code.cc.o: ../net/http/http_status_code.h
 net/CMakeFiles/Var.dir/http/http_status_code.cc.o: ../net/http/macros.h
 
+net/CMakeFiles/Var.dir/http/http_url.cc.o: ../net/http/http_parser.h
+net/CMakeFiles/Var.dir/http/http_url.cc.o: ../net/http/http_url.cc
+net/CMakeFiles/Var.dir/http/http_url.cc.o: ../net/http/http_url.h
+

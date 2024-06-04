@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Var.dir/http/http_parser.cc.o"
   "CMakeFiles/Var.dir/http/http_method.cc.o"
   "CMakeFiles/Var.dir/http/http_status_code.cc.o"
+  "CMakeFiles/Var.dir/http/http_url.cc.o"
   "../../lib/libVar.pdb"
   "../../lib/libVar.so"
 )

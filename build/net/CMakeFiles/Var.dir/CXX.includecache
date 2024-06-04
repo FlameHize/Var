@@ -60,6 +60,20 @@ http_status_code.h
 
 /home/zgx/project/Var/net/http/http_status_code.h
 
+/home/zgx/project/Var/net/http/http_url.cc
+http_url.h
+/home/zgx/project/Var/net/http/http_url.h
+http_parser.h
+/home/zgx/project/Var/net/http/http_parser.h
+
+/home/zgx/project/Var/net/http/http_url.h
+string
+-
+ostream
+-
+unordered_map
+-
+
 /home/zgx/project/Var/net/http/macros.h
 string.h
 -

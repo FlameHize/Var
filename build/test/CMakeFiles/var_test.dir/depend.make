@@ -10,5 +10,8 @@ test/CMakeFiles/var_test.dir/http_parser_test.cc.o: ../test/http_parser_test.cc
 test/CMakeFiles/var_test.dir/http_status_code_test.cc.o: ../net/http/http_status_code.h
 test/CMakeFiles/var_test.dir/http_status_code_test.cc.o: ../test/http_status_code_test.cc
 
+test/CMakeFiles/var_test.dir/http_url_test.cc.o: ../net/http/http_url.h
+test/CMakeFiles/var_test.dir/http_url_test.cc.o: ../test/http_url_test.cc
+
 test/CMakeFiles/var_test.dir/main.cc.o: ../test/main.cc
 

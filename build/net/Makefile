@@ -206,6 +206,33 @@ http/http_status_code.cc.s:
 	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_status_code.cc.s
 .PHONY : http/http_status_code.cc.s
 
+http/http_url.o: http/http_url.cc.o
+
+.PHONY : http/http_url.o
+
+# target to build an object file
+http/http_url.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_url.cc.o
+.PHONY : http/http_url.cc.o
+
+http/http_url.i: http/http_url.cc.i
+
+.PHONY : http/http_url.i
+
+# target to preprocess a source file
+http/http_url.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_url.cc.i
+.PHONY : http/http_url.cc.i
+
+http/http_url.s: http/http_url.cc.s
+
+.PHONY : http/http_url.s
+
+# target to generate assembly for a file
+http/http_url.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_url.cc.s
+.PHONY : http/http_url.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -224,6 +251,9 @@ help:
 	@echo "... http/http_status_code.o"
 	@echo "... http/http_status_code.i"
 	@echo "... http/http_status_code.s"
+	@echo "... http/http_url.o"
+	@echo "... http/http_url.i"
+	@echo "... http/http_url.s"
 .PHONY : help
 
 
