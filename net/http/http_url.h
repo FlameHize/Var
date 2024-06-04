@@ -24,9 +24,15 @@
 
 namespace var {
 
+struct URLStringEqual {  
+    bool operator()(const std::string& lhs, const std::string& rhs) const {  
+        return  lhs == rhs;
+    }  
+}; 
+
 class URL {
 public:
-    typedef std::unordered_map<std::string, std::string> QueryMap;
+    typedef std::unordered_map<std::string, std::string, std::hash<std::string>, URLStringEqual> QueryMap;
     typedef QueryMap::const_iterator QueryIterator;
 
     // You can copy a URL.

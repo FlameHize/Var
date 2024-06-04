@@ -1,0 +1,18 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "type": "shell",            // 定义任务是在shell中作为命令运行
+        "label": "build_var_test",  // 任务的用户界面标签，需要与launch.json中的preLaunchTask选项保持一致
+        "command": "cd ${workspaceFolder}/build && cmake .. && make -j4",    // 要执行的命令（这里是shell指令）
+        "args": [],                 // 调用此任务时要传递给命令的参数
+        "options": {
+          "cwd": "${fileDirname}"   // 已执行程序或者脚本的当前工作目录
+        },
+        "problemMatcher": [         // 要使用的问题匹配程序 
+          "$gcc"
+        ],
+        "detail": "CMake template build task"    // 任务说明
+      }
+    ]
+  }

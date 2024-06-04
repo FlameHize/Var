@@ -43,3 +43,220 @@ TEST(URLTest, everything)
     ASSERT_EQ("www.baidu.com", host_out);
     ASSERT_EQ(80, port_out);
 }
+
+TEST(URLTest, only_host) {
+    var::URL url;
+    ASSERT_EQ(0, url.ResolvedHttpURL("  foo1://www.baidu1.com?wd=uri2&nonkey=22 "));
+    ASSERT_EQ("foo1", url.scheme());
+    ASSERT_EQ(-1, url.port());
+    ASSERT_EQ("www.baidu1.com", url.host());
+    ASSERT_EQ("", url.path());
+    ASSERT_EQ("", url.user_info());
+    ASSERT_EQ("", url.fragment());
+    ASSERT_EQ(2u, url.QueryCount());
+    ASSERT_TRUE(url.GetQuery("wd"));
+    ASSERT_EQ(*url.GetQuery("wd"), "uri2");
+    ASSERT_TRUE(url.GetQuery("nonkey"));
+    ASSERT_EQ(*url.GetQuery("nonkey"), "22");
+
+    ASSERT_EQ(0, url.ResolvedHttpURL("foo2://www.baidu2.com:1234?wd=uri2&nonkey=22 "));
+    ASSERT_EQ("foo2", url.scheme());
+    ASSERT_EQ(1234, url.port());
+    ASSERT_EQ("www.baidu2.com", url.host());
+    ASSERT_EQ("", url.path());
+    ASSERT_EQ("", url.user_info());
+    ASSERT_EQ("", url.fragment());
+    ASSERT_EQ(2u, url.QueryCount());
+    ASSERT_TRUE(url.GetQuery("wd"));
+    ASSERT_EQ(*url.GetQuery("wd"), "uri2");
+    ASSERT_TRUE(url.GetQuery("nonkey"));
+    ASSERT_EQ(*url.GetQuery("nonkey"), "22");
+
+    ASSERT_EQ(0, url.ResolvedHttpURL(" www.baidu3.com:4321 "));
+    ASSERT_EQ("", url.scheme());
+    ASSERT_EQ(4321, url.port());
+    ASSERT_EQ("www.baidu3.com", url.host());
+    ASSERT_EQ("", url.path());
+    ASSERT_EQ("", url.user_info());
+    ASSERT_EQ("", url.fragment());
+    ASSERT_EQ(0u, url.QueryCount());
+    
+    ASSERT_EQ(0, url.ResolvedHttpURL(" www.baidu4.com "));
+    ASSERT_EQ("", url.scheme());
+    ASSERT_EQ(-1, url.port());
+    ASSERT_EQ("www.baidu4.com", url.host());
+    ASSERT_EQ("", url.path());
+    ASSERT_EQ("", url.user_info());
+    ASSERT_EQ("", url.fragment());
+    ASSERT_EQ(0u, url.QueryCount());
+}
+
+TEST(URLTest, no_scheme) {
+    // http parser_paser_url() can't ignore of scheme like 'http://'
+    var::URL url;
+    ASSERT_EQ(0, url.ResolvedHttpURL(" user:passwd2@www.baidu1.com/s?wd=uri2&nonkey=22#frag "));
+    ASSERT_EQ("", url.scheme());
+    ASSERT_EQ("user:passwd2", url.user_info());
+    ASSERT_EQ(-1, url.port());
+    ASSERT_EQ("www.baidu1.com", url.host());
+    ASSERT_EQ("/s", url.path());
+    ASSERT_EQ("frag", url.fragment());
+    ASSERT_TRUE(url.GetQuery("wd"));
+    ASSERT_EQ(*url.GetQuery("wd"), "uri2");
+    ASSERT_TRUE(url.GetQuery("nonkey"));
+    ASSERT_EQ(*url.GetQuery("nonkey"), "22");
+}
+
+TEST(URLTest, no_scheme_and_user_info) {
+    var::URL url;
+    ASSERT_EQ(0, url.ResolvedHttpURL(" www.baidu2.com/s?wd=uri2&nonkey=22#frag "));
+    ASSERT_EQ("", url.scheme());
+    ASSERT_EQ(-1, url.port());
+    ASSERT_EQ("www.baidu2.com", url.host());
+    ASSERT_EQ("/s", url.path());
+    ASSERT_EQ("", url.user_info());
+    ASSERT_EQ("frag", url.fragment());
+    ASSERT_TRUE(url.GetQuery("wd"));
+    ASSERT_EQ(*url.GetQuery("wd"), "uri2");
+    ASSERT_TRUE(url.GetQuery("nonkey"));
+    ASSERT_EQ(*url.GetQuery("nonkey"), "22");
+}
+
+TEST(URLTest, no_host) {
+    var::URL url;
+    ASSERT_EQ(0, url.ResolvedHttpURL(" /sb?wd=uri3#frag2 "));
+    ASSERT_EQ("", url.scheme());
+    ASSERT_EQ(-1, url.port());
+    ASSERT_EQ("", url.host());
+    ASSERT_EQ("/sb", url.path());
+    ASSERT_EQ("", url.user_info());
+    ASSERT_EQ("frag2", url.fragment());
+    ASSERT_TRUE(url.GetQuery("wd"));
+    ASSERT_EQ(*url.GetQuery("wd"), "uri3");
+    ASSERT_FALSE(url.GetQuery("nonkey"));
+
+    // set_path should do as its name says.
+    url.set_path("/x/y/z/");
+    ASSERT_EQ("", url.scheme());
+    ASSERT_EQ(-1, url.port());
+    ASSERT_EQ("", url.host());
+    ASSERT_EQ("/x/y/z/", url.path());
+    ASSERT_EQ("", url.user_info());
+    ASSERT_EQ("frag2", url.fragment());
+    ASSERT_TRUE(url.GetQuery("wd"));
+    ASSERT_EQ(*url.GetQuery("wd"), "uri3");
+    ASSERT_FALSE(url.GetQuery("nonkey"));
+}
+
+TEST(URLTest, consecutive_ampersand) {
+    var::URL url;
+    url.set_query("&key1=value1&&key3=value3");
+    ASSERT_TRUE(url.GetQuery("key1"));
+    ASSERT_TRUE(url.GetQuery("key3"));
+    ASSERT_FALSE(url.GetQuery("key2"));
+    ASSERT_EQ("value1", *url.GetQuery("key1"));
+    ASSERT_EQ("value3", *url.GetQuery("key3"));
+}
+
+TEST(URLTest, only_equality) {
+    var::URL url;
+    url.set_query("key1=&&key2&&=&key3=value3");
+    ASSERT_TRUE(url.GetQuery("key1"));
+    ASSERT_EQ("", *url.GetQuery("key1"));
+    ASSERT_TRUE(url.GetQuery("key2"));
+    ASSERT_EQ("", *url.GetQuery("key2"));
+    ASSERT_TRUE(url.GetQuery("key3"));
+    ASSERT_EQ("value3", *url.GetQuery("key3"));
+}
+
+TEST(URLTest, set_query) {
+    var::URL url;
+    url.set_query("key1=&&key2&&=&key3=value3");
+    ASSERT_TRUE(url.GetQuery("key1"));
+    ASSERT_TRUE(url.GetQuery("key3"));
+    ASSERT_EQ("value3", *url.GetQuery("key3"));
+    ASSERT_TRUE(url.GetQuery("key2"));
+    // overwrite value
+    url.SetQuery("key3", "value4");
+    ASSERT_EQ("value4", *url.GetQuery("key3"));
+
+    url.SetQuery("key2", "value2");
+    ASSERT_TRUE(url.GetQuery("key2"));
+    ASSERT_EQ("value2", *url.GetQuery("key2"));
+}
+
+TEST(URLTest, resolved_http_path) {
+    var::URL url;
+    url.ResolvedHttpPath("/dir?key1=&&key2&&=&key3=value3");
+    ASSERT_EQ("/dir", url.path());
+    ASSERT_TRUE(url.GetQuery("key1"));
+    ASSERT_TRUE(url.GetQuery("key2"));
+    ASSERT_TRUE(url.GetQuery("key3"));
+    ASSERT_EQ("value3", *url.GetQuery("key3"));
+
+    url.ResolvedHttpPath("dir?key1=&&key2&&=&key3=value3");
+    ASSERT_EQ("dir", url.path());
+    ASSERT_TRUE(url.GetQuery("key1"));
+    ASSERT_TRUE(url.GetQuery("key2"));
+    ASSERT_TRUE(url.GetQuery("key3"));
+    ASSERT_EQ("value3", *url.GetQuery("key3"));
+
+    url.ResolvedHttpPath("/dir?key1=&&key2&&=&key3=value3#frag1");
+    ASSERT_EQ("/dir", url.path());
+    ASSERT_TRUE(url.GetQuery("key1"));
+    ASSERT_TRUE(url.GetQuery("key2"));
+    ASSERT_TRUE(url.GetQuery("key3"));
+    ASSERT_EQ("value3", *url.GetQuery("key3"));
+    ASSERT_EQ("frag1", url.fragment());
+}
+
+TEST(URLTest, generate_http_path) {
+    var::URL url;
+    const std::string ref1 = "/dir?key1=&&key2&&=&key3=value3";
+    url.ResolvedHttpPath(ref1);
+    ASSERT_EQ("/dir", url.path());
+    ASSERT_EQ(3u, url.QueryCount());
+    ASSERT_TRUE(url.GetQuery("key1"));
+    ASSERT_TRUE(url.GetQuery("key2"));
+    ASSERT_TRUE(url.GetQuery("key3"));
+    ASSERT_EQ("value3", *url.GetQuery("key3"));
+    std::string path1;
+    url.GenerateHttpPath(&path1);
+    ASSERT_EQ(ref1, path1);
+
+    // key3=value3.3&key2 error in map range
+    // url.SetQuery("key3", "value3.3");
+    // ASSERT_EQ(3u, url.QueryCount());
+    // ASSERT_EQ(1u, url.RemoveQuery("key1"));
+    // ASSERT_EQ(2u, url.QueryCount());
+    // ASSERT_EQ("key2&key3=value3.3", url.query());
+    // url.GenerateHttpPath(&path1);
+    // ASSERT_EQ("/dir?key2&key3=value3.3", path1);    
+
+    const std::string ref2 = "/dir2?key1=&&key2&&=&key3=value3#frag2";
+    url.ResolvedHttpPath(ref2);
+    ASSERT_EQ("/dir2", url.path());
+    ASSERT_TRUE(url.GetQuery("key1"));
+    ASSERT_TRUE(url.GetQuery("key2"));
+    ASSERT_TRUE(url.GetQuery("key3"));
+    ASSERT_EQ("value3", *url.GetQuery("key3"));
+    ASSERT_EQ("frag2", url.fragment());
+    std::string path2;
+    url.GenerateHttpPath(&path2);
+    ASSERT_EQ(ref2, path2);
+
+    const std::string ref3 = "/dir3#frag3";
+    url.ResolvedHttpPath(ref3);
+    ASSERT_EQ("/dir3", url.path());
+    ASSERT_EQ("frag3", url.fragment());
+    std::string path3;
+    url.GenerateHttpPath(&path3);
+    ASSERT_EQ(ref3, path3);
+
+    const std::string ref4 = "/dir4";
+    url.ResolvedHttpPath(ref4);
+    ASSERT_EQ("/dir4", url.path());
+    std::string path4;
+    url.GenerateHttpPath(&path4);
+    ASSERT_EQ(ref4, path4);
+}
