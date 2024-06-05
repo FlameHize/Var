@@ -49,6 +49,9 @@ TEST(HttpHeaderTest, http_header)
     header.RemoveHeader("key1");
     ASSERT_FALSE(header.GetHeader("key1"));
 
+    header.set_unresolved_path("Foo/Bar");
+    ASSERT_EQ("Foo/Bar", header.unresolved_path());
+
     ASSERT_EQ(var::HTTP_METHOD_GET, header.method());
     header.set_method(var::HTTP_METHOD_POST);
     ASSERT_EQ(var::HTTP_METHOD_POST, header.method());

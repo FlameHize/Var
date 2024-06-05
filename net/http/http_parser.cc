@@ -2573,3 +2573,105 @@ void
 http_parser_set_max_header_size(uint32_t size) {
   max_header_size = size;
 }
+
+const char* 
+http_parser_type_name(enum http_parser_type type) {
+    switch (type) {
+    case HTTP_REQUEST: return "HTTP_REQUEST";
+    case HTTP_RESPONSE: return "HTTP_RESPONSE";
+    case HTTP_BOTH: return "HTTP_BOTH";
+    }
+    return "UNKNOWN_TYPE";
+}
+
+const char* 
+http_parser_state_name(unsigned int state) {
+    switch (state) {
+    case s_dead: return "s_dead";
+    case s_start_req_or_res: return "s_start_req_or_res";
+    case s_res_or_resp_H: return "s_res_or_resp_H";
+    case s_start_res: return "s_start_res";
+    case s_res_H: return "s_res_H";
+    case s_res_HT: return "s_res_HT";
+    case s_res_HTT: return "s_res_HTT";
+    case s_res_HTTP: return "s_res_HTTP";
+    case s_res_http_major: return "s_res_http_major";
+    case s_res_http_minor: return "s_res_http_minor";
+    case s_res_first_status_code: return "s_res_first_status_code";
+    case s_res_status_code: return "s_res_status_code";
+    case s_res_status_start: return "s_res_status_start";
+    case s_res_status: return "s_res_status";
+    case s_res_line_almost_done: return "s_res_line_almost_done";
+    case s_start_req: return "s_start_req";
+    case s_req_method: return "s_req_method";
+    case s_req_spaces_before_url: return "s_req_spaces_before_url";
+    case s_req_schema: return "s_req_scheme";
+    case s_req_schema_slash: return "s_req_scheme_slash";
+    case s_req_schema_slash_slash: return "s_req_scheme_slash_slash";
+    case s_req_server_start: return "s_req_server_start";
+    case s_req_server: return "s_req_server";
+    case s_req_server_with_at: return "s_req_server_with_at";
+    case s_req_path: return "s_req_path";
+    case s_req_query_string_start: return "s_req_query_string_start";
+    case s_req_query_string: return "s_req_query_string";
+    case s_req_fragment_start: return "s_req_fragment_start";
+    case s_req_fragment: return "s_req_fragment";
+    case s_req_http_start: return "s_req_http_start";
+    case s_req_http_H: return "s_req_http_H";
+    case s_req_http_HT: return "s_req_http_HT";
+    case s_req_http_HTT: return "s_req_http_HTT";
+    case s_req_http_HTTP: return "s_req_http_HTTP";
+    case s_req_http_major: return "s_req_http_major";
+    case s_req_http_minor: return "s_req_http_minor";
+    case s_req_line_almost_done: return "s_req_line_almost_done";
+    case s_header_field_start: return "s_header_field_start";
+    case s_header_field: return "s_header_field";
+    case s_header_value_discard_ws: return "s_header_value_discard_ws";
+    case s_header_value_discard_ws_almost_done:
+        return "s_header_value_discard_ws_almost_done";
+    case s_header_value_discard_lws: return "s_header_value_discard_lws";
+    case s_header_value_start: return "s_header_value_start";
+    case s_header_value: return "s_header_value";
+    case s_header_value_lws: return "s_header_value_lws";
+    case s_header_almost_done: return "s_header_almost_done";
+    case s_chunk_size_start: return "s_chunk_size_start";
+    case s_chunk_size: return "s_chunk_size";
+    case s_chunk_parameters: return "s_chunk_parameters";
+    case s_chunk_size_almost_done: return "s_chunk_size_almost_done";
+    case s_headers_almost_done: return "s_headers_almost_done";
+    case s_headers_done: return "s_headers_done";
+    case s_chunk_data: return "s_chunk_data";
+    case s_chunk_data_almost_done: return "s_chunk_data_almost_done";
+    case s_chunk_data_done: return "s_chunk_data_done";
+    case s_body_identity: return "s_body_identity";
+    case s_body_identity_eof: return "s_body_identity_eof";
+    case s_message_done: return "s_message_done";
+    }
+    return "s_unknown";
+}
+
+const char* 
+http_parser_header_state_name(unsigned int header_state) {
+    switch (header_state) {
+    case h_general: return "h_general";
+    case h_C: return "h_C";
+    case h_CO: return "h_CO";
+    case h_CON: return "h_CON";
+    case h_matching_connection: return "h_matching_connection";
+    case h_matching_proxy_connection: return "h_matching_proxy_connection";
+    case h_matching_content_length: return "h_matching_content_length";
+    case h_matching_transfer_encoding: return "h_matching_transfer_encoding";
+    case h_matching_upgrade: return "h_matching_upgrade";
+    case h_connection: return "h_connection";
+    case h_content_length: return "h_content_length";
+    case h_transfer_encoding: return "h_transfer_encoding";
+    case h_upgrade: return "h_upgrade";
+    case h_matching_transfer_encoding_chunked: return "h_matching_transfer_encoding_chunked";
+    case h_matching_connection_keep_alive: return "h_matching_connection_keep_alive";
+    case h_matching_connection_close: return "h_matching_connection_close";
+    case h_transfer_encoding_chunked: return "h_transfer_encoding_chunked";
+    case h_connection_keep_alive: return "h_connection_keep_alive";
+    case h_connection_close: return "h_connection_close";
+    }
+    return "h_unknown";
+}

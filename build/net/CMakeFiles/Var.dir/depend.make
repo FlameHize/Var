@@ -7,6 +7,18 @@ net/CMakeFiles/Var.dir/http/http_header.cc.o: ../net/http/http_method.h
 net/CMakeFiles/Var.dir/http/http_header.cc.o: ../net/http/http_status_code.h
 net/CMakeFiles/Var.dir/http/http_header.cc.o: ../net/http/http_url.h
 
+net/CMakeFiles/Var.dir/http/http_message.cc.o: ../util/iobuf.h
+net/CMakeFiles/Var.dir/http/http_message.cc.o: ../util/endian.h
+net/CMakeFiles/Var.dir/http/http_message.cc.o: ../util/macros.h
+net/CMakeFiles/Var.dir/http/http_message.cc.o: ../util/string_piece.h
+net/CMakeFiles/Var.dir/http/http_message.cc.o: ../net/http/http_header.h
+net/CMakeFiles/Var.dir/http/http_message.cc.o: ../net/http/http_message.cc
+net/CMakeFiles/Var.dir/http/http_message.cc.o: ../net/http/http_message.h
+net/CMakeFiles/Var.dir/http/http_message.cc.o: ../net/http/http_method.h
+net/CMakeFiles/Var.dir/http/http_message.cc.o: ../net/http/http_parser.h
+net/CMakeFiles/Var.dir/http/http_message.cc.o: ../net/http/http_status_code.h
+net/CMakeFiles/Var.dir/http/http_message.cc.o: ../net/http/http_url.h
+
 net/CMakeFiles/Var.dir/http/http_method.cc.o: ../net/http/http_method.cc
 net/CMakeFiles/Var.dir/http/http_method.cc.o: ../net/http/http_method.h
 net/CMakeFiles/Var.dir/http/http_method.cc.o: ../net/http/macros.h

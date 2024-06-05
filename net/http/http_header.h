@@ -121,8 +121,11 @@ public:
     //   "/FileService/mydir/123.txt"        "mydir/123.txt"
     //   "/FileService//mydir///123.txt//"   "mydir/123.txt"
     const std::string& unresolved_path() const { return _unresolved_path; }
+    void set_unresolved_path(const std::string& path) { _unresolved_path = path; }
 
 private:
+friend class HttpMessage;
+
     std::string& GetOrAddHeader(const std::string& key) {
         return _headers[key];
     }

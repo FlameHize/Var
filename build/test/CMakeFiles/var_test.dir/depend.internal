@@ -7,6 +7,18 @@ test/CMakeFiles/var_test.dir/http_header_test.cc.o
  ../net/http/http_status_code.h
  ../net/http/http_url.h
  /home/zgx/project/Var/test/http_header_test.cc
+test/CMakeFiles/var_test.dir/http_message_test.cc.o
+ ..//net/http/http_message.h
+ ..//util/iobuf.h
+ ../net/http/http_header.h
+ ../net/http/http_method.h
+ ../net/http/http_parser.h
+ ../net/http/http_status_code.h
+ ../net/http/http_url.h
+ ../util/endian.h
+ ../util/macros.h
+ ../util/string_piece.h
+ /home/zgx/project/Var/test/http_message_test.cc
 test/CMakeFiles/var_test.dir/http_method_test.cc.o
  ..//net/http/http_method.h
  /home/zgx/project/Var/test/http_method_test.cc

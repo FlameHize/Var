@@ -82,7 +82,7 @@ public:
         return ResolvedHttpURL(url.c_str()); 
     }
 
-    // Set host/port with the input in form of "host:(optional)port".
+    // Resolved host/port with the input in form of "host:(optional)port".
     void ResolvedHttpHostAndPort(const std::string& host_and_optional_port);
 
     // Put path?query#fragment into 'path'

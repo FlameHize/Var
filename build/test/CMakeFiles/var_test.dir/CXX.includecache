@@ -14,6 +14,14 @@ http_status_code.h
 http_method.h
 ../net/http/http_method.h
 
+..//net/http/http_message.h
+util/iobuf.h
+../net/http/util/iobuf.h
+http_header.h
+../net/http/http_header.h
+http_parser.h
+../net/http/http_parser.h
+
 ..//net/http/http_method.h
 algorithm
 -
@@ -46,6 +54,30 @@ ostream
 unordered_map
 -
 
+..//util/iobuf.h
+macros.h
+../util/macros.h
+endian.h
+../util/endian.h
+string_piece.h
+../util/string_piece.h
+algorithm
+-
+vector
+-
+assert.h
+-
+string.h
+-
+
+../net/http/http_header.h
+http_url.h
+../net/http/http_url.h
+http_status_code.h
+../net/http/http_status_code.h
+http_method.h
+../net/http/http_method.h
+
 ../net/http/http_method.h
 algorithm
 -
@@ -58,6 +90,16 @@ string.h
 pthread.h
 -
 
+../net/http/http_parser.h
+stddef.h
+-
+BaseTsd.h
+-
+sys/inttypes.h
+-
+stdint.h
+-
+
 ../net/http/http_status_code.h
 
 ../net/http/http_url.h
@@ -68,11 +110,33 @@ ostream
 unordered_map
 -
 
+../util/endian.h
+stdint.h
+-
+endian.h
+-
+
+../util/macros.h
+
+../util/string_piece.h
+string.h
+-
+string
+-
+iosfwd
+-
+
 /home/zgx/project/Var/test/http_header_test.cc
 gtest/gtest.h
 -
 net/http/http_header.h
 /home/zgx/project/Var/test/net/http/http_header.h
+
+/home/zgx/project/Var/test/http_message_test.cc
+gtest/gtest.h
+-
+net/http/http_message.h
+/home/zgx/project/Var/test/net/http/http_message.h
 
 /home/zgx/project/Var/test/http_method_test.cc
 gtest/gtest.h

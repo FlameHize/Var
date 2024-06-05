@@ -152,6 +152,33 @@ http/http_header.cc.s:
 	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_header.cc.s
 .PHONY : http/http_header.cc.s
 
+http/http_message.o: http/http_message.cc.o
+
+.PHONY : http/http_message.o
+
+# target to build an object file
+http/http_message.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_message.cc.o
+.PHONY : http/http_message.cc.o
+
+http/http_message.i: http/http_message.cc.i
+
+.PHONY : http/http_message.i
+
+# target to preprocess a source file
+http/http_message.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_message.cc.i
+.PHONY : http/http_message.cc.i
+
+http/http_message.s: http/http_message.cc.s
+
+.PHONY : http/http_message.s
+
+# target to generate assembly for a file
+http/http_message.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_message.cc.s
+.PHONY : http/http_message.cc.s
+
 http/http_method.o: http/http_method.cc.o
 
 .PHONY : http/http_method.o
@@ -272,6 +299,9 @@ help:
 	@echo "... http/http_header.o"
 	@echo "... http/http_header.i"
 	@echo "... http/http_header.s"
+	@echo "... http/http_message.o"
+	@echo "... http/http_message.i"
+	@echo "... http/http_message.s"
 	@echo "... http/http_method.o"
 	@echo "... http/http_method.i"
 	@echo "... http/http_method.s"

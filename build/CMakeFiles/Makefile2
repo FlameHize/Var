@@ -102,7 +102,7 @@ test/preinstall:
 test/CMakeFiles/var_test.dir/all: net/CMakeFiles/Var.dir/all
 	$(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=7,8,9,10,11,12,13 "Built target var_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=8,9,10,11,12,13,14,15 "Built target var_test"
 .PHONY : test/CMakeFiles/var_test.dir/all
 
 # Include target in all.
@@ -112,7 +112,7 @@ all: test/CMakeFiles/var_test.dir/all
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/var_test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 13
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 15
 	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/var_test.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
 .PHONY : test/CMakeFiles/var_test.dir/rule
@@ -157,7 +157,7 @@ net/preinstall:
 net/CMakeFiles/Var.dir/all:
 	$(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/depend
 	$(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target Var"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target Var"
 .PHONY : net/CMakeFiles/Var.dir/all
 
 # Include target in all.
@@ -167,7 +167,7 @@ all: net/CMakeFiles/Var.dir/all
 
 # Build rule for subdir invocation for target.
 net/CMakeFiles/Var.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 7
 	$(MAKE) -f CMakeFiles/Makefile2 net/CMakeFiles/Var.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
 .PHONY : net/CMakeFiles/Var.dir/rule

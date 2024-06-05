@@ -152,6 +152,33 @@ http_header_test.cc.s:
 	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_header_test.cc.s
 .PHONY : http_header_test.cc.s
 
+http_message_test.o: http_message_test.cc.o
+
+.PHONY : http_message_test.o
+
+# target to build an object file
+http_message_test.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_message_test.cc.o
+.PHONY : http_message_test.cc.o
+
+http_message_test.i: http_message_test.cc.i
+
+.PHONY : http_message_test.i
+
+# target to preprocess a source file
+http_message_test.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_message_test.cc.i
+.PHONY : http_message_test.cc.i
+
+http_message_test.s: http_message_test.cc.s
+
+.PHONY : http_message_test.s
+
+# target to generate assembly for a file
+http_message_test.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_message_test.cc.s
+.PHONY : http_message_test.cc.s
+
 http_method_test.o: http_method_test.cc.o
 
 .PHONY : http_method_test.o
@@ -299,6 +326,9 @@ help:
 	@echo "... http_header_test.o"
 	@echo "... http_header_test.i"
 	@echo "... http_header_test.s"
+	@echo "... http_message_test.o"
+	@echo "... http_message_test.i"
+	@echo "... http_message_test.s"
 	@echo "... http_method_test.o"
 	@echo "... http_method_test.i"
 	@echo "... http_method_test.s"

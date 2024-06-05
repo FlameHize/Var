@@ -443,6 +443,13 @@ int http_body_is_final(const http_parser *parser);
 /* Change the maximum header size provided at compile time. */
 void http_parser_set_max_header_size(uint32_t size);
 
+/* Return a string name of the given type */
+const char* http_parser_type_name(enum http_parser_type type);
+
+/* Return a string name of the given state */
+const char* http_parser_state_name(unsigned int state);
+const char* http_parser_header_state_name(unsigned int header_state);
+
 #ifdef __cplusplus
 }
 #endif

@@ -6,6 +6,38 @@
 
 #IncludeRegexTransform: 
 
+..//util/iobuf.h
+macros.h
+../util/macros.h
+endian.h
+../util/endian.h
+string_piece.h
+../util/string_piece.h
+algorithm
+-
+vector
+-
+assert.h
+-
+string.h
+-
+
+../util/endian.h
+stdint.h
+-
+endian.h
+-
+
+../util/macros.h
+
+../util/string_piece.h
+string.h
+-
+string
+-
+iosfwd
+-
+
 /home/zgx/project/Var/net/http/http_header.cc
 http_header.h
 /home/zgx/project/Var/net/http/http_header.h
@@ -17,6 +49,18 @@ http_status_code.h
 /home/zgx/project/Var/net/http/http_status_code.h
 http_method.h
 /home/zgx/project/Var/net/http/http_method.h
+
+/home/zgx/project/Var/net/http/http_message.cc
+http_message.h
+/home/zgx/project/Var/net/http/http_message.h
+
+/home/zgx/project/Var/net/http/http_message.h
+util/iobuf.h
+/home/zgx/project/Var/net/http/util/iobuf.h
+http_header.h
+/home/zgx/project/Var/net/http/http_header.h
+http_parser.h
+/home/zgx/project/Var/net/http/http_parser.h
 
 /home/zgx/project/Var/net/http/http_method.cc
 macros.h

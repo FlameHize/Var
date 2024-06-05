@@ -81,9 +81,33 @@ test/CMakeFiles/var_test.dir/http_header_test.cc.o.provides: test/CMakeFiles/var
 test/CMakeFiles/var_test.dir/http_header_test.cc.o.provides.build: test/CMakeFiles/var_test.dir/http_header_test.cc.o
 
 
+test/CMakeFiles/var_test.dir/http_message_test.cc.o: test/CMakeFiles/var_test.dir/flags.make
+test/CMakeFiles/var_test.dir/http_message_test.cc.o: ../test/http_message_test.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object test/CMakeFiles/var_test.dir/http_message_test.cc.o"
+	cd /home/zgx/project/Var/build/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_test.dir/http_message_test.cc.o -c /home/zgx/project/Var/test/http_message_test.cc
+
+test/CMakeFiles/var_test.dir/http_message_test.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/var_test.dir/http_message_test.cc.i"
+	cd /home/zgx/project/Var/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zgx/project/Var/test/http_message_test.cc > CMakeFiles/var_test.dir/http_message_test.cc.i
+
+test/CMakeFiles/var_test.dir/http_message_test.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/var_test.dir/http_message_test.cc.s"
+	cd /home/zgx/project/Var/build/test && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgx/project/Var/test/http_message_test.cc -o CMakeFiles/var_test.dir/http_message_test.cc.s
+
+test/CMakeFiles/var_test.dir/http_message_test.cc.o.requires:
+
+.PHONY : test/CMakeFiles/var_test.dir/http_message_test.cc.o.requires
+
+test/CMakeFiles/var_test.dir/http_message_test.cc.o.provides: test/CMakeFiles/var_test.dir/http_message_test.cc.o.requires
+	$(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_message_test.cc.o.provides.build
+.PHONY : test/CMakeFiles/var_test.dir/http_message_test.cc.o.provides
+
+test/CMakeFiles/var_test.dir/http_message_test.cc.o.provides.build: test/CMakeFiles/var_test.dir/http_message_test.cc.o
+
+
 test/CMakeFiles/var_test.dir/http_method_test.cc.o: test/CMakeFiles/var_test.dir/flags.make
 test/CMakeFiles/var_test.dir/http_method_test.cc.o: ../test/http_method_test.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object test/CMakeFiles/var_test.dir/http_method_test.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object test/CMakeFiles/var_test.dir/http_method_test.cc.o"
 	cd /home/zgx/project/Var/build/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_test.dir/http_method_test.cc.o -c /home/zgx/project/Var/test/http_method_test.cc
 
 test/CMakeFiles/var_test.dir/http_method_test.cc.i: cmake_force
@@ -107,7 +131,7 @@ test/CMakeFiles/var_test.dir/http_method_test.cc.o.provides.build: test/CMakeFil
 
 test/CMakeFiles/var_test.dir/http_parser_test.cc.o: test/CMakeFiles/var_test.dir/flags.make
 test/CMakeFiles/var_test.dir/http_parser_test.cc.o: ../test/http_parser_test.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object test/CMakeFiles/var_test.dir/http_parser_test.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object test/CMakeFiles/var_test.dir/http_parser_test.cc.o"
 	cd /home/zgx/project/Var/build/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_test.dir/http_parser_test.cc.o -c /home/zgx/project/Var/test/http_parser_test.cc
 
 test/CMakeFiles/var_test.dir/http_parser_test.cc.i: cmake_force
@@ -131,7 +155,7 @@ test/CMakeFiles/var_test.dir/http_parser_test.cc.o.provides.build: test/CMakeFil
 
 test/CMakeFiles/var_test.dir/http_status_code_test.cc.o: test/CMakeFiles/var_test.dir/flags.make
 test/CMakeFiles/var_test.dir/http_status_code_test.cc.o: ../test/http_status_code_test.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object test/CMakeFiles/var_test.dir/http_status_code_test.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object test/CMakeFiles/var_test.dir/http_status_code_test.cc.o"
 	cd /home/zgx/project/Var/build/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_test.dir/http_status_code_test.cc.o -c /home/zgx/project/Var/test/http_status_code_test.cc
 
 test/CMakeFiles/var_test.dir/http_status_code_test.cc.i: cmake_force
@@ -155,7 +179,7 @@ test/CMakeFiles/var_test.dir/http_status_code_test.cc.o.provides.build: test/CMa
 
 test/CMakeFiles/var_test.dir/http_url_test.cc.o: test/CMakeFiles/var_test.dir/flags.make
 test/CMakeFiles/var_test.dir/http_url_test.cc.o: ../test/http_url_test.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object test/CMakeFiles/var_test.dir/http_url_test.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object test/CMakeFiles/var_test.dir/http_url_test.cc.o"
 	cd /home/zgx/project/Var/build/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_test.dir/http_url_test.cc.o -c /home/zgx/project/Var/test/http_url_test.cc
 
 test/CMakeFiles/var_test.dir/http_url_test.cc.i: cmake_force
@@ -179,7 +203,7 @@ test/CMakeFiles/var_test.dir/http_url_test.cc.o.provides.build: test/CMakeFiles/
 
 test/CMakeFiles/var_test.dir/main.cc.o: test/CMakeFiles/var_test.dir/flags.make
 test/CMakeFiles/var_test.dir/main.cc.o: ../test/main.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object test/CMakeFiles/var_test.dir/main.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object test/CMakeFiles/var_test.dir/main.cc.o"
 	cd /home/zgx/project/Var/build/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_test.dir/main.cc.o -c /home/zgx/project/Var/test/main.cc
 
 test/CMakeFiles/var_test.dir/main.cc.i: cmake_force
@@ -204,6 +228,7 @@ test/CMakeFiles/var_test.dir/main.cc.o.provides.build: test/CMakeFiles/var_test.
 # Object files for target var_test
 var_test_OBJECTS = \
 "CMakeFiles/var_test.dir/http_header_test.cc.o" \
+"CMakeFiles/var_test.dir/http_message_test.cc.o" \
 "CMakeFiles/var_test.dir/http_method_test.cc.o" \
 "CMakeFiles/var_test.dir/http_parser_test.cc.o" \
 "CMakeFiles/var_test.dir/http_status_code_test.cc.o" \
@@ -214,6 +239,7 @@ var_test_OBJECTS = \
 var_test_EXTERNAL_OBJECTS =
 
 ../bin/var_test: test/CMakeFiles/var_test.dir/http_header_test.cc.o
+../bin/var_test: test/CMakeFiles/var_test.dir/http_message_test.cc.o
 ../bin/var_test: test/CMakeFiles/var_test.dir/http_method_test.cc.o
 ../bin/var_test: test/CMakeFiles/var_test.dir/http_parser_test.cc.o
 ../bin/var_test: test/CMakeFiles/var_test.dir/http_status_code_test.cc.o
@@ -223,7 +249,7 @@ var_test_EXTERNAL_OBJECTS =
 ../bin/var_test: /usr/lib/libgtest.a
 ../bin/var_test: ../lib/libVar.so
 ../bin/var_test: test/CMakeFiles/var_test.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable ../../bin/var_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable ../../bin/var_test"
 	cd /home/zgx/project/Var/build/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/var_test.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -232,6 +258,7 @@ test/CMakeFiles/var_test.dir/build: ../bin/var_test
 .PHONY : test/CMakeFiles/var_test.dir/build
 
 test/CMakeFiles/var_test.dir/requires: test/CMakeFiles/var_test.dir/http_header_test.cc.o.requires
+test/CMakeFiles/var_test.dir/requires: test/CMakeFiles/var_test.dir/http_message_test.cc.o.requires
 test/CMakeFiles/var_test.dir/requires: test/CMakeFiles/var_test.dir/http_method_test.cc.o.requires
 test/CMakeFiles/var_test.dir/requires: test/CMakeFiles/var_test.dir/http_parser_test.cc.o.requires
 test/CMakeFiles/var_test.dir/requires: test/CMakeFiles/var_test.dir/http_status_code_test.cc.o.requires

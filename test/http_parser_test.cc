@@ -95,7 +95,7 @@ TEST_F(HttpParserTest, HttpExample)
 {
     const char* http_request = 
         "GET /vars/bthread_count?series1=1&series2=2 HTTP/1.1\r\n"
-        "Host: 192.168.74.160:8000\r\n"
+        "Host: 192.168.74.160:8000,8001\r\n"
         "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0\r\n"
         "Accept: application/json, text/javascript, */*; q=0.01\r\n"
         "Accept-Encoding: gzip, deflate\r\n"
