@@ -44,6 +44,19 @@ TEST(URLTest, everything)
     ASSERT_EQ(80, port_out);
 }
 
+TEST(URLTest, parse_url)
+{
+    var::URL url;
+    std::string url_str = " foobar://user:passwd@www.baidu.com:80/var/bthread_count?wd1=url1&wd2=url2#frag  ";
+    std::string scheme;
+    std::string host_out;
+    int port_out = -1;
+    var::ParseURL(url_str.c_str(), &scheme, &host_out, &port_out);
+    ASSERT_EQ("foobar", scheme);
+    ASSERT_EQ("www.baidu.com", host_out);
+    ASSERT_EQ(80, port_out);
+}
+
 TEST(URLTest, only_host) {
     var::URL url;
     ASSERT_EQ(0, url.ResolvedHttpURL("  foo1://www.baidu1.com?wd=uri2&nonkey=22 "));
@@ -259,4 +272,57 @@ TEST(URLTest, generate_http_path) {
     std::string path4;
     url.GenerateHttpPath(&path4);
     ASSERT_EQ(ref4, path4);
+}
+
+TEST(URLTest, only_one_key) {
+    var::URL url;
+    url.set_query("key1");
+    ASSERT_TRUE(url.GetQuery("key1"));
+    ASSERT_EQ("", *url.GetQuery("key1"));
+}
+
+TEST(URLTest, empty_host) {
+    var::URL url;
+    ASSERT_EQ(0, url.ResolvedHttpURL("http://"));
+    ASSERT_EQ("", url.host());
+    ASSERT_EQ("", url.path());
+}
+
+TEST(URLTest, invalid_query) {
+    var::URL url;
+    ASSERT_EQ(0, url.ResolvedHttpURL("http://a.b.c/?a-b-c:def"));
+    ASSERT_EQ("a-b-c:def", url.query());
+}
+
+TEST(URLTest, print_url) {
+    var::URL url;
+
+    const std::string url1 = "http://user:passwd@a.b.c/?d=c&a=b&e=f#frg1";
+    ASSERT_EQ(0, url.ResolvedHttpURL(url1));
+    std::ostringstream oss;
+    url.Print(oss);
+    ASSERT_EQ("http://a.b.c/?d=c&a=b&e=f#frg1", oss.str());
+    oss.str("");
+    url.PrintWithoutHost(oss);
+    ASSERT_EQ("/?d=c&a=b&e=f#frg1", oss.str());
+
+    const std::string url2 = "http://a.b.c/?d=c&a=b&e=f#frg1";
+    ASSERT_EQ(0, url.ResolvedHttpURL(url2));
+    oss.str("");
+    url.Print(oss);
+    ASSERT_EQ(url2, oss.str());
+    oss.str("");
+    url.PrintWithoutHost(oss);
+    ASSERT_EQ("/?d=c&a=b&e=f#frg1", oss.str());
+
+    // // range error
+    // url.SetQuery("e", "f2");
+    // url.SetQuery("f", "g");
+    // ASSERT_EQ((size_t)1, url.RemoveQuery("a"));
+    // oss.str("");
+    // url.Print(oss);
+    // ASSERT_EQ("http://a.b.c/?d=c&e=f2&f=g#frg1", oss.str());
+    // oss.str("");
+    // url.PrintWithoutHost(oss);
+    // ASSERT_EQ("/?d=c&e=f2&f=g#frg1", oss.str());
 }

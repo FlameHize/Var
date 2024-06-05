@@ -23,8 +23,37 @@
 #include <unordered_map>
 
 namespace var {
+// The class for URI scheme : http://en.wikipedia.org/wiki/URI_scheme
+//
+//  foo://username:password@example.com:8042/over/there/index.dtb?type=animal&name=narwhal#nose
+//  \_/   \_______________/ \_________/ \__/            \___/ \_/ \______________________/ \__/
+//   |           |               |       |                |    |            |                |
+//   |       userinfo           host    port              |    |          query          fragment
+//   |    \________________________________/\_____________|____|/ \__/        \__/
+// scheme                 |                          |    |    |    |          |
+//                    authority                      |    |    |    |          |
+//                                                 path   |    |    interpretable as keys
+//                                                        |    |
+//        \_______________________________________________|____|/       \____/     \_____/
+//                             |                          |    |          |           |
+//                     hierarchical part                  |    |    interpretable as values
+//                                                        |    |
+//                                   interpretable as filename |
+//                                                             |
+//                                                             |
+//                                               interpretable as extension
 
-struct URLStringEqual {  
+struct URLStringHash : public std::hash<std::string> {
+    std::size_t operator()(const std::string& s) const {
+        std::size_t result = 0;
+        for (std::string::const_iterator i = s.begin(); i != s.end(); ++i) {
+            result = result * 101 + *i;
+        }
+        return result;        
+    }
+};
+
+struct URLStringEqual : public std::equal_to<std::string> {  
     bool operator()(const std::string& lhs, const std::string& rhs) const {  
         return  lhs == rhs;
     }  
@@ -32,7 +61,7 @@ struct URLStringEqual {
 
 class URL {
 public:
-    typedef std::unordered_map<std::string, std::string, std::hash<std::string>, URLStringEqual> QueryMap;
+    typedef std::unordered_map<std::string, std::string, URLStringHash, URLStringEqual> QueryMap;
     typedef QueryMap::const_iterator QueryIterator;
 
     // You can copy a URL.
@@ -94,6 +123,7 @@ public:
     const std::string* GetQuery(const std::string& key) const;
 
     // Add key/value pair. Override existing value.
+    // change the modified flag to update the output query string.
     void SetQuery(const std::string& key, const std::string& value);
 
     // Remove value associated with 'key'.
@@ -170,6 +200,7 @@ inline const std::string& URL::query() const {
         _query.clear();
         AppendQueryString(&_query,false);
     }
+    return _query;
 }
 
 inline std::ostream& operator<<(std::ostream& os, const URL& url) {

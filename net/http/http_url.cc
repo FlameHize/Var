@@ -16,8 +16,6 @@ URL::~URL() {
 
 void URL::Clear() {
     _port = -1;
-    _query_was_modified = false;
-    _initialized_query_map = false;
     _scheme.clear();
     _host.clear();
     _path.clear();
@@ -25,6 +23,8 @@ void URL::Clear() {
     _query.clear();
     _query_map.clear();
     _fragment.clear();
+    _query_was_modified = false;
+    _initialized_query_map = false;
 }
 
 void URL::Swap(URL& rhs) {
@@ -87,11 +87,14 @@ static void ParseQueries(URL::QueryMap& query_map, const std::string& query_str)
     if(start < query.size()) {
         param = query.substr(start);
         size_t pos = param.find('=');
+        key = param.substr(0, pos);
+        if(key.empty()) {
+            return;
+        }
         if(pos == std::string::npos) {
             value = "";
         }
         else {
-            key = param.substr(0, pos);
             value = param.substr(pos + 1);
         }
         query_map[key] = value;
@@ -410,7 +413,13 @@ void URL::PrintWithoutHost(std::ostream& os) const {
 
     if(_initialized_query_map && _query_was_modified) {
         bool is_first = true;
-        for(QueryIterator it = QueryBegin(); it != QueryEnd(); ++it) {
+        for(QueryIterator it = QueryEnd(); it != QueryEnd(); ++it) {
+            // // test
+            // size_t bucket = _query_map.bucket_count();
+            // std::string test = it->first;
+            // URLStringHash hasher;
+            // size_t hash = hasher.operator()(test);
+            // size_t index = hash % bucket; 
             if(is_first) {
                 is_first = false;
                 os << '?';
@@ -438,41 +447,89 @@ void URL::InitializeQueryMap() const {
     _query_was_modified = false;
 }
 
-int ParseURL(const char* url, std::string* scheme, 
-            std::string* host, int* port) {
-    // skipping heading blanks
-    const char* p = url;
-    if(*p == ' ') {
-        for(++p; *p == ' '; ++p) {}
+int ParseURL(const char* url, std::string* scheme_out, 
+            std::string* host_out, int* port_out) {
+        const char* p = url;
+    // skip heading blanks
+    if (*p == ' ') {
+        for (++p; *p == ' '; ++p) {}
     }
-    // skipping tailing blanks and calculate url size.
-    const char* url_start = p;
-    for(; *p; ++p) {}
-    --p;
-    while(*p && *p == ' '){
-        --p;
+    const char* start = p;
+    // Find end of host, locate scheme and user_info during the searching
+    bool need_scheme = true;
+    bool need_user_info = true;
+    for (; true; ++p) {
+        const char action = g_url_parsing_fast_action_map[(int)*p];
+        if (action == URI_PARSE_CONTINUE) {
+            continue;
+        }
+        if (action == URI_PARSE_BREAK) {
+            break;
+        }
+        if (*p == ':') {
+            if (p[1] == '/' && p[2] == '/' && need_scheme) {
+                need_scheme = false;
+                if (scheme_out) {
+                    scheme_out->assign(start, p - start);
+                }
+                p += 2;
+                start = p + 1;
+            }
+        } else if (*p == '@') {
+            if (need_user_info) {
+                need_user_info = false;
+                start = p + 1;
+            }
+        } else if (*p == ' ') {
+            if (!is_all_spaces(p + 1)) {
+                return -1;
+            }
+            break;
+        }
     }
-    size_t len = p - url_start + 1;
+    int port = -1;
+    const char* host_end = SplitHostAndPort(start, p, &port);
+    if (host_out) {
+        host_out->assign(start, host_end - start);
+    }
+    if (port_out) {
+        *port_out = port;
+    }
+    return 0;
 
-    // call http_parser_parse_url().
-    struct http_parser_url parser_url;
-    http_parser_url_init(&parser_url);
-    if(http_parser_parse_url(url_start, len, 0, &parser_url) == 0) {
-        if(parser_url.field_set & (1 << UF_SCHEMA)) {
-            scheme->assign(url_start + parser_url.field_data[UF_SCHEMA].off, 
-            parser_url.field_data[UF_SCHEMA].len);
-        }
+    // // skipping heading blanks
+    // const char* p = url;
+    // if(*p == ' ') {
+    //     for(++p; *p == ' '; ++p) {}
+    // }
+    // // skipping tailing blanks and calculate url size.
+    // const char* url_start = p;
+    // for(; *p; ++p) {}
+    // --p;
+    // while(*p && *p == ' '){
+    //     --p;
+    // }
+    // size_t len = p - url_start + 1;
 
-        if(parser_url.field_set & (1 << UF_HOST)) {
-            host->assign(url_start + parser_url.field_data[UF_HOST].off, 
-            parser_url.field_data[UF_HOST].len);
-        }
-        if(parser_url.field_set & (1 << UF_PORT)) {
-            *port = parser_url.port;
-        }
-        return 0;
-    }
-    return -1;
+    // // call http_parser_parse_url().
+    // struct http_parser_url parser_url;
+    // http_parser_url_init(&parser_url);
+    // if(http_parser_parse_url(url_start, len, 0, &parser_url) == 0) {
+    //     if(parser_url.field_set & (1 << UF_SCHEMA)) {
+    //         scheme->assign(url_start + parser_url.field_data[UF_SCHEMA].off, 
+    //         parser_url.field_data[UF_SCHEMA].len);
+    //     }
+
+    //     if(parser_url.field_set & (1 << UF_HOST)) {
+    //         host->assign(url_start + parser_url.field_data[UF_HOST].off, 
+    //         parser_url.field_data[UF_HOST].len);
+    //     }
+    //     if(parser_url.field_set & (1 << UF_PORT)) {
+    //         *port = parser_url.port;
+    //     }
+    //     return 0;
+    // }
+    // return -1;
 }
 
 void append_query(std::string* query_string,
