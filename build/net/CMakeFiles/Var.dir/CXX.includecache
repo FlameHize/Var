@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+/home/zgx/project/Var/net/http/http_header.cc
+http_header.h
+/home/zgx/project/Var/net/http/http_header.h
+
+/home/zgx/project/Var/net/http/http_header.h
+http_url.h
+/home/zgx/project/Var/net/http/http_url.h
+http_status_code.h
+/home/zgx/project/Var/net/http/http_status_code.h
+http_method.h
+/home/zgx/project/Var/net/http/http_method.h
+
 /home/zgx/project/Var/net/http/http_method.cc
 macros.h
 /home/zgx/project/Var/net/http/macros.h

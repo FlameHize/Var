@@ -18,7 +18,7 @@
 #ifndef VAR_HTTP_STATUS_CODE_H
 #define VAR_HTTP_STATUS_CODE_H
 
-namespace net {
+namespace var {
 // Read the description of a status code carefully before using it
 
 // http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html

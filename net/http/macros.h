@@ -20,7 +20,7 @@
 
 #include <string.h>
 
-namespace net {
+namespace var {
 
 template<typename T, size_t N>
 constexpr size_t get_array_size(const T(&)[N]) noexcept {

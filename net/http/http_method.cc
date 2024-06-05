@@ -1,7 +1,7 @@
 #include "macros.h"
 #include "http_method.h"
 
-namespace net {
+namespace var {
 
 struct HttpMethodPair {
     HttpMethod method;

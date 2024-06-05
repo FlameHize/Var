@@ -18,7 +18,7 @@
 #include <gtest/gtest.h>
 #include "net/http/http_status_code.h"
 
-using namespace net;
+using namespace var;
 
 class HttpStatusCodeTest : public testing::Test {
 protected:

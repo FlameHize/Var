@@ -59,17 +59,17 @@ struct URLStringEqual : public std::equal_to<std::string> {
     }  
 }; 
 
-class URL {
+class HttpUrl {
 public:
     typedef std::unordered_map<std::string, std::string, URLStringHash, URLStringEqual> QueryMap;
     typedef QueryMap::const_iterator QueryIterator;
 
     // You can copy a URL.
-    URL();
-    ~URL();
+    HttpUrl();
+    ~HttpUrl();
 
     // Exchange internal fields with another URL.
-    void Swap(URL& rhs);
+    void Swap(HttpUrl& rhs);
 
     // Reset internal fields as if they're just default-constructed.
     void Clear();
@@ -157,9 +157,9 @@ private:
     void AppendQueryString(std::string* query, bool append_question_mask) const;
 
     // Used to check whether the query has been changed.
+    int _port;
     mutable bool _query_was_modified;
     mutable bool _initialized_query_map;
-    int _port;
     std::string _scheme;
     std::string _host;
     std::string _path;
@@ -173,7 +173,7 @@ private:
 // Returns 0 on success, -1 otherwise.
 int ParseURL(const char* url, std::string* scheme, std::string* host, int* port);
 
-inline const std::string* URL::GetQuery(const std::string& key) const {
+inline const std::string* HttpUrl::GetQuery(const std::string& key) const {
     QueryIterator it = get_query_map().find(key);
     if(it == QueryEnd()) {
         return nullptr;
@@ -181,12 +181,12 @@ inline const std::string* URL::GetQuery(const std::string& key) const {
     return &it->second;
 }
 
-inline void URL::SetQuery(const std::string& key, const std::string& value) {
+inline void HttpUrl::SetQuery(const std::string& key, const std::string& value) {
     get_query_map()[key] = value;
     _query_was_modified = true;
 }
 
-inline size_t URL::RemoveQuery(const std::string& key) {
+inline size_t HttpUrl::RemoveQuery(const std::string& key) {
     if(get_query_map().erase(key)) {
         _query_was_modified = true;
         return 1;
@@ -194,7 +194,7 @@ inline size_t URL::RemoveQuery(const std::string& key) {
     return 0;
 }
 
-inline const std::string& URL::query() const {
+inline const std::string& HttpUrl::query() const {
     if(_initialized_query_map && _query_was_modified) {
         _query_was_modified = false;
         _query.clear();
@@ -203,7 +203,7 @@ inline const std::string& URL::query() const {
     return _query;
 }
 
-inline std::ostream& operator<<(std::ostream& os, const URL& url) {
+inline std::ostream& operator<<(std::ostream& os, const HttpUrl& url) {
     url.Print(os);
     return os;
 }

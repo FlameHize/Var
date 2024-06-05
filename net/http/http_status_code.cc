@@ -3,7 +3,7 @@
 #include "macros.h"
 #include "http_status_code.h"
 
-namespace net {
+namespace var {
 
 struct status_pair {
     int status_code;

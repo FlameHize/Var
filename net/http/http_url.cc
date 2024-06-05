@@ -2,20 +2,20 @@
 #include "http_parser.h"
 
 namespace var {
-
-URL::URL()
+HttpUrl::HttpUrl()
     : _port(-1)
     , _query_was_modified(false)
     , _initialized_query_map(false) {
+}
+
+HttpUrl::~HttpUrl() {
 
 }
 
-URL::~URL() {
-
-}
-
-void URL::Clear() {
+void HttpUrl::Clear() {
     _port = -1;
+    _query_was_modified = false;
+    _initialized_query_map = false;
     _scheme.clear();
     _host.clear();
     _path.clear();
@@ -23,11 +23,9 @@ void URL::Clear() {
     _query.clear();
     _query_map.clear();
     _fragment.clear();
-    _query_was_modified = false;
-    _initialized_query_map = false;
 }
 
-void URL::Swap(URL& rhs) {
+void HttpUrl::Swap(HttpUrl& rhs) {
     std::swap(_port, rhs._port);
     std::swap(_query_was_modified, rhs._query_was_modified);
     std::swap(_initialized_query_map, rhs._initialized_query_map);
@@ -55,7 +53,7 @@ static std::string RemoveAmpersand(const std::string& query) {
     return result; 
 }
 
-static void ParseQueries(URL::QueryMap& query_map, const std::string& query_str) {
+static void ParseQueries(HttpUrl::QueryMap& query_map, const std::string& query_str) {
     query_map.clear();
     if(query_str.empty()) {
         return;
@@ -165,7 +163,7 @@ static const char g_url_parsing_fast_action_map_raw[] = {
 static const char* const g_url_parsing_fast_action_map =
     g_url_parsing_fast_action_map_raw + 128;
 
-int URL::ResolvedHttpURL(const char* url) {
+int HttpUrl::ResolvedHttpURL(const char* url) {
     Clear();
     
     const char* p = url;
@@ -307,13 +305,13 @@ int URL::ResolvedHttpURL(const char* url) {
     // return -1;
 }
 
-void URL::ResolvedHttpHostAndPort(const std::string& host_and_optional_port) {
+void HttpUrl::ResolvedHttpHostAndPort(const std::string& host_and_optional_port) {
     const char* const host_begin = host_and_optional_port.c_str();
     const char* host_end = SplitHostAndPort(host_begin, host_begin + host_and_optional_port.size(), &_port);
     _host.assign(host_begin, host_end - host_begin);
 }
 
-void URL::AppendQueryString(std::string* query, bool append_question_mark) const {
+void HttpUrl::AppendQueryString(std::string* query, bool append_question_mark) const {
     if(_query_map.empty()) {
         return;
     }
@@ -337,7 +335,7 @@ void URL::AppendQueryString(std::string* query, bool append_question_mark) const
     }
 }
 
-void URL::GenerateHttpPath(std::string* http_path) const {
+void HttpUrl::GenerateHttpPath(std::string* http_path) const {
     http_path->reserve(_path.size() + _query.size() + _fragment.size());
     http_path->clear();
     if(_path.empty()) {
@@ -361,7 +359,7 @@ void URL::GenerateHttpPath(std::string* http_path) const {
     }
 }
 
-void URL::ResolvedHttpPath(const char* http_path) {
+void HttpUrl::ResolvedHttpPath(const char* http_path) {
     _path.clear();
     _query.clear();
     _fragment.clear();
@@ -385,7 +383,7 @@ void URL::ResolvedHttpPath(const char* http_path) {
     }
 }
 
-void URL::Print(std::ostream& os) const {
+void HttpUrl::Print(std::ostream& os) const {
     if (!_host.empty()) {
         if (!_scheme.empty()) {
             os << _scheme << "://";
@@ -401,7 +399,7 @@ void URL::Print(std::ostream& os) const {
     PrintWithoutHost(os);
 }
 
-void URL::PrintWithoutHost(std::ostream& os) const {
+void HttpUrl::PrintWithoutHost(std::ostream& os) const {
     if (_path.empty()) {
         // According to rfc2616#section-5.1.2, the absolute path
         // cannot be empty; if none is present in the original URI, it MUST
@@ -441,7 +439,7 @@ void URL::PrintWithoutHost(std::ostream& os) const {
     }
 }
 
-void URL::InitializeQueryMap() const {
+void HttpUrl::InitializeQueryMap() const {
     ParseQueries(_query_map, _query);
     _initialized_query_map = true;
     _query_was_modified = false;

@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+..//net/http/http_header.h
+http_url.h
+../net/http/http_url.h
+http_status_code.h
+../net/http/http_status_code.h
+http_method.h
+../net/http/http_method.h
+
 ..//net/http/http_method.h
 algorithm
 -
@@ -37,6 +45,34 @@ ostream
 -
 unordered_map
 -
+
+../net/http/http_method.h
+algorithm
+-
+ctype.h
+-
+stdlib.h
+-
+string.h
+-
+pthread.h
+-
+
+../net/http/http_status_code.h
+
+../net/http/http_url.h
+string
+-
+ostream
+-
+unordered_map
+-
+
+/home/zgx/project/Var/test/http_header_test.cc
+gtest/gtest.h
+-
+net/http/http_header.h
+/home/zgx/project/Var/test/net/http/http_header.h
 
 /home/zgx/project/Var/test/http_method_test.cc
 gtest/gtest.h

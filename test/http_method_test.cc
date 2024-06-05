@@ -18,7 +18,7 @@
 #include <gtest/gtest.h>
 #include <net/http/http_method.h>
 
-using namespace net;
+using namespace var;
 
 class HttpMethodTest : public testing::Test {
 protected:

@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/zgx/project/Var/net/http/http_header.cc" "/home/zgx/project/Var/build/net/CMakeFiles/Var.dir/http/http_header.cc.o"
   "/home/zgx/project/Var/net/http/http_method.cc" "/home/zgx/project/Var/build/net/CMakeFiles/Var.dir/http/http_method.cc.o"
   "/home/zgx/project/Var/net/http/http_parser.cc" "/home/zgx/project/Var/build/net/CMakeFiles/Var.dir/http/http_parser.cc.o"
   "/home/zgx/project/Var/net/http/http_status_code.cc" "/home/zgx/project/Var/build/net/CMakeFiles/Var.dir/http/http_status_code.cc.o"

@@ -24,7 +24,7 @@
 #ifndef VAR_HTTP_METHOD_H
 #define VAR_HTTP_METHOD_H
 
-namespace net {
+namespace var {
 
 enum HttpMethod {
     HTTP_METHOD_DELETE      =   0,

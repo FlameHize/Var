@@ -125,6 +125,33 @@ var_test/fast:
 	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/build
 .PHONY : var_test/fast
 
+http_header_test.o: http_header_test.cc.o
+
+.PHONY : http_header_test.o
+
+# target to build an object file
+http_header_test.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_header_test.cc.o
+.PHONY : http_header_test.cc.o
+
+http_header_test.i: http_header_test.cc.i
+
+.PHONY : http_header_test.i
+
+# target to preprocess a source file
+http_header_test.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_header_test.cc.i
+.PHONY : http_header_test.cc.i
+
+http_header_test.s: http_header_test.cc.s
+
+.PHONY : http_header_test.s
+
+# target to generate assembly for a file
+http_header_test.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_header_test.cc.s
+.PHONY : http_header_test.cc.s
+
 http_method_test.o: http_method_test.cc.o
 
 .PHONY : http_method_test.o
@@ -269,6 +296,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... var_test"
 	@echo "... edit_cache"
+	@echo "... http_header_test.o"
+	@echo "... http_header_test.i"
+	@echo "... http_header_test.s"
 	@echo "... http_method_test.o"
 	@echo "... http_method_test.i"
 	@echo "... http_method_test.s"
