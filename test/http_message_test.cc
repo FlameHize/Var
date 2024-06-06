@@ -18,8 +18,9 @@
 #include <gtest/gtest.h>
 #include "net/http/http_message.h"
 
+///@todo need to check higher and lower
 TEST(HttpMessageTest, request_sanity) {
-    const char *http_request = 
+const char *http_request = 
         "POST /path/file.html?sdfsdf=sdfs&sldf1=sdf HTTP/12.34\r\n"
         "From: someuser@jmarshall.com\r\n"
         "User-Agent: HTTPTool/1.0  \r\n"  // intended ending spaces

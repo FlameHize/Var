@@ -35,11 +35,11 @@ pthread.h
 -
 
 ..//net/http/http_parser.h
-stddef.h
+sys/types.h
 -
 BaseTsd.h
 -
-sys/inttypes.h
+stddef.h
 -
 stdint.h
 -
@@ -91,11 +91,11 @@ pthread.h
 -
 
 ../net/http/http_parser.h
-stddef.h
+sys/types.h
 -
 BaseTsd.h
 -
-sys/inttypes.h
+stddef.h
 -
 stdint.h
 -

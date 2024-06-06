@@ -20,6 +20,8 @@
 
 #include "net/http/http_parser.h"
 
+namespace var {
+
 class HttpParserTest : public testing::Test {
 protected:
     void SetUp() {}
@@ -36,7 +38,6 @@ int OnUrl(http_parser* parser, const char* at, const size_t length)
 {
     std::cout << "Get url: " << std::string(at,length) << std::endl;
     struct http_parser_url url;
-    http_parser_url_init(&url);
     if(http_parser_parse_url(at,length,0,&url) == 0) {
         if(url.field_set & (1 << UF_PORT)) {
             std::cout << "  port: " << url.port << std::endl;
@@ -116,7 +117,7 @@ TEST_F(HttpParserTest, HttpExample)
     //     "\r\n"
     //     "Message Body sdfsdf\r\n"
     // ;
-    std::cout << "Wait resolved http request: " << http_request << std::endl;
+    // std::cout << "Wait resolved http request: " << http_request << std::endl;
 
     http_parser parser;
     http_parser_init(&parser,http_parser_type::HTTP_REQUEST);
@@ -133,3 +134,5 @@ TEST_F(HttpParserTest, HttpExample)
 
     std::cout << http_parser_execute(&parser,&settings,http_request,strlen(http_request)) << std::endl;
 }
+
+} // end namespace var

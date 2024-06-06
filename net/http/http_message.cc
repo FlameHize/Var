@@ -39,7 +39,7 @@ int HttpMessage::on_status(http_parser* parser,
 int HttpMessage::on_header_field(http_parser* parser,
                                  const char* at, const size_t length) {
     HttpMessage* http_message = (HttpMessage*)parser->data;
-    if(http_message->_stage != HTTP_ON_HEADER_FIELD) {
+    if (http_message->_stage != HTTP_ON_HEADER_FIELD) {
         http_message->_stage = HTTP_ON_HEADER_FIELD;
         http_message->_cur_header.clear();
     }
@@ -67,16 +67,17 @@ int HttpMessage::on_header_value(http_parser* parser,
     if(http_message->_cur_value) {
         http_message->_cur_value->append(at, length);
     }
+    return 0;
 }
 
 int HttpMessage::on_headers_complete(http_parser* parser) {
     HttpMessage* http_message = (HttpMessage*)parser->data;
     http_message->_stage = HTTP_ON_HEADERS_COMPLETE;
     // Resolved and set content-type.
-    const std::string* content_type = http_message->header().GetHeader("content-type");
+    const std::string* content_type = http_message->header().GetHeader("Content-Type");
     if(content_type) {
         http_message->header().set_content_type(*content_type);
-        http_message->header().RemoveHeader("content-type");
+        http_message->header().RemoveHeader("Content-Type");
     }
     if(parser->http_major > 1) {
         parser->http_major = 1;

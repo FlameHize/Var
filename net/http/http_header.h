@@ -24,9 +24,30 @@
 
 namespace var {
 
+struct HeaderStringHash : public std::hash<std::string> {
+    std::size_t operator()(const std::string& s) const {
+        std::size_t result = 0;
+        for(std::string::const_iterator i = s.begin(); i != s.end(); ++i) {
+            result = result * 101 + std::tolower(*i);
+        }
+        return result;
+    }
+};
+
+struct HeaderStringEqual : public std::equal_to<std::string> {
+    bool operator()(const std::string& lhs, const std::string& rhs) const {
+        return lhs.size() == rhs.size() &&
+               std::equal(lhs.begin(), lhs.end(), rhs.begin(),
+               [](unsigned char a, unsigned char b) {
+                    return std::tolower(a) == std::tolower(b);
+               });
+    }
+};
+
 class HttpHeader {
 public:
-    typedef std::unordered_map<std::string, std::string> HeaderMap;
+    typedef std::unordered_map<std::string, std::string, 
+    HeaderStringHash, HeaderStringEqual> HeaderMap;
     typedef HeaderMap::const_iterator HeaderIterator;
 
     HttpHeader();

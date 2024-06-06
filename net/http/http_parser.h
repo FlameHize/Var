@@ -18,21 +18,19 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-#ifndef http_parser_h
-#define http_parser_h
-#ifdef __cplusplus
-extern "C" {
-#endif
+
+#ifndef VAR_HTTP_PARSER_H
+#define VAR_HTTP_PARSER_H
 
 /* Also update SONAME in the Makefile whenever you change these. */
 #define HTTP_PARSER_VERSION_MAJOR 2
-#define HTTP_PARSER_VERSION_MINOR 9
-#define HTTP_PARSER_VERSION_PATCH 4
+#define HTTP_PARSER_VERSION_MINOR 3
+#define HTTP_PARSER_VERSION_PATCH 0
 
-#include <stddef.h>
-#if defined(_WIN32) && !defined(__MINGW32__) && \
-  (!defined(_MSC_VER) || _MSC_VER<1600) && !defined(__WINE__)
+#include <sys/types.h>
+#if defined(_WIN32) && !defined(__MINGW32__) && (!defined(_MSC_VER) || _MSC_VER<1600)
 #include <BaseTsd.h>
+#include <stddef.h>
 typedef __int8 int8_t;
 typedef unsigned __int8 uint8_t;
 typedef __int16 int16_t;
@@ -41,33 +39,32 @@ typedef __int32 int32_t;
 typedef unsigned __int32 uint32_t;
 typedef __int64 int64_t;
 typedef unsigned __int64 uint64_t;
-#elif (defined(__sun) || defined(__sun__)) && defined(__SunOS_5_9)
-#include <sys/inttypes.h>
 #else
 #include <stdint.h>
 #endif
 
-/* Compile with -DHTTP_PARSER_STRICT=0 to make less checks, but run
+/* Compile with -DBRPC_HTTP_PARSER_STRICT=0 to make less checks, but run
  * faster
  */
-#ifndef HTTP_PARSER_STRICT
-# define HTTP_PARSER_STRICT 1
+#ifndef BRPC_HTTP_PARSER_STRICT
+# define BRPC_HTTP_PARSER_STRICT 1
 #endif
 
 /* Maximium header size allowed. If the macro is not defined
  * before including this header then the default is used. To
  * change the maximum header size, define the macro in the build
- * environment (e.g. -DHTTP_MAX_HEADER_SIZE=<value>). To remove
+ * environment (e.g. -DBRPC_HTTP_MAX_HEADER_SIZE=<value>). To remove
  * the effective limit on the size of the header, define the macro
- * to a very large number (e.g. -DHTTP_MAX_HEADER_SIZE=0x7fffffff)
+ * to a very large number (e.g. -DBRPC_HTTP_MAX_HEADER_SIZE=0x7fffffff)
  */
-#ifndef HTTP_MAX_HEADER_SIZE
-# define HTTP_MAX_HEADER_SIZE (80*1024)
+#ifndef BRPC_HTTP_MAX_HEADER_SIZE
+# define BRPC_HTTP_MAX_HEADER_SIZE (80*1024)
 #endif
 
-typedef struct http_parser http_parser;
-typedef struct http_parser_settings http_parser_settings;
 
+namespace var {
+
+struct http_parser;
 
 /* Callbacks should return non-zero to indicate an error. The parser will
  * then halt execution.
@@ -78,87 +75,12 @@ typedef struct http_parser_settings http_parser_settings;
  * HEAD request which may contain 'Content-Length' or 'Transfer-Encoding:
  * chunked' headers that indicate the presence of a body.
  *
- * Returning `2` from on_headers_complete will tell parser that it should not
- * expect neither a body nor any futher responses on this connection. This is
- * useful for handling responses to a CONNECT request which may not contain
- * `Upgrade` or `Connection: upgrade` headers.
- *
  * http_data_cb does not return data chunks. It will be called arbitrarily
  * many times for each string. E.G. you might get 10 callbacks for "on_url"
  * each providing just a few characters more data.
  */
 typedef int (*http_data_cb) (http_parser*, const char *at, size_t length);
 typedef int (*http_cb) (http_parser*);
-
-
-/* Status Codes */
-#define HTTP_STATUS_MAP(XX)                                                 \
-  XX(100, CONTINUE,                        Continue)                        \
-  XX(101, SWITCHING_PROTOCOLS,             Switching Protocols)             \
-  XX(102, PROCESSING,                      Processing)                      \
-  XX(200, OK,                              OK)                              \
-  XX(201, CREATED,                         Created)                         \
-  XX(202, ACCEPTED,                        Accepted)                        \
-  XX(203, NON_AUTHORITATIVE_INFORMATION,   Non-Authoritative Information)   \
-  XX(204, NO_CONTENT,                      No Content)                      \
-  XX(205, RESET_CONTENT,                   Reset Content)                   \
-  XX(206, PARTIAL_CONTENT,                 Partial Content)                 \
-  XX(207, MULTI_STATUS,                    Multi-Status)                    \
-  XX(208, ALREADY_REPORTED,                Already Reported)                \
-  XX(226, IM_USED,                         IM Used)                         \
-  XX(300, MULTIPLE_CHOICES,                Multiple Choices)                \
-  XX(301, MOVED_PERMANENTLY,               Moved Permanently)               \
-  XX(302, FOUND,                           Found)                           \
-  XX(303, SEE_OTHER,                       See Other)                       \
-  XX(304, NOT_MODIFIED,                    Not Modified)                    \
-  XX(305, USE_PROXY,                       Use Proxy)                       \
-  XX(307, TEMPORARY_REDIRECT,              Temporary Redirect)              \
-  XX(308, PERMANENT_REDIRECT,              Permanent Redirect)              \
-  XX(400, BAD_REQUEST,                     Bad Request)                     \
-  XX(401, UNAUTHORIZED,                    Unauthorized)                    \
-  XX(402, PAYMENT_REQUIRED,                Payment Required)                \
-  XX(403, FORBIDDEN,                       Forbidden)                       \
-  XX(404, NOT_FOUND,                       Not Found)                       \
-  XX(405, METHOD_NOT_ALLOWED,              Method Not Allowed)              \
-  XX(406, NOT_ACCEPTABLE,                  Not Acceptable)                  \
-  XX(407, PROXY_AUTHENTICATION_REQUIRED,   Proxy Authentication Required)   \
-  XX(408, REQUEST_TIMEOUT,                 Request Timeout)                 \
-  XX(409, CONFLICT,                        Conflict)                        \
-  XX(410, GONE,                            Gone)                            \
-  XX(411, LENGTH_REQUIRED,                 Length Required)                 \
-  XX(412, PRECONDITION_FAILED,             Precondition Failed)             \
-  XX(413, PAYLOAD_TOO_LARGE,               Payload Too Large)               \
-  XX(414, URI_TOO_LONG,                    URI Too Long)                    \
-  XX(415, UNSUPPORTED_MEDIA_TYPE,          Unsupported Media Type)          \
-  XX(416, RANGE_NOT_SATISFIABLE,           Range Not Satisfiable)           \
-  XX(417, EXPECTATION_FAILED,              Expectation Failed)              \
-  XX(421, MISDIRECTED_REQUEST,             Misdirected Request)             \
-  XX(422, UNPROCESSABLE_ENTITY,            Unprocessable Entity)            \
-  XX(423, LOCKED,                          Locked)                          \
-  XX(424, FAILED_DEPENDENCY,               Failed Dependency)               \
-  XX(426, UPGRADE_REQUIRED,                Upgrade Required)                \
-  XX(428, PRECONDITION_REQUIRED,           Precondition Required)           \
-  XX(429, TOO_MANY_REQUESTS,               Too Many Requests)               \
-  XX(431, REQUEST_HEADER_FIELDS_TOO_LARGE, Request Header Fields Too Large) \
-  XX(451, UNAVAILABLE_FOR_LEGAL_REASONS,   Unavailable For Legal Reasons)   \
-  XX(500, INTERNAL_SERVER_ERROR,           Internal Server Error)           \
-  XX(501, NOT_IMPLEMENTED,                 Not Implemented)                 \
-  XX(502, BAD_GATEWAY,                     Bad Gateway)                     \
-  XX(503, SERVICE_UNAVAILABLE,             Service Unavailable)             \
-  XX(504, GATEWAY_TIMEOUT,                 Gateway Timeout)                 \
-  XX(505, HTTP_VERSION_NOT_SUPPORTED,      HTTP Version Not Supported)      \
-  XX(506, VARIANT_ALSO_NEGOTIATES,         Variant Also Negotiates)         \
-  XX(507, INSUFFICIENT_STORAGE,            Insufficient Storage)            \
-  XX(508, LOOP_DETECTED,                   Loop Detected)                   \
-  XX(510, NOT_EXTENDED,                    Not Extended)                    \
-  XX(511, NETWORK_AUTHENTICATION_REQUIRED, Network Authentication Required) \
-
-enum http_status
-  {
-#define XX(num, name, string) HTTP_STATUS_##name = num,
-  HTTP_STATUS_MAP(XX)
-#undef XX
-  };
 
 
 /* Request Methods */
@@ -172,7 +94,7 @@ enum http_status
   XX(5,  CONNECT,     CONNECT)      \
   XX(6,  OPTIONS,     OPTIONS)      \
   XX(7,  TRACE,       TRACE)        \
-  /* WebDAV */                      \
+  /* webdav */                      \
   XX(8,  COPY,        COPY)         \
   XX(9,  LOCK,        LOCK)         \
   XX(10, MKCOL,       MKCOL)        \
@@ -181,30 +103,21 @@ enum http_status
   XX(13, PROPPATCH,   PROPPATCH)    \
   XX(14, SEARCH,      SEARCH)       \
   XX(15, UNLOCK,      UNLOCK)       \
-  XX(16, BIND,        BIND)         \
-  XX(17, REBIND,      REBIND)       \
-  XX(18, UNBIND,      UNBIND)       \
-  XX(19, ACL,         ACL)          \
   /* subversion */                  \
-  XX(20, REPORT,      REPORT)       \
-  XX(21, MKACTIVITY,  MKACTIVITY)   \
-  XX(22, CHECKOUT,    CHECKOUT)     \
-  XX(23, MERGE,       MERGE)        \
+  XX(16, REPORT,      REPORT)       \
+  XX(17, MKACTIVITY,  MKACTIVITY)   \
+  XX(18, CHECKOUT,    CHECKOUT)     \
+  XX(19, MERGE,       MERGE)        \
   /* upnp */                        \
-  XX(24, MSEARCH,     M-SEARCH)     \
-  XX(25, NOTIFY,      NOTIFY)       \
-  XX(26, SUBSCRIBE,   SUBSCRIBE)    \
-  XX(27, UNSUBSCRIBE, UNSUBSCRIBE)  \
+  XX(20, MSEARCH,     M-SEARCH)     \
+  XX(21, NOTIFY,      NOTIFY)       \
+  XX(22, SUBSCRIBE,   SUBSCRIBE)    \
+  XX(23, UNSUBSCRIBE, UNSUBSCRIBE)  \
   /* RFC-5789 */                    \
-  XX(28, PATCH,       PATCH)        \
-  XX(29, PURGE,       PURGE)        \
+  XX(24, PATCH,       PATCH)        \
+  XX(25, PURGE,       PURGE)        \
   /* CalDAV */                      \
-  XX(30, MKCALENDAR,  MKCALENDAR)   \
-  /* RFC-2068, section 19.6.1.2 */  \
-  XX(31, LINK,        LINK)         \
-  XX(32, UNLINK,      UNLINK)       \
-  /* icecast */                     \
-  XX(33, SOURCE,      SOURCE)       \
+  XX(26, MKCALENDAR,  MKCALENDAR)   \
 
 enum http_method
   {
@@ -218,20 +131,18 @@ enum http_parser_type { HTTP_REQUEST, HTTP_RESPONSE, HTTP_BOTH };
 
 
 /* Flag values for http_parser.flags field */
-enum flags
+enum http_parser_flags
   { F_CHUNKED               = 1 << 0
   , F_CONNECTION_KEEP_ALIVE = 1 << 1
   , F_CONNECTION_CLOSE      = 1 << 2
-  , F_CONNECTION_UPGRADE    = 1 << 3
-  , F_TRAILING              = 1 << 4
-  , F_UPGRADE               = 1 << 5
-  , F_SKIPBODY              = 1 << 6
-  , F_CONTENTLENGTH         = 1 << 7
+  , F_TRAILING              = 1 << 3
+  , F_UPGRADE               = 1 << 4
+  , F_SKIPBODY              = 1 << 5
   };
 
 
 /* Map for errno-related constants
- *
+ * 
  * The provided argument should be a macro that takes 2 arguments.
  */
 #define HTTP_ERRNO_MAP(XX)                                           \
@@ -247,8 +158,6 @@ enum flags
   XX(CB_body, "the on_body callback failed")                         \
   XX(CB_message_complete, "the on_message_complete callback failed") \
   XX(CB_status, "the on_status callback failed")                     \
-  XX(CB_chunk_header, "the on_chunk_header callback failed")         \
-  XX(CB_chunk_complete, "the on_chunk_complete callback failed")     \
                                                                      \
   /* Parsing-related errors */                                       \
   XX(INVALID_EOF_STATE, "stream ended at an unexpected time")        \
@@ -269,17 +178,13 @@ enum flags
   XX(INVALID_HEADER_TOKEN, "invalid character in header")            \
   XX(INVALID_CONTENT_LENGTH,                                         \
      "invalid character in content-length header")                   \
-  XX(UNEXPECTED_CONTENT_LENGTH,                                      \
-     "unexpected content-length header")                             \
   XX(INVALID_CHUNK_SIZE,                                             \
      "invalid character in chunk size header")                       \
   XX(INVALID_CONSTANT, "invalid constant string")                    \
   XX(INVALID_INTERNAL_STATE, "encountered unexpected internal state")\
   XX(STRICT, "strict mode assertion failed")                         \
   XX(PAUSED, "parser is paused")                                     \
-  XX(UNKNOWN, "an unknown error occurred")                           \
-  XX(INVALID_TRANSFER_ENCODING,                                      \
-     "request has invalid transfer-encoding")                        \
+  XX(UNKNOWN, "an unknown error occurred")
 
 
 /* Define HPE_* values for each errno value above */
@@ -297,20 +202,13 @@ enum http_errno {
 struct http_parser {
   /** PRIVATE **/
   unsigned int type : 2;         /* enum http_parser_type */
-  unsigned int flags : 8;       /* F_* values from 'flags' enum; semi-public */
-  unsigned int state : 7;        /* enum state from http_parser.c */
-  unsigned int header_state : 7; /* enum header_state from http_parser.c */
-  unsigned int index : 5;        /* index into current matcher */
-  unsigned int uses_transfer_encoding : 1; /* Transfer-Encoding header is present */
-  unsigned int allow_chunked_length : 1; /* Allow headers with both
-                                          * `Content-Length` and
-                                          * `Transfer-Encoding: chunked` set */
-  unsigned int lenient_http_headers : 1;
+  unsigned int flags : 6;        /* F_* values from 'flags' enum; semi-public */
+  unsigned int state : 8;        /* enum state from http_parser.c */
+  unsigned int header_state : 8; /* enum header_state from http_parser.c */
+  unsigned int index : 8;        /* index into current matcher */
 
   uint32_t nread;          /* # bytes read in various scenarios */
-  uint64_t content_length; /* # bytes in body. `(uint64_t) -1` (all bits one)
-                            * if no Content-Length header.
-                            */
+  uint64_t content_length; /* # bytes in body (0 if no Content-Length header) */
 
   /** READ-ONLY **/
   unsigned short http_major;
@@ -318,13 +216,7 @@ struct http_parser {
   unsigned int status_code : 16; /* responses only */
   unsigned int method : 8;       /* requests only */
   unsigned int http_errno : 7;
-
-  /* 1 = Upgrade header was present and the parser has exited because of that.
-   * 0 = No upgrade header present.
-   * Should be checked when http_parser_execute() returns in addition to
-   * error checking.
-   */
-  unsigned int upgrade : 1;
+  unsigned int dummy : 1;
 
   /** PUBLIC **/
   void *data; /* A pointer to get hook to the "connection" or "socket" object */
@@ -340,16 +232,11 @@ struct http_parser_settings {
   http_cb      on_headers_complete;
   http_data_cb on_body;
   http_cb      on_message_complete;
-  /* When on_chunk_header is called, the current chunk length is stored
-   * in parser->content_length.
-   */
-  http_cb      on_chunk_header;
-  http_cb      on_chunk_complete;
 };
 
 
 enum http_parser_url_fields
-  { UF_SCHEMA           = 0
+  { UF_SCHEME           = 0
   , UF_HOST             = 1
   , UF_PORT             = 2
   , UF_PATH             = 3
@@ -393,11 +280,6 @@ unsigned long http_parser_version(void);
 void http_parser_init(http_parser *parser, enum http_parser_type type);
 
 
-/* Initialize http_parser_settings members to 0
- */
-void http_parser_settings_init(http_parser_settings *settings);
-
-
 /* Executes the parser. Returns number of parsed bytes. Sets
  * `parser->http_errno` on error. */
 size_t http_parser_execute(http_parser *parser,
@@ -417,17 +299,11 @@ int http_should_keep_alive(const http_parser *parser);
 /* Returns a string version of the HTTP method. */
 const char *http_method_str(enum http_method m);
 
-/* Returns a string version of the HTTP status code. */
-const char *http_status_str(enum http_status s);
-
 /* Return a string name of the given error */
 const char *http_errno_name(enum http_errno err);
 
 /* Return a string description of the given error */
 const char *http_errno_description(enum http_errno err);
-
-/* Initialize all http_parser_url members to 0 */
-void http_parser_url_init(struct http_parser_url *u);
 
 /* Parse a URL; return nonzero on failure */
 int http_parser_parse_url(const char *buf, size_t buflen,
@@ -440,9 +316,6 @@ void http_parser_pause(http_parser *parser, int paused);
 /* Checks if this is the final chunk of the body. */
 int http_body_is_final(const http_parser *parser);
 
-/* Change the maximum header size provided at compile time. */
-void http_parser_set_max_header_size(uint32_t size);
-
 /* Return a string name of the given type */
 const char* http_parser_type_name(enum http_parser_type type);
 
@@ -450,7 +323,7 @@ const char* http_parser_type_name(enum http_parser_type type);
 const char* http_parser_state_name(unsigned int state);
 const char* http_parser_header_state_name(unsigned int header_state);
 
-#ifdef __cplusplus
-}
-#endif
-#endif
+} // end namespace var
+
+
+#endif // VAR_HTTP_PARSER_H
