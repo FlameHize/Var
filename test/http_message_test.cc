@@ -20,23 +20,25 @@
 
 ///@todo need to check higher and lower
 TEST(HttpMessageTest, request_sanity) {
-const char *http_request = 
+    const char* http_request = 
         "POST /path/file.html?sdfsdf=sdfs&sldf1=sdf HTTP/12.34\r\n"
         "From: someuser@jmarshall.com\r\n"
         "User-Agent: HTTPTool/1.0  \r\n"  // intended ending spaces
         "Content-Type: json\r\n"
-        "Content-Length: 19\r\n"
+        "Content-Length: 20\r\n"
         "Log-ID: 456\r\n"
         "Host: myhost\r\n"
         "Correlation-ID: 123\r\n"
         "Authorization: test\r\n"
         "Accept: */*\r\n"
         "\r\n"
-        "Message Body sdfsdf\r\n"
+        "Message Body sdfsdfa\r\n"
     ;
     var::HttpMessage http_message;
     ASSERT_EQ((ssize_t)strlen(http_request), 
               http_message.ParseFromBytes(http_request, strlen(http_request)));
+    ASSERT_TRUE(http_message.Completed());
+    ASSERT_EQ(http_message.stage(), var::HTTP_ON_MESSAGE_COMPLETE);
     const var::HttpHeader& header = http_message.header();
     // Check all keys
     ASSERT_EQ("json", header.content_type());
@@ -61,4 +63,82 @@ const char *http_request =
     ASSERT_EQ("456", *header.GetHeader("log-id"));
     ASSERT_TRUE(NULL != header.GetHeader("Authorization"));
     ASSERT_EQ("test", *header.GetHeader("Authorization"));
+}
+
+TEST(HttpMessageTest, incompleted_request_line)
+{
+    const char* http_request = 
+        "POST /vars/bthread_count?series HTTP/12.34\r\n"
+        "From: someuser@jmarshall.com\r\n"
+        "User-Agent: HTTPTool/1.0  \r\n"
+        "Content-Ty"
+    ;
+    var::HttpMessage http_message;
+    ASSERT_TRUE(http_message.ParseFromBytes(http_request, strlen(http_request)) >= 0);
+    ASSERT_FALSE(http_message.Completed());
+}
+
+TEST(HttpMessageTest, one_more_request_line)
+{
+    const char* http_request = 
+        "POST /path/file.html?sdfsdf=sdfs&sldf1=sdf HTTP/12.34\r\n"
+        "From: someuser@jmarshall.com\r\n"
+        "User-Agent: HTTPTool/1.0  \r\n"  // intended ending spaces
+        "Content-Type: json\r\n"
+        "Content-Length: 20\r\n"
+        "Log-ID: 456\r\n"
+        "Host: myhost\r\n"
+        "Correlation-ID: 123\r\n"
+        "Authorization: test\r\n"
+        "Accept: */*\r\n"
+        "\r\n"
+        "Message Body sdfsdfa\r\n"
+        "GET /vars/bthread_count?series HTTP/1.1\r\n"
+    ;
+    var::HttpMessage http_message;
+    size_t parsed_len = http_message.ParseFromBytes(http_request, strlen(http_request));
+    ASSERT_EQ(parsed_len, strlen(http_request));
+    var::HttpParserStage parsed_stage = http_message.stage();
+    ASSERT_EQ(parsed_stage, var::HTTP_ON_URL);
+
+    // 流式处理第二部分
+    const char* http_request_more = 
+        "User-Agent: HTTPTool/1.0  \r\n"  // intended ending spaces
+        "Content-Type: json\r\n"
+        "Content-Length: 20\r\n"
+        "Log-ID: 456\r\n"
+        "Host: myhost\r\n"
+        "Correlation-ID: 123\r\n"
+        "Authorization: test\r\n"
+        "Accept: */*\r\n"
+        "\r\n"
+        "Message Body sdfsdfa\r\n"
+    ;
+    size_t parsed_more_len = http_message.ParseFromBytes(http_request_more, strlen(http_request_more));
+    ASSERT_EQ(parsed_more_len, strlen(http_request_more));
+    var::HttpParserStage parsed_stage_2 = http_message.stage();
+    ASSERT_EQ(parsed_stage_2, var::HTTP_ON_MESSAGE_COMPLETE);
+    ASSERT_TRUE(http_message.Completed());
+}
+
+TEST(HttpMessageTest, parse_from_iobuf) {
+    const size_t content_length = 8192;
+    char header[1024];
+    snprintf(header, sizeof(header),
+            "GET /service/method?key1=value1&key2=value2&key3=value3 HTTP/1.1\r\n"
+            "Content-Type: text/plain\r\n"
+            "Content-Length: %lu\r\n"
+            "\r\n",
+            content_length);
+    std::string content;
+    for (size_t i = 0; i < content_length; ++i) content.push_back('2');
+    var::IOBuf request;
+    request.append(header);
+    request.append(content);
+
+    var::HttpMessage http_message;
+    ASSERT_TRUE(http_message.ParseFromBytes(request.peek(), request.readableBytes()) >= 0);
+    ASSERT_TRUE(http_message.Completed());
+    ASSERT_EQ(content, http_message.body().retrieveAllAsString());
+    ASSERT_EQ("text/plain", http_message.header().content_type());
 }

@@ -74,10 +74,10 @@ int HttpMessage::on_headers_complete(http_parser* parser) {
     HttpMessage* http_message = (HttpMessage*)parser->data;
     http_message->_stage = HTTP_ON_HEADERS_COMPLETE;
     // Resolved and set content-type.
-    const std::string* content_type = http_message->header().GetHeader("Content-Type");
+    const std::string* content_type = http_message->header().GetHeader("content-type");
     if(content_type) {
         http_message->header().set_content_type(*content_type);
-        http_message->header().RemoveHeader("Content-Type");
+        http_message->header().RemoveHeader("content-type");
     }
     if(parser->http_major > 1) {
         parser->http_major = 1;
@@ -118,13 +118,7 @@ int HttpMessage::on_headers_complete(http_parser* parser) {
 
 int HttpMessage::on_body(http_parser* parser,
                          const char* at, const size_t length) {
-    HttpMessage* http_message = (HttpMessage*)parser->data;
-    if(http_message->_stage != HTTP_ON_BODY) {
-        http_message->_stage = HTTP_ON_BODY;
-    }
-    ///@todo
-    // _body.append(at, length);
-    return 0;                   
+    return static_cast<HttpMessage*>(parser->data)->OnBody(at, length);                  
 }
 
 int HttpMessage::on_message_complete(http_parser* parser) {
@@ -133,6 +127,14 @@ int HttpMessage::on_message_complete(http_parser* parser) {
         http_message->_stage = HTTP_ON_MESSAGE_COMPLETE;
     }
     return 0;
+}
+
+int HttpMessage::OnBody(const char* data, size_t size) {
+    if(_stage != HTTP_ON_BODY) {
+        _stage = HTTP_ON_BODY;
+    }
+    _body.append(data, size);
+    return 0; 
 }
 
 const http_parser_settings g_parser_settings = {
