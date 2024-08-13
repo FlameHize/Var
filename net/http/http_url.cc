@@ -1,7 +1,9 @@
 #include "http_url.h"
 #include "http_parser.h"
 
-namespace var {
+using namespace var;
+using namespace var::net;
+
 HttpUrl::HttpUrl()
     : _port(-1)
     , _query_was_modified(false)
@@ -541,5 +543,3 @@ void append_query(std::string* query_string,
     query_string->push_back('=');
     query_string->append(value.data(), value.size());
 }
-
-} // end namespace var

@@ -61,9 +61,9 @@ typedef unsigned __int64 uint64_t;
 # define BRPC_HTTP_MAX_HEADER_SIZE (80*1024)
 #endif
 
-
 namespace var {
-
+namespace net {
+    
 struct http_parser;
 
 /* Callbacks should return non-zero to indicate an error. The parser will
@@ -323,6 +323,7 @@ const char* http_parser_type_name(enum http_parser_type type);
 const char* http_parser_state_name(unsigned int state);
 const char* http_parser_header_state_name(unsigned int header_state);
 
+} // end namespace net
 } // end namespace var
 
 

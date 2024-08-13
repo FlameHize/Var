@@ -18,9 +18,12 @@
 #include <gtest/gtest.h>
 #include "net/http/http_url.h"
 
+using namespace var;
+using namespace var::net;
+
 TEST(HttpUrlTest, everything)
 {
-    var::HttpUrl url;
+    HttpUrl url;
     std::string url_str = " foobar://user:passwd@www.baidu.com:80/var/bthread_count?wd1=url1&wd2=url2#frag  ";
     ASSERT_EQ(0, url.ResolvedHttpURL(url_str));
     ASSERT_EQ("foobar", url.scheme());
@@ -38,7 +41,7 @@ TEST(HttpUrlTest, everything)
     std::string scheme;
     std::string host_out;
     int port_out = -1;
-    var::ParseURL(url_str.c_str(), &scheme, &host_out, &port_out);
+    ParseURL(url_str.c_str(), &scheme, &host_out, &port_out);
     ASSERT_EQ("foobar", scheme);
     ASSERT_EQ("www.baidu.com", host_out);
     ASSERT_EQ(80, port_out);
@@ -46,12 +49,12 @@ TEST(HttpUrlTest, everything)
 
 TEST(HttpUrlTest, parse_url)
 {
-    var::HttpUrl url;
+    HttpUrl url;
     std::string url_str = " foobar://user:passwd@www.baidu.com:80/var/bthread_count?wd1=url1&wd2=url2#frag  ";
     std::string scheme;
     std::string host_out;
     int port_out = -1;
-    var::ParseURL(url_str.c_str(), &scheme, &host_out, &port_out);
+    ParseURL(url_str.c_str(), &scheme, &host_out, &port_out);
     ASSERT_EQ("foobar", scheme);
     ASSERT_EQ("www.baidu.com", host_out);
     ASSERT_EQ(80, port_out);
@@ -59,7 +62,7 @@ TEST(HttpUrlTest, parse_url)
 
 TEST(HttpUrlTest, only_host) 
 {
-    var::HttpUrl url;
+    HttpUrl url;
     ASSERT_EQ(0, url.ResolvedHttpURL("  foo1://www.baidu1.com?wd=uri2&nonkey=22 "));
     ASSERT_EQ("foo1", url.scheme());
     ASSERT_EQ(-1, url.port());
@@ -108,7 +111,7 @@ TEST(HttpUrlTest, only_host)
 TEST(HttpUrlTest, no_scheme) 
 {
     // http parser_paser_url() can't ignore of scheme like 'http://'
-    var::HttpUrl url;
+    HttpUrl url;
     ASSERT_EQ(0, url.ResolvedHttpURL(" user:passwd2@www.baidu1.com/s?wd=uri2&nonkey=22#frag "));
     ASSERT_EQ("", url.scheme());
     ASSERT_EQ("user:passwd2", url.user_info());
@@ -124,7 +127,7 @@ TEST(HttpUrlTest, no_scheme)
 
 TEST(HttpUrlTest, no_scheme_and_user_info) 
 {
-    var::HttpUrl url;
+    HttpUrl url;
     ASSERT_EQ(0, url.ResolvedHttpURL(" www.baidu2.com/s?wd=uri2&nonkey=22#frag "));
     ASSERT_EQ("", url.scheme());
     ASSERT_EQ(-1, url.port());
@@ -139,7 +142,7 @@ TEST(HttpUrlTest, no_scheme_and_user_info)
 }
 
 TEST(HttpUrlTest, no_host) {
-    var::HttpUrl url;
+    HttpUrl url;
     ASSERT_EQ(0, url.ResolvedHttpURL(" /sb?wd=uri3#frag2 "));
     ASSERT_EQ("", url.scheme());
     ASSERT_EQ(-1, url.port());
@@ -166,7 +169,7 @@ TEST(HttpUrlTest, no_host) {
 
 TEST(HttpUrlTest, consecutive_ampersand) 
 {
-    var::HttpUrl url;
+    HttpUrl url;
     url.set_query("&key1=value1&&key3=value3");
     ASSERT_TRUE(url.GetQuery("key1"));
     ASSERT_TRUE(url.GetQuery("key3"));
@@ -177,7 +180,7 @@ TEST(HttpUrlTest, consecutive_ampersand)
 
 TEST(HttpUrlTest, only_equality) 
 {
-    var::HttpUrl url;
+    HttpUrl url;
     url.set_query("key1=&&key2&&=&key3=value3");
     ASSERT_TRUE(url.GetQuery("key1"));
     ASSERT_EQ("", *url.GetQuery("key1"));
@@ -188,7 +191,7 @@ TEST(HttpUrlTest, only_equality)
 }
 
 TEST(HttpUrlTest, set_query) {
-    var::HttpUrl url;
+    HttpUrl url;
     url.set_query("key1=&&key2&&=&key3=value3");
     ASSERT_TRUE(url.GetQuery("key1"));
     ASSERT_TRUE(url.GetQuery("key3"));
@@ -205,7 +208,7 @@ TEST(HttpUrlTest, set_query) {
 
 TEST(HttpUrlTest, resolved_http_path) 
 {
-    var::HttpUrl url;
+    HttpUrl url;
     url.ResolvedHttpPath("/dir?key1=&&key2&&=&key3=value3");
     ASSERT_EQ("/dir", url.path());
     ASSERT_TRUE(url.GetQuery("key1"));
@@ -231,7 +234,7 @@ TEST(HttpUrlTest, resolved_http_path)
 
 TEST(HttpUrlTest, generate_http_path) 
 {
-    var::HttpUrl url;
+    HttpUrl url;
     const std::string ref1 = "/dir?key1=&&key2&&=&key3=value3";
     url.ResolvedHttpPath(ref1);
     ASSERT_EQ("/dir", url.path());
@@ -283,7 +286,7 @@ TEST(HttpUrlTest, generate_http_path)
 
 TEST(HttpUrlTest, only_one_key) 
 {
-    var::HttpUrl url;
+    HttpUrl url;
     url.set_query("key1");
     ASSERT_TRUE(url.GetQuery("key1"));
     ASSERT_EQ("", *url.GetQuery("key1"));
@@ -291,7 +294,7 @@ TEST(HttpUrlTest, only_one_key)
 
 TEST(HttpUrlTest, empty_host) 
 {
-    var::HttpUrl url;
+    HttpUrl url;
     ASSERT_EQ(0, url.ResolvedHttpURL("http://"));
     ASSERT_EQ("", url.host());
     ASSERT_EQ("", url.path());
@@ -299,14 +302,14 @@ TEST(HttpUrlTest, empty_host)
 
 TEST(HttpUrlTest, invalid_query) 
 {
-    var::HttpUrl url;
+    HttpUrl url;
     ASSERT_EQ(0, url.ResolvedHttpURL("http://a.b.c/?a-b-c:def"));
     ASSERT_EQ("a-b-c:def", url.query());
 }
 
 TEST(HttpUrlTest, print_url) 
 {
-    var::HttpUrl url;
+    HttpUrl url;
 
     const std::string url1 = "http://user:passwd@a.b.c/?d=c&a=b&e=f#frg1";
     ASSERT_EQ(0, url.ResolvedHttpURL(url1));

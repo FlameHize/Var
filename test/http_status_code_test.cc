@@ -19,6 +19,7 @@
 #include "net/http/http_status_code.h"
 
 using namespace var;
+using namespace var::net;
 
 class HttpStatusCodeTest : public testing::Test {
 protected:

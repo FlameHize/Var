@@ -3,7 +3,8 @@
 #include "macros.h"
 #include "http_status_code.h"
 
-namespace var {
+using namespace var;
+using namespace var::net;
 
 struct status_pair {
     int status_code;
@@ -87,5 +88,3 @@ const char* HttpReasonPhrase(int status_code) {
     }
     return desc;
 }
-
-}   // end namespace net

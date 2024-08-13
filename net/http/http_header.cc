@@ -1,6 +1,7 @@
 #include "http_header.h"
 
-namespace var {
+using namespace var;
+using namespace var::net;
 
 HttpHeader::HttpHeader()
     : _status_code(HTTP_STATUS_OK)
@@ -52,5 +53,3 @@ const HttpHeader& DefaultHttpHeader() {
     static HttpHeader header;
     return header;
 }
-
-} // end namepsace var

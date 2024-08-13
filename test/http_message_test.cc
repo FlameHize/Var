@@ -18,6 +18,9 @@
 #include <gtest/gtest.h>
 #include "net/http/http_message.h"
 
+using namespace var;
+using namespace var::net;
+
 TEST(HttpMessageTest, request_sanity) {
     const char* http_request = 
         "POST /path/file.html?sdfsdf=sdfs&sldf1=sdf HTTP/12.34\r\n"
@@ -33,12 +36,12 @@ TEST(HttpMessageTest, request_sanity) {
         "\r\n"
         "Message Body sdfsdfa\r\n"
     ;
-    var::HttpMessage http_message;
+    HttpMessage http_message;
     ASSERT_EQ((ssize_t)strlen(http_request), 
               http_message.ParseFromBytes(http_request, strlen(http_request)));
     ASSERT_TRUE(http_message.Completed());
-    ASSERT_EQ(http_message.stage(), var::HTTP_ON_MESSAGE_COMPLETE);
-    const var::HttpHeader& header = http_message.header();
+    ASSERT_EQ(http_message.stage(), HTTP_ON_MESSAGE_COMPLETE);
+    const HttpHeader& header = http_message.header();
     // Check all keys
     ASSERT_EQ("json", header.content_type());
     ASSERT_TRUE(header.GetHeader("HOST"));
@@ -54,8 +57,8 @@ TEST(HttpMessageTest, request_sanity) {
     
     ASSERT_EQ(1, header.major_version());
     ASSERT_EQ(34, header.minor_version());
-    ASSERT_EQ(var::HTTP_METHOD_POST, header.method());
-    ASSERT_EQ(var::HTTP_STATUS_OK, header.status_code());
+    ASSERT_EQ(HTTP_METHOD_POST, header.method());
+    ASSERT_EQ(HTTP_STATUS_OK, header.status_code());
     ASSERT_STREQ("OK", header.reason_phrase());
 
     ASSERT_TRUE(header.GetHeader("log-id"));
@@ -79,11 +82,11 @@ TEST(HttpMessageTest, response_sanity) {
         "\r\n"
         "Message Body sdfsdf\r\n"
     ;
-    var::HttpMessage http_message;
+    HttpMessage http_message;
     ASSERT_EQ((ssize_t)strlen(http_response), 
               http_message.ParseFromBytes(http_response, strlen(http_response)));
     // Check all keys
-    const var::HttpHeader& header = http_message.header();
+    const HttpHeader& header = http_message.header();
     ASSERT_EQ("json2", header.content_type());
     ASSERT_TRUE(header.GetHeader("HOST"));
     ASSERT_EQ("myhost", *header.GetHeader("host"));
@@ -99,9 +102,9 @@ TEST(HttpMessageTest, response_sanity) {
     ASSERT_EQ(1, header.major_version());
     ASSERT_EQ(34, header.minor_version());
     // method is undefined for response, in our case, it's set to 0.
-    ASSERT_EQ(var::HTTP_METHOD_DELETE, header.method());
-    ASSERT_EQ(var::HTTP_STATUS_GONE, header.status_code());
-    ASSERT_STREQ(var::HttpReasonPhrase(header.status_code()), /*not GoneBlah*/
+    ASSERT_EQ(HTTP_METHOD_DELETE, header.method());
+    ASSERT_EQ(HTTP_STATUS_GONE, header.status_code());
+    ASSERT_STREQ(HttpReasonPhrase(header.status_code()), /*not GoneBlah*/
                  header.reason_phrase());
     
     ASSERT_TRUE(header.GetHeader("log-id"));
@@ -137,7 +140,7 @@ TEST(HttpMessageTest, eof) {
         "X_BD_SUBSYS: apimap\r\n";
     var::IOBuf buf;
     buf.append(http_request);
-    var::HttpMessage http_message;
+    HttpMessage http_message;
     ASSERT_EQ((ssize_t)buf.readableBytes(), http_message.ParseFromBytes(buf.peek(), buf.readableBytes()));
     ASSERT_FALSE(http_message.Completed());
     ASSERT_EQ(2, http_message.ParseFromBytes("\r\n", 2));
@@ -147,7 +150,7 @@ TEST(HttpMessageTest, eof) {
 TEST(HttpMessageTest, bad_format) {
     const char *http_request =
         "slkdjflksdf skldjf\r\n";
-    var::HttpMessage http_message;
+    HttpMessage http_message;
     ASSERT_EQ(-1, http_message.ParseFromBytes(http_request, strlen(http_request)));
 }
 
@@ -159,7 +162,7 @@ TEST(HttpMessageTest, incompleted_request_line)
         "User-Agent: HTTPTool/1.0  \r\n"
         "Content-Ty"
     ;
-    var::HttpMessage http_message;
+    HttpMessage http_message;
     ASSERT_TRUE(http_message.ParseFromBytes(http_request, strlen(http_request)) >= 0);
     ASSERT_FALSE(http_message.Completed());
 }
@@ -181,11 +184,11 @@ TEST(HttpMessageTest, one_more_request_line)
         "Message Body sdfsdfa\r\n"
         "GET /vars/bthread_count?series HTTP/1.1\r\n"
     ;
-    var::HttpMessage http_message;
+    HttpMessage http_message;
     size_t parsed_len = http_message.ParseFromBytes(http_request, strlen(http_request));
     ASSERT_EQ(parsed_len, strlen(http_request));
-    var::HttpParserStage parsed_stage = http_message.stage();
-    ASSERT_EQ(parsed_stage, var::HTTP_ON_URL);
+    HttpParserStage parsed_stage = http_message.stage();
+    ASSERT_EQ(parsed_stage, HTTP_ON_URL);
 
     const char* http_request_more = 
         "User-Agent: HTTPTool/1.0  \r\n"  // intended ending spaces
@@ -201,8 +204,8 @@ TEST(HttpMessageTest, one_more_request_line)
     ;
     size_t parsed_more_len = http_message.ParseFromBytes(http_request_more, strlen(http_request_more));
     ASSERT_EQ(parsed_more_len, strlen(http_request_more));
-    var::HttpParserStage parsed_stage_2 = http_message.stage();
-    ASSERT_EQ(parsed_stage_2, var::HTTP_ON_MESSAGE_COMPLETE);
+    HttpParserStage parsed_stage_2 = http_message.stage();
+    ASSERT_EQ(parsed_stage_2, HTTP_ON_MESSAGE_COMPLETE);
     ASSERT_TRUE(http_message.Completed());
 }
 
@@ -223,7 +226,7 @@ TEST(HttpMessageTest, parse_from_iobuf) {
     request.append(header);
     request.append(content);
 
-    var::HttpMessage http_message;
+    HttpMessage http_message;
     ASSERT_TRUE(http_message.ParseFromBytes(request.peek(), request.readableBytes()) >= 0);
     ASSERT_TRUE(http_message.Completed());
     ASSERT_EQ(content, http_message.body().retrieveAllAsString());
@@ -232,22 +235,22 @@ TEST(HttpMessageTest, parse_from_iobuf) {
 
 TEST(HttpMessageTest, parse_series_http_message)
 {
-    var::HttpMessage* http_message = nullptr;
+    HttpMessage* http_message = nullptr;
     // used for mock ref. 这里是为了不带包内容 提前解析包头
     bool ref = false;
     // Model.
-    auto ParseHttpMessage = [&](var::IOBuf& buf, bool read_eof) -> var::HttpMessage {
+    auto ParseHttpMessage = [&](var::IOBuf& buf, bool read_eof) -> HttpMessage {
         if(http_message == nullptr) {
             // 1. read_eof：完整的HTTP消息后读取EOF，这是一个常见情况。
             // 请注意，除了not_enough_data之外，无法返回错误，否则socket将被设置为失败，并且仅在processHtttpxxx()中的消息就可以删除。
             // 2. Source->empty()：也很常见，InputMessage尝试解析处理程序，直到满足错误。如果消耗消息，来源可能是空的。
             if(read_eof || buf.readableBytes() == 0) {
                 // Need more data.
-                var::HttpMessage result;
+                HttpMessage result;
                 return result;
             }
             // Reset.
-            http_message = new var::HttpMessage;
+            http_message = new HttpMessage;
             ref = false;
         }
         ssize_t rc = 0;
@@ -270,14 +273,14 @@ TEST(HttpMessageTest, parse_series_http_message)
                     ref = false;
                     delete http_message;
                     http_message = nullptr;
-                    var::HttpMessage result;
+                    HttpMessage result;
                     return result;
                 }
             }
             else {
                 // Fail to parse the body, Since header were parsed successfully,
                 // the message is assumed to be HTTP, stop trying other protocols.
-                var::HttpMessage result;
+                HttpMessage result;
                 return result;
             }
         }
@@ -285,20 +288,20 @@ TEST(HttpMessageTest, parse_series_http_message)
             // http协议解析中即使source不包含一个完整的http消息，它也会被http parser消费掉，以避免下一次重复解析
             buf.retrieve(rc);
             if(http_message->Completed()) {
-                var::HttpMessage result = *http_message;
+                HttpMessage result = *http_message;
                 delete http_message;
                 http_message = nullptr;
                 return result;
             }
-            else if(http_message->stage() >= var::HTTP_ON_HEADERS_COMPLETE) {
+            else if(http_message->stage() >= HTTP_ON_HEADERS_COMPLETE) {
                 // 返回的内容包含完整包头 但不包含内容 可以提前解析
-                var::HttpMessage result = *http_message;
+                HttpMessage result = *http_message;
                 ref = true;
                 return result;
             }
             else {
                 // 返回parsed_not_enough_data.
-                var::HttpMessage result;
+                HttpMessage result;
                 return result;
             }
         }
@@ -323,13 +326,13 @@ TEST(HttpMessageTest, parse_series_http_message)
     buf.append(http_request, strlen(http_request));
     while(buf.readableBytes() >= 0) {
         bool read_eof = buf.readableBytes() == 0 ? true : false;
-        var::HttpMessage http_message = ParseHttpMessage(buf, read_eof);
+        HttpMessage http_message = ParseHttpMessage(buf, read_eof);
         if(read_eof) {
             break;
         }
         if(http_message.Completed()) {
             ASSERT_EQ(0, buf.readableBytes());
-            const var::HttpHeader& header = http_message.header();
+            const HttpHeader& header = http_message.header();
             ASSERT_EQ("json", header.content_type());
             ASSERT_TRUE(header.GetHeader("HOST"));
             ASSERT_EQ("myhost", *header.GetHeader("host"));

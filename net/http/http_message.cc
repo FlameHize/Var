@@ -1,6 +1,7 @@
 #include "http_message.h"
 
-namespace var {
+using namespace var;
+using namespace var::net;
 
 // Implement callbacks for http parser
 int HttpMessage::on_message_begin(http_parser* parser) {
@@ -220,5 +221,3 @@ std::ostream& operator<<(std::ostream& os, const http_parser& parser) {
        << '}';
     return os;
 }
-
-} // end namespace var

@@ -124,17 +124,17 @@ var_test/fast:
 .PHONY : var_test/fast
 
 #=============================================================================
-# Target rules for targets named Var
+# Target rules for targets named var_net
 
 # Build rule for target.
-Var: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Var
-.PHONY : Var
+var_net: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 var_net
+.PHONY : var_net
 
 # fast build rule for target.
-Var/fast:
-	$(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/build
-.PHONY : Var/fast
+var_net/fast:
+	$(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/build
+.PHONY : var_net/fast
 
 # Help Target
 help:
@@ -145,7 +145,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... var_test"
-	@echo "... Var"
+	@echo "... var_net"
 .PHONY : help
 
 

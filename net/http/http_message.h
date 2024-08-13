@@ -23,6 +23,7 @@
 #include "http_parser.h"
 
 namespace var {
+namespace net {
 
 enum HttpParserStage {
     HTTP_ON_MESSAGE_BEGIN,
@@ -82,6 +83,7 @@ private:
 
 std::ostream& operator<<(std::ostream& os, const http_parser& parser);
 
+} // end namespace net
 } // end namespace var
 
 #endif

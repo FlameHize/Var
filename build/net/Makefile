@@ -111,19 +111,748 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-net/CMakeFiles/Var.dir/rule:
-	cd /home/zgx/project/Var/build && $(MAKE) -f CMakeFiles/Makefile2 net/CMakeFiles/Var.dir/rule
-.PHONY : net/CMakeFiles/Var.dir/rule
+net/CMakeFiles/var_net.dir/rule:
+	cd /home/zgx/project/Var/build && $(MAKE) -f CMakeFiles/Makefile2 net/CMakeFiles/var_net.dir/rule
+.PHONY : net/CMakeFiles/var_net.dir/rule
 
 # Convenience name for target.
-Var: net/CMakeFiles/Var.dir/rule
+var_net: net/CMakeFiles/var_net.dir/rule
 
-.PHONY : Var
+.PHONY : var_net
 
 # fast build rule for target.
-Var/fast:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/build
-.PHONY : Var/fast
+var_net/fast:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/build
+.PHONY : var_net/fast
+
+Acceptor.o: Acceptor.cc.o
+
+.PHONY : Acceptor.o
+
+# target to build an object file
+Acceptor.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Acceptor.cc.o
+.PHONY : Acceptor.cc.o
+
+Acceptor.i: Acceptor.cc.i
+
+.PHONY : Acceptor.i
+
+# target to preprocess a source file
+Acceptor.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Acceptor.cc.i
+.PHONY : Acceptor.cc.i
+
+Acceptor.s: Acceptor.cc.s
+
+.PHONY : Acceptor.s
+
+# target to generate assembly for a file
+Acceptor.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Acceptor.cc.s
+.PHONY : Acceptor.cc.s
+
+Buffer.o: Buffer.cc.o
+
+.PHONY : Buffer.o
+
+# target to build an object file
+Buffer.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Buffer.cc.o
+.PHONY : Buffer.cc.o
+
+Buffer.i: Buffer.cc.i
+
+.PHONY : Buffer.i
+
+# target to preprocess a source file
+Buffer.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Buffer.cc.i
+.PHONY : Buffer.cc.i
+
+Buffer.s: Buffer.cc.s
+
+.PHONY : Buffer.s
+
+# target to generate assembly for a file
+Buffer.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Buffer.cc.s
+.PHONY : Buffer.cc.s
+
+Channel.o: Channel.cc.o
+
+.PHONY : Channel.o
+
+# target to build an object file
+Channel.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Channel.cc.o
+.PHONY : Channel.cc.o
+
+Channel.i: Channel.cc.i
+
+.PHONY : Channel.i
+
+# target to preprocess a source file
+Channel.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Channel.cc.i
+.PHONY : Channel.cc.i
+
+Channel.s: Channel.cc.s
+
+.PHONY : Channel.s
+
+# target to generate assembly for a file
+Channel.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Channel.cc.s
+.PHONY : Channel.cc.s
+
+Connector.o: Connector.cc.o
+
+.PHONY : Connector.o
+
+# target to build an object file
+Connector.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Connector.cc.o
+.PHONY : Connector.cc.o
+
+Connector.i: Connector.cc.i
+
+.PHONY : Connector.i
+
+# target to preprocess a source file
+Connector.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Connector.cc.i
+.PHONY : Connector.cc.i
+
+Connector.s: Connector.cc.s
+
+.PHONY : Connector.s
+
+# target to generate assembly for a file
+Connector.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Connector.cc.s
+.PHONY : Connector.cc.s
+
+EventLoop.o: EventLoop.cc.o
+
+.PHONY : EventLoop.o
+
+# target to build an object file
+EventLoop.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/EventLoop.cc.o
+.PHONY : EventLoop.cc.o
+
+EventLoop.i: EventLoop.cc.i
+
+.PHONY : EventLoop.i
+
+# target to preprocess a source file
+EventLoop.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/EventLoop.cc.i
+.PHONY : EventLoop.cc.i
+
+EventLoop.s: EventLoop.cc.s
+
+.PHONY : EventLoop.s
+
+# target to generate assembly for a file
+EventLoop.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/EventLoop.cc.s
+.PHONY : EventLoop.cc.s
+
+EventLoopThread.o: EventLoopThread.cc.o
+
+.PHONY : EventLoopThread.o
+
+# target to build an object file
+EventLoopThread.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/EventLoopThread.cc.o
+.PHONY : EventLoopThread.cc.o
+
+EventLoopThread.i: EventLoopThread.cc.i
+
+.PHONY : EventLoopThread.i
+
+# target to preprocess a source file
+EventLoopThread.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/EventLoopThread.cc.i
+.PHONY : EventLoopThread.cc.i
+
+EventLoopThread.s: EventLoopThread.cc.s
+
+.PHONY : EventLoopThread.s
+
+# target to generate assembly for a file
+EventLoopThread.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/EventLoopThread.cc.s
+.PHONY : EventLoopThread.cc.s
+
+EventLoopThreadPool.o: EventLoopThreadPool.cc.o
+
+.PHONY : EventLoopThreadPool.o
+
+# target to build an object file
+EventLoopThreadPool.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/EventLoopThreadPool.cc.o
+.PHONY : EventLoopThreadPool.cc.o
+
+EventLoopThreadPool.i: EventLoopThreadPool.cc.i
+
+.PHONY : EventLoopThreadPool.i
+
+# target to preprocess a source file
+EventLoopThreadPool.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/EventLoopThreadPool.cc.i
+.PHONY : EventLoopThreadPool.cc.i
+
+EventLoopThreadPool.s: EventLoopThreadPool.cc.s
+
+.PHONY : EventLoopThreadPool.s
+
+# target to generate assembly for a file
+EventLoopThreadPool.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/EventLoopThreadPool.cc.s
+.PHONY : EventLoopThreadPool.cc.s
+
+InetAddress.o: InetAddress.cc.o
+
+.PHONY : InetAddress.o
+
+# target to build an object file
+InetAddress.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/InetAddress.cc.o
+.PHONY : InetAddress.cc.o
+
+InetAddress.i: InetAddress.cc.i
+
+.PHONY : InetAddress.i
+
+# target to preprocess a source file
+InetAddress.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/InetAddress.cc.i
+.PHONY : InetAddress.cc.i
+
+InetAddress.s: InetAddress.cc.s
+
+.PHONY : InetAddress.s
+
+# target to generate assembly for a file
+InetAddress.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/InetAddress.cc.s
+.PHONY : InetAddress.cc.s
+
+Poller.o: Poller.cc.o
+
+.PHONY : Poller.o
+
+# target to build an object file
+Poller.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Poller.cc.o
+.PHONY : Poller.cc.o
+
+Poller.i: Poller.cc.i
+
+.PHONY : Poller.i
+
+# target to preprocess a source file
+Poller.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Poller.cc.i
+.PHONY : Poller.cc.i
+
+Poller.s: Poller.cc.s
+
+.PHONY : Poller.s
+
+# target to generate assembly for a file
+Poller.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Poller.cc.s
+.PHONY : Poller.cc.s
+
+Socket.o: Socket.cc.o
+
+.PHONY : Socket.o
+
+# target to build an object file
+Socket.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Socket.cc.o
+.PHONY : Socket.cc.o
+
+Socket.i: Socket.cc.i
+
+.PHONY : Socket.i
+
+# target to preprocess a source file
+Socket.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Socket.cc.i
+.PHONY : Socket.cc.i
+
+Socket.s: Socket.cc.s
+
+.PHONY : Socket.s
+
+# target to generate assembly for a file
+Socket.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Socket.cc.s
+.PHONY : Socket.cc.s
+
+SocketsOps.o: SocketsOps.cc.o
+
+.PHONY : SocketsOps.o
+
+# target to build an object file
+SocketsOps.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/SocketsOps.cc.o
+.PHONY : SocketsOps.cc.o
+
+SocketsOps.i: SocketsOps.cc.i
+
+.PHONY : SocketsOps.i
+
+# target to preprocess a source file
+SocketsOps.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/SocketsOps.cc.i
+.PHONY : SocketsOps.cc.i
+
+SocketsOps.s: SocketsOps.cc.s
+
+.PHONY : SocketsOps.s
+
+# target to generate assembly for a file
+SocketsOps.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/SocketsOps.cc.s
+.PHONY : SocketsOps.cc.s
+
+Timer.o: Timer.cc.o
+
+.PHONY : Timer.o
+
+# target to build an object file
+Timer.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Timer.cc.o
+.PHONY : Timer.cc.o
+
+Timer.i: Timer.cc.i
+
+.PHONY : Timer.i
+
+# target to preprocess a source file
+Timer.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Timer.cc.i
+.PHONY : Timer.cc.i
+
+Timer.s: Timer.cc.s
+
+.PHONY : Timer.s
+
+# target to generate assembly for a file
+Timer.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/Timer.cc.s
+.PHONY : Timer.cc.s
+
+TimerQueue.o: TimerQueue.cc.o
+
+.PHONY : TimerQueue.o
+
+# target to build an object file
+TimerQueue.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/TimerQueue.cc.o
+.PHONY : TimerQueue.cc.o
+
+TimerQueue.i: TimerQueue.cc.i
+
+.PHONY : TimerQueue.i
+
+# target to preprocess a source file
+TimerQueue.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/TimerQueue.cc.i
+.PHONY : TimerQueue.cc.i
+
+TimerQueue.s: TimerQueue.cc.s
+
+.PHONY : TimerQueue.s
+
+# target to generate assembly for a file
+TimerQueue.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/TimerQueue.cc.s
+.PHONY : TimerQueue.cc.s
+
+base/AsyncLogging.o: base/AsyncLogging.cc.o
+
+.PHONY : base/AsyncLogging.o
+
+# target to build an object file
+base/AsyncLogging.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/AsyncLogging.cc.o
+.PHONY : base/AsyncLogging.cc.o
+
+base/AsyncLogging.i: base/AsyncLogging.cc.i
+
+.PHONY : base/AsyncLogging.i
+
+# target to preprocess a source file
+base/AsyncLogging.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/AsyncLogging.cc.i
+.PHONY : base/AsyncLogging.cc.i
+
+base/AsyncLogging.s: base/AsyncLogging.cc.s
+
+.PHONY : base/AsyncLogging.s
+
+# target to generate assembly for a file
+base/AsyncLogging.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/AsyncLogging.cc.s
+.PHONY : base/AsyncLogging.cc.s
+
+base/Condition.o: base/Condition.cc.o
+
+.PHONY : base/Condition.o
+
+# target to build an object file
+base/Condition.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Condition.cc.o
+.PHONY : base/Condition.cc.o
+
+base/Condition.i: base/Condition.cc.i
+
+.PHONY : base/Condition.i
+
+# target to preprocess a source file
+base/Condition.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Condition.cc.i
+.PHONY : base/Condition.cc.i
+
+base/Condition.s: base/Condition.cc.s
+
+.PHONY : base/Condition.s
+
+# target to generate assembly for a file
+base/Condition.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Condition.cc.s
+.PHONY : base/Condition.cc.s
+
+base/CountDownLatch.o: base/CountDownLatch.cc.o
+
+.PHONY : base/CountDownLatch.o
+
+# target to build an object file
+base/CountDownLatch.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/CountDownLatch.cc.o
+.PHONY : base/CountDownLatch.cc.o
+
+base/CountDownLatch.i: base/CountDownLatch.cc.i
+
+.PHONY : base/CountDownLatch.i
+
+# target to preprocess a source file
+base/CountDownLatch.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/CountDownLatch.cc.i
+.PHONY : base/CountDownLatch.cc.i
+
+base/CountDownLatch.s: base/CountDownLatch.cc.s
+
+.PHONY : base/CountDownLatch.s
+
+# target to generate assembly for a file
+base/CountDownLatch.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/CountDownLatch.cc.s
+.PHONY : base/CountDownLatch.cc.s
+
+base/CurrentThread.o: base/CurrentThread.cc.o
+
+.PHONY : base/CurrentThread.o
+
+# target to build an object file
+base/CurrentThread.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/CurrentThread.cc.o
+.PHONY : base/CurrentThread.cc.o
+
+base/CurrentThread.i: base/CurrentThread.cc.i
+
+.PHONY : base/CurrentThread.i
+
+# target to preprocess a source file
+base/CurrentThread.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/CurrentThread.cc.i
+.PHONY : base/CurrentThread.cc.i
+
+base/CurrentThread.s: base/CurrentThread.cc.s
+
+.PHONY : base/CurrentThread.s
+
+# target to generate assembly for a file
+base/CurrentThread.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/CurrentThread.cc.s
+.PHONY : base/CurrentThread.cc.s
+
+base/Date.o: base/Date.cc.o
+
+.PHONY : base/Date.o
+
+# target to build an object file
+base/Date.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Date.cc.o
+.PHONY : base/Date.cc.o
+
+base/Date.i: base/Date.cc.i
+
+.PHONY : base/Date.i
+
+# target to preprocess a source file
+base/Date.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Date.cc.i
+.PHONY : base/Date.cc.i
+
+base/Date.s: base/Date.cc.s
+
+.PHONY : base/Date.s
+
+# target to generate assembly for a file
+base/Date.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Date.cc.s
+.PHONY : base/Date.cc.s
+
+base/Exception.o: base/Exception.cc.o
+
+.PHONY : base/Exception.o
+
+# target to build an object file
+base/Exception.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Exception.cc.o
+.PHONY : base/Exception.cc.o
+
+base/Exception.i: base/Exception.cc.i
+
+.PHONY : base/Exception.i
+
+# target to preprocess a source file
+base/Exception.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Exception.cc.i
+.PHONY : base/Exception.cc.i
+
+base/Exception.s: base/Exception.cc.s
+
+.PHONY : base/Exception.s
+
+# target to generate assembly for a file
+base/Exception.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Exception.cc.s
+.PHONY : base/Exception.cc.s
+
+base/FileUtil.o: base/FileUtil.cc.o
+
+.PHONY : base/FileUtil.o
+
+# target to build an object file
+base/FileUtil.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/FileUtil.cc.o
+.PHONY : base/FileUtil.cc.o
+
+base/FileUtil.i: base/FileUtil.cc.i
+
+.PHONY : base/FileUtil.i
+
+# target to preprocess a source file
+base/FileUtil.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/FileUtil.cc.i
+.PHONY : base/FileUtil.cc.i
+
+base/FileUtil.s: base/FileUtil.cc.s
+
+.PHONY : base/FileUtil.s
+
+# target to generate assembly for a file
+base/FileUtil.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/FileUtil.cc.s
+.PHONY : base/FileUtil.cc.s
+
+base/LogFile.o: base/LogFile.cc.o
+
+.PHONY : base/LogFile.o
+
+# target to build an object file
+base/LogFile.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/LogFile.cc.o
+.PHONY : base/LogFile.cc.o
+
+base/LogFile.i: base/LogFile.cc.i
+
+.PHONY : base/LogFile.i
+
+# target to preprocess a source file
+base/LogFile.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/LogFile.cc.i
+.PHONY : base/LogFile.cc.i
+
+base/LogFile.s: base/LogFile.cc.s
+
+.PHONY : base/LogFile.s
+
+# target to generate assembly for a file
+base/LogFile.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/LogFile.cc.s
+.PHONY : base/LogFile.cc.s
+
+base/LogStream.o: base/LogStream.cc.o
+
+.PHONY : base/LogStream.o
+
+# target to build an object file
+base/LogStream.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/LogStream.cc.o
+.PHONY : base/LogStream.cc.o
+
+base/LogStream.i: base/LogStream.cc.i
+
+.PHONY : base/LogStream.i
+
+# target to preprocess a source file
+base/LogStream.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/LogStream.cc.i
+.PHONY : base/LogStream.cc.i
+
+base/LogStream.s: base/LogStream.cc.s
+
+.PHONY : base/LogStream.s
+
+# target to generate assembly for a file
+base/LogStream.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/LogStream.cc.s
+.PHONY : base/LogStream.cc.s
+
+base/Logging.o: base/Logging.cc.o
+
+.PHONY : base/Logging.o
+
+# target to build an object file
+base/Logging.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Logging.cc.o
+.PHONY : base/Logging.cc.o
+
+base/Logging.i: base/Logging.cc.i
+
+.PHONY : base/Logging.i
+
+# target to preprocess a source file
+base/Logging.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Logging.cc.i
+.PHONY : base/Logging.cc.i
+
+base/Logging.s: base/Logging.cc.s
+
+.PHONY : base/Logging.s
+
+# target to generate assembly for a file
+base/Logging.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Logging.cc.s
+.PHONY : base/Logging.cc.s
+
+base/ProcessInfo.o: base/ProcessInfo.cc.o
+
+.PHONY : base/ProcessInfo.o
+
+# target to build an object file
+base/ProcessInfo.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o
+.PHONY : base/ProcessInfo.cc.o
+
+base/ProcessInfo.i: base/ProcessInfo.cc.i
+
+.PHONY : base/ProcessInfo.i
+
+# target to preprocess a source file
+base/ProcessInfo.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.i
+.PHONY : base/ProcessInfo.cc.i
+
+base/ProcessInfo.s: base/ProcessInfo.cc.s
+
+.PHONY : base/ProcessInfo.s
+
+# target to generate assembly for a file
+base/ProcessInfo.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.s
+.PHONY : base/ProcessInfo.cc.s
+
+base/Thread.o: base/Thread.cc.o
+
+.PHONY : base/Thread.o
+
+# target to build an object file
+base/Thread.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Thread.cc.o
+.PHONY : base/Thread.cc.o
+
+base/Thread.i: base/Thread.cc.i
+
+.PHONY : base/Thread.i
+
+# target to preprocess a source file
+base/Thread.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Thread.cc.i
+.PHONY : base/Thread.cc.i
+
+base/Thread.s: base/Thread.cc.s
+
+.PHONY : base/Thread.s
+
+# target to generate assembly for a file
+base/Thread.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Thread.cc.s
+.PHONY : base/Thread.cc.s
+
+base/TimeZone.o: base/TimeZone.cc.o
+
+.PHONY : base/TimeZone.o
+
+# target to build an object file
+base/TimeZone.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/TimeZone.cc.o
+.PHONY : base/TimeZone.cc.o
+
+base/TimeZone.i: base/TimeZone.cc.i
+
+.PHONY : base/TimeZone.i
+
+# target to preprocess a source file
+base/TimeZone.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/TimeZone.cc.i
+.PHONY : base/TimeZone.cc.i
+
+base/TimeZone.s: base/TimeZone.cc.s
+
+.PHONY : base/TimeZone.s
+
+# target to generate assembly for a file
+base/TimeZone.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/TimeZone.cc.s
+.PHONY : base/TimeZone.cc.s
+
+base/Timestamp.o: base/Timestamp.cc.o
+
+.PHONY : base/Timestamp.o
+
+# target to build an object file
+base/Timestamp.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Timestamp.cc.o
+.PHONY : base/Timestamp.cc.o
+
+base/Timestamp.i: base/Timestamp.cc.i
+
+.PHONY : base/Timestamp.i
+
+# target to preprocess a source file
+base/Timestamp.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Timestamp.cc.i
+.PHONY : base/Timestamp.cc.i
+
+base/Timestamp.s: base/Timestamp.cc.s
+
+.PHONY : base/Timestamp.s
+
+# target to generate assembly for a file
+base/Timestamp.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/Timestamp.cc.s
+.PHONY : base/Timestamp.cc.s
 
 http/http_header.o: http/http_header.cc.o
 
@@ -131,7 +860,7 @@ http/http_header.o: http/http_header.cc.o
 
 # target to build an object file
 http/http_header.cc.o:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_header.cc.o
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_header.cc.o
 .PHONY : http/http_header.cc.o
 
 http/http_header.i: http/http_header.cc.i
@@ -140,7 +869,7 @@ http/http_header.i: http/http_header.cc.i
 
 # target to preprocess a source file
 http/http_header.cc.i:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_header.cc.i
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_header.cc.i
 .PHONY : http/http_header.cc.i
 
 http/http_header.s: http/http_header.cc.s
@@ -149,7 +878,7 @@ http/http_header.s: http/http_header.cc.s
 
 # target to generate assembly for a file
 http/http_header.cc.s:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_header.cc.s
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_header.cc.s
 .PHONY : http/http_header.cc.s
 
 http/http_message.o: http/http_message.cc.o
@@ -158,7 +887,7 @@ http/http_message.o: http/http_message.cc.o
 
 # target to build an object file
 http/http_message.cc.o:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_message.cc.o
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_message.cc.o
 .PHONY : http/http_message.cc.o
 
 http/http_message.i: http/http_message.cc.i
@@ -167,7 +896,7 @@ http/http_message.i: http/http_message.cc.i
 
 # target to preprocess a source file
 http/http_message.cc.i:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_message.cc.i
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_message.cc.i
 .PHONY : http/http_message.cc.i
 
 http/http_message.s: http/http_message.cc.s
@@ -176,7 +905,7 @@ http/http_message.s: http/http_message.cc.s
 
 # target to generate assembly for a file
 http/http_message.cc.s:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_message.cc.s
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_message.cc.s
 .PHONY : http/http_message.cc.s
 
 http/http_method.o: http/http_method.cc.o
@@ -185,7 +914,7 @@ http/http_method.o: http/http_method.cc.o
 
 # target to build an object file
 http/http_method.cc.o:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_method.cc.o
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_method.cc.o
 .PHONY : http/http_method.cc.o
 
 http/http_method.i: http/http_method.cc.i
@@ -194,7 +923,7 @@ http/http_method.i: http/http_method.cc.i
 
 # target to preprocess a source file
 http/http_method.cc.i:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_method.cc.i
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_method.cc.i
 .PHONY : http/http_method.cc.i
 
 http/http_method.s: http/http_method.cc.s
@@ -203,7 +932,7 @@ http/http_method.s: http/http_method.cc.s
 
 # target to generate assembly for a file
 http/http_method.cc.s:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_method.cc.s
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_method.cc.s
 .PHONY : http/http_method.cc.s
 
 http/http_parser.o: http/http_parser.cc.o
@@ -212,7 +941,7 @@ http/http_parser.o: http/http_parser.cc.o
 
 # target to build an object file
 http/http_parser.cc.o:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_parser.cc.o
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_parser.cc.o
 .PHONY : http/http_parser.cc.o
 
 http/http_parser.i: http/http_parser.cc.i
@@ -221,7 +950,7 @@ http/http_parser.i: http/http_parser.cc.i
 
 # target to preprocess a source file
 http/http_parser.cc.i:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_parser.cc.i
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_parser.cc.i
 .PHONY : http/http_parser.cc.i
 
 http/http_parser.s: http/http_parser.cc.s
@@ -230,7 +959,7 @@ http/http_parser.s: http/http_parser.cc.s
 
 # target to generate assembly for a file
 http/http_parser.cc.s:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_parser.cc.s
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_parser.cc.s
 .PHONY : http/http_parser.cc.s
 
 http/http_status_code.o: http/http_status_code.cc.o
@@ -239,7 +968,7 @@ http/http_status_code.o: http/http_status_code.cc.o
 
 # target to build an object file
 http/http_status_code.cc.o:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_status_code.cc.o
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_status_code.cc.o
 .PHONY : http/http_status_code.cc.o
 
 http/http_status_code.i: http/http_status_code.cc.i
@@ -248,7 +977,7 @@ http/http_status_code.i: http/http_status_code.cc.i
 
 # target to preprocess a source file
 http/http_status_code.cc.i:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_status_code.cc.i
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_status_code.cc.i
 .PHONY : http/http_status_code.cc.i
 
 http/http_status_code.s: http/http_status_code.cc.s
@@ -257,7 +986,7 @@ http/http_status_code.s: http/http_status_code.cc.s
 
 # target to generate assembly for a file
 http/http_status_code.cc.s:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_status_code.cc.s
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_status_code.cc.s
 .PHONY : http/http_status_code.cc.s
 
 http/http_url.o: http/http_url.cc.o
@@ -266,7 +995,7 @@ http/http_url.o: http/http_url.cc.o
 
 # target to build an object file
 http/http_url.cc.o:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_url.cc.o
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_url.cc.o
 .PHONY : http/http_url.cc.o
 
 http/http_url.i: http/http_url.cc.i
@@ -275,7 +1004,7 @@ http/http_url.i: http/http_url.cc.i
 
 # target to preprocess a source file
 http/http_url.cc.i:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_url.cc.i
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_url.cc.i
 .PHONY : http/http_url.cc.i
 
 http/http_url.s: http/http_url.cc.s
@@ -284,8 +1013,197 @@ http/http_url.s: http/http_url.cc.s
 
 # target to generate assembly for a file
 http/http_url.cc.s:
-	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/Var.dir/build.make net/CMakeFiles/Var.dir/http/http_url.cc.s
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_url.cc.s
 .PHONY : http/http_url.cc.s
+
+poller/DefaultPoller.o: poller/DefaultPoller.cc.o
+
+.PHONY : poller/DefaultPoller.o
+
+# target to build an object file
+poller/DefaultPoller.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/poller/DefaultPoller.cc.o
+.PHONY : poller/DefaultPoller.cc.o
+
+poller/DefaultPoller.i: poller/DefaultPoller.cc.i
+
+.PHONY : poller/DefaultPoller.i
+
+# target to preprocess a source file
+poller/DefaultPoller.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/poller/DefaultPoller.cc.i
+.PHONY : poller/DefaultPoller.cc.i
+
+poller/DefaultPoller.s: poller/DefaultPoller.cc.s
+
+.PHONY : poller/DefaultPoller.s
+
+# target to generate assembly for a file
+poller/DefaultPoller.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/poller/DefaultPoller.cc.s
+.PHONY : poller/DefaultPoller.cc.s
+
+poller/EpollPoller.o: poller/EpollPoller.cc.o
+
+.PHONY : poller/EpollPoller.o
+
+# target to build an object file
+poller/EpollPoller.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/poller/EpollPoller.cc.o
+.PHONY : poller/EpollPoller.cc.o
+
+poller/EpollPoller.i: poller/EpollPoller.cc.i
+
+.PHONY : poller/EpollPoller.i
+
+# target to preprocess a source file
+poller/EpollPoller.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/poller/EpollPoller.cc.i
+.PHONY : poller/EpollPoller.cc.i
+
+poller/EpollPoller.s: poller/EpollPoller.cc.s
+
+.PHONY : poller/EpollPoller.s
+
+# target to generate assembly for a file
+poller/EpollPoller.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/poller/EpollPoller.cc.s
+.PHONY : poller/EpollPoller.cc.s
+
+poller/PollPoller.o: poller/PollPoller.cc.o
+
+.PHONY : poller/PollPoller.o
+
+# target to build an object file
+poller/PollPoller.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/poller/PollPoller.cc.o
+.PHONY : poller/PollPoller.cc.o
+
+poller/PollPoller.i: poller/PollPoller.cc.i
+
+.PHONY : poller/PollPoller.i
+
+# target to preprocess a source file
+poller/PollPoller.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/poller/PollPoller.cc.i
+.PHONY : poller/PollPoller.cc.i
+
+poller/PollPoller.s: poller/PollPoller.cc.s
+
+.PHONY : poller/PollPoller.s
+
+# target to generate assembly for a file
+poller/PollPoller.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/poller/PollPoller.cc.s
+.PHONY : poller/PollPoller.cc.s
+
+tcp/TcpClient.o: tcp/TcpClient.cc.o
+
+.PHONY : tcp/TcpClient.o
+
+# target to build an object file
+tcp/TcpClient.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/tcp/TcpClient.cc.o
+.PHONY : tcp/TcpClient.cc.o
+
+tcp/TcpClient.i: tcp/TcpClient.cc.i
+
+.PHONY : tcp/TcpClient.i
+
+# target to preprocess a source file
+tcp/TcpClient.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/tcp/TcpClient.cc.i
+.PHONY : tcp/TcpClient.cc.i
+
+tcp/TcpClient.s: tcp/TcpClient.cc.s
+
+.PHONY : tcp/TcpClient.s
+
+# target to generate assembly for a file
+tcp/TcpClient.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/tcp/TcpClient.cc.s
+.PHONY : tcp/TcpClient.cc.s
+
+tcp/TcpConnection.o: tcp/TcpConnection.cc.o
+
+.PHONY : tcp/TcpConnection.o
+
+# target to build an object file
+tcp/TcpConnection.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/tcp/TcpConnection.cc.o
+.PHONY : tcp/TcpConnection.cc.o
+
+tcp/TcpConnection.i: tcp/TcpConnection.cc.i
+
+.PHONY : tcp/TcpConnection.i
+
+# target to preprocess a source file
+tcp/TcpConnection.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/tcp/TcpConnection.cc.i
+.PHONY : tcp/TcpConnection.cc.i
+
+tcp/TcpConnection.s: tcp/TcpConnection.cc.s
+
+.PHONY : tcp/TcpConnection.s
+
+# target to generate assembly for a file
+tcp/TcpConnection.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/tcp/TcpConnection.cc.s
+.PHONY : tcp/TcpConnection.cc.s
+
+tcp/TcpServer.o: tcp/TcpServer.cc.o
+
+.PHONY : tcp/TcpServer.o
+
+# target to build an object file
+tcp/TcpServer.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/tcp/TcpServer.cc.o
+.PHONY : tcp/TcpServer.cc.o
+
+tcp/TcpServer.i: tcp/TcpServer.cc.i
+
+.PHONY : tcp/TcpServer.i
+
+# target to preprocess a source file
+tcp/TcpServer.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/tcp/TcpServer.cc.i
+.PHONY : tcp/TcpServer.cc.i
+
+tcp/TcpServer.s: tcp/TcpServer.cc.s
+
+.PHONY : tcp/TcpServer.s
+
+# target to generate assembly for a file
+tcp/TcpServer.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/tcp/TcpServer.cc.s
+.PHONY : tcp/TcpServer.cc.s
+
+udp/UdpServer.o: udp/UdpServer.cc.o
+
+.PHONY : udp/UdpServer.o
+
+# target to build an object file
+udp/UdpServer.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/udp/UdpServer.cc.o
+.PHONY : udp/UdpServer.cc.o
+
+udp/UdpServer.i: udp/UdpServer.cc.i
+
+.PHONY : udp/UdpServer.i
+
+# target to preprocess a source file
+udp/UdpServer.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/udp/UdpServer.cc.i
+.PHONY : udp/UdpServer.cc.i
+
+udp/UdpServer.s: udp/UdpServer.cc.s
+
+.PHONY : udp/UdpServer.s
+
+# target to generate assembly for a file
+udp/UdpServer.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/udp/UdpServer.cc.s
+.PHONY : udp/UdpServer.cc.s
 
 # Help Target
 help:
@@ -294,8 +1212,89 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... Var"
+	@echo "... var_net"
 	@echo "... edit_cache"
+	@echo "... Acceptor.o"
+	@echo "... Acceptor.i"
+	@echo "... Acceptor.s"
+	@echo "... Buffer.o"
+	@echo "... Buffer.i"
+	@echo "... Buffer.s"
+	@echo "... Channel.o"
+	@echo "... Channel.i"
+	@echo "... Channel.s"
+	@echo "... Connector.o"
+	@echo "... Connector.i"
+	@echo "... Connector.s"
+	@echo "... EventLoop.o"
+	@echo "... EventLoop.i"
+	@echo "... EventLoop.s"
+	@echo "... EventLoopThread.o"
+	@echo "... EventLoopThread.i"
+	@echo "... EventLoopThread.s"
+	@echo "... EventLoopThreadPool.o"
+	@echo "... EventLoopThreadPool.i"
+	@echo "... EventLoopThreadPool.s"
+	@echo "... InetAddress.o"
+	@echo "... InetAddress.i"
+	@echo "... InetAddress.s"
+	@echo "... Poller.o"
+	@echo "... Poller.i"
+	@echo "... Poller.s"
+	@echo "... Socket.o"
+	@echo "... Socket.i"
+	@echo "... Socket.s"
+	@echo "... SocketsOps.o"
+	@echo "... SocketsOps.i"
+	@echo "... SocketsOps.s"
+	@echo "... Timer.o"
+	@echo "... Timer.i"
+	@echo "... Timer.s"
+	@echo "... TimerQueue.o"
+	@echo "... TimerQueue.i"
+	@echo "... TimerQueue.s"
+	@echo "... base/AsyncLogging.o"
+	@echo "... base/AsyncLogging.i"
+	@echo "... base/AsyncLogging.s"
+	@echo "... base/Condition.o"
+	@echo "... base/Condition.i"
+	@echo "... base/Condition.s"
+	@echo "... base/CountDownLatch.o"
+	@echo "... base/CountDownLatch.i"
+	@echo "... base/CountDownLatch.s"
+	@echo "... base/CurrentThread.o"
+	@echo "... base/CurrentThread.i"
+	@echo "... base/CurrentThread.s"
+	@echo "... base/Date.o"
+	@echo "... base/Date.i"
+	@echo "... base/Date.s"
+	@echo "... base/Exception.o"
+	@echo "... base/Exception.i"
+	@echo "... base/Exception.s"
+	@echo "... base/FileUtil.o"
+	@echo "... base/FileUtil.i"
+	@echo "... base/FileUtil.s"
+	@echo "... base/LogFile.o"
+	@echo "... base/LogFile.i"
+	@echo "... base/LogFile.s"
+	@echo "... base/LogStream.o"
+	@echo "... base/LogStream.i"
+	@echo "... base/LogStream.s"
+	@echo "... base/Logging.o"
+	@echo "... base/Logging.i"
+	@echo "... base/Logging.s"
+	@echo "... base/ProcessInfo.o"
+	@echo "... base/ProcessInfo.i"
+	@echo "... base/ProcessInfo.s"
+	@echo "... base/Thread.o"
+	@echo "... base/Thread.i"
+	@echo "... base/Thread.s"
+	@echo "... base/TimeZone.o"
+	@echo "... base/TimeZone.i"
+	@echo "... base/TimeZone.s"
+	@echo "... base/Timestamp.o"
+	@echo "... base/Timestamp.i"
+	@echo "... base/Timestamp.s"
 	@echo "... http/http_header.o"
 	@echo "... http/http_header.i"
 	@echo "... http/http_header.s"
@@ -314,6 +1313,27 @@ help:
 	@echo "... http/http_url.o"
 	@echo "... http/http_url.i"
 	@echo "... http/http_url.s"
+	@echo "... poller/DefaultPoller.o"
+	@echo "... poller/DefaultPoller.i"
+	@echo "... poller/DefaultPoller.s"
+	@echo "... poller/EpollPoller.o"
+	@echo "... poller/EpollPoller.i"
+	@echo "... poller/EpollPoller.s"
+	@echo "... poller/PollPoller.o"
+	@echo "... poller/PollPoller.i"
+	@echo "... poller/PollPoller.s"
+	@echo "... tcp/TcpClient.o"
+	@echo "... tcp/TcpClient.i"
+	@echo "... tcp/TcpClient.s"
+	@echo "... tcp/TcpConnection.o"
+	@echo "... tcp/TcpConnection.i"
+	@echo "... tcp/TcpConnection.s"
+	@echo "... tcp/TcpServer.o"
+	@echo "... tcp/TcpServer.i"
+	@echo "... tcp/TcpServer.s"
+	@echo "... udp/UdpServer.o"
+	@echo "... udp/UdpServer.i"
+	@echo "... udp/UdpServer.s"
 .PHONY : help
 
 

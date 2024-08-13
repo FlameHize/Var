@@ -19,10 +19,11 @@
 #include "net/http/http_header.h"
 
 using namespace var;
+using namespace var::net;
 
 TEST(HttpHeaderTest, http_header)
 {
-    var::HttpHeader header;
+    HttpHeader header;
 
     header.set_version(1, 2);
     ASSERT_EQ(1, header.major_version());
@@ -52,20 +53,20 @@ TEST(HttpHeaderTest, http_header)
     header.set_unresolved_path("Foo/Bar");
     ASSERT_EQ("Foo/Bar", header.unresolved_path());
 
-    ASSERT_EQ(var::HTTP_METHOD_GET, header.method());
-    header.set_method(var::HTTP_METHOD_POST);
-    ASSERT_EQ(var::HTTP_METHOD_POST, header.method());
+    ASSERT_EQ(HTTP_METHOD_GET, header.method());
+    header.set_method(HTTP_METHOD_POST);
+    ASSERT_EQ(HTTP_METHOD_POST, header.method());
 
-    ASSERT_EQ(var::HTTP_STATUS_OK, header.status_code());
-    ASSERT_STREQ(var::HttpReasonPhrase(header.status_code()),
+    ASSERT_EQ(HTTP_STATUS_OK, header.status_code());
+    ASSERT_STREQ(HttpReasonPhrase(header.status_code()),
                  header.reason_phrase());
-    header.set_status_code(var::HTTP_STATUS_CONTINUE);
-    ASSERT_EQ(var::HTTP_STATUS_CONTINUE, header.status_code());
-    ASSERT_STREQ(var::HttpReasonPhrase(header.status_code()),
+    header.set_status_code(HTTP_STATUS_CONTINUE);
+    ASSERT_EQ(HTTP_STATUS_CONTINUE, header.status_code());
+    ASSERT_STREQ(HttpReasonPhrase(header.status_code()),
                  header.reason_phrase());
     
-    header.set_status_code(var::HTTP_STATUS_GONE);
-    ASSERT_EQ(var::HTTP_STATUS_GONE, header.status_code());
-    ASSERT_STREQ(var::HttpReasonPhrase(header.status_code()),
+    header.set_status_code(HTTP_STATUS_GONE);
+    ASSERT_EQ(HTTP_STATUS_GONE, header.status_code());
+    ASSERT_STREQ(HttpReasonPhrase(header.status_code()),
                  header.reason_phrase());
 }

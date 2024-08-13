@@ -19,6 +19,7 @@
 #define VAR_HTTP_STATUS_CODE_H
 
 namespace var {
+namespace net {
 // Read the description of a status code carefully before using it
 
 // http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
@@ -674,5 +675,6 @@ static const int HTTP_STATUS_GATEWAY_TIMEOUT                 = 504;
 // that server. 
 static const int HTTP_STATUS_VERSION_NOT_SUPPORTED           = 505;
 
-}   // end namespace net
+} // end namespace net
+} // end namespace var 
 #endif

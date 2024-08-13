@@ -19,6 +19,7 @@
 #include <net/http/http_method.h>
 
 using namespace var;
+using namespace var::net;
 
 class HttpMethodTest : public testing::Test {
 protected:

@@ -57,5 +57,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "test/CMakeFiles/var_test.dir/DependInfo.cmake"
-  "net/CMakeFiles/Var.dir/DependInfo.cmake"
+  "net/CMakeFiles/var_net.dir/DependInfo.cmake"
   )

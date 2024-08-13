@@ -23,6 +23,7 @@
 #include "http_method.h"
 
 namespace var {
+namespace net {
 
 struct HeaderStringHash : public std::hash<std::string> {
     std::size_t operator()(const std::string& s) const {
@@ -170,6 +171,7 @@ inline const std::string* HttpHeader::GetHeader(const char* key) const {
     return &it->second;
 }
 
+} // end namespace net
 } // end namespace var
 
 #endif

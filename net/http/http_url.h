@@ -23,6 +23,7 @@
 #include <unordered_map>
 
 namespace var {
+namespace net {
 // The class for URI scheme : http://en.wikipedia.org/wiki/URI_scheme
 //
 //  foo://username:password@example.com:8042/over/there/index.dtb?type=animal&name=narwhal#nose
@@ -218,7 +219,8 @@ inline std::ostream& operator<<(std::ostream& os, const HttpUrl& url) {
 void AppendQuery(std::string* query_string, 
                 const std::string& key, 
                 const std::string& value);
-
-}; // end namespace var
+                
+} // end namespace net
+} // end namespace var
 
 #endif

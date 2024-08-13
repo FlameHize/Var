@@ -17,11 +17,12 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../"
+  "../net"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/zgx/project/Var/build/net/CMakeFiles/Var.dir/DependInfo.cmake"
+  "/home/zgx/project/Var/build/net/CMakeFiles/var_net.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

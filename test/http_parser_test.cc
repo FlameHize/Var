@@ -20,7 +20,8 @@
 
 #include "net/http/http_parser.h"
 
-namespace var {
+using namespace var;
+using namespace var::net;
 
 class HttpParserTest : public testing::Test {
 protected:
@@ -134,5 +135,3 @@ TEST_F(HttpParserTest, HttpExample)
 
     std::cout << http_parser_execute(&parser,&settings,http_request,strlen(http_request)) << std::endl;
 }
-
-} // end namespace var
