@@ -15,10 +15,9 @@
 // specific language governing permissions and limitations
 // under the License.
 
-#include <gtest/gtest.h>
 #include "net/http/http_header.h"
+#include <gtest/gtest.h>
 
-using namespace var;
 using namespace var::net;
 
 TEST(HttpHeaderTest, http_header)

@@ -42,4 +42,4 @@ add_library(var_net STATIC
 
 target_include_directories(var_net PRIVATE ${PROJECT_SOURCE_DIR}/net)
 
-# add_subdirectory(test)
+add_subdirectory(test)

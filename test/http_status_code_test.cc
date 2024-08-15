@@ -15,19 +15,12 @@
 // specific language governing permissions and limitations
 // under the License.
 
-#include <gtest/gtest.h>
 #include "net/http/http_status_code.h"
+#include <gtest/gtest.h>
 
-using namespace var;
 using namespace var::net;
 
-class HttpStatusCodeTest : public testing::Test {
-protected:
-    void SetUp() {}
-    void TearDown() {}
-};
-
-TEST_F(HttpStatusCodeTest, HttpStatusCode)
+TEST(HttpStatusCodeTest, HttpStatusCode)
 {
     ASSERT_STREQ("Continue", HttpReasonPhrase(HTTP_STATUS_CONTINUE));
     ASSERT_STREQ("OK", HttpReasonPhrase(HTTP_STATUS_OK));

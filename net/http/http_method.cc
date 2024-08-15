@@ -1,8 +1,8 @@
 #include "macros.h"
 #include "http_method.h"
 
-using namespace var;
-using namespace var::net;
+namespace var {
+namespace net {
 
 struct HttpMethodPair {
     HttpMethod method;
@@ -120,3 +120,6 @@ bool Str2HttpMethod(const char* method_str, HttpMethod* method) {
     }
     return false;
 }
+
+} // end namespave net
+} // end namespace var

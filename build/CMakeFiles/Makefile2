@@ -102,7 +102,7 @@ test/preinstall:
 test/CMakeFiles/var_test.dir/all: net/CMakeFiles/var_net.dir/all
 	$(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/depend
 	$(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=42,43,44,45,46,47,48,49 "Built target var_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=72,73,74,75,76,77,78,79 "Built target var_test"
 .PHONY : test/CMakeFiles/var_test.dir/all
 
 # Include target in all.
@@ -137,16 +137,18 @@ clean: test/CMakeFiles/var_test.dir/clean
 
 # Convenience name for "all" pass in the directory.
 net/all: net/CMakeFiles/var_net.dir/all
+net/all: net/test/all
 
 .PHONY : net/all
 
 # Convenience name for "clean" pass in the directory.
 net/clean: net/CMakeFiles/var_net.dir/clean
+net/clean: net/test/clean
 
 .PHONY : net/clean
 
 # Convenience name for "preinstall" pass in the directory.
-net/preinstall:
+net/preinstall: net/test/preinstall
 
 .PHONY : net/preinstall
 
@@ -157,7 +159,7 @@ net/preinstall:
 net/CMakeFiles/var_net.dir/all:
 	$(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/depend
 	$(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41 "Built target var_net"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71 "Built target var_net"
 .PHONY : net/CMakeFiles/var_net.dir/all
 
 # Include target in all.
@@ -184,6 +186,412 @@ net/CMakeFiles/var_net.dir/clean:
 
 # clean rule for target.
 clean: net/CMakeFiles/var_net.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory net/test
+
+# Convenience name for "all" pass in the directory.
+net/test/all: net/test/CMakeFiles/udpserver_test.dir/all
+net/test/all: net/test/CMakeFiles/tcpclient_test.dir/all
+net/test/all: net/test/CMakeFiles/tcpserver_test.dir/all
+net/test/all: net/test/CMakeFiles/eventloopthreadpool_test.dir/all
+net/test/all: net/test/CMakeFiles/channel_test.dir/all
+net/test/all: net/test/CMakeFiles/buffer_test.dir/all
+net/test/all: net/test/CMakeFiles/inetaddress_test.dir/all
+net/test/all: net/test/CMakeFiles/timerqueue_test.dir/all
+net/test/all: net/test/CMakeFiles/eventloop_test.dir/all
+net/test/all: net/test/CMakeFiles/eventloopthread_test.dir/all
+
+.PHONY : net/test/all
+
+# Convenience name for "clean" pass in the directory.
+net/test/clean: net/test/CMakeFiles/udpserver_test.dir/clean
+net/test/clean: net/test/CMakeFiles/tcpclient_test.dir/clean
+net/test/clean: net/test/CMakeFiles/tcpserver_test.dir/clean
+net/test/clean: net/test/CMakeFiles/eventloopthreadpool_test.dir/clean
+net/test/clean: net/test/CMakeFiles/channel_test.dir/clean
+net/test/clean: net/test/CMakeFiles/buffer_test.dir/clean
+net/test/clean: net/test/CMakeFiles/inetaddress_test.dir/clean
+net/test/clean: net/test/CMakeFiles/timerqueue_test.dir/clean
+net/test/clean: net/test/CMakeFiles/eventloop_test.dir/clean
+net/test/clean: net/test/CMakeFiles/eventloopthread_test.dir/clean
+
+.PHONY : net/test/clean
+
+# Convenience name for "preinstall" pass in the directory.
+net/test/preinstall:
+
+.PHONY : net/test/preinstall
+
+#=============================================================================
+# Target rules for target net/test/CMakeFiles/udpserver_test.dir
+
+# All Build rule for target.
+net/test/CMakeFiles/udpserver_test.dir/all: net/CMakeFiles/var_net.dir/all
+	$(MAKE) -f net/test/CMakeFiles/udpserver_test.dir/build.make net/test/CMakeFiles/udpserver_test.dir/depend
+	$(MAKE) -f net/test/CMakeFiles/udpserver_test.dir/build.make net/test/CMakeFiles/udpserver_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=28,29,30 "Built target udpserver_test"
+.PHONY : net/test/CMakeFiles/udpserver_test.dir/all
+
+# Include target in all.
+all: net/test/CMakeFiles/udpserver_test.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+net/test/CMakeFiles/udpserver_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 44
+	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/udpserver_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
+.PHONY : net/test/CMakeFiles/udpserver_test.dir/rule
+
+# Convenience name for target.
+udpserver_test: net/test/CMakeFiles/udpserver_test.dir/rule
+
+.PHONY : udpserver_test
+
+# clean rule for target.
+net/test/CMakeFiles/udpserver_test.dir/clean:
+	$(MAKE) -f net/test/CMakeFiles/udpserver_test.dir/build.make net/test/CMakeFiles/udpserver_test.dir/clean
+.PHONY : net/test/CMakeFiles/udpserver_test.dir/clean
+
+# clean rule for target.
+clean: net/test/CMakeFiles/udpserver_test.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target net/test/CMakeFiles/tcpclient_test.dir
+
+# All Build rule for target.
+net/test/CMakeFiles/tcpclient_test.dir/all: net/CMakeFiles/var_net.dir/all
+	$(MAKE) -f net/test/CMakeFiles/tcpclient_test.dir/build.make net/test/CMakeFiles/tcpclient_test.dir/depend
+	$(MAKE) -f net/test/CMakeFiles/tcpclient_test.dir/build.make net/test/CMakeFiles/tcpclient_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=19,20,21 "Built target tcpclient_test"
+.PHONY : net/test/CMakeFiles/tcpclient_test.dir/all
+
+# Include target in all.
+all: net/test/CMakeFiles/tcpclient_test.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+net/test/CMakeFiles/tcpclient_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 44
+	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/tcpclient_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
+.PHONY : net/test/CMakeFiles/tcpclient_test.dir/rule
+
+# Convenience name for target.
+tcpclient_test: net/test/CMakeFiles/tcpclient_test.dir/rule
+
+.PHONY : tcpclient_test
+
+# clean rule for target.
+net/test/CMakeFiles/tcpclient_test.dir/clean:
+	$(MAKE) -f net/test/CMakeFiles/tcpclient_test.dir/build.make net/test/CMakeFiles/tcpclient_test.dir/clean
+.PHONY : net/test/CMakeFiles/tcpclient_test.dir/clean
+
+# clean rule for target.
+clean: net/test/CMakeFiles/tcpclient_test.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target net/test/CMakeFiles/tcpserver_test.dir
+
+# All Build rule for target.
+net/test/CMakeFiles/tcpserver_test.dir/all: net/CMakeFiles/var_net.dir/all
+	$(MAKE) -f net/test/CMakeFiles/tcpserver_test.dir/build.make net/test/CMakeFiles/tcpserver_test.dir/depend
+	$(MAKE) -f net/test/CMakeFiles/tcpserver_test.dir/build.make net/test/CMakeFiles/tcpserver_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=22,23,24 "Built target tcpserver_test"
+.PHONY : net/test/CMakeFiles/tcpserver_test.dir/all
+
+# Include target in all.
+all: net/test/CMakeFiles/tcpserver_test.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+net/test/CMakeFiles/tcpserver_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 44
+	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/tcpserver_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
+.PHONY : net/test/CMakeFiles/tcpserver_test.dir/rule
+
+# Convenience name for target.
+tcpserver_test: net/test/CMakeFiles/tcpserver_test.dir/rule
+
+.PHONY : tcpserver_test
+
+# clean rule for target.
+net/test/CMakeFiles/tcpserver_test.dir/clean:
+	$(MAKE) -f net/test/CMakeFiles/tcpserver_test.dir/build.make net/test/CMakeFiles/tcpserver_test.dir/clean
+.PHONY : net/test/CMakeFiles/tcpserver_test.dir/clean
+
+# clean rule for target.
+clean: net/test/CMakeFiles/tcpserver_test.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target net/test/CMakeFiles/eventloopthreadpool_test.dir
+
+# All Build rule for target.
+net/test/CMakeFiles/eventloopthreadpool_test.dir/all: net/CMakeFiles/var_net.dir/all
+	$(MAKE) -f net/test/CMakeFiles/eventloopthreadpool_test.dir/build.make net/test/CMakeFiles/eventloopthreadpool_test.dir/depend
+	$(MAKE) -f net/test/CMakeFiles/eventloopthreadpool_test.dir/build.make net/test/CMakeFiles/eventloopthreadpool_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=13,14,15 "Built target eventloopthreadpool_test"
+.PHONY : net/test/CMakeFiles/eventloopthreadpool_test.dir/all
+
+# Include target in all.
+all: net/test/CMakeFiles/eventloopthreadpool_test.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+net/test/CMakeFiles/eventloopthreadpool_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 44
+	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/eventloopthreadpool_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
+.PHONY : net/test/CMakeFiles/eventloopthreadpool_test.dir/rule
+
+# Convenience name for target.
+eventloopthreadpool_test: net/test/CMakeFiles/eventloopthreadpool_test.dir/rule
+
+.PHONY : eventloopthreadpool_test
+
+# clean rule for target.
+net/test/CMakeFiles/eventloopthreadpool_test.dir/clean:
+	$(MAKE) -f net/test/CMakeFiles/eventloopthreadpool_test.dir/build.make net/test/CMakeFiles/eventloopthreadpool_test.dir/clean
+.PHONY : net/test/CMakeFiles/eventloopthreadpool_test.dir/clean
+
+# clean rule for target.
+clean: net/test/CMakeFiles/eventloopthreadpool_test.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target net/test/CMakeFiles/channel_test.dir
+
+# All Build rule for target.
+net/test/CMakeFiles/channel_test.dir/all: net/CMakeFiles/var_net.dir/all
+	$(MAKE) -f net/test/CMakeFiles/channel_test.dir/build.make net/test/CMakeFiles/channel_test.dir/depend
+	$(MAKE) -f net/test/CMakeFiles/channel_test.dir/build.make net/test/CMakeFiles/channel_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=4,5,6 "Built target channel_test"
+.PHONY : net/test/CMakeFiles/channel_test.dir/all
+
+# Include target in all.
+all: net/test/CMakeFiles/channel_test.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+net/test/CMakeFiles/channel_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 44
+	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/channel_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
+.PHONY : net/test/CMakeFiles/channel_test.dir/rule
+
+# Convenience name for target.
+channel_test: net/test/CMakeFiles/channel_test.dir/rule
+
+.PHONY : channel_test
+
+# clean rule for target.
+net/test/CMakeFiles/channel_test.dir/clean:
+	$(MAKE) -f net/test/CMakeFiles/channel_test.dir/build.make net/test/CMakeFiles/channel_test.dir/clean
+.PHONY : net/test/CMakeFiles/channel_test.dir/clean
+
+# clean rule for target.
+clean: net/test/CMakeFiles/channel_test.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target net/test/CMakeFiles/buffer_test.dir
+
+# All Build rule for target.
+net/test/CMakeFiles/buffer_test.dir/all: net/CMakeFiles/var_net.dir/all
+	$(MAKE) -f net/test/CMakeFiles/buffer_test.dir/build.make net/test/CMakeFiles/buffer_test.dir/depend
+	$(MAKE) -f net/test/CMakeFiles/buffer_test.dir/build.make net/test/CMakeFiles/buffer_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=1,2,3 "Built target buffer_test"
+.PHONY : net/test/CMakeFiles/buffer_test.dir/all
+
+# Include target in all.
+all: net/test/CMakeFiles/buffer_test.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+net/test/CMakeFiles/buffer_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 44
+	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/buffer_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
+.PHONY : net/test/CMakeFiles/buffer_test.dir/rule
+
+# Convenience name for target.
+buffer_test: net/test/CMakeFiles/buffer_test.dir/rule
+
+.PHONY : buffer_test
+
+# clean rule for target.
+net/test/CMakeFiles/buffer_test.dir/clean:
+	$(MAKE) -f net/test/CMakeFiles/buffer_test.dir/build.make net/test/CMakeFiles/buffer_test.dir/clean
+.PHONY : net/test/CMakeFiles/buffer_test.dir/clean
+
+# clean rule for target.
+clean: net/test/CMakeFiles/buffer_test.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target net/test/CMakeFiles/inetaddress_test.dir
+
+# All Build rule for target.
+net/test/CMakeFiles/inetaddress_test.dir/all: net/CMakeFiles/var_net.dir/all
+	$(MAKE) -f net/test/CMakeFiles/inetaddress_test.dir/build.make net/test/CMakeFiles/inetaddress_test.dir/depend
+	$(MAKE) -f net/test/CMakeFiles/inetaddress_test.dir/build.make net/test/CMakeFiles/inetaddress_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=16,17,18 "Built target inetaddress_test"
+.PHONY : net/test/CMakeFiles/inetaddress_test.dir/all
+
+# Include target in all.
+all: net/test/CMakeFiles/inetaddress_test.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+net/test/CMakeFiles/inetaddress_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 44
+	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/inetaddress_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
+.PHONY : net/test/CMakeFiles/inetaddress_test.dir/rule
+
+# Convenience name for target.
+inetaddress_test: net/test/CMakeFiles/inetaddress_test.dir/rule
+
+.PHONY : inetaddress_test
+
+# clean rule for target.
+net/test/CMakeFiles/inetaddress_test.dir/clean:
+	$(MAKE) -f net/test/CMakeFiles/inetaddress_test.dir/build.make net/test/CMakeFiles/inetaddress_test.dir/clean
+.PHONY : net/test/CMakeFiles/inetaddress_test.dir/clean
+
+# clean rule for target.
+clean: net/test/CMakeFiles/inetaddress_test.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target net/test/CMakeFiles/timerqueue_test.dir
+
+# All Build rule for target.
+net/test/CMakeFiles/timerqueue_test.dir/all: net/CMakeFiles/var_net.dir/all
+	$(MAKE) -f net/test/CMakeFiles/timerqueue_test.dir/build.make net/test/CMakeFiles/timerqueue_test.dir/depend
+	$(MAKE) -f net/test/CMakeFiles/timerqueue_test.dir/build.make net/test/CMakeFiles/timerqueue_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=25,26,27 "Built target timerqueue_test"
+.PHONY : net/test/CMakeFiles/timerqueue_test.dir/all
+
+# Include target in all.
+all: net/test/CMakeFiles/timerqueue_test.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+net/test/CMakeFiles/timerqueue_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 44
+	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/timerqueue_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
+.PHONY : net/test/CMakeFiles/timerqueue_test.dir/rule
+
+# Convenience name for target.
+timerqueue_test: net/test/CMakeFiles/timerqueue_test.dir/rule
+
+.PHONY : timerqueue_test
+
+# clean rule for target.
+net/test/CMakeFiles/timerqueue_test.dir/clean:
+	$(MAKE) -f net/test/CMakeFiles/timerqueue_test.dir/build.make net/test/CMakeFiles/timerqueue_test.dir/clean
+.PHONY : net/test/CMakeFiles/timerqueue_test.dir/clean
+
+# clean rule for target.
+clean: net/test/CMakeFiles/timerqueue_test.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target net/test/CMakeFiles/eventloop_test.dir
+
+# All Build rule for target.
+net/test/CMakeFiles/eventloop_test.dir/all: net/CMakeFiles/var_net.dir/all
+	$(MAKE) -f net/test/CMakeFiles/eventloop_test.dir/build.make net/test/CMakeFiles/eventloop_test.dir/depend
+	$(MAKE) -f net/test/CMakeFiles/eventloop_test.dir/build.make net/test/CMakeFiles/eventloop_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=7,8,9 "Built target eventloop_test"
+.PHONY : net/test/CMakeFiles/eventloop_test.dir/all
+
+# Include target in all.
+all: net/test/CMakeFiles/eventloop_test.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+net/test/CMakeFiles/eventloop_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 44
+	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/eventloop_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
+.PHONY : net/test/CMakeFiles/eventloop_test.dir/rule
+
+# Convenience name for target.
+eventloop_test: net/test/CMakeFiles/eventloop_test.dir/rule
+
+.PHONY : eventloop_test
+
+# clean rule for target.
+net/test/CMakeFiles/eventloop_test.dir/clean:
+	$(MAKE) -f net/test/CMakeFiles/eventloop_test.dir/build.make net/test/CMakeFiles/eventloop_test.dir/clean
+.PHONY : net/test/CMakeFiles/eventloop_test.dir/clean
+
+# clean rule for target.
+clean: net/test/CMakeFiles/eventloop_test.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target net/test/CMakeFiles/eventloopthread_test.dir
+
+# All Build rule for target.
+net/test/CMakeFiles/eventloopthread_test.dir/all: net/CMakeFiles/var_net.dir/all
+	$(MAKE) -f net/test/CMakeFiles/eventloopthread_test.dir/build.make net/test/CMakeFiles/eventloopthread_test.dir/depend
+	$(MAKE) -f net/test/CMakeFiles/eventloopthread_test.dir/build.make net/test/CMakeFiles/eventloopthread_test.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/project/Var/build/CMakeFiles --progress-num=10,11,12 "Built target eventloopthread_test"
+.PHONY : net/test/CMakeFiles/eventloopthread_test.dir/all
+
+# Include target in all.
+all: net/test/CMakeFiles/eventloopthread_test.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+net/test/CMakeFiles/eventloopthread_test.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 44
+	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/eventloopthread_test.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/project/Var/build/CMakeFiles 0
+.PHONY : net/test/CMakeFiles/eventloopthread_test.dir/rule
+
+# Convenience name for target.
+eventloopthread_test: net/test/CMakeFiles/eventloopthread_test.dir/rule
+
+.PHONY : eventloopthread_test
+
+# clean rule for target.
+net/test/CMakeFiles/eventloopthread_test.dir/clean:
+	$(MAKE) -f net/test/CMakeFiles/eventloopthread_test.dir/build.make net/test/CMakeFiles/eventloopthread_test.dir/clean
+.PHONY : net/test/CMakeFiles/eventloopthread_test.dir/clean
+
+# clean rule for target.
+clean: net/test/CMakeFiles/eventloopthread_test.dir/clean
 
 .PHONY : clean
 

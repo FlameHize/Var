@@ -1,8 +1,8 @@
 #include "http_url.h"
 #include "http_parser.h"
 
-using namespace var;
-using namespace var::net;
+namespace var {
+namespace net {
 
 HttpUrl::HttpUrl()
     : _port(-1)
@@ -543,3 +543,6 @@ void append_query(std::string* query_string,
     query_string->push_back('=');
     query_string->append(value.data(), value.size());
 }
+
+} // end namespace net
+} // end namespace var

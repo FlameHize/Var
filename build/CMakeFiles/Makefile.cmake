@@ -12,6 +12,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.10.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.10.2/CMakeSystem.cmake"
   "../net/CMakeLists.txt"
+  "../net/test/CMakeLists.txt"
   "../src/CMakeLists.txt"
   "../test/CMakeLists.txt"
   "/usr/share/cmake-3.10/Modules/CMakeCInformation.cmake"
@@ -52,10 +53,21 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "src/CMakeFiles/CMakeDirectoryInformation.cmake"
   "test/CMakeFiles/CMakeDirectoryInformation.cmake"
   "net/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "net/test/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "test/CMakeFiles/var_test.dir/DependInfo.cmake"
   "net/CMakeFiles/var_net.dir/DependInfo.cmake"
+  "net/test/CMakeFiles/udpserver_test.dir/DependInfo.cmake"
+  "net/test/CMakeFiles/tcpclient_test.dir/DependInfo.cmake"
+  "net/test/CMakeFiles/tcpserver_test.dir/DependInfo.cmake"
+  "net/test/CMakeFiles/eventloopthreadpool_test.dir/DependInfo.cmake"
+  "net/test/CMakeFiles/channel_test.dir/DependInfo.cmake"
+  "net/test/CMakeFiles/buffer_test.dir/DependInfo.cmake"
+  "net/test/CMakeFiles/inetaddress_test.dir/DependInfo.cmake"
+  "net/test/CMakeFiles/timerqueue_test.dir/DependInfo.cmake"
+  "net/test/CMakeFiles/eventloop_test.dir/DependInfo.cmake"
+  "net/test/CMakeFiles/eventloopthread_test.dir/DependInfo.cmake"
   )

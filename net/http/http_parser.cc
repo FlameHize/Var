@@ -126,8 +126,8 @@ do {                                                                 \
 #define KEEP_ALIVE "keep-alive"
 #define CLOSE "close"
 
-using namespace var;
-using namespace var::net;
+namespace var {
+namespace net {
 
 static const char *method_strings[] =
   {
@@ -2355,3 +2355,6 @@ http_parser_version(void) {
          HTTP_PARSER_VERSION_MINOR * 0x00100 |
          HTTP_PARSER_VERSION_PATCH * 0x00001;
 }
+
+} // end namespace net
+} // end namespace var

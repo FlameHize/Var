@@ -6,5 +6,5 @@ CXX_FLAGS = -std=c++17 -g -Wall -g
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/zgx/project/Var -I/home/zgx/project/Var/net 
+CXX_INCLUDES = -I/home/zgx/project/Var 
 

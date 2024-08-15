@@ -136,6 +136,136 @@ var_net/fast:
 	$(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/build
 .PHONY : var_net/fast
 
+#=============================================================================
+# Target rules for targets named udpserver_test
+
+# Build rule for target.
+udpserver_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 udpserver_test
+.PHONY : udpserver_test
+
+# fast build rule for target.
+udpserver_test/fast:
+	$(MAKE) -f net/test/CMakeFiles/udpserver_test.dir/build.make net/test/CMakeFiles/udpserver_test.dir/build
+.PHONY : udpserver_test/fast
+
+#=============================================================================
+# Target rules for targets named tcpclient_test
+
+# Build rule for target.
+tcpclient_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tcpclient_test
+.PHONY : tcpclient_test
+
+# fast build rule for target.
+tcpclient_test/fast:
+	$(MAKE) -f net/test/CMakeFiles/tcpclient_test.dir/build.make net/test/CMakeFiles/tcpclient_test.dir/build
+.PHONY : tcpclient_test/fast
+
+#=============================================================================
+# Target rules for targets named tcpserver_test
+
+# Build rule for target.
+tcpserver_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tcpserver_test
+.PHONY : tcpserver_test
+
+# fast build rule for target.
+tcpserver_test/fast:
+	$(MAKE) -f net/test/CMakeFiles/tcpserver_test.dir/build.make net/test/CMakeFiles/tcpserver_test.dir/build
+.PHONY : tcpserver_test/fast
+
+#=============================================================================
+# Target rules for targets named eventloopthreadpool_test
+
+# Build rule for target.
+eventloopthreadpool_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 eventloopthreadpool_test
+.PHONY : eventloopthreadpool_test
+
+# fast build rule for target.
+eventloopthreadpool_test/fast:
+	$(MAKE) -f net/test/CMakeFiles/eventloopthreadpool_test.dir/build.make net/test/CMakeFiles/eventloopthreadpool_test.dir/build
+.PHONY : eventloopthreadpool_test/fast
+
+#=============================================================================
+# Target rules for targets named channel_test
+
+# Build rule for target.
+channel_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 channel_test
+.PHONY : channel_test
+
+# fast build rule for target.
+channel_test/fast:
+	$(MAKE) -f net/test/CMakeFiles/channel_test.dir/build.make net/test/CMakeFiles/channel_test.dir/build
+.PHONY : channel_test/fast
+
+#=============================================================================
+# Target rules for targets named buffer_test
+
+# Build rule for target.
+buffer_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 buffer_test
+.PHONY : buffer_test
+
+# fast build rule for target.
+buffer_test/fast:
+	$(MAKE) -f net/test/CMakeFiles/buffer_test.dir/build.make net/test/CMakeFiles/buffer_test.dir/build
+.PHONY : buffer_test/fast
+
+#=============================================================================
+# Target rules for targets named inetaddress_test
+
+# Build rule for target.
+inetaddress_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 inetaddress_test
+.PHONY : inetaddress_test
+
+# fast build rule for target.
+inetaddress_test/fast:
+	$(MAKE) -f net/test/CMakeFiles/inetaddress_test.dir/build.make net/test/CMakeFiles/inetaddress_test.dir/build
+.PHONY : inetaddress_test/fast
+
+#=============================================================================
+# Target rules for targets named timerqueue_test
+
+# Build rule for target.
+timerqueue_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 timerqueue_test
+.PHONY : timerqueue_test
+
+# fast build rule for target.
+timerqueue_test/fast:
+	$(MAKE) -f net/test/CMakeFiles/timerqueue_test.dir/build.make net/test/CMakeFiles/timerqueue_test.dir/build
+.PHONY : timerqueue_test/fast
+
+#=============================================================================
+# Target rules for targets named eventloop_test
+
+# Build rule for target.
+eventloop_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 eventloop_test
+.PHONY : eventloop_test
+
+# fast build rule for target.
+eventloop_test/fast:
+	$(MAKE) -f net/test/CMakeFiles/eventloop_test.dir/build.make net/test/CMakeFiles/eventloop_test.dir/build
+.PHONY : eventloop_test/fast
+
+#=============================================================================
+# Target rules for targets named eventloopthread_test
+
+# Build rule for target.
+eventloopthread_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 eventloopthread_test
+.PHONY : eventloopthread_test
+
+# fast build rule for target.
+eventloopthread_test/fast:
+	$(MAKE) -f net/test/CMakeFiles/eventloopthread_test.dir/build.make net/test/CMakeFiles/eventloopthread_test.dir/build
+.PHONY : eventloopthread_test/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -146,6 +276,16 @@ help:
 	@echo "... edit_cache"
 	@echo "... var_test"
 	@echo "... var_net"
+	@echo "... udpserver_test"
+	@echo "... tcpclient_test"
+	@echo "... tcpserver_test"
+	@echo "... eventloopthreadpool_test"
+	@echo "... channel_test"
+	@echo "... buffer_test"
+	@echo "... inetaddress_test"
+	@echo "... timerqueue_test"
+	@echo "... eventloop_test"
+	@echo "... eventloopthread_test"
 .PHONY : help
 
 
