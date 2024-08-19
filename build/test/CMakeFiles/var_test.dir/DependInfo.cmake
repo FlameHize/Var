@@ -11,12 +11,14 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/zgx/project/Var/test/http_status_code_test.cc" "/home/zgx/project/Var/build/test/CMakeFiles/var_test.dir/http_status_code_test.cc.o"
   "/home/zgx/project/Var/test/http_url_test.cc" "/home/zgx/project/Var/build/test/CMakeFiles/var_test.dir/http_url_test.cc.o"
   "/home/zgx/project/Var/test/main.cc" "/home/zgx/project/Var/build/test/CMakeFiles/var_test.dir/main.cc.o"
+  "/home/zgx/project/Var/test/string_splitter_test.cc" "/home/zgx/project/Var/build/test/CMakeFiles/var_test.dir/string_splitter_test.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../"
+  "../net"
   )
 
 # Targets to which this target links.

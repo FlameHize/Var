@@ -138,7 +138,7 @@ TEST(HttpMessageTest, eof) {
         "X_BD_LOGID64: 16815814797661447369\r\n"
         "X_BD_PRODUCT: map\r\n"
         "X_BD_SUBSYS: apimap\r\n";
-    var::IOBuf buf;
+    var::net::Buffer buf;
     buf.append(http_request);
     HttpMessage http_message;
     ASSERT_EQ((ssize_t)buf.readableBytes(), http_message.ParseFromBytes(buf.peek(), buf.readableBytes()));
@@ -222,7 +222,7 @@ TEST(HttpMessageTest, parse_from_iobuf) {
     for (size_t i = 0; i < content_length; ++i) {
         content.push_back('2');
     }
-    var::IOBuf request;
+    var::net::Buffer request;
     request.append(header);
     request.append(content);
 
@@ -239,7 +239,7 @@ TEST(HttpMessageTest, parse_series_http_message)
     // used for mock ref. 这里是为了不带包内容 提前解析包头
     bool ref = false;
     // Model.
-    auto ParseHttpMessage = [&](var::IOBuf& buf, bool read_eof) -> HttpMessage {
+    auto ParseHttpMessage = [&](var::net::Buffer& buf, bool read_eof) -> HttpMessage {
         if(http_message == nullptr) {
             // 1. read_eof：完整的HTTP消息后读取EOF，这是一个常见情况。
             // 请注意，除了not_enough_data之外，无法返回错误，否则socket将被设置为失败，并且仅在processHtttpxxx()中的消息就可以删除。
@@ -322,7 +322,7 @@ TEST(HttpMessageTest, parse_series_http_message)
     "\r\n"
     "Message Body sdfsdfa\r\n"
     ;
-    var::IOBuf buf;
+    var::net::Buffer buf;
     buf.append(http_request, strlen(http_request));
     while(buf.readableBytes() >= 0) {
         bool read_eof = buf.readableBytes() == 0 ? true : false;

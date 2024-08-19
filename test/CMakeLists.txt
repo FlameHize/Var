@@ -10,10 +10,18 @@ set(TEST_SRC_FILES
     http_header_test.cc
     http_url_test.cc
     http_status_code_test.cc
-    http_message_test.cc)
+    http_message_test.cc
+    string_splitter_test.cc)
 
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
-target_include_directories(${PROJECT_TEST_NAME} PRIVATE ${GTEST_INCLUDE_DIRS})
+# 注意这里的头文件问题 http_message_test直接包含http_message.h(间接包含Buffer.h)
+# 如果这里不加${PROJECT_SOURCE_DIR}/net 那么CMake无法识别“Buffer.h"路径 只能识别"net/Buffer.h"路径
+# 这是因为生成的var_net库的target_include_directories路径级别是PRIVATE的 不对库外文件开放包含的${PROJECT_SOURCE_DIR}/net包含路径
+# 这里也可能把var_net的头文件路径改为PUBLIC的 这样下面就不用加${PROJECT_SOURCE_DIR}/net这一行了
+target_include_directories(${PROJECT_TEST_NAME} PRIVATE 
+                    ${GTEST_INCLUDE_DIRS}
+                    ${PROJECT_SOURCE_DIR}/net)
+
 target_link_libraries(${PROJECT_TEST_NAME} 
                     ${GTEST_LIBRARIES} 
                     var_net

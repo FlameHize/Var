@@ -24,10 +24,8 @@
 #include <string.h>
 //#include <unistd.h>  // ssize_t
 
-namespace var
-{
-namespace net
-{
+namespace var {
+namespace net {
 
 /// A buffer class modeled after org.jboss.netty.buffer.ChannelBuffer
 ///

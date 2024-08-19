@@ -314,6 +314,33 @@ main.cc.s:
 	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/main.cc.s
 .PHONY : main.cc.s
 
+string_splitter_test.o: string_splitter_test.cc.o
+
+.PHONY : string_splitter_test.o
+
+# target to build an object file
+string_splitter_test.cc.o:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/string_splitter_test.cc.o
+.PHONY : string_splitter_test.cc.o
+
+string_splitter_test.i: string_splitter_test.cc.i
+
+.PHONY : string_splitter_test.i
+
+# target to preprocess a source file
+string_splitter_test.cc.i:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/string_splitter_test.cc.i
+.PHONY : string_splitter_test.cc.i
+
+string_splitter_test.s: string_splitter_test.cc.s
+
+.PHONY : string_splitter_test.s
+
+# target to generate assembly for a file
+string_splitter_test.cc.s:
+	cd /home/zgx/project/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/string_splitter_test.cc.s
+.PHONY : string_splitter_test.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -344,6 +371,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... string_splitter_test.o"
+	@echo "... string_splitter_test.i"
+	@echo "... string_splitter_test.s"
 .PHONY : help
 
 

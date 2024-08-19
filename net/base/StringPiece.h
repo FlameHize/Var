@@ -42,11 +42,10 @@
 
 #include <string.h>
 #include <iosfwd>    // for ostream forward-declaration
-
+#include <algorithm>
 #include "Types.h"
 
-namespace var
-{
+namespace var {
 
 // For passing C-style string argument to a function.
 class StringArg // copyable
@@ -75,6 +74,7 @@ class StringPiece {
   // We provide non-explicit singleton constructors so users can pass
   // in a "const char*" or a "string" wherever a "StringPiece" is
   // expected.
+  typedef size_t size_type;
   StringPiece()
     : ptr_(NULL), length_(0) { }
   StringPiece(const char* str)
@@ -108,6 +108,23 @@ class StringPiece {
   void set(const void* buffer, int len) {
     ptr_ = reinterpret_cast<const char*>(buffer);
     length_ = len;
+  }
+
+  static size_type npos() {
+    return std::string::npos;
+  }
+
+  size_type find(const char c, size_type pos = 0) const {
+    if(pos > static_cast<size_type>(size())) return StringPiece::npos();
+    const char* result = std::find(begin() + pos, end(), c);
+    return result != end() ?
+        static_cast<size_type>(result - begin()) : StringPiece::npos();
+  }
+
+  StringPiece substr(size_type pos, size_type n = std::string::npos) const {
+    if(pos > static_cast<size_type>(size())) pos = size();
+    if(n > static_cast<size_type>(size()) - pos) n =  static_cast<size_type>(size()) - pos;
+    return StringPiece(ptr_ + pos, n);
   }
 
   char operator[](int i) const { return ptr_[i]; }
@@ -183,7 +200,7 @@ template<> struct __type_traits<var::StringPiece> {
 };
 #endif
 
-// allow StringPiece to be logged
-std::ostream& operator<<(std::ostream& o, const var::StringPiece& piece);
+// // allow StringPiece to be logged
+// std::ostream& operator<<(std::ostream& o, const var::StringPiece& piece);
 
 #endif  // VAR_BASE_STRINGPIECE_H

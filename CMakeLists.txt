@@ -10,6 +10,5 @@ include_directories(${PROJECT_SOURCE_DIR})
 
 add_subdirectory(src)
 add_subdirectory(test)
-# add_subdirectory(util)
 add_subdirectory(net)
 # add_subdirectory(service)

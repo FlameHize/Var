@@ -18,9 +18,9 @@
 #ifndef VAR_HTTP_MESSAGE_H
 #define VAR_HTTP_MESSAGE_H
 
-#include "util/iobuf.h"
 #include "http_header.h"
 #include "http_parser.h"
+#include "Buffer.h"
 
 namespace var {
 namespace net {
@@ -45,8 +45,8 @@ public:
     // Returns bytes parsed, -1 on failure.
     ssize_t ParseFromBytes(const char* data, const size_t length);
 
-    const IOBuf &body() const { return _body; }
-    IOBuf &body() { return _body; }
+    const Buffer &body() const { return _body; }
+    Buffer &body() { return _body; }
 
     bool Completed() const { return _stage == HTTP_ON_MESSAGE_COMPLETE; }
     HttpParserStage stage() const { return _stage; }
@@ -74,7 +74,7 @@ private:
     HttpParserStage _stage;
     HttpHeader _header;
     std::string _url;
-    IOBuf _body;
+    Buffer _body;
     struct http_parser _parser;
     size_t _parsed_length;
     std::string _cur_header;
