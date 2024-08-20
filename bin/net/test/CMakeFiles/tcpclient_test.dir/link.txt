@@ -1,1 +1,0 @@
-/usr/bin/c++  -std=c++17 -g -Wall -g  -rdynamic CMakeFiles/tcpclient_test.dir/TcpClient_test.cc.o CMakeFiles/tcpclient_test.dir/main.cc.o  -o ../../tcpclient_test -Wl,-Bstatic -lgtest ../../../lib/libvar_net.a -Wl,-Bdynamic -lpthread 

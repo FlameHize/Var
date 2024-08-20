@@ -1,1 +1,0 @@
-/usr/bin/c++  -std=c++17 -g -Wall -g  -rdynamic CMakeFiles/channel_test.dir/Channel_test.cc.o CMakeFiles/channel_test.dir/main.cc.o  -o ../../channel_test -Wl,-Bstatic -lgtest ../../../lib/libvar_net.a -Wl,-Bdynamic -lpthread 

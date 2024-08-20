@@ -1,1 +1,0 @@
-/usr/bin/c++  -std=c++17 -g -Wall -g  -rdynamic CMakeFiles/inetaddress_test.dir/InetAddress_test.cc.o CMakeFiles/inetaddress_test.dir/main.cc.o  -o ../../inetaddress_test -Wl,-Bstatic -lgtest ../../../lib/libvar_net.a -Wl,-Bdynamic -lpthread 
