@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++17 -g -Wall -fno-rtti -g  -rdynamic CMakeFiles/buffer_test.dir/Buffer_test.cc.o CMakeFiles/buffer_test.dir/main.cc.o  -o ../../../bin/buffer_test  /usr/local/lib/libgtest.a ../../../lib/libvar_net.a -lpthread 

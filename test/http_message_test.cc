@@ -209,7 +209,8 @@ TEST(HttpMessageTest, one_more_request_line)
     ASSERT_TRUE(http_message.Completed());
 }
 
-TEST(HttpMessageTest, parse_from_iobuf) {
+TEST(HttpMessageTest, parse_from_iobuf) 
+{
     const size_t content_length = 8192;
     char header[1024];
     snprintf(header, sizeof(header),
@@ -231,6 +232,78 @@ TEST(HttpMessageTest, parse_from_iobuf) {
     ASSERT_TRUE(http_message.Completed());
     ASSERT_EQ(content, http_message.body().retrieveAllAsString());
     ASSERT_EQ("text/plain", http_message.header().content_type());
+}
+
+TEST(HttpMessageTest, parse_http_header) 
+{
+    const char* http_request = 
+        "POST foobar://user:passwd@www.baidu.com:80/var/bthread_count?wd1=url1&wd2=url2#frag HTTP/1.1\r\n"
+        "From: someuser@jmarshall.com\r\n"
+        "User-Agent: HTTPTool/1.0  \r\n"  
+        "Content-Type: json\r\n"
+        "Content-Length: 20\r\n"
+        "Log-ID: 456\r\n"
+        "Host: myhost\r\n"
+        "Correlation-ID: 123\r\n"
+        "Authorization: test\r\n"
+        "Accept: */*\r\n"
+        "\r\n"
+        "Message Body sdfsdfa\r\n"
+    ;
+    HttpMessage http_message;
+    ASSERT_EQ((ssize_t)strlen(http_request), 
+              http_message.ParseFromBytes(http_request, strlen(http_request)));
+    ASSERT_TRUE(http_message.Completed());
+    const HttpHeader& header = http_message.header();
+    const HttpUrl& url = header.url();
+    ASSERT_EQ("foobar", url.scheme());
+    ASSERT_EQ("user:passwd", url.user_info());
+    ASSERT_EQ(80, url.port());
+    ASSERT_EQ("www.baidu.com", url.host());
+    ASSERT_EQ("/var/bthread_count", url.path());
+    ASSERT_EQ("frag", url.fragment());
+    ASSERT_TRUE(url.GetQuery("wd1"));
+    ASSERT_EQ(*url.GetQuery("wd1"), "url1");
+    ASSERT_TRUE(url.GetQuery("wd2"));
+    ASSERT_EQ(*url.GetQuery("wd2"), "url2");
+    ASSERT_FALSE(url.GetQuery("nonkey"));
+}
+
+TEST(HttpMessageTest, parse_brpc_request) 
+{
+    const char* http_request = 
+        "GET /vars/bthread_count?series HTTP/1.1\r\n"
+        "Host: 0.0.0.0:8000\r\n"
+        "User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:78.0) Gecko/20100101 Firefox/78.0\r\n"
+        "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\n"
+        "Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2\r\n"
+        "Accept-Encoding: gzip, deflate\r\n"
+        "X-Requested-With: XMLHttpRequest\r\n"
+        "Connection: keep-alive\r\n"
+        "Referer: http://0.0.0.0:8000/vars/\r\n"
+        "Cookie: key=%24argon2i%24v%3D19%24m%3D4096%2Ct%3D3%2Cp%3D1%24UFk%2BiH2ZXvkDSdoqlycaVg%24%2FgdItxoX8GduV0PhrM28cALrDUjqHkGH488OQZ8KvZY\r\n"
+        "Upgrade-Insecure-Requests: 1\r\n"
+        "\r\n"
+    ;
+    HttpMessage http_message;
+    ASSERT_EQ((ssize_t)strlen(http_request), 
+              http_message.ParseFromBytes(http_request, strlen(http_request)));
+    ASSERT_TRUE(http_message.Completed());
+    ASSERT_EQ(http_message.stage(), HTTP_ON_MESSAGE_COMPLETE);
+    const HttpHeader& header = http_message.header();
+    ASSERT_EQ(HTTP_METHOD_GET, header.method());
+    ASSERT_EQ(1, header.major_version());
+    ASSERT_EQ(1, header.minor_version());
+    ASSERT_EQ(HTTP_STATUS_OK, header.status_code());
+    ASSERT_EQ("0.0.0.0:8000", *header.GetHeader("Host"));
+    ASSERT_EQ("gzip, deflate", *header.GetHeader("Accept-Encoding"));
+    ASSERT_EQ("XMLHttpRequest", *header.GetHeader("X-Requested-With"));
+    ASSERT_EQ("keep-alive", *header.GetHeader("Connection"));
+    ASSERT_EQ("http://0.0.0.0:8000/vars/", *header.GetHeader("Referer"));
+    ASSERT_EQ("1", *header.GetHeader("Upgrader-Insecure-Requests"));
+    const HttpUrl& url = header.url();
+    ASSERT_EQ("/var/bthread_count", url.path());
+
 }
 
 TEST(HttpMessageTest, parse_series_http_message)

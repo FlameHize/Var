@@ -57,3 +57,7 @@ target_link_libraries(tcpserver_test ${GTEST_LIBRARIES} var_net pthread)
 add_executable(udpserver_test UdpServer_test.cc main.cc)
 target_include_directories(udpserver_test PRIVATE ${GTEST_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/net)
 target_link_libraries(udpserver_test ${GTEST_LIBRARIES} var_net pthread)
+
+add_executable(httpserver_test HttpServer_test.cc main.cc)
+target_include_directories(httpserver_test PRIVATE ${GTEST_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/net)
+target_link_libraries(httpserver_test ${GTEST_LIBRARIES} var_net pthread)

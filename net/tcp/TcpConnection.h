@@ -78,14 +78,14 @@ class TcpConnection : noncopyable,
   void stopRead();
   bool isReading() const { return reading_; }; // NOT thread safe, may race with start/stopReadInLoop
 
-  void setContext(const std::any& context)
+  void setContext(void* context)
   { context_ = context; }
 
-  const std::any& getContext() const
+  const void* getContext() const
   { return context_; }
 
-  std::any* getMutableContext()
-  { return &context_; }
+  void* getMutableContext()
+  { return context_; }
 
   void setConnectionCallback(const ConnectionCallback& cb)
   { connectionCallback_ = cb; }
@@ -149,7 +149,7 @@ class TcpConnection : noncopyable,
   size_t highWaterMark_;
   Buffer inputBuffer_;
   Buffer outputBuffer_; // FIXME: use list<Buffer> as output buffer.
-  std::any context_;
+  void* context_;
   // FIXME: creationTime_, lastReceiveTime_
   //        bytesReceived_, bytesSent_
 };

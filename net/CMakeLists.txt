@@ -25,6 +25,7 @@ add_library(var_net STATIC
     http/http_url.cc
     http/http_header.cc
     http/http_message.cc
+    http/http_server.cc
     base/AsyncLogging.cc
     base/Condition.cc
     base/CountDownLatch.cc

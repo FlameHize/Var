@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++17 -g -Wall -fno-rtti -g  -rdynamic CMakeFiles/tcpserver_test.dir/TcpServer_test.cc.o CMakeFiles/tcpserver_test.dir/main.cc.o  -o ../../../bin/tcpserver_test  /usr/local/lib/libgtest.a ../../../lib/libvar_net.a -lpthread 
