@@ -6,14 +6,18 @@ net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o
  ../net/Callbacks.h
  ../net/Endian.h
  ../net/EventLoop.h
+ ../net/EventLoopThread.h
  ../net/InetAddress.h
  ../net/TimerId.h
  ../net/base/Atomic.h
+ ../net/base/Condition.h
+ ../net/base/CountDownLatch.h
  ../net/base/CurrentThread.h
  ../net/base/LogStream.h
  ../net/base/Logging.h
  ../net/base/Mutex.h
  ../net/base/StringPiece.h
+ ../net/base/Thread.h
  ../net/base/Timestamp.h
  ../net/base/Types.h
  ../net/base/copyable.h
@@ -26,6 +30,7 @@ net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o
  ../net/http/http_server.h
  ../net/http/http_status_code.h
  ../net/http/http_url.h
+ ../net/tcp/TcpClient.h
  ../net/tcp/TcpConnection.h
  ../net/tcp/TcpServer.h
  /home/zgx/Var/net/test/HttpServer_test.cc

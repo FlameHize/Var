@@ -15,7 +15,24 @@ void HttpServer::Start() {
     _server.start();
 }
 
+void HttpServer::ResetConnContext(const TcpConnectionPtr& conn) {
+    if(!conn) {
+        return;
+    }
+    HttpContext* http_context = static_cast<HttpContext*>(conn->getMutableContext());
+    if(http_context) {
+        delete http_context;
+        http_context = nullptr;
+    }
+    conn->setContext(nullptr);
+}
+
 void HttpServer::OnConnection(const TcpConnectionPtr& conn) {
+    HttpContext* http_context = static_cast<HttpContext*>(conn->getMutableContext());
+    if(!conn->connected() && !http_context) {
+        delete http_context;
+        http_context = nullptr;
+    }
     conn->setContext(nullptr);
     LOG_TRACE << conn->localAddress().toIpPort() << " -> "
               << conn->peerAddress().toIpPort() << " is "
@@ -30,14 +47,14 @@ void HttpServer::OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp 
     }
     // Resolved all buf's data.
     size_t rc = http_context->ParseFromBytes(buf->peek(), buf->readableBytes());
-    // Http header has already resolved data success, continue parse http body.
+    // Http header has already resolved data success, 
+    // continue parse http body.
     if(http_context->GetResolvedStage()) {
         if(rc >= 0) {
             buf->retrieve(rc);
             if(http_context->Completed()) {
                 // Already return the message before, do not return again.
-                delete http_context;
-                http_context = nullptr;
+                ResetConnContext(conn);
                 return;
             }
         }
@@ -54,17 +71,14 @@ void HttpServer::OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp 
         // to avoid repeated parsing in the next time.
         buf->retrieve(rc);
         if(http_context->Completed()) {
-            ///@todo callback
-            conn->send("Resolved Http completed message success");
-            delete http_context;
-            http_context = nullptr;
+            OnHttpMessage(conn, static_cast<HttpMessage*>(http_context));
+            ResetConnContext(conn);
             return;
         }
         else if(http_context->stage() >= HTTP_ON_HEADERS_COMPLETE) {
             // Returned content contains the complete header but does not 
             // include any content, which can be parsed in advance. 
-            ///@todo callback
-            conn->send("Resolved Http Header success");
+            OnHttpMessage(conn, static_cast<HttpMessage*>(http_context));
             http_context->SetStageToResolved();
             return;
         }
@@ -73,6 +87,10 @@ void HttpServer::OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp 
             return;
         }
     }
+}
+
+void HttpServer::OnHttpMessage(const TcpConnectionPtr& conn, const HttpMessage* msg) {
+    LOG_INFO << "Resolved http message success";
 }
 
 } // end namespace net

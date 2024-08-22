@@ -95,7 +95,7 @@ channel_test_EXTERNAL_OBJECTS =
 ../bin/channel_test: net/test/CMakeFiles/channel_test.dir/main.cc.o
 ../bin/channel_test: net/test/CMakeFiles/channel_test.dir/build.make
 ../bin/channel_test: /usr/local/lib/libgtest.a
-../bin/channel_test: ../lib/libvar_net.a
+../bin/channel_test: ../lib/libvar_net.so
 ../bin/channel_test: net/test/CMakeFiles/channel_test.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../../../bin/channel_test"
 	cd /home/zgx/Var/build/net/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/channel_test.dir/link.txt --verbose=$(VERBOSE)

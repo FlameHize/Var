@@ -1,4 +1,4 @@
-add_library(var_net STATIC 
+add_library(var_net SHARED 
     Acceptor.cc
     Buffer.cc
     Channel.cc

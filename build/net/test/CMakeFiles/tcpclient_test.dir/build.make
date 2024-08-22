@@ -95,7 +95,7 @@ tcpclient_test_EXTERNAL_OBJECTS =
 ../bin/tcpclient_test: net/test/CMakeFiles/tcpclient_test.dir/main.cc.o
 ../bin/tcpclient_test: net/test/CMakeFiles/tcpclient_test.dir/build.make
 ../bin/tcpclient_test: /usr/local/lib/libgtest.a
-../bin/tcpclient_test: ../lib/libvar_net.a
+../bin/tcpclient_test: ../lib/libvar_net.so
 ../bin/tcpclient_test: net/test/CMakeFiles/tcpclient_test.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../../../bin/tcpclient_test"
 	cd /home/zgx/Var/build/net/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tcpclient_test.dir/link.txt --verbose=$(VERBOSE)

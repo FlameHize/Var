@@ -637,55 +637,54 @@ var_net_OBJECTS = \
 # External object files for target var_net
 var_net_EXTERNAL_OBJECTS =
 
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/Acceptor.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/Buffer.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/Channel.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/Connector.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/EventLoop.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/EventLoopThread.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/EventLoopThreadPool.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/Socket.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/SocketsOps.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/InetAddress.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/Timer.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/TimerQueue.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/tcp/TcpConnection.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/tcp/TcpClient.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/tcp/TcpServer.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/udp/UdpServer.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/Poller.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/poller/PollPoller.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/poller/EpollPoller.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/poller/DefaultPoller.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/http/http_parser.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/http/http_method.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/http/http_status_code.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/http/http_url.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/http/http_header.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/http/http_message.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/http/http_server.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/AsyncLogging.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/Condition.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/CountDownLatch.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/CurrentThread.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/Date.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/Exception.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/FileUtil.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/LogFile.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/Logging.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/LogStream.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/Thread.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/Timestamp.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/base/TimeZone.cc.o
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/build.make
-../lib/libvar_net.a: net/CMakeFiles/var_net.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Linking CXX static library ../../lib/libvar_net.a"
-	cd /home/zgx/Var/build/net && $(CMAKE_COMMAND) -P CMakeFiles/var_net.dir/cmake_clean_target.cmake
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/Acceptor.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/Buffer.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/Channel.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/Connector.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/EventLoop.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/EventLoopThread.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/EventLoopThreadPool.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/Socket.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/SocketsOps.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/InetAddress.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/Timer.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/TimerQueue.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/tcp/TcpConnection.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/tcp/TcpClient.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/tcp/TcpServer.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/udp/UdpServer.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/Poller.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/poller/PollPoller.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/poller/EpollPoller.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/poller/DefaultPoller.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/http/http_parser.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/http/http_method.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/http/http_status_code.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/http/http_url.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/http/http_header.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/http/http_message.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/http/http_server.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/AsyncLogging.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/Condition.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/CountDownLatch.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/CurrentThread.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/Date.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/Exception.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/FileUtil.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/LogFile.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/Logging.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/LogStream.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/Thread.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/Timestamp.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/TimeZone.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/build.make
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Linking CXX shared library ../../lib/libvar_net.so"
 	cd /home/zgx/Var/build/net && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/var_net.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-net/CMakeFiles/var_net.dir/build: ../lib/libvar_net.a
+net/CMakeFiles/var_net.dir/build: ../lib/libvar_net.so
 
 .PHONY : net/CMakeFiles/var_net.dir/build
 

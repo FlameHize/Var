@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "../../lib/libvar_net.a"
   "../../lib/libvar_net.pdb"
+  "../../lib/libvar_net.so"
   "CMakeFiles/var_net.dir/Acceptor.cc.o"
   "CMakeFiles/var_net.dir/Buffer.cc.o"
   "CMakeFiles/var_net.dir/Channel.cc.o"

@@ -34,8 +34,10 @@ public:
     void Start();
 
 private:
+    void ResetConnContext(const TcpConnectionPtr& conn);
     void OnConnection(const TcpConnectionPtr& conn);
     void OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp time);
+    void OnHttpMessage(const TcpConnectionPtr& conn, const HttpMessage* msg);
 
 private:
     TcpServer _server;

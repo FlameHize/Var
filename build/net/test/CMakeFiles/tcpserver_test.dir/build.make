@@ -95,7 +95,7 @@ tcpserver_test_EXTERNAL_OBJECTS =
 ../bin/tcpserver_test: net/test/CMakeFiles/tcpserver_test.dir/main.cc.o
 ../bin/tcpserver_test: net/test/CMakeFiles/tcpserver_test.dir/build.make
 ../bin/tcpserver_test: /usr/local/lib/libgtest.a
-../bin/tcpserver_test: ../lib/libvar_net.a
+../bin/tcpserver_test: ../lib/libvar_net.so
 ../bin/tcpserver_test: net/test/CMakeFiles/tcpserver_test.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../../../bin/tcpserver_test"
 	cd /home/zgx/Var/build/net/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tcpserver_test.dir/link.txt --verbose=$(VERBOSE)

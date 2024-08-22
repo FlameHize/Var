@@ -95,7 +95,7 @@ udpserver_test_EXTERNAL_OBJECTS =
 ../bin/udpserver_test: net/test/CMakeFiles/udpserver_test.dir/main.cc.o
 ../bin/udpserver_test: net/test/CMakeFiles/udpserver_test.dir/build.make
 ../bin/udpserver_test: /usr/local/lib/libgtest.a
-../bin/udpserver_test: ../lib/libvar_net.a
+../bin/udpserver_test: ../lib/libvar_net.so
 ../bin/udpserver_test: net/test/CMakeFiles/udpserver_test.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../../../bin/udpserver_test"
 	cd /home/zgx/Var/build/net/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/udpserver_test.dir/link.txt --verbose=$(VERBOSE)
