@@ -22,6 +22,7 @@
 
 #include <assert.h>
 #include <string.h>
+#include <sstream>
 //#include <unistd.h>  // ssize_t
 
 namespace var {
@@ -412,6 +413,34 @@ class Buffer : public var::copyable
   size_t writerIndex_;
 
   static const char kCRLF[];
+};
+
+class BufferStream : public Buffer, public std::ostream {
+public:
+  BufferStream() : buf_(new std::stringbuf) {
+    rdbuf(buf_);
+  }
+
+  virtual ~BufferStream() {
+    delete buf_;
+    buf_ = nullptr;
+  }
+
+  Buffer& buf() {
+    this->append(buf_->str());
+    return *this;
+  }
+
+  void buf(const Buffer& buf) {
+    *static_cast<Buffer*>(this) = buf;
+  }
+
+  void moveTo(Buffer& target) {
+    target = std::move(buf());
+  }
+
+private:
+  std::stringbuf* buf_;
 };
 
 }  // namespace net

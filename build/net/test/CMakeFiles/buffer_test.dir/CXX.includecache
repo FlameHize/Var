@@ -23,6 +23,8 @@ assert.h
 -
 string.h
 -
+sstream
+-
 
 ../net/Endian.h
 stdint.h
@@ -55,10 +57,6 @@ assert.h
 /home/zgx/Var/net/test/Buffer_test.cc
 Buffer.h
 /home/zgx/Var/net/test/Buffer.h
-gtest/gtest.h
--
-
-/home/zgx/Var/net/test/main.cc
 gtest/gtest.h
 -
 

@@ -37,7 +37,9 @@ private:
     void ResetConnContext(const TcpConnectionPtr& conn);
     void OnConnection(const TcpConnectionPtr& conn);
     void OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp time);
-    void OnHttpMessage(const TcpConnectionPtr& conn, const HttpMessage* msg);
+    void OnHttpMessage(const TcpConnectionPtr& conn, const HttpMessage* http_message);
+
+    std::string MakeHttpRequestStr(const HttpMessage* http_message);
 
 private:
     TcpServer _server;

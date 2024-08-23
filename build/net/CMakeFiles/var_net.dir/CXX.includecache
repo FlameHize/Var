@@ -23,6 +23,8 @@ assert.h
 -
 string.h
 -
+sstream
+-
 
 ../net/Callbacks.h
 base/Timestamp.h
@@ -173,6 +175,8 @@ stdint.h
 /home/zgx/Var/net/http/http_server.cc
 http_server.h
 /home/zgx/Var/net/http/http_server.h
+ostream
+-
 
 /home/zgx/Var/net/http/http_server.h
 http_context.h

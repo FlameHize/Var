@@ -27,6 +27,7 @@ TEST(HttpServerTest, resolved_request)
     const char* http_request = 
         "GET /vars/bthread_count?series HTTP/1.1\r\n"
         "Host: 0.0.0.0:8000\r\n"
+        "Content-Type: text/html\r\n"
         "User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:78.0) Gecko/20100101 Firefox/78.0\r\n"
         "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\n"
         "Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2\r\n"
