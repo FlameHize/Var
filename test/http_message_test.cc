@@ -300,7 +300,7 @@ TEST(HttpMessageTest, parse_brpc_request)
     ASSERT_EQ("XMLHttpRequest", *header.GetHeader("X-Requested-With"));
     ASSERT_EQ("keep-alive", *header.GetHeader("Connection"));
     ASSERT_EQ("http://0.0.0.0:8000/vars/", *header.GetHeader("Referer"));
-    ASSERT_EQ("1", *header.GetHeader("Upgrader-Insecure-Requests"));
+    ASSERT_EQ("1", *header.GetHeader("Upgrade-Insecure-Requests"));
     const HttpUrl& url = header.url();
-    ASSERT_EQ("/var/bthread_count", url.path());
+    ASSERT_EQ("/vars/bthread_count", url.path());
 }

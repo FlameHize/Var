@@ -27,22 +27,28 @@ namespace net {
 
 class HttpServer : noncopyable {
 public:
+    typedef std::function<void(HttpHeader*, Buffer*, Buffer*)> HttpCallback;
     explicit HttpServer(EventLoop* loop, 
                         const InetAddress& addr, 
                         const std::string& name);
 
-    void Start();
+    void Start() { _server.start(); }
+    void SetVerbose() { _verbose = true; }
+
+    static std::string MakeHttpRequestStr(HttpHeader* header, Buffer* content);
+    static std::string MakeHttpReponseStr(HttpHeader* header, Buffer* content);
 
 private:
     void ResetConnContext(const TcpConnectionPtr& conn);
     void OnConnection(const TcpConnectionPtr& conn);
     void OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp time);
-    void OnHttpMessage(const TcpConnectionPtr& conn, const HttpMessage* http_message);
-
-    std::string MakeHttpRequestStr(const HttpMessage* http_message);
+    void OnHttpMessage(const TcpConnectionPtr& conn, HttpMessage* http_message);
+    void OnVerboseHttpMessage(HttpHeader* header, Buffer* content, std::string remote_side, bool request_or_response);
 
 private:
+    bool _verbose;
     TcpServer _server;
+    HttpCallback _http_callback;
 };
 
 } // end namespace net

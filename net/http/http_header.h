@@ -33,15 +33,22 @@ struct HeaderStringHash : public std::hash<std::string> {
         }
         return result;
     }
+    std::size_t operator()(const char* s) const {
+        std::size_t result = 0;
+        for(; *s; ++s) {
+            result = result * 101 + std::tolower(*s);
+        }
+        return result;
+    }
 };
 
 struct HeaderStringEqual : public std::equal_to<std::string> {
-    bool operator()(const std::string& lhs, const std::string& rhs) const {
-        return lhs.size() == rhs.size() &&
-               std::equal(lhs.begin(), lhs.end(), rhs.begin(),
-               [](unsigned char a, unsigned char b) {
-                    return std::tolower(a) == std::tolower(b);
-               });
+    bool operator()(const std::string& s1, const std::string& s2) const {
+        return s1.size() == s2.size() &&
+            strcasecmp(s1.c_str(), s2.c_str()) == 0;
+    }
+    bool operator()(const std::string& s1, const char* s2) const {
+        return strcasecmp(s1.c_str(), s2) == 0;
     }
 };
 

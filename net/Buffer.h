@@ -173,6 +173,15 @@ class Buffer : public var::copyable
     return StringPiece(peek(), static_cast<int>(readableBytes()));
   }
 
+  void append(const Buffer& buf) {
+    append(buf.peek(), buf.readableBytes());
+  }
+
+  void append(Buffer&& buf) {
+    append(buf.peek(), buf.readableBytes());
+    buf.retrieveAll();
+  }
+
   void append(const StringPiece& str)
   {
     append(str.data(), str.size());

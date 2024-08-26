@@ -4,16 +4,20 @@
 namespace var {
 namespace net {
 
+void defaultHttpCallback(HttpHeader* header, Buffer* content, Buffer* response) {
+    header->set_status_code(HTTP_STATUS_NOT_FOUND);
+    header->SetHeader("Connection", "close");
+}
+
 HttpServer::HttpServer(EventLoop* loop, 
                        const InetAddress& addr,
                        const std::string& name)
-    : _server(loop, addr, name) {
+    : _verbose(false)
+    , _server(loop, addr, name)
+    , _http_callback(defaultHttpCallback) {
     _server.setConnectionCallback(std::bind(&HttpServer::OnConnection, this, _1));
     _server.setMessageCallback(std::bind(&HttpServer::OnMessage, this, _1, _2, _3));
-}
-
-void HttpServer::Start() {
-    _server.start();
+    SetVerbose();
 }
 
 void HttpServer::ResetConnContext(const TcpConnectionPtr& conn) {
@@ -91,47 +95,84 @@ void HttpServer::OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp 
     }
 }
 
-void HttpServer::OnHttpMessage(const TcpConnectionPtr& conn, const HttpMessage* http_message) {
-    ///@todo
-    if(true) {
-        std::string verbose_str("[ HTTP REQUEST @");
-        std::string remote_side = conn->peerAddress().toIpPort();
-        verbose_str.append(remote_side);
-        verbose_str.append(" ]");
+void HttpServer::OnHttpMessage(const TcpConnectionPtr& conn, HttpMessage* http_message) {
+    HttpHeader* header = &http_message->header();
+    Buffer* content = &http_message->body();
+    std::string remote_side = conn->peerAddress().toIpPort();
+    if(_verbose) {
+        OnVerboseHttpMessage(header, content, remote_side, true);
+    }
 
-        std::string request_str = MakeHttpRequestStr(http_message);
-        std::string prefix("\r\n> ");
-        Buffer buf;
-        buf.append(request_str);
-        size_t last_pos = 0;
-        size_t cur_pos = 0;
-        while(buf.findCRLF(buf.peek() + cur_pos)) {
-            verbose_str.append(prefix);
-            last_pos = cur_pos;
-            const char* line = buf.findCRLF(buf.peek() + cur_pos);
-            cur_pos = line - buf.peek();
-            verbose_str.append(buf.peek() + last_pos, cur_pos - last_pos);
-            cur_pos += 2;
-        }
-        LOG_INFO << verbose_str;
+    const std::string* connection = header->GetHeader("Connection");
+    bool close = false;
+    if(connection) {
+        close = *connection == "close" ||
+            (header->minor_version() == 0 && *connection != "Keep-Alive");
+    }
+    Buffer response;
+    _http_callback(header, content, &response);
+    conn->send(&response);
+    if(close) {
+        conn->shutdown();
     }
 }
 
-std::string HttpServer::MakeHttpRequestStr(const HttpMessage* http_message) {
-    const HttpHeader& header = http_message->header();
-    const Buffer& body = http_message->body();
-    const HttpUrl& url = header.url();
+void HttpServer::OnVerboseHttpMessage(HttpHeader* header, 
+                                      Buffer* content, 
+                                      std::string remote_side, 
+                                      bool request_or_response) {
+    std::string verbose_str;
+    std::string request_or_response_str;
+    Buffer buf;
+    if(request_or_response) {
+        verbose_str = std::string("[ HTTP REQUEST @");
+        request_or_response_str = MakeHttpRequestStr(header, content);
+    }
+    else {
+        verbose_str = std::string("[ HTTP RESPONSE @");
+        request_or_response_str = MakeHttpReponseStr(header, content);
+    }
+    verbose_str.append(remote_side);
+    verbose_str.append(" ]");
+    buf.append(request_or_response_str);
+
+    std::string prefix("\r\n> ");
+    size_t last_pos = 0;
+    size_t cur_pos = 0;
+    while(buf.findCRLF(buf.peek() + cur_pos)) {
+        verbose_str.append(prefix);
+        last_pos = cur_pos;
+        const char* line = buf.findCRLF(buf.peek() + cur_pos);
+        cur_pos = line - buf.peek();
+        verbose_str.append(buf.peek() + last_pos, cur_pos - last_pos);
+        cur_pos += 2;
+    }
+    verbose_str.pop_back();
+    verbose_str.pop_back();
+    LOG_INFO << verbose_str;
+}
+
+std::string HttpServer::MakeHttpRequestStr(HttpHeader* header, Buffer* content) {
+    HttpUrl& url = header->url();
 
     BufferStream os;
-    os << HttpMethod2Str(header.method()) << ' ';
+    os << HttpMethod2Str(header->method()) << ' ';
     url.PrintWithoutHost(os);
-    os << "HTTP/" << header.major_version() << '.'
-       << header.minor_version() << "\r\n";
-    if(!header.GetHeader("Transfer-Encoding")) {
-        os << "Content-Length: " << (body.readableBytes() != 0 ?
-            body.readableBytes() : 0) << "\r\n";
+    os << " HTTP/" << header->major_version() << '.'
+       << header->minor_version() << "\r\n";
+    // Never use "Content-Length" set by user.
+    header->RemoveHeader("Content-Length");
+    const std::string* transfer_encoding = header->GetHeader("Transfer-Encoding");
+    if(header->method() == HTTP_METHOD_GET) {
+        header->RemoveHeader("Transfer-Encoding");
     }
-    if(!header.GetHeader("Host")) {
+    else if(!transfer_encoding) {
+        // A sender MUST NOT send a Content-Length header field in any message
+        // that contains a Transfer-Encoding header field.
+        os << "Content-Length: " << (content->readableBytes() != 0 ?
+              content->readableBytes() : 0) << "\r\n";
+    }
+    if(!header->GetHeader("Host")) {
         os << "Host: ";
         if(url.host().empty()) {
             os << url.host();
@@ -141,28 +182,101 @@ std::string HttpServer::MakeHttpRequestStr(const HttpMessage* http_message) {
         }
         os << "\r\n";
     }
-    if(!header.content_type().empty()) {
-        os << "Content-Type: " << header.content_type() << "\r\n";
+    if(!header->content_type().empty()) {
+        os << "Content-Type: " << header->content_type() << "\r\n";
     }
-    for(HttpHeader::HeaderIterator it = header.HeaderBegin();
-        it != header.HeaderEnd(); ++it) {
+    for(HttpHeader::HeaderIterator it = header->HeaderBegin();
+        it != header->HeaderEnd(); ++it) {
         os << it->first << ": " << it->second << "\r\n";
     }
-    if(!header.GetHeader("Accept")) {
+    if(!header->GetHeader("Accept")) {
         os << "Accept: */*\r\n";
     }
-    if(!header.GetHeader("User-Agent")) {
+    if(!header->GetHeader("User-Agent")) {
         os << "User-Agent: var/1.0 curl/7.0\r\n";
     }
+    const std::string& user_info = url.user_info();
+    if(!user_info.empty() && !header->GetHeader("Authorization")) {
+        // NOTE: just assume user_info is well formatted namely
+        // "<user_name><password>". Users are very unlikely to add extra
+        // characters in this part and even if users did, most of them are
+        // invaild and rejected by http_parser_parse_url().
+        os << "Authorization: " << user_info << "\r\n";
+    }
     os << "\r\n";
-    if(body.readableBytes() != 0) {
-        Buffer temp = body;
-        os << "Body: " << temp.retrieveAllAsString() << "\r\n"; 
+    if(header->method() != HTTP_METHOD_GET && content->readableBytes() != 0) {
+        Buffer temp = *content;
+        os << temp.retrieveAllAsString(); 
     }
     
     Buffer buf;
     os.moveTo(buf);
     return buf.retrieveAllAsString();
+}
+
+std::string HttpServer::MakeHttpReponseStr(HttpHeader* header, Buffer* content) {
+    BufferStream os;
+    os << "HTTP/" << header->major_version() << '.'
+       << header->minor_version() << ' '
+       << header->status_code() << ' '
+       << header->reason_phrase() << "\r\n";
+    bool is_invaild_content = header->status_code() < HTTP_STATUS_OK ||
+                              header->status_code() == HTTP_STATUS_NO_CONTENT;
+    // Just request http header not contains http body.
+    bool is_head_req = header->method() == HTTP_METHOD_HEAD;
+    if(is_invaild_content) {
+        // A server MUST NOT send a Transfer-Encoding header field in any
+        // response with a status code of 1xx(Informational) or 204(No Content).
+        header->RemoveHeader("Transfer-Encoding");
+        // A server MUST NOT send a Content-Length header field in any
+        // response with a status code of 1xx(Informational) or 204(No Content).
+        header->RemoveHeader("Content-Length");
+    }
+    else {
+        const std::string* transfer_encoding = header->GetHeader("Transfer-Encoding");
+        if(transfer_encoding) {
+            header->RemoveHeader("Content-Length");
+        }
+        if(content) {
+            const std::string* content_length = header->GetHeader("Content-Length");
+            if(!content->readableBytes()) {
+                // Do not set content by the zero length.
+            }
+            else if(is_head_req) {
+                if(!content_length && !transfer_encoding) {
+                    // Prioritize "Content-Length" set by user.
+                    // If "Content-Length" is not set, set it to the length of content.
+                    os << "Content-Length: " << content->readableBytes() << "\r\n";
+                }
+            }
+            else {
+                if(!transfer_encoding) {
+                    if(content_length) {
+                        header->RemoveHeader("Content-Length");
+                    }
+                    // Never use "Content-Length" set by user.
+                    // Always set Content-Length size lighttpd requires 
+                    // the header set to 0 for empty content.
+                    os << "Content-Length: " << content->readableBytes() << "\r\n";
+                }
+            }
+        }
+    }
+    if(!is_invaild_content && !header->content_type().empty()) {
+        os << "Content-Type: " << header->content_type() << "r\n";
+    }
+    for(HttpHeader::HeaderIterator it = header->HeaderBegin(); 
+        it != header->HeaderEnd(); ++it) {
+        os << it->first << ": " << it->second << "\r\n";
+    }
+    os << "\r\n";
+    
+    Buffer result;
+    os.moveTo(result);
+    if(!is_invaild_content && !is_head_req && content) {
+        result.append(std::move(*content));
+    }
+    return result.retrieveAllAsString();
 }
 
 } // end namespace net
