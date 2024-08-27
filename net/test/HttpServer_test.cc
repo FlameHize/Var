@@ -18,7 +18,6 @@ TEST(HttpServerTest, resolved_request)
     EventLoopThread loop_thread;
     TcpClient client(loop_thread.startLoop(), addr, "httpclient");
     auto on_message_callback = [](const TcpConnectionPtr& conn, Buffer* buf, Timestamp time) {
-        LOG_INFO << buf->retrieveAllAsString();
         return;
     };
     client.setMessageCallback(on_message_callback);
@@ -109,7 +108,6 @@ TEST(HttpServerTest, serialize_http_response)
     content.append("data");
     std::string response = HttpServer::MakeHttpReponseStr(&header, &content);
     ASSERT_EQ("HTTP/1.1 200 OK\r\nContent-Length: 4\r\nFoo: Bar\r\n\r\ndata", response);
-    ASSERT_EQ(content.readableBytes(), 0);
 
     // NULL content
     header.SetHeader("Content-Length", "100");
@@ -122,10 +120,12 @@ TEST(HttpServerTest, serialize_http_response)
     header.RemoveHeader("Transfer-Encoding");
 
     // User-set content-length is ignored.
+    content.retrieveAll();
     content.append("data2");
     response = HttpServer::MakeHttpReponseStr(&header, &content);
     ASSERT_EQ("HTTP/1.1 200 OK\r\nContent-Length: 5\r\nFoo: Bar\r\n\r\ndata2", response);
 
+    content.retrieveAll();
     header.SetHeader("Content-Length", "100");
     header.SetHeader("Transfer-Encoding", "chunked");
     response = HttpServer::MakeHttpReponseStr(&header, nullptr);
@@ -134,12 +134,14 @@ TEST(HttpServerTest, serialize_http_response)
 
     // User-set content-length and transfer-encoding is ignored when status code is 204 or 1xx.
     // 204 No Content.
+    content.retrieveAll();
     header.SetHeader("Content-Length", "100");
     header.SetHeader("Transfer-Encoding", "chunked");
     header.set_status_code(HTTP_STATUS_NO_CONTENT);
     response = HttpServer::MakeHttpReponseStr(&header, &content);
     ASSERT_EQ("HTTP/1.1 204 No Content\r\nFoo: Bar\r\n\r\n", response);
     // 101 Continue
+    content.retrieveAll();
     header.SetHeader("Content-Length", "100");
     header.SetHeader("Transfer-Encoding", "chunked");
     header.set_status_code(HTTP_STATUS_CONTINUE);
@@ -150,10 +152,12 @@ TEST(HttpServerTest, serialize_http_response)
     // 1. There isn't user-set content-length, length of content is used.
     header.set_method(HTTP_METHOD_HEAD);
     header.set_status_code(HTTP_STATUS_OK);
+    content.retrieveAll();
     content.append("data2");
     response = HttpServer::MakeHttpReponseStr(&header, &content);
     ASSERT_EQ("HTTP/1.1 200 OK\r\nContent-Length: 5\r\nFoo: Bar\r\n\r\n", response);
     // 2. User-set content-length is not ignored .
+    content.retrieveAll();
     header.SetHeader("Content-Length", "100");
     response = HttpServer::MakeHttpReponseStr(&header, &content);
     ASSERT_EQ("HTTP/1.1 200 OK\r\nContent-Length: 100\r\nFoo: Bar\r\n\r\n", response);

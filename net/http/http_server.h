@@ -27,7 +27,7 @@ namespace net {
 
 class HttpServer : noncopyable {
 public:
-    typedef std::function<void(HttpHeader*, Buffer*, Buffer*)> HttpCallback;
+    typedef std::function<void(HttpHeader*, Buffer*, HttpMessage*)> HttpCallback;
     explicit HttpServer(EventLoop* loop, 
                         const InetAddress& addr, 
                         const std::string& name);

@@ -4,9 +4,9 @@
 namespace var {
 namespace net {
 
-void defaultHttpCallback(HttpHeader* header, Buffer* content, Buffer* response) {
-    header->set_status_code(HTTP_STATUS_NOT_FOUND);
-    header->SetHeader("Connection", "close");
+void defaultHttpCallback(HttpHeader* header, Buffer* content, HttpMessage* response) {
+    response->header().set_status_code(HTTP_STATUS_OK);
+    response->header().SetHeader("Connection", "keep-alive");
 }
 
 HttpServer::HttpServer(EventLoop* loop, 
@@ -96,24 +96,60 @@ void HttpServer::OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp 
 }
 
 void HttpServer::OnHttpMessage(const TcpConnectionPtr& conn, HttpMessage* http_message) {
-    HttpHeader* header = &http_message->header();
-    Buffer* content = &http_message->body();
+    HttpHeader* resquest_header = &http_message->header();
+    Buffer* request_content = &http_message->body();
     std::string remote_side = conn->peerAddress().toIpPort();
     if(_verbose) {
-        OnVerboseHttpMessage(header, content, remote_side, true);
+        OnVerboseHttpMessage(resquest_header, request_content, remote_side, true);
     }
-
-    const std::string* connection = header->GetHeader("Connection");
-    bool close = false;
-    if(connection) {
-        close = *connection == "close" ||
-            (header->minor_version() == 0 && *connection != "Keep-Alive");
+    HttpMessage response;
+    _http_callback(resquest_header, request_content, &response);
+    
+    HttpHeader* response_header = &response.header();
+    Buffer* response_content = &response.body();
+    response_header->set_version(resquest_header->major_version(), resquest_header->minor_version());
+    const std::string* content_type = &response_header->content_type();
+    if(content_type->empty()) {
+        // Use request's content type if response's is not set.
+        content_type = &resquest_header->content_type();
+        response_header->set_content_type(*content_type);
     }
-    Buffer response;
-    _http_callback(header, content, &response);
-    conn->send(&response);
-    if(close) {
+    // In HTTP 0.9, the server always closes the connection after sending the
+    // response. The client must close its end of the connection after
+    // receiving the response.
+    // In HTTP 1.0, the server always closes the connection after sending the
+    // response UNLESS the client sent a Connection: keep-alive request header
+    // and the server sent a Connection: keep-alive response header. If no
+    // such response header exists, the client must close its end of the
+    // connection after receiving the response.
+    // In HTTP 1.1, the server does not close the connection after sending
+    // the response UNLESS the client sent a Connection: close request header,
+    // or the server sent a Connection: close response header. If such a
+    // response header exists, the client must close its end of the connection
+    // after receiving the response.
+    const std::string* response_conn = response_header->GetHeader("Connection");
+    if(response_conn || strcasecmp(response_conn->c_str(), "close") != 0) {
+        const std::string* request_conn = resquest_header->GetHeader("Connection");
+        // Before Http 1.1.
+        if((resquest_header->major_version() * 10000 + 
+            resquest_header->minor_version() * 10000) <= 10000) {
+            if(!request_conn && strcasecmp(request_conn->c_str(), "keep-alive") == 0) {
+                response_header->SetHeader("Connection", "keep-alive");
+            }
+        }
+        else {
+            if(!request_conn && strcasecmp(request_conn->c_str(), "close") == 0) {
+                response_header->SetHeader("Connection", "close");
+            }
+        }
+    }
+    std::string response_str = MakeHttpReponseStr(response_header, response_content);
+    conn->send(response_str);
+    if(strcasecmp(response_conn->c_str(), "close") == 0) {
         conn->shutdown();
+    }
+    if(_verbose) {
+        OnVerboseHttpMessage(response_header, response_content, remote_side, false);
     }
 }
 
@@ -263,7 +299,7 @@ std::string HttpServer::MakeHttpReponseStr(HttpHeader* header, Buffer* content) 
         }
     }
     if(!is_invaild_content && !header->content_type().empty()) {
-        os << "Content-Type: " << header->content_type() << "r\n";
+        os << "Content-Type: " << header->content_type() << "\r\n";
     }
     for(HttpHeader::HeaderIterator it = header->HeaderBegin(); 
         it != header->HeaderEnd(); ++it) {
@@ -274,7 +310,7 @@ std::string HttpServer::MakeHttpReponseStr(HttpHeader* header, Buffer* content) 
     Buffer result;
     os.moveTo(result);
     if(!is_invaild_content && !is_head_req && content) {
-        result.append(std::move(*content));
+        result.append(*content);
     }
     return result.retrieveAllAsString();
 }
