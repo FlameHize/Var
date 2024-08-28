@@ -329,6 +329,8 @@ net/CMakeFiles/var_net.dir/http/http_server.cc.o: ../net/base/Atomic.h
 net/CMakeFiles/var_net.dir/http/http_server.cc.o: ../net/base/LogStream.h
 net/CMakeFiles/var_net.dir/http/http_server.cc.o: ../net/base/Logging.h
 net/CMakeFiles/var_net.dir/http/http_server.cc.o: ../net/base/StringPiece.h
+net/CMakeFiles/var_net.dir/http/http_server.cc.o: ../net/base/StringSplitter.h
+net/CMakeFiles/var_net.dir/http/http_server.cc.o: ../net/base/StringSplitterInl.h
 net/CMakeFiles/var_net.dir/http/http_server.cc.o: ../net/base/Timestamp.h
 net/CMakeFiles/var_net.dir/http/http_server.cc.o: ../net/base/Types.h
 net/CMakeFiles/var_net.dir/http/http_server.cc.o: ../net/base/copyable.h

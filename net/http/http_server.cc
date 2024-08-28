@@ -66,8 +66,9 @@ void HttpServer::OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp 
         }
         else {
             // Failed to parse the body, Since header were parsed successfully.
-            LOG_ERROR << "Http body parsed error";
+            ResetConnContext(conn);
             buf->retrieveAll();
+            LOG_ERROR << "Http body parsed error";
             return;
         }
     }
@@ -75,7 +76,16 @@ void HttpServer::OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp 
         // In HTTP protocol parsing, even if the source does not contain 
         // a complete HTTP message, it will still be consumed by the http parser 
         // to avoid repeated parsing in the next time.
-        buf->retrieve(rc);
+        if(buf->readableBytes() >= rc) {
+            buf->retrieve(rc);
+        }
+        else {
+            // Failed to parse the whole message.
+            ResetConnContext(conn);
+            buf->retrieveAll();
+            LOG_ERROR << "Http message parsed error";
+            return;
+        }
         if(http_context->Completed()) {
             OnHttpMessage(conn, static_cast<HttpMessage*>(http_context));
             ResetConnContext(conn);
@@ -313,6 +323,28 @@ std::string HttpServer::MakeHttpReponseStr(HttpHeader* header, Buffer* content) 
         result.append(*content);
     }
     return result.retrieveAllAsString();
+}
+
+void HttpServer::FillUnresolvedPath(std::string* unresolved_path,
+                                    const std::string& url_path,
+                                    StringSplitter& splitter) {
+    if(!unresolved_path) {
+        return;
+    }
+    if(!splitter) {
+        unresolved_path->clear();
+        return;
+    }
+    const size_t path_len = url_path.c_str() + url_path.size() - splitter.field();
+    unresolved_path->reserve(path_len);
+    unresolved_path->clear();
+    for(StringSplitter sp(splitter.field(), splitter.field() + path_len, '/');
+            sp != nullptr; ++sp) {
+        if(!unresolved_path->empty()) {
+            unresolved_path->push_back('/');
+        }
+        unresolved_path->append(sp.field(), sp.length());
+    }
 }
 
 } // end namespace net

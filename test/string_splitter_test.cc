@@ -403,4 +403,20 @@ TEST_F(StringSplitterTest, key_value_pairs_splitter_sanity) {
     }
 }
 
+TEST_F(StringSplitterTest, http_url_splitter) {
+    std::string str = "/vars/bthread_count";
+    var::StringSplitter ss(str, '/');
+    ASSERT_TRUE(ss);
+    ASSERT_EQ(4ul, ss.length());
+    ASSERT_EQ(ss.field(), str.data() + 1);
+
+    ++ss;
+    ASSERT_TRUE(ss);
+    ASSERT_EQ(13ul, ss.length());
+    ASSERT_EQ(ss.field(), str.data() + 6);
+
+    ++ss;
+    ASSERT_FALSE(ss);
+}
+
 }

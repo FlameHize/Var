@@ -140,6 +140,20 @@ algorithm
 Types.h
 ../net/base/Types.h
 
+../net/base/StringSplitter.h
+stdlib.h
+-
+stdint.h
+-
+StringPiece.h
+../net/base/StringPiece.h
+StringSplitterInl.h
+../net/base/StringSplitterInl.h
+
+../net/base/StringSplitterInl.h
+limits.h
+-
+
 ../net/base/Thread.h
 Atomic.h
 ../net/base/Atomic.h
@@ -225,6 +239,8 @@ tcp/TcpServer.h
 ../net/http/tcp/TcpServer.h
 base/Logging.h
 ../net/http/base/Logging.h
+base/StringSplitter.h
+../net/http/base/StringSplitter.h
 
 ../net/http/http_status_code.h
 

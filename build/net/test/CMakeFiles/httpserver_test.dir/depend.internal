@@ -17,6 +17,8 @@ net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o
  ../net/base/Logging.h
  ../net/base/Mutex.h
  ../net/base/StringPiece.h
+ ../net/base/StringSplitter.h
+ ../net/base/StringSplitterInl.h
  ../net/base/Thread.h
  ../net/base/Timestamp.h
  ../net/base/Types.h

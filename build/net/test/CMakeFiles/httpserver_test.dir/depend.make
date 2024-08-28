@@ -16,6 +16,8 @@ net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o: ../net/base/LogStr
 net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o: ../net/base/Logging.h
 net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o: ../net/base/Mutex.h
 net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o: ../net/base/StringPiece.h
+net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o: ../net/base/StringSplitter.h
+net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o: ../net/base/StringSplitterInl.h
 net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o: ../net/base/Thread.h
 net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o: ../net/base/Timestamp.h
 net/test/CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o: ../net/base/Types.h

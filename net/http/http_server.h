@@ -21,6 +21,7 @@
 #include "http_context.h"
 #include "tcp/TcpServer.h"
 #include "base/Logging.h"
+#include "base/StringSplitter.h"
 
 namespace var {
 namespace net {
@@ -37,6 +38,10 @@ public:
 
     static std::string MakeHttpRequestStr(HttpHeader* header, Buffer* content);
     static std::string MakeHttpReponseStr(HttpHeader* header, Buffer* content);
+
+    static void FillUnresolvedPath(std::string* unresolved_path,
+                                   const std::string& url_path,
+                                   StringSplitter& splitter);
 
 private:
     void ResetConnContext(const TcpConnectionPtr& conn);
