@@ -15,8 +15,6 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// Date: 2024/05/13
-
 #ifndef VAR_VARIABLE_H
 #define VAR_VARIABLE_H
 
