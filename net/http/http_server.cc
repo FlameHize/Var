@@ -43,15 +43,6 @@ void HttpServer::OnConnection(const TcpConnectionPtr& conn) {
     LOG_TRACE << conn->localAddress().toIpPort() << " -> "
               << conn->peerAddress().toIpPort() << " is "
               << (conn->connected() ? "UP" : "DOWN");
-
-    // HttpHeader header;
-    // header.set_status_code(HTTP_STATUS_OK);
-    // header.SetHeader("Connection", "keep-alive");
-    // std::string str = "<h1>hello, vars web browser!<h1>";
-    // Buffer buf;
-    // buf.append(str);
-    // std::string response_str = MakeHttpReponseStr(&header, &buf);
-    // conn->send(response_str);
 }
 
 void HttpServer::OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp time) {
@@ -204,6 +195,13 @@ void HttpServer::OnVerboseHttpMessage(HttpHeader* header,
     }
     verbose_str.pop_back();
     verbose_str.pop_back();
+    if(cur_pos != buf.readableBytes()) {
+        // For http response.
+        verbose_str.append(prefix);
+        verbose_str.append("Body: ");
+        verbose_str.append(buf.peek() + cur_pos, buf.readableBytes() - cur_pos);
+        verbose_str.append("\r\n");
+    }
     LOG_INFO << verbose_str;
 }
 
