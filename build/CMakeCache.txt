@@ -230,6 +230,9 @@ Var_BINARY_DIR:STATIC=/home/zgx/Var/build
 //Value Computed by CMake
 Var_SOURCE_DIR:STATIC=/home/zgx/Var
 
+//Dependencies for the target
+var_LIB_DEPENDS:STATIC=general;var_net;
+
 
 ########################
 # INTERNAL cache entries

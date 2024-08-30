@@ -4,7 +4,7 @@
 namespace var {
 namespace net {
 
-void defaultHttpCallback(HttpHeader* header, Buffer* content, HttpMessage* response) {
+void defaultHttpCallback(HttpRequest* request, HttpResponse* response) {
     response->header().set_status_code(HTTP_STATUS_OK);
     response->header().SetHeader("Connection", "keep-alive");
 }
@@ -44,15 +44,14 @@ void HttpServer::OnConnection(const TcpConnectionPtr& conn) {
               << conn->peerAddress().toIpPort() << " is "
               << (conn->connected() ? "UP" : "DOWN");
 
-    ///@todo fix
-    HttpHeader header;
-    header.set_status_code(HTTP_STATUS_OK);
-    header.SetHeader("Connection", "keep-alive");
-    std::string str = "<h1>hello, web browser!<h1>";
-    Buffer buf;
-    buf.append(str);
-    std::string response_str = MakeHttpReponseStr(&header, &buf);
-    conn->send(response_str);
+    // HttpHeader header;
+    // header.set_status_code(HTTP_STATUS_OK);
+    // header.SetHeader("Connection", "keep-alive");
+    // std::string str = "<h1>hello, vars web browser!<h1>";
+    // Buffer buf;
+    // buf.append(str);
+    // std::string response_str = MakeHttpReponseStr(&header, &buf);
+    // conn->send(response_str);
 }
 
 void HttpServer::OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp time) {
@@ -123,7 +122,7 @@ void HttpServer::OnHttpMessage(const TcpConnectionPtr& conn, HttpMessage* http_m
         OnVerboseHttpMessage(resquest_header, request_content, remote_side, true);
     }
     HttpMessage response;
-    _http_callback(resquest_header, request_content, &response);
+    _http_callback(http_message, &response);
     
     HttpHeader* response_header = &response.header();
     Buffer* response_content = &response.body();

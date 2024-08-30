@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named var
+
+# Build rule for target.
+var: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 var
+.PHONY : var
+
+# fast build rule for target.
+var/fast:
+	$(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/build
+.PHONY : var/fast
+
+#=============================================================================
 # Target rules for targets named var_test
 
 # Build rule for target.
@@ -287,6 +300,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... var"
 	@echo "... var_test"
 	@echo "... var_net"
 	@echo "... httpserver_test"

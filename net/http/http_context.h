@@ -23,6 +23,9 @@
 namespace var {
 namespace net {
 
+typedef HttpMessage HttpRequest;
+typedef HttpMessage HttpResponse;
+
 class HttpContext : public HttpMessage {
 public:
     inline HttpContext() : _has_resolved(false) {}

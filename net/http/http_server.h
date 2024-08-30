@@ -28,13 +28,14 @@ namespace net {
 
 class HttpServer : noncopyable {
 public:
-    typedef std::function<void(HttpHeader*, Buffer*, HttpMessage*)> HttpCallback;
+    typedef std::function<void(HttpRequest*, HttpResponse*)> HttpCallback;
     explicit HttpServer(EventLoop* loop, 
                         const InetAddress& addr, 
                         const std::string& name);
 
     void Start() { _server.start(); }
     void SetVerbose() { _verbose = true; }
+    void SetHttpCallback(const HttpCallback& cb) { _http_callback = cb; }
 
     static std::string MakeHttpRequestStr(HttpHeader* header, Buffer* content);
     static std::string MakeHttpReponseStr(HttpHeader* header, Buffer* content);

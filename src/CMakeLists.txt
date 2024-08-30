@@ -1,0 +1,8 @@
+add_library(var SHARED
+    service.cc
+    server.cc
+    builtin/vars_service.cc
+    builtin/index_service.cc)
+
+target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR}/src)
+target_link_libraries(var var_net)

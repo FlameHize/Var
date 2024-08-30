@@ -5,7 +5,7 @@
         "name": "g++ - Build and Debug Var",
         "type": "cppdbg",               // cpp调试环境
         "request": "launch",            // 调试和应用程序一起启动
-        "program": "${workspaceFolder}/bin/httpserver_test",  // 程序可执行文件的完整路径
+        "program": "${workspaceFolder}/bin/var_test",  // 程序可执行文件的完整路径
         "stopAtEntry": false,           // 设定程序不会在入口处停止
         "cwd": "${workspaceFolder}",    // 运行时程序的工作目录 一般设置为当前的文件夹
         "environment": [],              // 程序启动时传递的环境变量

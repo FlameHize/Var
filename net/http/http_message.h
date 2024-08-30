@@ -45,6 +45,11 @@ public:
     // Returns bytes parsed, -1 on failure.
     ssize_t ParseFromBytes(const char* data, const size_t length);
 
+    void set_body(const Buffer& body) { _body = std::move(body); }
+    void set_body(const std::string& str) { 
+        _body.retrieveAll();
+        _body.append(str);
+    }
     const Buffer &body() const { return _body; }
     Buffer &body() { return _body; }
 

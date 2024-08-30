@@ -11,7 +11,8 @@ set(TEST_SRC_FILES
     http_url_test.cc
     http_status_code_test.cc
     http_message_test.cc
-    string_splitter_test.cc)
+    string_splitter_test.cc
+    dummy_server_test.cc)
 
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
 # 注意这里的头文件问题 http_message_test直接包含http_message.h(间接包含Buffer.h)
@@ -24,5 +25,5 @@ target_include_directories(${PROJECT_TEST_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_TEST_NAME} 
                     ${GTEST_LIBRARIES} 
-                    var_net
+                    var
                     pthread)

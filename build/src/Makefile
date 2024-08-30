@@ -110,6 +110,129 @@ depend:
 	cd /home/zgx/Var/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+# Convenience name for target.
+src/CMakeFiles/var.dir/rule:
+	cd /home/zgx/Var/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/var.dir/rule
+.PHONY : src/CMakeFiles/var.dir/rule
+
+# Convenience name for target.
+var: src/CMakeFiles/var.dir/rule
+
+.PHONY : var
+
+# fast build rule for target.
+var/fast:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/build
+.PHONY : var/fast
+
+builtin/index_service.o: builtin/index_service.cc.o
+
+.PHONY : builtin/index_service.o
+
+# target to build an object file
+builtin/index_service.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/index_service.cc.o
+.PHONY : builtin/index_service.cc.o
+
+builtin/index_service.i: builtin/index_service.cc.i
+
+.PHONY : builtin/index_service.i
+
+# target to preprocess a source file
+builtin/index_service.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/index_service.cc.i
+.PHONY : builtin/index_service.cc.i
+
+builtin/index_service.s: builtin/index_service.cc.s
+
+.PHONY : builtin/index_service.s
+
+# target to generate assembly for a file
+builtin/index_service.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/index_service.cc.s
+.PHONY : builtin/index_service.cc.s
+
+builtin/vars_service.o: builtin/vars_service.cc.o
+
+.PHONY : builtin/vars_service.o
+
+# target to build an object file
+builtin/vars_service.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/vars_service.cc.o
+.PHONY : builtin/vars_service.cc.o
+
+builtin/vars_service.i: builtin/vars_service.cc.i
+
+.PHONY : builtin/vars_service.i
+
+# target to preprocess a source file
+builtin/vars_service.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/vars_service.cc.i
+.PHONY : builtin/vars_service.cc.i
+
+builtin/vars_service.s: builtin/vars_service.cc.s
+
+.PHONY : builtin/vars_service.s
+
+# target to generate assembly for a file
+builtin/vars_service.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/vars_service.cc.s
+.PHONY : builtin/vars_service.cc.s
+
+server.o: server.cc.o
+
+.PHONY : server.o
+
+# target to build an object file
+server.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/server.cc.o
+.PHONY : server.cc.o
+
+server.i: server.cc.i
+
+.PHONY : server.i
+
+# target to preprocess a source file
+server.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/server.cc.i
+.PHONY : server.cc.i
+
+server.s: server.cc.s
+
+.PHONY : server.s
+
+# target to generate assembly for a file
+server.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/server.cc.s
+.PHONY : server.cc.s
+
+service.o: service.cc.o
+
+.PHONY : service.o
+
+# target to build an object file
+service.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/service.cc.o
+.PHONY : service.cc.o
+
+service.i: service.cc.i
+
+.PHONY : service.i
+
+# target to preprocess a source file
+service.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/service.cc.i
+.PHONY : service.cc.i
+
+service.s: service.cc.s
+
+.PHONY : service.s
+
+# target to generate assembly for a file
+service.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/service.cc.s
+.PHONY : service.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -118,6 +241,19 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... var"
+	@echo "... builtin/index_service.o"
+	@echo "... builtin/index_service.i"
+	@echo "... builtin/index_service.s"
+	@echo "... builtin/vars_service.o"
+	@echo "... builtin/vars_service.i"
+	@echo "... builtin/vars_service.s"
+	@echo "... server.o"
+	@echo "... server.i"
+	@echo "... server.s"
+	@echo "... service.o"
+	@echo "... service.i"
+	@echo "... service.s"
 .PHONY : help
 
 

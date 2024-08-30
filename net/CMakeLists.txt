@@ -41,6 +41,6 @@ add_library(var_net SHARED
     base/Timestamp.cc
     base/TimeZone.cc)   
 
-target_include_directories(var_net PRIVATE ${PROJECT_SOURCE_DIR}/net)
+target_include_directories(var_net PUBLIC ${PROJECT_SOURCE_DIR}/net)
 
 add_subdirectory(test)

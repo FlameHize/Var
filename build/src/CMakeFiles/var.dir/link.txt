@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -std=c++17 -g -Wall -fno-rtti -g  -shared -Wl,-soname,libvar.so -o ../../lib/libvar.so CMakeFiles/var.dir/service.cc.o CMakeFiles/var.dir/server.cc.o CMakeFiles/var.dir/builtin/vars_service.cc.o CMakeFiles/var.dir/builtin/index_service.cc.o  -Wl,-rpath,/home/zgx/Var/lib ../../lib/libvar_net.so 

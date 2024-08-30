@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "../../bin/var_test"
   "../../bin/var_test.pdb"
+  "CMakeFiles/var_test.dir/dummy_server_test.cc.o"
   "CMakeFiles/var_test.dir/http_header_test.cc.o"
   "CMakeFiles/var_test.dir/http_message_test.cc.o"
   "CMakeFiles/var_test.dir/http_method_test.cc.o"
