@@ -4,7 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/zgx/Var/src/builtin/flot_min_js.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/builtin/flot_min_js.cc.o"
+  "/home/zgx/Var/src/builtin/get_js_service.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/builtin/get_js_service.cc.o"
   "/home/zgx/Var/src/builtin/index_service.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/builtin/index_service.cc.o"
+  "/home/zgx/Var/src/builtin/jquery_min_js.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o"
   "/home/zgx/Var/src/builtin/vars_service.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/builtin/vars_service.cc.o"
   "/home/zgx/Var/src/server.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/server.cc.o"
   "/home/zgx/Var/src/service.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/service.cc.o"

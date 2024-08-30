@@ -1,6 +1,7 @@
 #include "server.h"
 #include "builtin/index_service.h"
 #include "builtin/vars_service.h"
+#include "builtin/get_js_service.h"
 
 namespace var {
 
@@ -45,6 +46,10 @@ void Server::Start() {
     if(!AddBuiltinService("vars", new (std::nothrow) VarsService)) {
         LOG_ERROR << "Failed to add VarsService";
     }
+    if(!AddBuiltinService("js", new (std::nothrow) GetJsService)) {
+        LOG_ERROR << "Failed to add GetJsService";
+    }
+    
     _server.Start();
     _loop.loop();
 }

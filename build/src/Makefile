@@ -125,6 +125,60 @@ var/fast:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/build
 .PHONY : var/fast
 
+builtin/flot_min_js.o: builtin/flot_min_js.cc.o
+
+.PHONY : builtin/flot_min_js.o
+
+# target to build an object file
+builtin/flot_min_js.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/flot_min_js.cc.o
+.PHONY : builtin/flot_min_js.cc.o
+
+builtin/flot_min_js.i: builtin/flot_min_js.cc.i
+
+.PHONY : builtin/flot_min_js.i
+
+# target to preprocess a source file
+builtin/flot_min_js.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/flot_min_js.cc.i
+.PHONY : builtin/flot_min_js.cc.i
+
+builtin/flot_min_js.s: builtin/flot_min_js.cc.s
+
+.PHONY : builtin/flot_min_js.s
+
+# target to generate assembly for a file
+builtin/flot_min_js.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/flot_min_js.cc.s
+.PHONY : builtin/flot_min_js.cc.s
+
+builtin/get_js_service.o: builtin/get_js_service.cc.o
+
+.PHONY : builtin/get_js_service.o
+
+# target to build an object file
+builtin/get_js_service.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/get_js_service.cc.o
+.PHONY : builtin/get_js_service.cc.o
+
+builtin/get_js_service.i: builtin/get_js_service.cc.i
+
+.PHONY : builtin/get_js_service.i
+
+# target to preprocess a source file
+builtin/get_js_service.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/get_js_service.cc.i
+.PHONY : builtin/get_js_service.cc.i
+
+builtin/get_js_service.s: builtin/get_js_service.cc.s
+
+.PHONY : builtin/get_js_service.s
+
+# target to generate assembly for a file
+builtin/get_js_service.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/get_js_service.cc.s
+.PHONY : builtin/get_js_service.cc.s
+
 builtin/index_service.o: builtin/index_service.cc.o
 
 .PHONY : builtin/index_service.o
@@ -151,6 +205,33 @@ builtin/index_service.s: builtin/index_service.cc.s
 builtin/index_service.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/index_service.cc.s
 .PHONY : builtin/index_service.cc.s
+
+builtin/jquery_min_js.o: builtin/jquery_min_js.cc.o
+
+.PHONY : builtin/jquery_min_js.o
+
+# target to build an object file
+builtin/jquery_min_js.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o
+.PHONY : builtin/jquery_min_js.cc.o
+
+builtin/jquery_min_js.i: builtin/jquery_min_js.cc.i
+
+.PHONY : builtin/jquery_min_js.i
+
+# target to preprocess a source file
+builtin/jquery_min_js.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.i
+.PHONY : builtin/jquery_min_js.cc.i
+
+builtin/jquery_min_js.s: builtin/jquery_min_js.cc.s
+
+.PHONY : builtin/jquery_min_js.s
+
+# target to generate assembly for a file
+builtin/jquery_min_js.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.s
+.PHONY : builtin/jquery_min_js.cc.s
 
 builtin/vars_service.o: builtin/vars_service.cc.o
 
@@ -242,9 +323,18 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... var"
+	@echo "... builtin/flot_min_js.o"
+	@echo "... builtin/flot_min_js.i"
+	@echo "... builtin/flot_min_js.s"
+	@echo "... builtin/get_js_service.o"
+	@echo "... builtin/get_js_service.i"
+	@echo "... builtin/get_js_service.s"
 	@echo "... builtin/index_service.o"
 	@echo "... builtin/index_service.i"
 	@echo "... builtin/index_service.s"
+	@echo "... builtin/jquery_min_js.o"
+	@echo "... builtin/jquery_min_js.i"
+	@echo "... builtin/jquery_min_js.s"
 	@echo "... builtin/vars_service.o"
 	@echo "... builtin/vars_service.i"
 	@echo "... builtin/vars_service.s"

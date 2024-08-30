@@ -10,6 +10,8 @@ void IndexService::default_method(net::HttpRequest* request, net::HttpResponse* 
     os << "<!DOCTYPE html>\n";
     os << "<html lang = \"zh-CN\">\n";
     os << "<head>\n";
+    os << "<script language=\"javascript\" type=\"text/javascript\" src=\"/js/jquery_min\"></script>\n";
+    os << "<script language=\"javascript\" type=\"text/javascript\" src=\"/js/flot_min\"></script>\n";
     os << "<title>dummy server</title>\n";
     os << "</head>\n";
     os << "<body>\n";

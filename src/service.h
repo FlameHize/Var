@@ -42,8 +42,9 @@ public:
     virtual ~Service();
     void AddMethod(const std::string& method_name, const Method& method);
     const Method* FindMethodByName(const std::string& method_name) const;
+    
     virtual void default_method(net::HttpRequest* request,
-                                net::HttpResponse* response) = 0;
+                                net::HttpResponse* response);
 
 private:
     MethodMap _method_map;

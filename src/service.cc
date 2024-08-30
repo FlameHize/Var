@@ -31,4 +31,8 @@ Service::FindMethodByName(const std::string& method_name) const {
     return iter != _method_map.end() ? &iter->second : nullptr;
 }
 
+void Service::default_method(net::HttpRequest* request, net::HttpResponse* response) {
+    LOG_INFO << "wait for complete this func";
+}
+
 } // end namespace var
