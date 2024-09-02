@@ -29,6 +29,8 @@ GetJsService::GetJsService() {
 }
 
 void GetJsService::jquery_min(net::HttpRequest* request, net::HttpResponse* response) {
+    response->header().set_content_type("application/javascript");
+    SetExpires(&response->header(), 600);
     net::HttpHeader& request_header = request->header();
     const std::string* ims = request_header.GetHeader("If-Modified-Since");
     if(ims && *ims == g_last_modified) {
@@ -36,12 +38,12 @@ void GetJsService::jquery_min(net::HttpRequest* request, net::HttpResponse* resp
         return;
     }
     response->header().SetHeader("Last-Modified", g_last_modified);
-    response->header().set_content_type("application/javascript");
     response->set_body(jquery_min_js_buf());
-    SetExpires(&response->header(), 600);
 }
 
 void GetJsService::flot_min(net::HttpRequest* request, net::HttpResponse* response) {
+    response->header().set_content_type("application/javascript");
+    SetExpires(&response->header(), 600);
     net::HttpHeader& request_header = request->header();
     const std::string* ims = request_header.GetHeader("If-Modified-Since");
     if(ims && *ims == g_last_modified) {
@@ -49,9 +51,7 @@ void GetJsService::flot_min(net::HttpRequest* request, net::HttpResponse* respon
         return;
     }
     response->header().SetHeader("Last-Modified", g_last_modified);
-    response->header().set_content_type("application/javascript");
     response->set_body(flot_min_js_buf());
-    SetExpires(&response->header(), 600);
 }
 
 } // end namespace var

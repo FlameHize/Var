@@ -294,10 +294,7 @@ std::string HttpServer::MakeHttpReponseStr(HttpHeader* header, Buffer* content) 
         }
         if(content) {
             const std::string* content_length = header->GetHeader("Content-Length");
-            if(!content->readableBytes()) {
-                // Do not set content by the zero length.
-            }
-            else if(is_head_req) {
+            if(is_head_req) {
                 if(!content_length && !transfer_encoding) {
                     // Prioritize "Content-Length" set by user.
                     // If "Content-Length" is not set, set it to the length of content.
