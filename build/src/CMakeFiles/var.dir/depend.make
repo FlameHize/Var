@@ -152,3 +152,18 @@ src/CMakeFiles/var.dir/service.cc.o: ../net/http/http_url.h
 src/CMakeFiles/var.dir/service.cc.o: ../src/service.cc
 src/CMakeFiles/var.dir/service.cc.o: ../src/service.h
 
+src/CMakeFiles/var.dir/variable.cc.o: ../net/base/CurrentThread.h
+src/CMakeFiles/var.dir/variable.cc.o: ../net/base/LogStream.h
+src/CMakeFiles/var.dir/variable.cc.o: ../net/base/Logging.h
+src/CMakeFiles/var.dir/variable.cc.o: ../net/base/Mutex.h
+src/CMakeFiles/var.dir/variable.cc.o: ../net/base/StringPiece.h
+src/CMakeFiles/var.dir/variable.cc.o: ../net/base/StringSplitter.h
+src/CMakeFiles/var.dir/variable.cc.o: ../net/base/StringSplitterInl.h
+src/CMakeFiles/var.dir/variable.cc.o: ../net/base/Timestamp.h
+src/CMakeFiles/var.dir/variable.cc.o: ../net/base/Types.h
+src/CMakeFiles/var.dir/variable.cc.o: ../net/base/copyable.h
+src/CMakeFiles/var.dir/variable.cc.o: ../net/base/noncopyable.h
+src/CMakeFiles/var.dir/variable.cc.o: ../src/common.h
+src/CMakeFiles/var.dir/variable.cc.o: ../src/variable.cc
+src/CMakeFiles/var.dir/variable.cc.o: ../src/variable.h
+

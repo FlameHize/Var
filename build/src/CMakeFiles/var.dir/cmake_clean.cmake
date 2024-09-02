@@ -8,6 +8,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/var.dir/builtin/vars_service.cc.o"
   "CMakeFiles/var.dir/server.cc.o"
   "CMakeFiles/var.dir/service.cc.o"
+  "CMakeFiles/var.dir/variable.cc.o"
 )
 
 # Per-language clean rules from dependency scanning.

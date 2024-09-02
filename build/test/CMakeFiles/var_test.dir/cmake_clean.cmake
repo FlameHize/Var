@@ -10,6 +10,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/var_test.dir/http_url_test.cc.o"
   "CMakeFiles/var_test.dir/main.cc.o"
   "CMakeFiles/var_test.dir/string_splitter_test.cc.o"
+  "CMakeFiles/var_test.dir/variable_test.cc.o"
 )
 
 # Per-language clean rules from dependency scanning.

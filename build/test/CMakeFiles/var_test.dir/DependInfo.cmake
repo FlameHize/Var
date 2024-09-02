@@ -13,6 +13,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/zgx/Var/test/http_url_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/http_url_test.cc.o"
   "/home/zgx/Var/test/main.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/main.cc.o"
   "/home/zgx/Var/test/string_splitter_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/string_splitter_test.cc.o"
+  "/home/zgx/Var/test/variable_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/variable_test.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

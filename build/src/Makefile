@@ -314,6 +314,33 @@ service.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/service.cc.s
 .PHONY : service.cc.s
 
+variable.o: variable.cc.o
+
+.PHONY : variable.o
+
+# target to build an object file
+variable.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/variable.cc.o
+.PHONY : variable.cc.o
+
+variable.i: variable.cc.i
+
+.PHONY : variable.i
+
+# target to preprocess a source file
+variable.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/variable.cc.i
+.PHONY : variable.cc.i
+
+variable.s: variable.cc.s
+
+.PHONY : variable.s
+
+# target to generate assembly for a file
+variable.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/variable.cc.s
+.PHONY : variable.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -344,6 +371,9 @@ help:
 	@echo "... service.o"
 	@echo "... service.i"
 	@echo "... service.s"
+	@echo "... variable.o"
+	@echo "... variable.i"
+	@echo "... variable.s"
 .PHONY : help
 
 

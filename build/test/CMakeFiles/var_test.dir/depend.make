@@ -77,3 +77,7 @@ test/CMakeFiles/var_test.dir/string_splitter_test.cc.o: ../net/base/StringSplitt
 test/CMakeFiles/var_test.dir/string_splitter_test.cc.o: ../net/base/Types.h
 test/CMakeFiles/var_test.dir/string_splitter_test.cc.o: ../test/string_splitter_test.cc
 
+test/CMakeFiles/var_test.dir/variable_test.cc.o: ../net/base/noncopyable.h
+test/CMakeFiles/var_test.dir/variable_test.cc.o: ../src/variable.h
+test/CMakeFiles/var_test.dir/variable_test.cc.o: ../test/variable_test.cc
+

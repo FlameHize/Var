@@ -152,3 +152,18 @@ src/CMakeFiles/var.dir/service.cc.o
  ../net/http/http_url.h
  /home/zgx/Var/src/service.cc
  /home/zgx/Var/src/service.h
+src/CMakeFiles/var.dir/variable.cc.o
+ ../net/base/CurrentThread.h
+ ../net/base/LogStream.h
+ ../net/base/Logging.h
+ ../net/base/Mutex.h
+ ../net/base/StringPiece.h
+ ../net/base/StringSplitter.h
+ ../net/base/StringSplitterInl.h
+ ../net/base/Timestamp.h
+ ../net/base/Types.h
+ ../net/base/copyable.h
+ ../net/base/noncopyable.h
+ /home/zgx/Var/src/common.h
+ /home/zgx/Var/src/variable.cc
+ /home/zgx/Var/src/variable.h

@@ -23,10 +23,10 @@
 using namespace var;
 
 TEST(DummyServerTest, StartDummyServer) {
-    net::InetAddress addr(2008);
-    LOG_INFO << "port: " << addr.port();
-    StartDummyServerAt(addr.port());
-    while(true){}
+    // net::InetAddress addr(2008);
+    // LOG_INFO << "port: " << addr.port();
+    // StartDummyServerAt(addr.port());
+    // while(true){}
     
     // net::EventLoop loop;
     // net::EventLoopThread loop_thread;

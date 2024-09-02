@@ -18,11 +18,10 @@
 #ifndef VAR_VARIABLE_H
 #define VAR_VARIABLE_H
 
+#include "net/base/noncopyable.h"
 #include <ostream>
 #include <string>
 #include <vector>
-
-#include "util/macros.h"
 
 namespace var {
 
@@ -52,7 +51,7 @@ struct DumpOptions {
 
     // The ? in wildcards. Wildcards in URL need to use another
     // character becasuse ? is reserved.
-    char question_mask;
+    char question_mark;
 
     // Dump variables with matched display_filter.
     DisplayFilter display_filter;
@@ -77,10 +76,9 @@ struct DumpOptions {
  *      describle()/get_description()/get_value() etc from different threads
  *      safely (provided that there's no non-const methods going on).
 */
-class Variable {
+class Variable : public noncopyable {
     // Var uses TLS,thus copying/assignment neet to copy TLS stuff as well,
     // which is heavy. We disable copying/assignment now.
-    DISALLOW_COPY_MOVE_AND_ASSIGN(Variable);
 public:
     Variable() {}
     virtual ~Variable();
@@ -94,7 +92,7 @@ public:
     ///@note The output will be ploted by js.plot
     // Describle saved series as a json-string into the stream.
     // Returns 0 on success, otherwise (this variable does not save series).
-    virtual int describle_series(std::ostream& os) const {
+    virtual int describe_series(std::ostream& os) const {
         return 1;
     }
 
@@ -106,19 +104,14 @@ public:
     // Returns 0 on success, otherwise -1.
     ///@todo stringpiece
     int expose(const std::string& name, DisplayFilter display_filter = DISPLAY_ON_ALL) {
-        return exposed_impl(std::string(),name,display_filter);
+        return expose_impl(std::string(), name, display_filter);
     }
 
     // Expose this variable with a prefix
     // Returns 0 on success, otherwise -1.
     int expose_as(const std::string& prefix, const std::string& name,
                   DisplayFilter display_filter = DISPLAY_ON_ALL) {
-        return exposed_impl(prefix,name,display_filter);
-    }
-
-    // Get exposed name. If this variable is not exposed, the name is empty.
-    const std::string& name() const {
-        return _name;
+        return expose_impl(prefix, name, display_filter);
     }
 
     // Hide this variable so that it's not counted in *_exposed functions.
@@ -126,6 +119,26 @@ public:
     // CAUTION!! SubClasses must call hide() manually to avoid displaying
     // a variable that is just destructing.
     bool hide();
+
+    // Check if this variable is is_hidden.
+    bool is_hidden() const;
+
+    // Get exposed name. If this variable is not exposed, the name is empty.
+    const std::string& name() const {
+        return _name;
+    }
+
+    // ====================================================================
+
+    // Put name of all exposed variables into 'names'.
+    // If you want to print all variables, you have to go through 'names'
+    // and call describe_exposed() on each name. 
+    // This func internal prevents an iteration from taking the lock too long.
+    static void list_exposed(std::vector<std::string>* names,
+                             DisplayFilter = DISPLAY_ON_ALL); 
+
+    // Get number of exposed variables.
+    static size_t count_exposed();
 
     // Find an exposed variable by 'name' and put its description into 'os'.
     // Returns 0 on found, otherwise return -1.
@@ -146,27 +159,16 @@ public:
     static int describe_series_exposed(const std::string& name,
                                        std::ostream& os);
 
-    // Put name of all exposed variables into 'names'.
-    // If you want to print all variables, you have to go through 'names'
-    // and call describe_exposed() on each name. 
-    // This func internal prevents an iteration from taking the lock too long.
-    static void list_exposed(std::vector<std::string>* names,
-                             DisplayFilter = DISPLAY_ON_ALL); 
-
-    // Get number of exposed variables.
-    static size_t count_exposed();
-
     // Find all exposed variables matching 'white_wildcards' but
     // 'black_wildcards' and send them to 'dumper'.
     // Use default options when 'options' is NULL.
     // Returns number of dumped variables, -1 on error.
-    ///@todo
-    static int dump_exposed();
+    static int dump_exposed(Dumper* dumper, const DumpOptions* options);
 
 protected:
-    virtual int exposed_impl(const std::string& prefix,
-                             const std::string& name,
-                             DisplayFilter = DISPLAY_ON_ALL);
+    virtual int expose_impl(const std::string& prefix,
+                            const std::string& name,
+                            DisplayFilter = DISPLAY_ON_ALL);
 
 private:
     std::string _name;

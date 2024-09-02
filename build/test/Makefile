@@ -368,6 +368,33 @@ string_splitter_test.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/string_splitter_test.cc.s
 .PHONY : string_splitter_test.cc.s
 
+variable_test.o: variable_test.cc.o
+
+.PHONY : variable_test.o
+
+# target to build an object file
+variable_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/variable_test.cc.o
+.PHONY : variable_test.cc.o
+
+variable_test.i: variable_test.cc.i
+
+.PHONY : variable_test.i
+
+# target to preprocess a source file
+variable_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/variable_test.cc.i
+.PHONY : variable_test.cc.i
+
+variable_test.s: variable_test.cc.s
+
+.PHONY : variable_test.s
+
+# target to generate assembly for a file
+variable_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/variable_test.cc.s
+.PHONY : variable_test.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -404,6 +431,9 @@ help:
 	@echo "... string_splitter_test.o"
 	@echo "... string_splitter_test.i"
 	@echo "... string_splitter_test.s"
+	@echo "... variable_test.o"
+	@echo "... variable_test.i"
+	@echo "... variable_test.s"
 .PHONY : help
 
 
