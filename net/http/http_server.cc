@@ -138,24 +138,26 @@ void HttpServer::OnHttpMessage(const TcpConnectionPtr& conn, HttpMessage* http_m
     // response header exists, the client must close its end of the connection
     // after receiving the response.
     const std::string* response_conn = response_header->GetHeader("Connection");
-    if(response_conn || strcasecmp(response_conn->c_str(), "close") != 0) {
+    if(!response_conn || strcasecmp(response_conn->c_str(), "close") != 0) {
         const std::string* request_conn = resquest_header->GetHeader("Connection");
         // Before Http 1.1.
         if((resquest_header->major_version() * 10000 + 
             resquest_header->minor_version() * 10000) <= 10000) {
-            if(!request_conn && strcasecmp(request_conn->c_str(), "keep-alive") == 0) {
+            if(request_conn && strcasecmp(request_conn->c_str(), "keep-alive") == 0) {
                 response_header->SetHeader("Connection", "keep-alive");
             }
         }
         else {
-            if(!request_conn && strcasecmp(request_conn->c_str(), "close") == 0) {
+            if(request_conn && strcasecmp(request_conn->c_str(), "close") == 0) {
                 response_header->SetHeader("Connection", "close");
             }
         }
     }
+
     std::string response_str = MakeHttpReponseStr(response_header, response_content);
     conn->send(response_str);
-    if(strcasecmp(response_conn->c_str(), "close") == 0) {
+    response_conn = response_header->GetHeader("Connection");
+    if(response_conn && strcasecmp(response_conn->c_str(), "close") == 0) {
         conn->shutdown();
     }
     if(_verbose) {

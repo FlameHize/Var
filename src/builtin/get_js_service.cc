@@ -29,8 +29,6 @@ GetJsService::GetJsService() {
 }
 
 void GetJsService::jquery_min(net::HttpRequest* request, net::HttpResponse* response) {
-    response->header().SetHeader("Connection", "keep-alive");
-    response->header().set_status_code(net::HTTP_STATUS_OK);
     net::HttpHeader& request_header = request->header();
     const std::string* ims = request_header.GetHeader("If-Modified-Since");
     if(ims && *ims == g_last_modified) {
@@ -44,8 +42,6 @@ void GetJsService::jquery_min(net::HttpRequest* request, net::HttpResponse* resp
 }
 
 void GetJsService::flot_min(net::HttpRequest* request, net::HttpResponse* response) {
-    response->header().SetHeader("Connection", "keep-alive");
-    response->header().set_status_code(net::HTTP_STATUS_OK);
     net::HttpHeader& request_header = request->header();
     const std::string* ims = request_header.GetHeader("If-Modified-Since");
     if(ims && *ims == g_last_modified) {
