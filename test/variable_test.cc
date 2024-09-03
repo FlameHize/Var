@@ -157,3 +157,109 @@ TEST(VariableTest, expose)
     ASSERT_EQ("c1", c1.name());
     ASSERT_EQ(1UL, Variable::count_exposed());
 }
+
+class MyDumper : public Dumper {
+public:
+    bool dump(const std::string& name, 
+              const std::string& description) override {
+        _list.push_back(std::make_pair(name, description));
+        return true;
+    }
+    std::vector<std::pair<std::string, std::string>> _list;
+};
+
+TEST(VariableTest, dump)
+{
+    MyDumper dumper;
+
+    // Nothing to dump yet.
+    ASSERT_EQ(0, Variable::dump_exposed(&dumper, nullptr));
+    ASSERT_TRUE(dumper._list.empty());
+
+    Status<int> v1("var1", 1);
+    Status<int> v1_2("var1", 12);
+    Status<int> v2("var2", 2);
+    Status<int> v3("foo.bar.Apple", "var3", 3);
+    Status<int> v4("foo.bar.BaNaNa", "var4", 4);
+    Status<int> v5("foo::bar::Car_Rot", "var5", 5);
+    ASSERT_EQ(5, Variable::dump_exposed(&dumper, NULL));
+    ASSERT_EQ(5UL, dumper._list.size());
+
+    ASSERT_EQ("foo_bar_apple_var3", dumper._list[0].first);
+    ASSERT_EQ("3", dumper._list[0].second);
+    ASSERT_EQ("foo_bar_ba_na_na_var4", dumper._list[1].first);
+    ASSERT_EQ("4", dumper._list[1].second);
+    ASSERT_EQ("foo_bar_car_rot_var5", dumper._list[2].first);
+    ASSERT_EQ("5", dumper._list[2].second);
+    ASSERT_EQ("var1", dumper._list[3].first);
+    ASSERT_EQ("1", dumper._list[3].second);
+    ASSERT_EQ("var2", dumper._list[4].first);
+    ASSERT_EQ("2", dumper._list[4].second);
+
+    dumper._list.clear();
+    DumpOptions opts;
+    opts.white_wildcards = "foo_bar_*";
+    opts.black_wildcards = "*var5";
+    ASSERT_EQ(2, Variable::dump_exposed(&dumper, &opts));
+    ASSERT_EQ(2UL, dumper._list.size());
+    ASSERT_EQ("foo_bar_apple_var3", dumper._list[0].first);
+    ASSERT_EQ("3", dumper._list[0].second);
+    ASSERT_EQ("foo_bar_ba_na_na_var4", dumper._list[1].first);
+    ASSERT_EQ("4", dumper._list[1].second);
+
+    dumper._list.clear();
+    opts = DumpOptions();
+    opts.white_wildcards = "*?rot*";
+    ASSERT_EQ(1, Variable::dump_exposed(&dumper, &opts));
+    ASSERT_EQ(1UL, dumper._list.size());
+    ASSERT_EQ("foo_bar_car_rot_var5", dumper._list[0].first);
+    ASSERT_EQ("5", dumper._list[0].second);
+
+    dumper._list.clear();
+    opts = DumpOptions();
+    opts.white_wildcards = "";
+    opts.black_wildcards = "var1;var2";
+    ASSERT_EQ(3, Variable::dump_exposed(&dumper, &opts));
+    ASSERT_EQ(3UL, dumper._list.size());
+    ASSERT_EQ("foo_bar_apple_var3", dumper._list[0].first);
+    ASSERT_EQ("3", dumper._list[0].second);
+    ASSERT_EQ("foo_bar_ba_na_na_var4", dumper._list[1].first);
+    ASSERT_EQ("4", dumper._list[1].second);
+    ASSERT_EQ("foo_bar_car_rot_var5", dumper._list[2].first);
+    ASSERT_EQ("5", dumper._list[2].second);
+
+    dumper._list.clear();
+    opts = DumpOptions();
+    opts.white_wildcards = "";
+    opts.black_wildcards = "f?o_b?r_*;not_exist";
+    ASSERT_EQ(2, Variable::dump_exposed(&dumper, &opts));
+    ASSERT_EQ(2UL, dumper._list.size());
+    ASSERT_EQ("var1", dumper._list[0].first);
+    ASSERT_EQ("1", dumper._list[0].second);
+    ASSERT_EQ("var2", dumper._list[1].first);
+    ASSERT_EQ("2", dumper._list[1].second);
+
+    dumper._list.clear();
+    opts = DumpOptions();
+    opts.question_mark = '$';
+    opts.white_wildcards = "";
+    opts.black_wildcards = "f$o_b$r_*;not_exist";
+    ASSERT_EQ(2, Variable::dump_exposed(&dumper, &opts));
+    ASSERT_EQ(2UL, dumper._list.size());
+    ASSERT_EQ("var1", dumper._list[0].first);
+    ASSERT_EQ("1", dumper._list[0].second);
+    ASSERT_EQ("var2", dumper._list[1].first);
+    ASSERT_EQ("2", dumper._list[1].second);
+
+    dumper._list.clear();
+    opts = DumpOptions();
+    opts.white_wildcards = "not_exist";
+    ASSERT_EQ(0, Variable::dump_exposed(&dumper, &opts));
+    ASSERT_EQ(0UL, dumper._list.size());
+
+    dumper._list.clear();
+    opts = DumpOptions();
+    opts.white_wildcards = "not_exist;f??o_bar*";
+    ASSERT_EQ(0,Variable::dump_exposed(&dumper, &opts));
+    ASSERT_EQ(0UL, dumper._list.size());
+}

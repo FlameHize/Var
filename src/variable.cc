@@ -16,7 +16,7 @@ public:
 typedef std::unordered_map<std::string, VarEntry> VarMap;
 
 struct VarMapWithLock : public VarMap {
-    MutexLock mutex;
+    mutable MutexLock mutex;
     VarMapWithLock() {
         reserve(1024);
     }
@@ -225,6 +225,7 @@ int Variable::dump_exposed(Dumper* dumper, const DumpOptions* options) {
                                   opt.question_mark,
                                   true);
     if(white_matcher.wildcards().empty() && !white_matcher.exact_names().empty()) {
+        // WhiteMatcher does not have wildcards(like */?) but have complete format.
         for(std::set<std::string>::const_iterator it = white_matcher.exact_names().begin(); 
             it!= white_matcher.exact_names().end(); ++it) {
             const std::string& name = *it;

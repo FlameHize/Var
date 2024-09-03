@@ -180,4 +180,14 @@ void to_underscored_name(std::string* out,const std::string& name);
 
 } // end namespace var
 
+// Make variables printable.
+namespace std {
+
+inline ostream& operator<<(ostream& os, const var::Variable& var) {
+    var.describe(os, false);
+    return os;
+}
+
+} // end namespace std
+
 #endif

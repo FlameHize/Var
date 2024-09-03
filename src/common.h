@@ -24,6 +24,7 @@
 #include <set>
 #include <streambuf>
 #include <cstring>
+#include <mutex>
 
 // Compiler detection.
 #if defined(__GNUC__)
