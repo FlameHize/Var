@@ -48,6 +48,112 @@ private:
 TEST(VariableTest, status)
 {
     Status<int> st1;
-    st1.set_value(9);
     ASSERT_TRUE(st1.is_hidden());
+    ASSERT_EQ(0UL, Variable::count_exposed());
+
+    ASSERT_EQ(0, st1.expose("var1"));
+    ASSERT_FALSE(st1.is_hidden());
+    st1.set_value(9);
+    ASSERT_EQ("9", Variable::describe_exposed("var1"));
+    std::vector<std::string> vars;
+    Variable::list_exposed(&vars);
+    ASSERT_EQ(1UL, vars.size());
+    ASSERT_EQ("var1", vars[0]);
+    ASSERT_EQ(1UL, Variable::count_exposed());
+
+    Status<int> st2;
+    st2.set_value(10);
+    ASSERT_TRUE(st2.is_hidden());
+    ASSERT_EQ(-1, st2.expose("var1"));
+    ASSERT_TRUE(st2.is_hidden());
+    ASSERT_EQ(1UL, Variable::count_exposed());
+    ASSERT_EQ("10", st2.get_description());
+    ASSERT_EQ("9", Variable::describe_exposed("var1"));
+    ASSERT_EQ(1UL, Variable::count_exposed());
+
+    ASSERT_TRUE(st1.hide());
+    ASSERT_TRUE(st1.is_hidden());
+    ASSERT_EQ(0UL, Variable::count_exposed());
+    ASSERT_EQ("", Variable::describe_exposed("var1"));
+    ASSERT_EQ(0, st1.expose("var1"));
+    ASSERT_EQ(1UL, Variable::count_exposed());
+    ASSERT_EQ("9", Variable::describe_exposed("var1"));
+
+    ASSERT_EQ(0, st2.expose("var2"));
+    ASSERT_EQ(2UL, Variable::count_exposed());
+    ASSERT_EQ("9", Variable::describe_exposed("var1"));
+    ASSERT_EQ("10", Variable::describe_exposed("var2"));
+    Variable::list_exposed(&vars);
+    ASSERT_EQ(2UL, vars.size());
+    ASSERT_EQ("var1", vars[0]);
+    ASSERT_EQ("var2", vars[1]);
+
+    ASSERT_TRUE(st2.hide());
+    ASSERT_EQ(1UL, Variable::count_exposed());
+    ASSERT_EQ("", Variable::describe_exposed("var2"));
+    Variable::list_exposed(&vars);
+    ASSERT_EQ(1UL, vars.size());
+    ASSERT_EQ("var1", vars[0]);
+
+    ASSERT_EQ(0, st2.expose("Var2 Again"));
+    ASSERT_EQ("", Variable::describe_exposed("Var2 Again"));
+    ASSERT_EQ("10", Variable::describe_exposed("var2_again"));
+    Variable::list_exposed(&vars);
+    ASSERT_EQ(2UL, vars.size());
+    ASSERT_EQ("var1", vars[0]);
+    ASSERT_EQ("var2_again", vars[1]);
+    ASSERT_EQ(2UL, Variable::count_exposed());  
+
+    Status<int> st3("var3", 11);
+    ASSERT_EQ("var3", st3.name());
+    ASSERT_EQ(3UL, Variable::count_exposed());
+    ASSERT_EQ("11", Variable::describe_exposed("var3"));
+    Variable::list_exposed(&vars);
+    ASSERT_EQ(3UL, vars.size());
+    ASSERT_EQ("var1", vars[0]);
+    ASSERT_EQ("var3", vars[1]);
+    ASSERT_EQ("var2_again", vars[2]);
+    ASSERT_EQ(3UL, Variable::count_exposed()); 
+
+    Status<int> st4("var4", 12);
+    ASSERT_EQ("var4", st4.name());
+    ASSERT_EQ(4UL, Variable::count_exposed());
+    ASSERT_EQ("12", Variable::describe_exposed("var4"));
+    Variable::list_exposed(&vars);
+    ASSERT_EQ(4UL, vars.size());
+    ASSERT_EQ("var1", vars[0]);
+    ASSERT_EQ("var3", vars[1]);
+    ASSERT_EQ("var4", vars[2]);
+    ASSERT_EQ("var2_again", vars[3]);
+
+    Status<void*> st5((void*)19UL);
+    ASSERT_EQ("0x13", st5.get_description());
+}
+
+TEST(VariableTest, expose)
+{
+    Status<int> c1;
+    ASSERT_EQ(0, c1.expose_as("foo::bar::Apple", "c1"));
+    ASSERT_EQ("foo_bar_apple_c1", c1.name());
+    ASSERT_EQ(1UL, Variable::count_exposed());
+
+    ASSERT_EQ(0, c1.expose_as("foo.bar::BaNaNa", "c1"));
+    ASSERT_EQ("foo_bar_ba_na_na_c1", c1.name());
+    ASSERT_EQ(1UL, Variable::count_exposed());
+
+    ASSERT_EQ(0, c1.expose_as("foo::bar.Car_Rot", "c1"));
+    ASSERT_EQ("foo_bar_car_rot_c1", c1.name());
+    ASSERT_EQ(1UL, Variable::count_exposed());
+
+    ASSERT_EQ(0, c1.expose_as("foo-bar-RPCTest", "c1"));
+    ASSERT_EQ("foo_bar_rpctest_c1", c1.name());
+    ASSERT_EQ(1UL, Variable::count_exposed());
+
+    ASSERT_EQ(0, c1.expose_as("foo-bar-HELLO", "c1"));
+    ASSERT_EQ("foo_bar_hello_c1", c1.name());
+    ASSERT_EQ(1UL, Variable::count_exposed());
+    
+    ASSERT_EQ(0, c1.expose("c1"));
+    ASSERT_EQ("c1", c1.name());
+    ASSERT_EQ(1UL, Variable::count_exposed());
 }

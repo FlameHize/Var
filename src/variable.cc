@@ -84,7 +84,7 @@ int Variable::expose_impl(const std::string& prefix,
     _name.reserve((prefix.size() + name.size()) * 5 / 4);
     if(!prefix.empty()) {
         to_underscored_name(&_name, prefix);
-        if(!_name.empty() && _name[_name.size() - 1] != '_') {
+        if(!_name.empty() && back_char(_name) != '_') {
             _name.push_back('_');
         }
     }

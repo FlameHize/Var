@@ -148,9 +148,9 @@ public:
                                 DisplayFilter = DISPLAY_ON_ALL);
 
     // String form. Returns empty string if not found.
-    std::string describe_exposed(const std::string& name,
-                                 bool quote_string = false,
-                                 DisplayFilter = DISPLAY_ON_ALL);
+    static std::string describe_exposed(const std::string& name,
+                                        bool quote_string = false,
+                                        DisplayFilter = DISPLAY_ON_ALL);
 
     ///@note The output will be ploted by js.plot.
     // Describe saved series of variable 'names' as a json-string into 'os'.
