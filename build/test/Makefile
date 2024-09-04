@@ -341,6 +341,33 @@ http_url_test.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_url_test.cc.s
 .PHONY : http_url_test.cc.s
 
+linked_list_test.o: linked_list_test.cc.o
+
+.PHONY : linked_list_test.o
+
+# target to build an object file
+linked_list_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/linked_list_test.cc.o
+.PHONY : linked_list_test.cc.o
+
+linked_list_test.i: linked_list_test.cc.i
+
+.PHONY : linked_list_test.i
+
+# target to preprocess a source file
+linked_list_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/linked_list_test.cc.i
+.PHONY : linked_list_test.cc.i
+
+linked_list_test.s: linked_list_test.cc.s
+
+.PHONY : linked_list_test.s
+
+# target to generate assembly for a file
+linked_list_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/linked_list_test.cc.s
+.PHONY : linked_list_test.cc.s
+
 main.o: main.cc.o
 
 .PHONY : main.o
@@ -455,6 +482,9 @@ help:
 	@echo "... http_url_test.o"
 	@echo "... http_url_test.i"
 	@echo "... http_url_test.s"
+	@echo "... linked_list_test.o"
+	@echo "... linked_list_test.i"
+	@echo "... linked_list_test.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -41,6 +41,7 @@ typedef int AgentId;
 template<typename Agent>
 class AgentGroup {
 public:
+    // Purpose to get template param 'Agent' type used for ::.
     typedef Agent agent_type;
 
     // TODO: We should remove the template parameter and unify AgentGroup
@@ -72,7 +73,7 @@ public:
     // makes alignment of ThreadBlock harder and to address the agent we have
     // to touch an additional cacheline: the bitmap. Whereas in the first
     // method, bitmap and ThreadBlock* are in one cacheline.
-    struct ThreadBlock {
+    struct VAR_CACHELINE_ALIGNMENT ThreadBlock {
         inline Agent* at(size_t offset) { return _agents + offset; }
     private:
         Agent _agents[ELEMENTS_PER_BLOCK];
@@ -82,7 +83,6 @@ public:
         _destroy_tls_blocks();
     }
 
-    // 序号复用
     inline static AgentId create_new_agent() {
         MutexLockGuard lock(_s_mutex);
         AgentId agent_id = 0;

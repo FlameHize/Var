@@ -85,6 +85,10 @@ test/CMakeFiles/var_test.dir/http_status_code_test.cc.o: ../test/http_status_cod
 test/CMakeFiles/var_test.dir/http_url_test.cc.o: ../net/http/http_url.h
 test/CMakeFiles/var_test.dir/http_url_test.cc.o: ../test/http_url_test.cc
 
+test/CMakeFiles/var_test.dir/linked_list_test.cc.o: ../net/base/noncopyable.h
+test/CMakeFiles/var_test.dir/linked_list_test.cc.o: ../src/util/linked_list.h
+test/CMakeFiles/var_test.dir/linked_list_test.cc.o: ../test/linked_list_test.cc
+
 test/CMakeFiles/var_test.dir/main.cc.o: ../test/main.cc
 
 test/CMakeFiles/var_test.dir/string_splitter_test.cc.o: ../net/base/StringPiece.h

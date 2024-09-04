@@ -51,6 +51,10 @@
 #  define VAR_UNLIKELY(expr) (expr)
 #endif
 
+#define VAR_CACHELINE_SIZE 64
+#define ALIGNAS(byte_alignment) __attribute__((aligned(byte_alignment)))
+#define VAR_CACHELINE_ALIGNMENT ALIGNAS(VAR_CACHELINE_SIZE)
+
 namespace var {
 
 // [ Ease getting first/last character of std::string before C++11 ]
