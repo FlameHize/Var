@@ -19,8 +19,8 @@
 #define VAR_DETAIL_COMBINER_H
 
 #include "call_op_returing_void.h"
-#include "is_atomical.h"
 #include <type_traits>
+#include <atomic>
 #include <mutex>
 
 namespace var {
@@ -29,10 +29,6 @@ namespace detail {
 template<typename T, typename Enabler = void>
 class ElementContainer {
 public:
-    // Used for debug.
-    ElementContainer() { 
-        std::cout << "POD" << std::endl; 
-    }
     void load(T* out) {
         std::lock_guard<std::mutex> guard(_mutex);
         *out = _value;
@@ -69,20 +65,16 @@ private:
 };
 
 template<typename T>
-class ElementContainer<T, typename std::enable_if<std::is_atomic<T>::value>::type> {
+class ElementContainer<T, typename std::enable_if<
+    std::is_integral<T>::value || std::is_floating_point<T>::value, void>::type> {
 public:
-    // Used for debug.
-    ElementContainer() { 
-        std::cout << "ATOMIC" << std::endl; 
-    }
-
     // Do not need any memory fencing here, every op is relaxed.
     inline void load(T* out) {
         *out = _value.load(std::memory_order_relaxed);
     }
 
-    inline void store(const T& new_value) {
-        _value.store(new_value.load(), std::memory_order_relaxed);
+    inline void store(T new_value) {
+        _value.store(new_value, std::memory_order_relaxed);
     }
 
     inline void exchange(T* prev, T new_value) {

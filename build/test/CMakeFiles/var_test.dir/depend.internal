@@ -4,7 +4,6 @@
 test/CMakeFiles/var_test.dir/agent_combiner_test.cc.o
  ../src/detail/call_op_returing_void.h
  ../src/detail/combiner.h
- ../src/detail/is_atomical.h
  /home/zgx/Var/test/agent_combiner_test.cc
 test/CMakeFiles/var_test.dir/agent_group_test.cc.o
  ../net/base/CurrentThread.h

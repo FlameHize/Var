@@ -36,9 +36,12 @@ TEST(AgentCombinerTest, element_container_pod)
     }, 5);
     pod_container.load(&pod_value);
     EXPECT_EQ(pod_value, 25);
-    int global_value = 0;
-    pod_container.merge_global([](int& value, int value2){
-        value += value2;
-    }, global_value);
-    EXPECT_EQ(global_value, 25);
+}
+
+TEST(AgentCombinerTest, element_container_atomical)
+{
+    ASSERT_EQ(sizeof(int32_t), sizeof(ElementContainer<int32_t>));
+    ASSERT_EQ(sizeof(int64_t), sizeof(ElementContainer<int64_t>));
+    ASSERT_EQ(sizeof(float), sizeof(ElementContainer<float>));
+    ASSERT_EQ(sizeof(double), sizeof(ElementContainer<double>));
 }

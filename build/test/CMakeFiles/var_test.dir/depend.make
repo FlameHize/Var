@@ -3,7 +3,6 @@
 
 test/CMakeFiles/var_test.dir/agent_combiner_test.cc.o: ../src/detail/call_op_returing_void.h
 test/CMakeFiles/var_test.dir/agent_combiner_test.cc.o: ../src/detail/combiner.h
-test/CMakeFiles/var_test.dir/agent_combiner_test.cc.o: ../src/detail/is_atomical.h
 test/CMakeFiles/var_test.dir/agent_combiner_test.cc.o: ../test/agent_combiner_test.cc
 
 test/CMakeFiles/var_test.dir/agent_group_test.cc.o: ../net/base/CurrentThread.h
