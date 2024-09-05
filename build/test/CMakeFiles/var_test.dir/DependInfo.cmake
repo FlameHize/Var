@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/zgx/Var/test/agent_combiner_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/agent_combiner_test.cc.o"
   "/home/zgx/Var/test/agent_group_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/agent_group_test.cc.o"
   "/home/zgx/Var/test/dummy_server_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/dummy_server_test.cc.o"
   "/home/zgx/Var/test/http_header_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/http_header_test.cc.o"

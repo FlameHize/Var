@@ -125,6 +125,33 @@ var_test/fast:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/build
 .PHONY : var_test/fast
 
+agent_combiner_test.o: agent_combiner_test.cc.o
+
+.PHONY : agent_combiner_test.o
+
+# target to build an object file
+agent_combiner_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/agent_combiner_test.cc.o
+.PHONY : agent_combiner_test.cc.o
+
+agent_combiner_test.i: agent_combiner_test.cc.i
+
+.PHONY : agent_combiner_test.i
+
+# target to preprocess a source file
+agent_combiner_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/agent_combiner_test.cc.i
+.PHONY : agent_combiner_test.cc.i
+
+agent_combiner_test.s: agent_combiner_test.cc.s
+
+.PHONY : agent_combiner_test.s
+
+# target to generate assembly for a file
+agent_combiner_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/agent_combiner_test.cc.s
+.PHONY : agent_combiner_test.cc.s
+
 agent_group_test.o: agent_group_test.cc.o
 
 .PHONY : agent_group_test.o
@@ -458,6 +485,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... var_test"
+	@echo "... agent_combiner_test.o"
+	@echo "... agent_combiner_test.i"
+	@echo "... agent_combiner_test.s"
 	@echo "... agent_group_test.o"
 	@echo "... agent_group_test.i"
 	@echo "... agent_group_test.s"

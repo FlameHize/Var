@@ -6,15 +6,25 @@
 
 #IncludeRegexTransform: 
 
-../net/base/noncopyable.h
+../src/detail/call_op_returing_void.h
 
-../src/util/linked_list.h
-net/base/noncopyable.h
-../src/util/net/base/noncopyable.h
+../src/detail/combiner.h
+call_op_returing_void.h
+../src/detail/call_op_returing_void.h
+is_atomical.h
+../src/detail/is_atomical.h
+type_traits
+-
+mutex
+-
 
-/home/zgx/Var/test/linked_list_test.cc
+../src/detail/is_atomical.h
+atomic
+-
+
+/home/zgx/Var/test/agent_combiner_test.cc
 gtest/gtest.h
 -
-src/util/linked_list.h
-/home/zgx/Var/test/src/util/linked_list.h
+src/detail/combiner.h
+/home/zgx/Var/test/src/detail/combiner.h
 

@@ -15,6 +15,7 @@ set(TEST_SRC_FILES
     dummy_server_test.cc
     variable_test.cc
     agent_group_test.cc
+    agent_combiner_test.cc
     linked_list_test.cc)
 
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
