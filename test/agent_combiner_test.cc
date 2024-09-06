@@ -16,6 +16,7 @@
 // under the License.
 
 #include <gtest/gtest.h>
+#include <thread>
 #include "src/detail/combiner.h"
 
 using namespace var;
@@ -44,4 +45,39 @@ TEST(AgentCombinerTest, element_container_atomical)
     ASSERT_EQ(sizeof(int64_t), sizeof(ElementContainer<int64_t>));
     ASSERT_EQ(sizeof(float), sizeof(ElementContainer<float>));
     ASSERT_EQ(sizeof(double), sizeof(ElementContainer<double>));
+}
+
+template<typename T>
+struct AddTo {
+    void operator()(T& lhs, const T& rhs) const {
+        lhs += rhs;
+    }
+};
+
+template<typename T>
+struct MinusFrom {
+    void operator()(T& lhs, const T& rhs) const {
+        lhs -= rhs;
+    }
+};
+
+TEST(AgentCombinerTest, all_kinds_agent_group)
+{
+    // One kind of AgentCombiner has one kind AgentGroup
+    AgentCombiner<int,int,AddTo<int>> addto_int_agent_combiner;
+    AgentCombiner<int,int,AddTo<int>> addto_int_agent_combiner_2;
+    AgentCombiner<int,int,MinusFrom<int>> minus_int_agent_combiner;
+    AgentCombiner<double,double,MinusFrom<double>> minus_double_agent_combiner;
+    EXPECT_EQ(addto_int_agent_combiner.id(), 0);
+    EXPECT_EQ(addto_int_agent_combiner_2.id(), 1);
+    EXPECT_EQ(minus_int_agent_combiner.id(),0);
+    EXPECT_EQ(minus_double_agent_combiner.id(), 0);
+
+    int agent_id = 0;
+    std::thread thread([&agent_id](){
+        AgentCombiner<int, int, AddTo<int>> addto_int_agent_combiner_3;
+        agent_id = addto_int_agent_combiner_3.id();
+    });
+    EXPECT_EQ(agent_id, 2);
+    thread.join();
 }

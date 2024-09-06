@@ -18,8 +18,11 @@
 #ifndef VAR_DETAIL_COMBINER_H
 #define VAR_DETAIL_COMBINER_H
 
-#include "call_op_returing_void.h"
-#include <type_traits>
+#include "src/detail/agent_group.h"
+#include "src/detail/call_op_returing_void.h"
+#include "src/util/linked_list.h"
+#include "src/util/type_traits.h"
+#include "net/base/Logging.h"
 #include <atomic>
 #include <mutex>
 
@@ -51,13 +54,13 @@ public:
         call_or_returning_void(op, _value, value2);
     }
 
-    // [Unique]
-    template<typename Op, typename GlobalValue>
-    void merge_global(const Op& op, GlobalValue& global_value) {
-        std::lock_guard<std::mutex> guard(_mutex);
-        call_or_returning_void(op, global_value, _value);
-        //op(global_value, _value);
-    }
+    // // [Unique]
+    // template<typename Op, typename GlobalValue>
+    // void merge_global(const Op& op, GlobalValue& global_value) {
+    //     std::lock_guard<std::mutex> guard(_mutex);
+    //     call_or_returning_void(op, global_value, _value);
+    //     //op(global_value, _value);
+    // }
 
 private:
     T _value;
@@ -109,6 +112,159 @@ private:
     std::atomic<T> _value;
 };
 
+template<typename ResultTp, typename ElementTp, typename BinaryOp>
+class AgentCombiner {
+public:
+    typedef ResultTp result_type;
+    typedef ElementTp element_type;
+    typedef AgentCombiner<ResultTp, ElementTp, BinaryOp> self_type;
+
+    struct Agent : public LinkNode<Agent> {
+        Agent() : combiner(nullptr) {}
+        ~Agent() {
+            if(combiner) {
+                combiner->combine_and_erase(this);
+                combiner = nullptr;
+            }
+        }
+
+        void reset(const ElementTp& val, self_type* c) {
+            combiner = c;
+            element.store(val);
+        }
+
+        // // NOTE: Only available to non-atomical(ElementTp) types.
+        // template<typename Op>
+        // void merge_global(const Op& op) {
+        //     ///@todo
+        // }
+
+        self_type* combiner;
+        ElementContainer<ElementTp> element;
+    };
+
+    typedef detail::AgentGroup<Agent> AgentGroup;
+
+    explicit AgentCombiner(const ResultTp result_identity = ResultTp(),
+                           const ElementTp element_idetity = ElementTp(),
+                           const BinaryOp& op = BinaryOp())
+        : _id(AgentGroup::create_new_agent())
+        , _op(op)
+        , _global_result(result_identity)
+        , _result_identity(result_identity)
+        , _element_identity(element_idetity) {
+    }
+
+    ~AgentCombiner() {
+        if(_id >= 0) {
+            clear_all_agents();
+            AgentGroup::destroy_agent(_id);
+            _id = -1;
+        }
+    }
+
+
+    // [ThreadSafe] May be called from anywhere.
+    ResultTp combine_agents() const {
+        ElementTp tls_value;
+        std::lock_guard guard(_lock);
+        ResultTp ret = _global_result;
+        for(LinkNode<Agent>* node = _agents.head(); node != _agents.end(); node = node->next()) {
+            node->value()->element.load(&tls_value);
+            call_or_returning_void(_op, ret, tls_value);
+        }
+        return ret;
+    }
+
+    // [ThreadSafe] May be called from anywhere.
+    ResultTp reset_all_agents() {
+        ElementTp prev;
+        std::lock_guard guard(_lock);
+        ResultTp tmp = _global_result;
+        _global_result = _result_identity;
+        for(LinkNode<Agent>* node = _agents.head(); node != _agents.end(); node = node->next()) {
+            node->value()->element.exchange(&prev, _element_identity);
+            call_or_returning_void(_op, tmp, prev);
+        }
+        return tmp;
+    }
+
+    // Always called from the thread owning the agent.
+    void commit_and_erase(Agent* agent) {
+        if(!agent) return;
+        ElementTp local;
+        std::lock_guard guard(_lock);
+        agent->element.load(&local);
+        call_or_returning_void(_op, _global_result, local);
+        agent->RemoveFromList();
+    }
+
+    // Always called from the thread owning the agent.
+    void commit_and_clear(Agent* agent) {
+        if(!agent) return;
+        ElementTp prev;
+        std::lock_guard guard(_lock);
+        agent->element.exchange(&prev, _element_identity);
+        call_or_returning_void(_op, _global_result, prev);
+    }
+
+    // MUST be as fast as possible. 
+    inline Agent* get_or_create_tls_agent() {
+        Agent* agent = AgentGroup::get_tls_agent(_id);
+        if(!agent) {
+            // Create new agent.
+            agent = AgentGroup::get_or_create_tls_agent(_id);
+            if(!agent) {
+                LOG_ERROR << "Failed to create agent";
+                return nullptr;
+            }
+        }
+        if(agent->combiner) {
+            return agent;
+        }
+        agent->reset(_element_identity, this);
+        {
+            std::lock_guard guard(_lock);
+            _agents.Append(agent);
+        }
+        return agent;
+    }
+
+    // Reseting agents is MUST beacuse the agent object may be reused.
+    // Set element to be default-constructed so that if its' non-pod,
+    // internal allocations should be released.
+    void clear_all_agents() {
+        std::lock_guard guard(_lock);
+        for(LinkNode<Agent>* node = _agents.head(); node != _agents.end(); ) {
+            node->value()->reset(ElementTp(), nullptr);
+            LinkNode<Agent>* const saved_next = node->next();
+            node->RemoveFromList();
+            node = saved_next;
+        }
+    }
+
+    typename var::add_cr_non_integral<ElementTp>::type element_identity() const {
+        return _element_identity;
+    }
+    typename var::add_cr_non_integral<ResultTp>::type result_identity() const {
+        return _result_identity;
+    }
+
+    const BinaryOp& op() const { return _op; }
+
+    const AgentId& id() const { return _id; }
+
+    bool vaild() const { return _id >= 0; }
+
+private:
+    AgentId                 _id;
+    BinaryOp                _op;
+    ResultTp                _global_result;
+    ResultTp                _result_identity;
+    ElementTp               _element_identity;
+    mutable std::mutex      _lock;
+    LinkedList<Agent>       _agents;
+};
 
 } // end namespace detail
 } // end namespace var
