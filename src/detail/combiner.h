@@ -123,7 +123,7 @@ public:
         Agent() : combiner(nullptr) {}
         ~Agent() {
             if(combiner) {
-                combiner->combine_and_erase(this);
+                combiner->commit_and_erase(this);
                 combiner = nullptr;
             }
         }

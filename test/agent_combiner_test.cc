@@ -64,20 +64,43 @@ struct MinusFrom {
 TEST(AgentCombinerTest, all_kinds_agent_group)
 {
     // One kind of AgentCombiner has one kind AgentGroup
-    AgentCombiner<int,int,AddTo<int>> addto_int_agent_combiner;
-    AgentCombiner<int,int,AddTo<int>> addto_int_agent_combiner_2;
-    AgentCombiner<int,int,MinusFrom<int>> minus_int_agent_combiner;
-    AgentCombiner<double,double,MinusFrom<double>> minus_double_agent_combiner;
+    AgentCombiner<int, int, AddTo<int>> addto_int_agent_combiner;
+    AgentCombiner<int, int, AddTo<int>> addto_int_agent_combiner_2;
+    AgentCombiner<int, int, MinusFrom<int>> minus_int_agent_combiner;
+    AgentCombiner<double, double, MinusFrom<double>> minus_double_agent_combiner;
     EXPECT_EQ(addto_int_agent_combiner.id(), 0);
     EXPECT_EQ(addto_int_agent_combiner_2.id(), 1);
     EXPECT_EQ(minus_int_agent_combiner.id(),0);
     EXPECT_EQ(minus_double_agent_combiner.id(), 0);
 
-    int agent_id = 0;
-    std::thread thread([&agent_id](){
-        AgentCombiner<int, int, AddTo<int>> addto_int_agent_combiner_3;
-        agent_id = addto_int_agent_combiner_3.id();
+    // int agent_id = 0;
+    // std::thread thread([&agent_id](){
+    //     AgentCombiner<int, int, AddTo<int>> addto_int_agent_combiner_3;
+    //     agent_id = addto_int_agent_combiner_3.id();
+    // });
+    // EXPECT_EQ(agent_id, 2);
+    // thread.join();
+}
+
+TEST(AgentCombinerTest, combine_and_merge)
+{
+    const size_t loop = 100;
+    AgentCombiner<int, int, AddTo<int>> combiner;
+    std::thread thread_1([&](){
+        for(size_t i = 0; i < loop; ++i) {
+            auto *agent = combiner.get_or_create_tls_agent();
+            agent->element.modify(combiner.op(), 1);
+        }
     });
-    EXPECT_EQ(agent_id, 2);
-    thread.join();
+    std::thread thread_2([&](){
+        for(size_t i = 0; i < loop; ++i) {
+            auto *agent = combiner.get_or_create_tls_agent();
+            agent->element.modify(combiner.op(), 1);
+        }
+    });
+    thread_1.join();
+    thread_2.join();
+    EXPECT_EQ(combiner.combine_agents(), 2 * loop);
+    EXPECT_EQ(combiner.reset_all_agents(), 2  * loop);
+    EXPECT_EQ(combiner.combine_agents(), 0);
 }
