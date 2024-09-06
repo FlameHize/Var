@@ -71,6 +71,8 @@ public:
     }
 
     ~Reducer() {
+        // Calling hide() manually is a MUST required by Variable.
+        hide();
     }
 
     // Add a value.
@@ -90,13 +92,13 @@ public:
     // Notice that this function walks through all threads ever add values
     // into this reducer. You should avoid calling it frequently.
     T get_value() const {
-        return _combiner->combine_agents();
+        return _combiner.combine_agents();
     }
 
     // Reset the reduced value to T().
     // Returns the reduced value before reset.
     T reset() {
-        return _combiner->reset_all_agents();
+        return _combiner.reset_all_agents();
     }
 
     void describe(std::ostream& os, bool quote_string) const override {
@@ -152,15 +154,73 @@ class Adder : public Reducer<T, detail::AddTo<T>> {
 public:
     typedef Reducer<T, detail::AddTo<T>> Base;
     typedef T value_type;
+    
     Adder() : Base() {}
     explicit Adder(const std::string& name) : Base() {
         this->expose(name);
     }
-    Adder(const std::string& prefix,
-          const std::string& name) : Base() {
+    explicit Adder(const std::string& prefix,
+                   const std::string& name) : Base() {
         this->expose_as(prefix, name);
     }
     ~Adder() {
+        Variable::hide();
+    }
+};
+
+namespace detail {
+template<typename T>
+struct MaxTo {
+    void operator()(T& lhs, typename var::add_cr_non_integral<T>::type rhs) const {
+        if(lhs < rhs) { lhs = rhs; }
+    }
+};
+template<typename T>
+struct MinTo {
+    void operator()(T& lhs, typename var::add_cr_non_integral<T>::type rhs) const {
+        if(rhs < lhs) { lhs = rhs; }
+    }
+};
+} // end namespace detail
+
+template<typename T>
+class Maxer : public Reducer<T, detail::MaxTo<T>> {
+public:
+    typedef Reducer<T, detail::MaxTo<T>> Base;
+    typedef T value_type;
+
+    Maxer() : Base(std::numeric_limits<T>::min()) {}
+    explicit Maxer(const std::string& name) 
+        : Base(std::numeric_limits<T>::min()) {
+        this->expose(name);
+    }
+    explicit Maxer(const std::string& prefix,
+                   const std::string& name) 
+        : Base(std::numeric_limits<T>::min()) {
+        this->expose_as(prefix, name);
+    }
+    ~Maxer() {
+        Variable::hide();
+    }
+};
+
+template<typename T>
+class Miner : public Reducer<T, detail::MinTo<T>> {
+public:
+    typedef Reducer<T, detail::MinTo<T>> Base;
+    typedef T value_type;
+
+    Miner() : Base(std::numeric_limits<T>::max()) {}
+    explicit Miner(const std::string name)
+        : Base(std::numeric_limits<T>::max()) {
+        this->expose(name);
+    }
+    explicit Miner(const std::string& prefix,
+                   const std::string& name) 
+        : Base(std::numeric_limits<T>::max()) {
+        this->expose_as(prefix, name);
+    }
+    ~Miner() {
         Variable::hide();
     }
 };

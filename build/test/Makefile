@@ -422,6 +422,33 @@ main.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/main.cc.s
 .PHONY : main.cc.s
 
+reducer_test.o: reducer_test.cc.o
+
+.PHONY : reducer_test.o
+
+# target to build an object file
+reducer_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/reducer_test.cc.o
+.PHONY : reducer_test.cc.o
+
+reducer_test.i: reducer_test.cc.i
+
+.PHONY : reducer_test.i
+
+# target to preprocess a source file
+reducer_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/reducer_test.cc.i
+.PHONY : reducer_test.cc.i
+
+reducer_test.s: reducer_test.cc.s
+
+.PHONY : reducer_test.s
+
+# target to generate assembly for a file
+reducer_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/reducer_test.cc.s
+.PHONY : reducer_test.cc.s
+
 string_splitter_test.o: string_splitter_test.cc.o
 
 .PHONY : string_splitter_test.o
@@ -518,6 +545,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... reducer_test.o"
+	@echo "... reducer_test.i"
+	@echo "... reducer_test.s"
 	@echo "... string_splitter_test.o"
 	@echo "... string_splitter_test.i"
 	@echo "... string_splitter_test.s"

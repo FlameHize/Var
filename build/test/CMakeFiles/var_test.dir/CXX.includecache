@@ -128,19 +128,45 @@ atomic
 mutex
 -
 
+../src/reducer.h
+src/variable.h
+../src/src/variable.h
+src/detail/combiner.h
+../src/src/detail/combiner.h
+src/util/type_traits.h
+../src/src/util/type_traits.h
+
 ../src/util/linked_list.h
 net/base/noncopyable.h
 ../src/util/net/base/noncopyable.h
+
+../src/util/time.h
+time.h
+-
+sys/time.h
+-
+stdint.h
+-
 
 ../src/util/type_traits.h
 type_traits
 -
 
-/home/zgx/Var/test/agent_combiner_test.cc
+../src/variable.h
+net/base/noncopyable.h
+../src/net/base/noncopyable.h
+ostream
+-
+string
+-
+vector
+-
+
+/home/zgx/Var/test/reducer_test.cc
 gtest/gtest.h
 -
-thread
--
-src/detail/combiner.h
-/home/zgx/Var/test/src/detail/combiner.h
+src/reducer.h
+/home/zgx/Var/test/src/reducer.h
+src/util/time.h
+/home/zgx/Var/test/src/util/time.h
 
