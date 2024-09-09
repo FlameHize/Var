@@ -187,3 +187,58 @@ TEST(ReducerTest, non_primitive) {
     adder << Foo(2) << Foo(3) << Foo(4);
     ASSERT_EQ(9, adder.get_value().x);
 }
+
+bool g_stop = false;
+struct StringAppenderResult {
+    int count;
+};
+
+static void* string_appender(void* arg) {
+    var::Adder<std::string>* cater = (var::Adder<std::string>*)arg;
+    int count = 0;
+    std::string id = std::to_string(pthread_self());
+    std::string tmp = "a";
+    for (count = 0; !count || !g_stop; ++count) {
+        *cater << id << ":";
+        for (char c = 'a'; c <= 'z'; ++c) {
+            tmp[0] = c;
+            *cater << tmp;
+        }
+        *cater << ".";
+    }
+    StringAppenderResult* res = new StringAppenderResult;
+    res->count = count;
+    std::cout << "Appended " << count << std::endl;
+    return res;
+}
+
+TEST(ReducerTest, non_primitive_mt) {
+    var::Adder<std::string> cater;
+    pthread_t th[8];
+    g_stop = false;
+    for (size_t i = 0; i < 8; ++i) {
+        pthread_create(&th[i], NULL, string_appender, &cater);
+    }
+    usleep(50000);
+    g_stop = true;
+    std::unordered_map<pthread_t, int> appended_count;
+    for (size_t i = 0; i < 8; ++i) {
+        StringAppenderResult* res = NULL;
+        pthread_join(th[i], (void**)&res);
+        appended_count[th[i]] = res->count;
+        delete res;
+    }
+    std::unordered_map<pthread_t, int> got_count;
+    std::string res = cater.get_value();
+    for (var::StringSplitter sp(res.c_str(), '.'); sp; ++sp) {
+        char* endptr = NULL;
+        ++got_count[(pthread_t)strtoll(sp.field(), &endptr, 10)];
+        ASSERT_EQ(27LL, sp.field() + sp.length() - endptr)
+            << std::string(sp.field(), sp.length());
+        ASSERT_EQ(0, memcmp(":abcdefghijklmnopqrstuvwxyz", endptr, 27));
+    }
+    ASSERT_EQ(appended_count.size(), got_count.size());
+    for (size_t i = 0; i < 8; ++i) {
+        ASSERT_EQ(appended_count[th[i]], got_count[th[i]]);
+    }
+}
