@@ -20,8 +20,8 @@
 
 #include "src/common.h"
 #include "net/base/Logging.h"
-#include "net/base/Mutex.h"
 #include <pthread.h>
+#include <mutex>
 #include <deque>
 #include <vector>
 
@@ -84,7 +84,7 @@ public:
     }
 
     inline static AgentId create_new_agent() {
-        MutexLockGuard lock(_s_mutex);
+        std::lock_guard guard(_s_mutex);
         AgentId agent_id = 0;
         if(!_get_free_ids().empty()) {
             agent_id = _get_free_ids().back();
@@ -97,7 +97,7 @@ public:
     }
 
     inline static int destroy_agent(AgentId id) {
-        MutexLockGuard lock(_s_mutex);
+        std::lock_guard guard(_s_mutex);
         if(id < 0 || id >= _s_agent_kinds) {
             errno = EINVAL;
             return -1;
@@ -171,14 +171,14 @@ private:
         return *_s_free_ids;
     }
 
-    static MutexLock                            _s_mutex;
+    static std::mutex                           _s_mutex;
     static AgentId                              _s_agent_kinds;
     static std::deque<AgentId>*                 _s_free_ids;
     static __thread std::vector<ThreadBlock*>*  _s_tls_blocks;
 };
 
 template<typename Agent>
-MutexLock AgentGroup<Agent>::_s_mutex = MutexLock();
+std::mutex AgentGroup<Agent>::_s_mutex = std::mutex();
 
 template<typename Agent>
 AgentId AgentGroup<Agent>::_s_agent_kinds = 0;

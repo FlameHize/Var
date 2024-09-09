@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../net/base/CurrentThread.h
-Types.h
-../net/base/Types.h
-
 ../net/base/LogStream.h
 noncopyable.h
 ../net/base/noncopyable.h
@@ -27,16 +23,6 @@ LogStream.h
 ../net/base/LogStream.h
 Timestamp.h
 ../net/base/Timestamp.h
-
-../net/base/Mutex.h
-CurrentThread.h
-../net/base/CurrentThread.h
-noncopyable.h
-../net/base/noncopyable.h
-assert.h
--
-pthread.h
--
 
 ../net/base/StringPiece.h
 string.h
@@ -101,9 +87,9 @@ src/common.h
 ../src/detail/src/common.h
 net/base/Logging.h
 ../src/detail/net/base/Logging.h
-net/base/Mutex.h
-../src/detail/net/base/Mutex.h
 pthread.h
+-
+mutex
 -
 deque
 -

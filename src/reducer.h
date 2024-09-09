@@ -106,6 +106,7 @@ public:
             os << '"' << get_value() << '"';
         }
         else {
+            // NOTE: T MUST have operator<<() func.
             os << get_value();
         }
     }

@@ -162,13 +162,12 @@ TEST(ReducerTest, max)
     ASSERT_EQ(std::numeric_limits<int>::max(), reducer2.get_value());
 }
 
-///@todo fix destroy bug.
-// var::Adder<int> global_adder;
-// TEST(ReducerTest, global)
-// {
-//     ASSERT_TRUE(global_adder.valid());
-//     global_adder.get_value();
-// }
+var::Adder<int> global_adder;
+TEST(ReducerTest, global)
+{
+    ASSERT_TRUE(global_adder.valid());
+    global_adder.get_value();
+}
 
 struct Foo {
     int x;
