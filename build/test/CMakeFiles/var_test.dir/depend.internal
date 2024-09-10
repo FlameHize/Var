@@ -120,7 +120,9 @@ test/CMakeFiles/var_test.dir/reducer_test.cc.o
  ../src/detail/agent_group.h
  ../src/detail/call_op_returing_void.h
  ../src/detail/combiner.h
+ ../src/detail/sampler.h
  ../src/reducer.h
+ ../src/util/bounded_queue.h
  ../src/util/linked_list.h
  ../src/util/time.h
  ../src/util/type_traits.h

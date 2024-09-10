@@ -22,6 +22,7 @@
 
 #include "src/variable.h"
 #include "src/detail/combiner.h"
+#include "src/detail/sampler.h"
 #include "src/util/type_traits.h"
 
 namespace var {
@@ -58,7 +59,7 @@ namespace var {
 // my_type_sum << MyType(1) << MyType(2) << MyType(3);
 // LOG(INFO) << my_type_sum;  // "MyType{6}"
 
-template<typename T, typename Op>
+template<typename T, typename Op, typename InvOp = detail::VoidOp>
 class Reducer : public Variable {
 public:
     typedef typename detail::AgentCombiner<T, T, Op> combine_type;
@@ -116,6 +117,7 @@ public:
 
     // Get instance of Op.
     const Op& op() const { return _combiner.op(); }
+    const InvOp& inv_op() const { return _inv_op; }
 
 protected:
     int expose_impl(const std::string& prefix,
@@ -127,6 +129,7 @@ protected:
 
 private:
     combine_type _combiner;
+    InvOp        _inv_op;
 };
 
 // =================== Common reducers ===================

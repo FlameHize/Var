@@ -119,7 +119,9 @@ test/CMakeFiles/var_test.dir/reducer_test.cc.o: ../src/common.h
 test/CMakeFiles/var_test.dir/reducer_test.cc.o: ../src/detail/agent_group.h
 test/CMakeFiles/var_test.dir/reducer_test.cc.o: ../src/detail/call_op_returing_void.h
 test/CMakeFiles/var_test.dir/reducer_test.cc.o: ../src/detail/combiner.h
+test/CMakeFiles/var_test.dir/reducer_test.cc.o: ../src/detail/sampler.h
 test/CMakeFiles/var_test.dir/reducer_test.cc.o: ../src/reducer.h
+test/CMakeFiles/var_test.dir/reducer_test.cc.o: ../src/util/bounded_queue.h
 test/CMakeFiles/var_test.dir/reducer_test.cc.o: ../src/util/linked_list.h
 test/CMakeFiles/var_test.dir/reducer_test.cc.o: ../src/util/time.h
 test/CMakeFiles/var_test.dir/reducer_test.cc.o: ../src/util/type_traits.h

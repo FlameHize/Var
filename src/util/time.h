@@ -24,6 +24,25 @@
 
 namespace var {
 
+// --------------------------------------------------------------------
+// Get elapse since the Epoch.                                          
+// No gettimeofday_ns() because resolution of timeval is microseconds.  
+// Cost ~40ns on 2.6.32_1-12-0-0, Intel(R) Xeon(R) CPU E5620 @ 2.40GHz
+// --------------------------------------------------------------------
+inline int64_t gettimeofday_us() {
+    timeval now;
+    gettimeofday(&now, NULL);
+    return now.tv_sec * 1000000L + now.tv_usec;
+}
+
+inline int64_t gettimeofday_ms() {
+    return gettimeofday_us() / 1000L;
+}
+
+inline int64_t gettimeofday_s() {
+    return gettimeofday_us() / 1000000L;
+}
+
 class Timer {
 public:
     enum TimerType {
