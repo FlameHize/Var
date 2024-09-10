@@ -95,6 +95,29 @@ src/CMakeFiles/var.dir/builtin/vars_service.cc.o: ../src/service.h
 src/CMakeFiles/var.dir/builtin/vars_service.cc.o: ../src/builtin/vars_service.cc
 src/CMakeFiles/var.dir/builtin/vars_service.cc.o: ../src/builtin/vars_service.h
 
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/LogStream.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/Logging.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/StringPiece.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/StringSplitter.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/StringSplitterInl.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/Timestamp.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/Types.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/copyable.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/noncopyable.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/common.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/agent_group.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/call_op_returing_void.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/combiner.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/sampler.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/reducer.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/bounded_queue.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/linked_list.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/singleton.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/time.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/type_traits.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/variable.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/sampler.cc
+
 src/CMakeFiles/var.dir/server.cc.o: ../net/Buffer.h
 src/CMakeFiles/var.dir/server.cc.o: ../net/Callbacks.h
 src/CMakeFiles/var.dir/server.cc.o: ../net/Endian.h

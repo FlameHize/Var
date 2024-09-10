@@ -26,6 +26,10 @@
 #define VAR_UTIL_BOUNDED_QUEUE_H
 
 #include "net/base/noncopyable.h"
+#include <stdlib.h>
+#include <cstddef>
+#include <cstdint>
+#include <utility>
 
 namespace var {
 

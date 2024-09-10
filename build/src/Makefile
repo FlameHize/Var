@@ -260,6 +260,33 @@ builtin/vars_service.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/vars_service.cc.s
 .PHONY : builtin/vars_service.cc.s
 
+detail/sampler.o: detail/sampler.cc.o
+
+.PHONY : detail/sampler.o
+
+# target to build an object file
+detail/sampler.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/detail/sampler.cc.o
+.PHONY : detail/sampler.cc.o
+
+detail/sampler.i: detail/sampler.cc.i
+
+.PHONY : detail/sampler.i
+
+# target to preprocess a source file
+detail/sampler.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/detail/sampler.cc.i
+.PHONY : detail/sampler.cc.i
+
+detail/sampler.s: detail/sampler.cc.s
+
+.PHONY : detail/sampler.s
+
+# target to generate assembly for a file
+detail/sampler.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/detail/sampler.cc.s
+.PHONY : detail/sampler.cc.s
+
 server.o: server.cc.o
 
 .PHONY : server.o
@@ -365,6 +392,9 @@ help:
 	@echo "... builtin/vars_service.o"
 	@echo "... builtin/vars_service.i"
 	@echo "... builtin/vars_service.s"
+	@echo "... detail/sampler.o"
+	@echo "... detail/sampler.i"
+	@echo "... detail/sampler.s"
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"

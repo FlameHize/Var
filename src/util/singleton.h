@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// Date: Mon Sep 09 14:49:21 CST 2024
+// Date: Mon Sep 09 14:49:21 CST 2024.
 
 #ifndef VAR_UTIL_SINGLETON_H
 #define VAR_UTIL_SINGLETON_H
@@ -50,8 +50,8 @@ void GetSingleton<T>::create_singleton() {
 // global variables.
 template<typename T>
 inline T* get_singleton() {
-    pthread_once(&GetSingleton<T>::g_create_singleon_once,
-                    GetSingleton<T>::create_singleton);
+    pthread_once(&GetSingleton<T>::g_create_singleton_once, GetSingleton<T>::create_singleton);
+    return GetSingleton<T>::g_singleton;
 }
 
 } // end namespace var

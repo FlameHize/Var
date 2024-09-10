@@ -141,6 +141,14 @@ src/util/type_traits.h
 ../src/util/bounded_queue.h
 net/base/noncopyable.h
 ../src/util/net/base/noncopyable.h
+stdlib.h
+-
+cstddef
+-
+cstdint
+-
+utility
+-
 
 ../src/util/linked_list.h
 net/base/noncopyable.h

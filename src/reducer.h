@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// Date 2024 Sep 06 11:28 Fri Author zgx.
+// Date Fri Sep 06 11:28 CST 2024.
 
 #ifndef VAR_REDUCER_H
 #define VAR_REDUCER_H
@@ -24,6 +24,7 @@
 #include "src/detail/combiner.h"
 #include "src/detail/sampler.h"
 #include "src/util/type_traits.h"
+// #include "src/util/class_name.h"
 
 namespace var {
 // Reduce multiple values into one with `Op': e1 Op e2 Op e3 ...
@@ -64,16 +65,24 @@ class Reducer : public Variable {
 public:
     typedef typename detail::AgentCombiner<T, T, Op> combine_type;
     typedef typename combine_type::Agent agent_type;
+    typedef detail::ReducerSampler<Reducer, T, Op, InvOp> sampler_type;
 
     // The 'identify' must satisfy: identity Op a == a.
     Reducer(typename var::add_cr_non_integral<T>::type identity = T(),
-            const Op& op = Op())
-        : _combiner(identity, identity, op) {
+            const Op& op = Op(),
+            const InvOp& inv_op = InvOp())
+        : _combiner(identity, identity, op)
+        , _sampler(NULL)
+        , _inv_op(inv_op) {
     }
 
     ~Reducer() {
         // Calling hide() manually is a MUST required by Variable.
         hide();
+        if(_sampler) {
+            _sampler->destroy();
+            _sampler = NULL;
+        }
     }
 
     // Add a value.
@@ -93,6 +102,14 @@ public:
     // Notice that this function walks through all threads ever add values
     // into this reducer. You should avoid calling it frequently.
     T get_value() const {
+        // Sampler will reset var's which does not have inverse op.
+        if(std::is_same<InvOp, detail::VoidOp>::value && _sampler != nullptr) {
+            LOG_ERROR << "You should not call Reducer::get_value() when a Window<> "
+                      << "is used because the operator does not have inverse op";
+            // LOG_ERROR << "You should not call Reducer<" << var::class_name_str<T>()
+            // << ", " << var::class_name_str<Op>() << ">::get_value() when a "
+            // << "Window<> is used because the operator does not have inverse op.";
+        }
         return _combiner.combine_agents();
     }
 
@@ -119,6 +136,14 @@ public:
     const Op& op() const { return _combiner.op(); }
     const InvOp& inv_op() const { return _inv_op; }
 
+    sampler_type* get_sampler() {
+        if(!_sampler) {
+            _sampler = new sampler_type(this);
+            _sampler->schedule();
+        }
+        return _sampler;
+    }
+
 protected:
     int expose_impl(const std::string& prefix,
                     const std::string& name,
@@ -128,8 +153,9 @@ protected:
     }
 
 private:
-    combine_type _combiner;
-    InvOp        _inv_op;
+    combine_type    _combiner;
+    sampler_type*   _sampler;
+    InvOp           _inv_op;
 };
 
 // =================== Common reducers ===================
@@ -154,10 +180,11 @@ struct MinusFrom {
 } // end namespace detail
 
 template<typename T>
-class Adder : public Reducer<T, detail::AddTo<T>> {
+class Adder : public Reducer<T, detail::AddTo<T>, detail::MinusFrom<T>> {
 public:
-    typedef Reducer<T, detail::AddTo<T>> Base;
+    typedef Reducer<T, detail::AddTo<T>, detail::MinusFrom<T>> Base;
     typedef T value_type;
+    typedef typename Base::sampler_type sampler_type;
     
     Adder() : Base() {}
     explicit Adder(const std::string& name) : Base() {
@@ -192,6 +219,7 @@ class Maxer : public Reducer<T, detail::MaxTo<T>> {
 public:
     typedef Reducer<T, detail::MaxTo<T>> Base;
     typedef T value_type;
+    typedef typename Base::sampler_type sampler_type;
 
     Maxer() : Base(std::numeric_limits<T>::min()) {}
     explicit Maxer(const std::string& name) 
@@ -213,6 +241,7 @@ class Miner : public Reducer<T, detail::MinTo<T>> {
 public:
     typedef Reducer<T, detail::MinTo<T>> Base;
     typedef T value_type;
+    typedef typename Base::sampler_type sampler_type;
 
     Miner() : Base(std::numeric_limits<T>::max()) {}
     explicit Miner(const std::string name)

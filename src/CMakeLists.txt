@@ -2,6 +2,7 @@ add_library(var SHARED
     service.cc
     server.cc
     variable.cc
+    detail/sampler.cc
     builtin/jquery_min_js.cc
     builtin/flot_min_js.cc
     builtin/vars_service.cc
