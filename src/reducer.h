@@ -72,7 +72,7 @@ public:
             const Op& op = Op(),
             const InvOp& inv_op = InvOp())
         : _combiner(identity, identity, op)
-        , _sampler(NULL)
+        , _sampler(nullptr)
         , _inv_op(inv_op) {
     }
 
@@ -81,7 +81,7 @@ public:
         hide();
         if(_sampler) {
             _sampler->destroy();
-            _sampler = NULL;
+            _sampler = nullptr;
         }
     }
 

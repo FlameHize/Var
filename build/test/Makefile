@@ -449,6 +449,33 @@ reducer_test.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/reducer_test.cc.s
 .PHONY : reducer_test.cc.s
 
+sampler_test.o: sampler_test.cc.o
+
+.PHONY : sampler_test.o
+
+# target to build an object file
+sampler_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/sampler_test.cc.o
+.PHONY : sampler_test.cc.o
+
+sampler_test.i: sampler_test.cc.i
+
+.PHONY : sampler_test.i
+
+# target to preprocess a source file
+sampler_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/sampler_test.cc.i
+.PHONY : sampler_test.cc.i
+
+sampler_test.s: sampler_test.cc.s
+
+.PHONY : sampler_test.s
+
+# target to generate assembly for a file
+sampler_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/sampler_test.cc.s
+.PHONY : sampler_test.cc.s
+
 string_splitter_test.o: string_splitter_test.cc.o
 
 .PHONY : string_splitter_test.o
@@ -548,6 +575,9 @@ help:
 	@echo "... reducer_test.o"
 	@echo "... reducer_test.i"
 	@echo "... reducer_test.s"
+	@echo "... sampler_test.o"
+	@echo "... sampler_test.i"
+	@echo "... sampler_test.s"
 	@echo "... string_splitter_test.o"
 	@echo "... string_splitter_test.i"
 	@echo "... string_splitter_test.s"

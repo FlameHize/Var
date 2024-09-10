@@ -13,11 +13,13 @@ set(TEST_SRC_FILES
     http_message_test.cc
     string_splitter_test.cc
     dummy_server_test.cc
+    linked_list_test.cc
     variable_test.cc
     agent_group_test.cc
     agent_combiner_test.cc
     reducer_test.cc
-    linked_list_test.cc)
+    sampler_test.cc
+)
 
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
 # 注意这里的头文件问题 http_message_test直接包含http_message.h(间接包含Buffer.h)

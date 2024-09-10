@@ -96,7 +96,7 @@ public:
         // second would not be ingored.
         take_sample();
     }
-    ~ReducerSampler();
+    ~ReducerSampler() {}
 
     void take_sample() override {
         // Make _queue ready.
@@ -175,7 +175,6 @@ public:
         }
         else {
             // Diff the latest and oldset sample within the window.
-            // Diff the latest and oldest sample within the window.
             // var::Adder<int> adder; window_size = 3;
             // 1s adder << 1;  
             // 2s adder << 2;
@@ -219,7 +218,8 @@ public:
         if (NULL == oldest) {
             oldest = _queue.top();
         }
-        for (int i = 1; true; ++i) {
+        // fix i = 1 to i = 0.
+        for (int i = 0; true; ++i) {
             Sample<T>* e = _queue.bottom(i);
             if (e == oldest) {
                 break;

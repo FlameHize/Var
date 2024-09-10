@@ -88,6 +88,7 @@ private:
 
     static void* sampling_thread(void* arg) {
         static_cast<SamplerCollector*>(arg)->run();
+        return nullptr;
     }
 
     static double get_cumulated_time(void* arg) {
@@ -129,7 +130,7 @@ private:
                 LinkNode<Sampler>* saved_next = p->next();
                 Sampler* s = p->value();
                 s->_mutex.lock();
-                if(!s->_used) {
+                if(s->_used) {
                     s->take_sample();
                     s->_mutex.unlock();
                 }
