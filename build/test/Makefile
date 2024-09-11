@@ -557,6 +557,33 @@ variable_test.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/variable_test.cc.s
 .PHONY : variable_test.cc.s
 
+window_test.o: window_test.cc.o
+
+.PHONY : window_test.o
+
+# target to build an object file
+window_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/window_test.cc.o
+.PHONY : window_test.cc.o
+
+window_test.i: window_test.cc.i
+
+.PHONY : window_test.i
+
+# target to preprocess a source file
+window_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/window_test.cc.i
+.PHONY : window_test.cc.i
+
+window_test.s: window_test.cc.s
+
+.PHONY : window_test.s
+
+# target to generate assembly for a file
+window_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/window_test.cc.s
+.PHONY : window_test.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -614,6 +641,9 @@ help:
 	@echo "... variable_test.o"
 	@echo "... variable_test.i"
 	@echo "... variable_test.s"
+	@echo "... window_test.o"
+	@echo "... window_test.i"
+	@echo "... window_test.s"
 .PHONY : help
 
 

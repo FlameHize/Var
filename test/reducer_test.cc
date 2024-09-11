@@ -98,12 +98,12 @@ static long start_perf_test_with_adder(size_t num_thread) {
 
 TEST(ReducerTest, perf) {
     std::ostringstream oss;
-    for (size_t i = 1; i <= 24; ++i) {
+    for (size_t i = 1; i <= 8; ++i) {
         oss << i << '\t' << start_perf_test_with_adder(i) << '\n';
     }
     std::cout << "Adder performance:\n" << oss.str() << std::endl;
     oss.str("");
-    for (size_t i = 1; i <= 24; ++i) {
+    for (size_t i = 1; i <= 8; ++i) {
         oss << i << '\t' << start_perf_test_with_atomic(i) << '\n';
     }
     std::cout << "Atomic performance:\n" << oss.str() << std::endl;

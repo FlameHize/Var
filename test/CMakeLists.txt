@@ -20,6 +20,7 @@ set(TEST_SRC_FILES
     reducer_test.cc
     sampler_test.cc
     series_test.cc
+    window_test.cc
 )
 
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})

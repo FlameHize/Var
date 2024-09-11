@@ -20,6 +20,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/zgx/Var/test/series_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/series_test.cc.o"
   "/home/zgx/Var/test/string_splitter_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/string_splitter_test.cc.o"
   "/home/zgx/Var/test/variable_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/variable_test.cc.o"
+  "/home/zgx/Var/test/window_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/window_test.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
