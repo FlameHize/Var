@@ -212,14 +212,6 @@ math.h
 limits
 -
 
-/home/zgx/Var/test/reducer_test.cc
-gtest/gtest.h
--
-src/reducer.h
-/home/zgx/Var/test/src/reducer.h
-src/util/time.h
-/home/zgx/Var/test/src/util/time.h
-
 /home/zgx/Var/test/window_test.cc
 gtest/gtest.h
 -

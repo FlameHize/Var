@@ -62,16 +62,16 @@ public:
         ~SeriesSampler() {}
         
         void take_sample() override {
-            if(series_freq == SERIES_IN_SECOND) {
-                // Get one-second window value for PerSecond<>, otherwise the
-                // "smoother" plot may hide peaks.
-                _series.append(_owner->get_value(1));
+            if(series_freq == SERIES_IN_WINDOW) {
+                // Get the value inside the full window. 
+                // "get_value(1)" is incorrect when users intend to see 
+                // aggregated values of the full window in the plot.
+                _series.append(_owner->get_value());
             }
             else {
-                // Get the value inside the full window. "get_value(1)" is 
-                // incorrect when users intend to see aggregated values of
-                // the full window in the plot.
-                _series.append(_owner->get_value());
+                // Special with a Sampler window_size is 1.
+                // Used for PerSecond<> ,otherwise the "smoother" plot may hide peaks.
+                _series.append(_owner->get_value(1));
             }
         }
 
@@ -192,6 +192,55 @@ public:
         this->expose_as(prefix, name);
     }
 };
+
+// Obtain the average change value persecond of a var.
+// The only difference between PerScond and Window is that PerSecond
+// return value is divided by time window_size.
+template<typename R, SeriesFrequency series_freq = SERIES_IN_SECOND>
+class PerSecond : public detail::WindowBase<R, series_freq> {
+    typedef detail::WindowBase<R, series_freq> Base;
+    typedef typename R::value_type value_type;
+    typedef typename R::sampler_type sampler_type;
+public:
+    // If window_size is non-positive or absent, use default value.
+    PerSecond(R* reducer) : Base(reducer, -1) {}
+    PerSecond(R* reducer, time_t window_size) : Base(reducer, window_size) {}
+    PerSecond(const std::string& name, R* reducer) : Base(reducer, -1) {
+        this->expose(name);
+    }
+    PerSecond(const std::string& prefix, const std::string& name, R* reducer)
+        : Base(reducer, -1) {
+        this->expose_as(prefix, name);
+    }
+    PerSecond(const std::string& prefix, const std::string& name, 
+              R* reducer, time_t window_size)
+        : Base(reducer, window_size) {
+        this->expose_as(prefix, name);
+    }
+
+    value_type get_value(time_t window_size) const override {
+        detail::Sample<value_type> s;
+        this->get_span(window_size, &s);
+        // We may test if the mulitiplcation overflows and use intergral ops
+        // if possible. However signed/unsigned 32-bit/64-bit make the solution
+        // complex. Since this function is not called often, we use floating
+        // point for simplicity.
+        if(s.time_us <= 0) {
+            return static_cast<value_type>(0);
+        }
+        if(std::is_floating_point<value_type>::value) {
+            return static_cast<value_type>(s.data * 1000000.0 / s.time_us);
+        }
+        else {
+            return static_cast<value_type>(round(s.data * 1000000.0 / s.time_us));
+        }
+    }
+
+    value_type get_value() const {
+        return Base::get_value();
+    }
+};
+
 
 } // end namespace var
 

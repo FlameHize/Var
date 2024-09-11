@@ -27,6 +27,7 @@ TEST(WindowTest, window)
 
     var::Adder<int> adder;
     var::Window<var::Adder<int>> window_adder(&adder, window_size);
+    var::PerSecond<var::Adder<int>> per_second_adder(&adder, window_size);
     
     var::Maxer<int> maxer;
     var::Window<var::Maxer<int>> window_maxer(&maxer, window_size);
@@ -45,6 +46,7 @@ TEST(WindowTest, window)
     
     sleep(1);
     ASSERT_EQ(window_adder.get_value(), 12);
+    ASSERT_EQ(per_second_adder.get_value(), 6);
     ASSERT_EQ(window_maxer.get_value(), 10);
     ASSERT_EQ(window_miner.get_value(), 2);
 }
