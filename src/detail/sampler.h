@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// Date: Mon Sep 09 09:58:33 CST 2024
+// Date: Mon Sep 09 09:58:33 CST 2024.
 
 #ifndef VAR_DETAIL_SAMPLER_H
 #define VAR_DETAIL_SAMPLER_H

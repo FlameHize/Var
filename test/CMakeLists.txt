@@ -19,6 +19,7 @@ set(TEST_SRC_FILES
     agent_combiner_test.cc
     reducer_test.cc
     sampler_test.cc
+    series_test.cc
 )
 
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})

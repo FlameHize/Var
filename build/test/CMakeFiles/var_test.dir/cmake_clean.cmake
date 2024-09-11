@@ -14,6 +14,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/var_test.dir/main.cc.o"
   "CMakeFiles/var_test.dir/reducer_test.cc.o"
   "CMakeFiles/var_test.dir/sampler_test.cc.o"
+  "CMakeFiles/var_test.dir/series_test.cc.o"
   "CMakeFiles/var_test.dir/string_splitter_test.cc.o"
   "CMakeFiles/var_test.dir/variable_test.cc.o"
 )

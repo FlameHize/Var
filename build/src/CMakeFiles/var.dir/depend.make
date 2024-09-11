@@ -109,12 +109,14 @@ src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/agent_group.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/call_op_returing_void.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/combiner.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/sampler.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/series.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/reducer.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/bounded_queue.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/linked_list.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/singleton.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/time.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/type_traits.h
+src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/vector.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/variable.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/sampler.cc
 

@@ -23,6 +23,7 @@
 #include "src/variable.h"
 #include "src/detail/combiner.h"
 #include "src/detail/sampler.h"
+#include "src/detail/series.h"
 #include "src/util/type_traits.h"
 // #include "src/util/class_name.h"
 
@@ -67,12 +68,29 @@ public:
     typedef typename combine_type::Agent agent_type;
     typedef detail::ReducerSampler<Reducer, T, Op, InvOp> sampler_type;
 
+    class SeriesSampler : public detail::Sampler {
+    public:
+        SeriesSampler(Reducer* owner, const Op& op)
+            : _owner(owner), _series(op) {}
+        ~SeriesSampler() {}
+        void take_sample() override {
+            _series.append(_owner->get_value());
+        }
+        void describe(std::ostream& os) {
+            _series.describe(os, nullptr);
+        }
+    private:
+        Reducer* _owner;
+        detail::Series<T, Op> _series;
+    };
+
     // The 'identify' must satisfy: identity Op a == a.
     Reducer(typename var::add_cr_non_integral<T>::type identity = T(),
             const Op& op = Op(),
             const InvOp& inv_op = InvOp())
         : _combiner(identity, identity, op)
         , _sampler(nullptr)
+        , _series_sampler(nullptr)
         , _inv_op(inv_op) {
     }
 
@@ -82,6 +100,10 @@ public:
         if(_sampler) {
             _sampler->destroy();
             _sampler = nullptr;
+        }
+        if(_series_sampler) {
+            _series_sampler->destroy();
+            _series_sampler = nullptr;
         }
     }
 
@@ -144,17 +166,33 @@ public:
         return _sampler;
     }
 
+    int describe_series(std::ostream& os) const override {
+        if(!_series_sampler) {
+            return 1;
+        }
+        _series_sampler->describe(os);
+        return 0;
+    }
+
 protected:
     int expose_impl(const std::string& prefix,
                     const std::string& name,
                     DisplayFilter display_filter) override {
         const int rc = Variable::expose_impl(prefix, name, display_filter);
+        ///@todo fix invop.
+        if(rc == 0 &&
+           _series_sampler == nullptr &&
+           !std::is_same<T, std::string>::value)  {
+           _series_sampler = new SeriesSampler(this, _combiner.op());
+           _series_sampler->schedule(); 
+        }
         return rc;
     }
 
 private:
     combine_type    _combiner;
     sampler_type*   _sampler;
+    SeriesSampler*  _series_sampler;
     InvOp           _inv_op;
 };
 

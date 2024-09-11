@@ -17,6 +17,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/zgx/Var/test/main.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/main.cc.o"
   "/home/zgx/Var/test/reducer_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/reducer_test.cc.o"
   "/home/zgx/Var/test/sampler_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/sampler_test.cc.o"
+  "/home/zgx/Var/test/series_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/series_test.cc.o"
   "/home/zgx/Var/test/string_splitter_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/string_splitter_test.cc.o"
   "/home/zgx/Var/test/variable_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/variable_test.cc.o"
   )

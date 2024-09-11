@@ -128,6 +128,22 @@ net/base/Logging.h
 mutex
 -
 
+../src/detail/series.h
+src/detail/call_op_returing_void.h
+../src/detail/src/detail/call_op_returing_void.h
+src/util/vector.h
+../src/detail/src/util/vector.h
+src/util/type_traits.h
+../src/detail/src/util/type_traits.h
+net/base/StringSplitter.h
+../src/detail/net/base/StringSplitter.h
+math.h
+-
+ostream
+-
+mutex
+-
+
 ../src/reducer.h
 src/variable.h
 ../src/src/variable.h
@@ -135,6 +151,8 @@ src/detail/combiner.h
 ../src/src/detail/combiner.h
 src/detail/sampler.h
 ../src/src/detail/sampler.h
+src/detail/series.h
+../src/src/detail/series.h
 src/util/type_traits.h
 ../src/src/util/type_traits.h
 
@@ -168,6 +186,10 @@ stdint.h
 
 ../src/util/type_traits.h
 type_traits
+-
+
+../src/util/vector.h
+ostream
 -
 
 ../src/variable.h

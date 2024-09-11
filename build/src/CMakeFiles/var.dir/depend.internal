@@ -110,12 +110,14 @@ src/CMakeFiles/var.dir/detail/sampler.cc.o
  ../src/detail/call_op_returing_void.h
  ../src/detail/combiner.h
  ../src/detail/sampler.h
+ ../src/detail/series.h
  ../src/reducer.h
  ../src/util/bounded_queue.h
  ../src/util/linked_list.h
  ../src/util/singleton.h
  ../src/util/time.h
  ../src/util/type_traits.h
+ ../src/util/vector.h
  ../src/variable.h
  /home/zgx/Var/src/detail/sampler.cc
 src/CMakeFiles/var.dir/server.cc.o
