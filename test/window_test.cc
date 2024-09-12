@@ -28,25 +28,42 @@ TEST(WindowTest, window)
     var::Adder<int> adder;
     var::Window<var::Adder<int>> window_adder(&adder, window_size);
     var::PerSecond<var::Adder<int>> per_second_adder(&adder, window_size);
+    var::WindowEx<var::Adder<int>, window_size> window_ex_adder("window_ex_adder");
+    var::PerSecondEx<var::Adder<int>, window_size> per_second_ex_adder("per_second_ex_adder");
     
     var::Maxer<int> maxer;
     var::Window<var::Maxer<int>> window_maxer(&maxer, window_size);
+    var::WindowEx<var::Maxer<int>, window_size> window_ex_maxer("window_ex_maxer");
 
     var::Miner<int> miner;
     var::Window<var::Miner<int>> window_miner(&miner, window_size);
+    var::WindowEx<var::Miner<int>, window_size> window_ex_miner("window_ex_miner"); 
     
     adder << 10;
+    window_ex_adder << 10;
+    per_second_ex_adder << 10;
     maxer << 10;
+    window_ex_maxer << 10;
     miner << 10;
+    window_ex_miner << 10;
 
     sleep(1);
     adder << 2;
+    window_ex_adder << 2;
+    per_second_ex_adder << 2;
     maxer << 2;
+    window_ex_maxer << 2;
     miner << 2;
+    window_ex_miner << 2;
     
     sleep(1);
     ASSERT_EQ(window_adder.get_value(), 12);
+    ASSERT_EQ(window_ex_adder.get_value(), 12);
     ASSERT_EQ(per_second_adder.get_value(), 6);
+    ASSERT_EQ(per_second_ex_adder.get_value(), 6);
+
     ASSERT_EQ(window_maxer.get_value(), 10);
+    ASSERT_EQ(window_ex_maxer.get_value(), 10);
     ASSERT_EQ(window_miner.get_value(), 2);
+    ASSERT_EQ(window_ex_miner.get_value(), 2);
 }

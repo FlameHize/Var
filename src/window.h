@@ -61,14 +61,21 @@ public:
         
         ~SeriesSampler() {}
         
+        // E.X window_size default is 10.
         void take_sample() override {
             if(series_freq == SERIES_IN_WINDOW) {
+                // 10s 1-10s change value
+                // 11s 1-11s change value
+                // 12s 2-12s change value
                 // Get the value inside the full window. 
                 // "get_value(1)" is incorrect when users intend to see 
-                // aggregated values of the full window in the plot.
+                // aggregated values of the full window in the plot. 
                 _series.append(_owner->get_value());
             }
             else {
+                // 10s 9-10s change value
+                // 11s 10-11s change value
+                // 12s 11-12s change value 
                 // Special with a Sampler window_size is 1.
                 // Used for PerSecond<> ,otherwise the "smoother" plot may hide peaks.
                 _series.append(_owner->get_value(1));
@@ -236,8 +243,115 @@ public:
         }
     }
 
+    // Get average change value persecond of a window_size sampling.
     value_type get_value() const {
         return Base::get_value();
+    }
+};
+
+namespace adapter {
+
+template<typename R>
+class WindowExType {
+public:
+    typedef R var_type;
+    typedef var::Window<var_type> window_type;
+    struct WindowExVar {
+        WindowExVar(time_t window_size) : window(&var, window_size) {}
+        var_type var;
+        window_type window;
+    };
+};
+
+template<typename R>
+class PerSecondType {
+public:
+    typedef R var_type;
+    typedef var::PerSecond<var_type> window_type;
+    struct WindowExVar {
+        WindowExVar(time_t window_size) : window(&var, window_size) {}
+        var_type var;
+        window_type window;
+    };
+};
+
+template<typename R, typename WindowType>
+class WindowExAdapter : public var::Variable {
+public:
+    typedef typename R::value_type value_type;
+    typedef typename WindowType::WindowExVar WindowExVar;
+
+    WindowExAdapter(time_t window_size)
+        : _window_size(window_size > 0 ? window_size : 10)
+        , _window_ex_var(_window_size) {}
+
+    value_type get_value() const {
+        return _window_ex_var.window.get_value();
+    }
+
+    // template<typename ANY_TYPE>
+    WindowExAdapter& operator<<(value_type value) {
+        _window_ex_var.var << value;
+        return *this;
+    } 
+
+    // Implement Variable::describe()
+    void describe(std::ostream& os, bool quote_string) const {
+        if (std::is_same<value_type, std::string>::value && quote_string) {
+            os << '"' << get_value() << '"';
+        } else {
+            os << get_value();
+        }
+    }
+
+    virtual ~WindowExAdapter() {
+        hide();
+    }
+
+private:
+    time_t      _window_size;
+    WindowExVar _window_ex_var;
+};
+
+} // end namespace adapter
+
+// Get data within a time window.
+// The time unit is 1 second fixed.
+// Window not relies on other bvar.
+
+// R must:
+// - window_size must be a constant
+template<typename R, time_t window_size = 0>
+class WindowEx : public adapter::WindowExAdapter<R, adapter::WindowExType<R>> {
+public:
+    typedef adapter::WindowExAdapter<R, adapter::WindowExType<R>> Base;
+    WindowEx() : Base(window_size) {}
+    WindowEx(const std::string& name) : Base(window_size) {
+        this->expose(name);
+    }
+    WindowEx(const std::string& prefix, const std::string& name)
+        : Base(window_size) {
+        this->expose_as(prefix, name);
+    }
+};
+
+// Get data per second within a time window.
+// The only difference between PerSecondEx and WindowEx is that PerSecondEx divides
+// the data by time duration.
+
+// R must:
+// - window_size must be a constant
+template<typename R, time_t window_size = 0>
+class PerSecondEx : public adapter::WindowExAdapter<R, adapter::PerSecondType<R>> {
+public:
+    typedef adapter::WindowExAdapter<R, adapter::PerSecondType<R>> Base;
+    PerSecondEx() : Base(window_size) {}
+    PerSecondEx(const std::string& name) : Base(window_size) {
+        this->expose(name);
+    }
+    PerSecondEx(const std::string& prefix, const std::string& name)
+        : Base(window_size) {
+        this->expose_as(prefix, name);
     }
 };
 
