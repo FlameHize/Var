@@ -34,6 +34,12 @@ algorithm
 Types.h
 ../net/base/Types.h
 
+../net/base/StringPrintf.h
+string
+-
+stdarg.h
+-
+
 ../net/base/StringSplitter.h
 stdlib.h
 -
@@ -156,6 +162,22 @@ src/detail/series.h
 src/util/type_traits.h
 ../src/src/util/type_traits.h
 
+../src/status.h
+src/variable.h
+../src/src/variable.h
+src/reducer.h
+../src/src/reducer.h
+src/util/type_traits.h
+../src/src/util/type_traits.h
+net/base/StringPrintf.h
+../src/net/base/StringPrintf.h
+string
+-
+atomic
+-
+mutex
+-
+
 ../src/util/bounded_queue.h
 net/base/noncopyable.h
 ../src/util/net/base/noncopyable.h
@@ -198,25 +220,9 @@ string
 vector
 -
 
-../src/window.h
-src/variable.h
-../src/src/variable.h
-src/detail/sampler.h
-../src/src/detail/sampler.h
-src/detail/series.h
-../src/src/detail/series.h
-net/base/Logging.h
-../src/net/base/Logging.h
-math.h
--
-limits
--
-
-/home/zgx/Var/test/window_test.cc
+/home/zgx/Var/test/status_test.cc
 gtest/gtest.h
 -
-src/window.h
-/home/zgx/Var/test/src/window.h
-src/reducer.h
-/home/zgx/Var/test/src/reducer.h
+src/status.h
+/home/zgx/Var/test/src/status.h
 

@@ -21,6 +21,7 @@ set(TEST_SRC_FILES
     sampler_test.cc
     series_test.cc
     window_test.cc
+    status_test.cc
 )
 
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})

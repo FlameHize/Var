@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// Date Thus Sep 10 11:22:36 CST 2024.
+// Date Tue Sep 10 11:22:36 CST 2024.
 
 #include <gtest/gtest.h>
 #include "src/detail/sampler.h"

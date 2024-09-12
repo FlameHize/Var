@@ -267,6 +267,9 @@ net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o
  /home/zgx/Var/net/base/Types.h
  /home/zgx/Var/net/base/copyable.h
  /home/zgx/Var/net/base/noncopyable.h
+net/CMakeFiles/var_net.dir/base/StringPrintf.cc.o
+ ../net/base/StringPrintf.h
+ /home/zgx/Var/net/base/StringPrintf.cc
 net/CMakeFiles/var_net.dir/base/Thread.cc.o
  /home/zgx/Var/net/base/Atomic.h
  /home/zgx/Var/net/base/Condition.h

@@ -28,6 +28,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/zgx/Var/net/base/LogStream.cc" "/home/zgx/Var/build/net/CMakeFiles/var_net.dir/base/LogStream.cc.o"
   "/home/zgx/Var/net/base/Logging.cc" "/home/zgx/Var/build/net/CMakeFiles/var_net.dir/base/Logging.cc.o"
   "/home/zgx/Var/net/base/ProcessInfo.cc" "/home/zgx/Var/build/net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o"
+  "/home/zgx/Var/net/base/StringPrintf.cc" "/home/zgx/Var/build/net/CMakeFiles/var_net.dir/base/StringPrintf.cc.o"
   "/home/zgx/Var/net/base/Thread.cc" "/home/zgx/Var/build/net/CMakeFiles/var_net.dir/base/Thread.cc.o"
   "/home/zgx/Var/net/base/TimeZone.cc" "/home/zgx/Var/build/net/CMakeFiles/var_net.dir/base/TimeZone.cc.o"
   "/home/zgx/Var/net/base/Timestamp.cc" "/home/zgx/Var/build/net/CMakeFiles/var_net.dir/base/Timestamp.cc.o"

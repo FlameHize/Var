@@ -39,7 +39,8 @@ add_library(var_net SHARED
     base/ProcessInfo.cc
     base/Thread.cc
     base/Timestamp.cc
-    base/TimeZone.cc)   
+    base/TimeZone.cc
+    base/StringPrintf.cc)   
 
 target_include_directories(var_net PUBLIC ${PROJECT_SOURCE_DIR}/net)
 

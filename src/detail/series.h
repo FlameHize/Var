@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// Date: Thus Sep 10 15:24:05 CST 2024.
+// Date: Tue Sep 10 15:24:05 CST 2024.
 
 #ifndef VAR_DETAIL_SERIES_H
 #define VAR_DETAIL_SERIES_H

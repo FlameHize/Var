@@ -25,6 +25,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/var_net.dir/base/LogStream.cc.o"
   "CMakeFiles/var_net.dir/base/Logging.cc.o"
   "CMakeFiles/var_net.dir/base/ProcessInfo.cc.o"
+  "CMakeFiles/var_net.dir/base/StringPrintf.cc.o"
   "CMakeFiles/var_net.dir/base/Thread.cc.o"
   "CMakeFiles/var_net.dir/base/TimeZone.cc.o"
   "CMakeFiles/var_net.dir/base/Timestamp.cc.o"

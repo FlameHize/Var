@@ -69,7 +69,7 @@ private:
 
 template<typename T>
 class ElementContainer<T, typename std::enable_if<
-    std::is_integral<T>::value || std::is_floating_point<T>::value, void>::type> {
+    std::is_integral<T>::value || std::is_floating_point<T>::value>::type> {
 public:
     // Do not need any memory fencing here, every op is relaxed.
     inline void load(T* out) {

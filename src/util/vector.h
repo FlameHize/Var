@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// Date: Thus Sep 10 16:05:20 CST 2024.
+// Date: Tue Sep 10 16:05:20 CST 2024.
 
 #ifndef VAR_UTIL_VECTOR_H
 #define VAR_UTIL_VECTOR_H

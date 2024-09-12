@@ -503,6 +503,33 @@ series_test.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/series_test.cc.s
 .PHONY : series_test.cc.s
 
+status_test.o: status_test.cc.o
+
+.PHONY : status_test.o
+
+# target to build an object file
+status_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/status_test.cc.o
+.PHONY : status_test.cc.o
+
+status_test.i: status_test.cc.i
+
+.PHONY : status_test.i
+
+# target to preprocess a source file
+status_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/status_test.cc.i
+.PHONY : status_test.cc.i
+
+status_test.s: status_test.cc.s
+
+.PHONY : status_test.s
+
+# target to generate assembly for a file
+status_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/status_test.cc.s
+.PHONY : status_test.cc.s
+
 string_splitter_test.o: string_splitter_test.cc.o
 
 .PHONY : string_splitter_test.o
@@ -635,6 +662,9 @@ help:
 	@echo "... series_test.o"
 	@echo "... series_test.i"
 	@echo "... series_test.s"
+	@echo "... status_test.o"
+	@echo "... status_test.i"
+	@echo "... status_test.s"
 	@echo "... string_splitter_test.o"
 	@echo "... string_splitter_test.i"
 	@echo "... string_splitter_test.s"

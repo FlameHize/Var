@@ -773,6 +773,33 @@ base/ProcessInfo.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.s
 .PHONY : base/ProcessInfo.cc.s
 
+base/StringPrintf.o: base/StringPrintf.cc.o
+
+.PHONY : base/StringPrintf.o
+
+# target to build an object file
+base/StringPrintf.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/StringPrintf.cc.o
+.PHONY : base/StringPrintf.cc.o
+
+base/StringPrintf.i: base/StringPrintf.cc.i
+
+.PHONY : base/StringPrintf.i
+
+# target to preprocess a source file
+base/StringPrintf.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/StringPrintf.cc.i
+.PHONY : base/StringPrintf.cc.i
+
+base/StringPrintf.s: base/StringPrintf.cc.s
+
+.PHONY : base/StringPrintf.s
+
+# target to generate assembly for a file
+base/StringPrintf.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/base/StringPrintf.cc.s
+.PHONY : base/StringPrintf.cc.s
+
 base/Thread.o: base/Thread.cc.o
 
 .PHONY : base/Thread.o
@@ -1313,6 +1340,9 @@ help:
 	@echo "... base/ProcessInfo.o"
 	@echo "... base/ProcessInfo.i"
 	@echo "... base/ProcessInfo.s"
+	@echo "... base/StringPrintf.o"
+	@echo "... base/StringPrintf.i"
+	@echo "... base/StringPrintf.s"
 	@echo "... base/Thread.o"
 	@echo "... base/Thread.i"
 	@echo "... base/Thread.s"
