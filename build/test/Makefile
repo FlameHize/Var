@@ -422,6 +422,33 @@ main.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/main.cc.s
 .PHONY : main.cc.s
 
+passive_status_test.o: passive_status_test.cc.o
+
+.PHONY : passive_status_test.o
+
+# target to build an object file
+passive_status_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/passive_status_test.cc.o
+.PHONY : passive_status_test.cc.o
+
+passive_status_test.i: passive_status_test.cc.i
+
+.PHONY : passive_status_test.i
+
+# target to preprocess a source file
+passive_status_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/passive_status_test.cc.i
+.PHONY : passive_status_test.cc.i
+
+passive_status_test.s: passive_status_test.cc.s
+
+.PHONY : passive_status_test.s
+
+# target to generate assembly for a file
+passive_status_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/passive_status_test.cc.s
+.PHONY : passive_status_test.cc.s
+
 reducer_test.o: reducer_test.cc.o
 
 .PHONY : reducer_test.o
@@ -653,6 +680,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... passive_status_test.o"
+	@echo "... passive_status_test.i"
+	@echo "... passive_status_test.s"
 	@echo "... reducer_test.o"
 	@echo "... reducer_test.i"
 	@echo "... reducer_test.s"

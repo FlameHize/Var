@@ -6,6 +6,32 @@
 
 #IncludeRegexTransform: 
 
+../net/Buffer.h
+base/copyable.h
+../net/base/copyable.h
+base/StringPiece.h
+../net/base/StringPiece.h
+base/Types.h
+../net/base/Types.h
+Endian.h
+../net/Endian.h
+algorithm
+-
+vector
+-
+assert.h
+-
+string.h
+-
+sstream
+-
+
+../net/Endian.h
+stdint.h
+-
+endian.h
+-
+
 ../net/base/LogStream.h
 noncopyable.h
 ../net/base/noncopyable.h
@@ -33,12 +59,6 @@ algorithm
 -
 Types.h
 ../net/base/Types.h
-
-../net/base/StringPrintf.h
-string
--
-stdarg.h
--
 
 ../net/base/StringSplitter.h
 stdlib.h
@@ -150,6 +170,12 @@ ostream
 mutex
 -
 
+../src/passive_status.h
+src/variable.h
+../src/src/variable.h
+src/reducer.h
+../src/src/reducer.h
+
 ../src/reducer.h
 src/variable.h
 ../src/src/variable.h
@@ -161,22 +187,6 @@ src/detail/series.h
 ../src/src/detail/series.h
 src/util/type_traits.h
 ../src/src/util/type_traits.h
-
-../src/status.h
-src/variable.h
-../src/src/variable.h
-src/reducer.h
-../src/src/reducer.h
-src/util/type_traits.h
-../src/src/util/type_traits.h
-net/base/StringPrintf.h
-../src/net/base/StringPrintf.h
-string
--
-atomic
--
-mutex
--
 
 ../src/util/bounded_queue.h
 net/base/noncopyable.h
@@ -220,9 +230,13 @@ string
 vector
 -
 
-/home/zgx/Var/test/status_test.cc
+/home/zgx/Var/test/passive_status_test.cc
 gtest/gtest.h
 -
-src/status.h
-/home/zgx/Var/test/src/status.h
+src/passive_status.h
+/home/zgx/Var/test/src/passive_status.h
+net/base/Logging.h
+/home/zgx/Var/test/net/base/Logging.h
+net/Buffer.h
+/home/zgx/Var/test/net/Buffer.h
 
