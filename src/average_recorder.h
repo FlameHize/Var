@@ -84,7 +84,14 @@ inline std::ostream& operator<<(std::ostream& os, const Stat& s) {
 //   CHECK_EQ(3, latency.average());
 class AverageRecorder : public Variable {
 public:
+    // Compressing format:
+    // | 20 bits (unsigned) | sign bit | 43 bits |
+    //       num                   sum
     // Specialize for Stat operator int64_t of combiner.
+    const static size_t SUM_BIT_WIDTH = 44;
+    const static uint64_t MAX_SUM_PER_THREAD = (1ul << SUM_BIT_WIDTH) - 1;
+    const static uint64_t MAX_NUM_PER_THREAD = (1ul << (64ul - SUM_BIT_WIDTH)) - 1;
+
     struct AddStat {
         void operator()(Stat& s1, const Stat& s2) const { s1 += s2; }
     };
@@ -97,8 +104,8 @@ public:
 
     struct AddToStat {
         void operator()(Stat& lhs, uint64_t rhs) const {
-            lhs.sum += rhs;
-            lhs.num += 1;
+            lhs.sum += _get_sum(rhs);
+            lhs.num += _get_num(rhs);
         }
     };
 
@@ -116,7 +123,7 @@ public:
     }
     ~AverageRecorder() {
         hide();
-        if(!_sampler) {
+        if(_sampler) {
             _sampler->destroy();
             _sampler = nullptr;
         }
@@ -129,8 +136,17 @@ public:
             LOG_ERROR << "Fail to create agent";
             return *this;
         }
-        // Does not correct with template
-        
+        uint64_t n;
+        agent->element.load(&n);
+        const uint64_t complement = _get_sum(value);
+        uint64_t num;
+        uint64_t sum;
+        do {
+            num = _get_num(n);
+            sum = _get_sum(n);
+        } while(!agent->element.compare_exchange_weak(
+                    n, _compress(num + 1, sum + complement)));
+        return *this;
     }
     
     int64_t average() const {
@@ -170,6 +186,21 @@ public:
     // IntRecorder is often used as the source of data and not exposed.
     void set_debug_name(const std::string& name) {
         _debug_name.assign(name.data(), name.size());
+    }
+
+private:
+    static uint64_t _get_sum(const uint64_t n) {
+        return (n & MAX_SUM_PER_THREAD);
+    }
+
+    static uint64_t _get_num(const uint64_t n) {
+        return (n >> SUM_BIT_WIDTH);
+    }
+
+    static uint64_t _compress(const uint64_t num, const uint64_t sum) {
+        // There is a redundant '1' in the front of sum which was combined
+        // with two negative number, so truncation has to be done here.
+        return (num << SUM_BIT_WIDTH) | (sum & MAX_SUM_PER_THREAD);
     }
 
 private:

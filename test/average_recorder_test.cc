@@ -22,7 +22,16 @@
 
 TEST(AverageRecorderTest, average)
 {
-    // var::AverageRecorder recorder;
-    // recorder << 2;
-    // ASSERT_EQ(2l, (int64_t)recorder.average());
+    var::AverageRecorder recorder;
+    recorder << 1;
+    recorder << 3;
+    recorder << 5;
+    ASSERT_EQ(3l, (int64_t)recorder.average());
+
+    ///@todo fix
+    var::AverageRecorder recorder2;
+    recorder2 << -1;
+    recorder2 << -3;
+    recorder2 << -5;
+    ASSERT_EQ(-3l, (int64_t)recorder2.average());
 }
