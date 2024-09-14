@@ -76,7 +76,7 @@ inline std::ostream& operator<<(std::ostream& os, const Stat& s) {
     }
 }
 
-// 区分std::is_integtal / std::is_floating_point or others.
+// 区分std::is_integtal / std::is_floating_point.
 // For calculating average of numbers.
 // Example:
 //   IntRecorder latency;
@@ -104,7 +104,7 @@ public:
 
     struct AddToStat {
         void operator()(Stat& lhs, uint64_t rhs) const {
-            lhs.sum += _get_sum(rhs);
+            lhs.sum += _extend_sign_bit(_get_sum(rhs));
             lhs.num += _get_num(rhs);
         }
     };
@@ -130,7 +130,35 @@ public:
     }
 
     // Note: The input type is acutally int. Use int64_t to check overflow.
-    inline AverageRecorder& operator<<(uint64_t value) {
+    inline AverageRecorder& operator<<(int64_t value) {
+        // Truncate to be max or min of int. We using SUM_BIT_WIDTH bits to
+        // store the sum thus following aggregations are not likely to 
+        // be overflow/underflow.
+        if(VAR_UNLIKELY((int64_t)(int)value != value)) {
+            const char* reason = nullptr;
+            if(value > std::numeric_limits<int>::max()) {
+                reason = "overflows";
+                value = std::numeric_limits<int>::max();
+            }
+            else {
+                reason = "underflows";
+                value = std::numeric_limits<int>::min();
+            }
+            if(!name().empty()) {
+                // Already exposed.
+                LOG_WARN << "Input = " << value << " to "
+                         << name() << "\' " << reason;
+            }
+            else if(!_debug_name.empty()) {
+                LOG_WARN << "Input = " << value << " to "
+                         << _debug_name << "\' " << reason;
+            }
+            else {
+                LOG_WARN << "Input = " << value << " to AverageRecorder("
+                         << (void*)this << ") " << reason; 
+            }
+        }
+
         agent_type* agent = _combiner.get_or_create_tls_agent();
         if(VAR_UNLIKELY(!agent)) {
             LOG_ERROR << "Fail to create agent";
@@ -144,6 +172,13 @@ public:
         do {
             num = _get_num(n);
             sum = _get_sum(n);
+            if(VAR_UNLIKELY((num + 1 > MAX_NUM_PER_THREAD) ||
+                _will_overflow(_extend_sign_bit(sum), value))) {
+                agent->combiner->commit_and_clear(agent);
+                sum = 0;
+                num = 0;
+                n = 0;
+            }
         } while(!agent->element.compare_exchange_weak(
                     n, _compress(num + 1, sum + complement)));
         return *this;
@@ -202,6 +237,43 @@ private:
         // with two negative number, so truncation has to be done here.
         return (num << SUM_BIT_WIDTH) | (sum & MAX_SUM_PER_THREAD);
     }
+
+    // Expanding a signed number to a larger data type requires performing
+    // symbol extension, with the reule being to extend the symbol bits
+    // to the required number of bits.
+    // Fill all the first (64 - SUM_BIT_WITH + 1) bits with 1 if the sign 
+    // bit to represent a complete 64-bit negatived number;
+    // 1ul << (SUM_BIT_WIDTH - 1) & sum: get signed value 1 or 0.
+    // (1ul << (64ul - SUB_BIT_WIDTH + 1)) - 1 expant to fill symbol ahead of sign to sign.
+    // | (int64_t)sum fill the sum value to last (SUM_BIT_WIDTH -1) digits.
+    // E.X set int64_t to int8_t SUM_BIT_WIDTH = 4 sum's signed value = 1
+    // 1ul << (SUM_BIT_WIDTH - 1) & sum =        0b00001000
+    // (1ul << (64ul - SUB_BIT_WIDTH + 1)) - 1 = 0b00011111
+    // multiple result = 0b11111 =               0b11111000
+    // sum'a actually max value is last 3 digits max value = 0b111 = 7.
+    static int64_t _extend_sign_bit(const uint64_t sum) {
+        return ((1ul << (SUM_BIT_WIDTH - 1) & sum)
+            * ((1ul << (64ul - SUM_BIT_WIDTH + 1)) - 1))
+            | (int64_t)sum;
+    }
+
+    // Check whether the sum of twon integer overflows the range of signed
+    // integer with the width of SUM_BIT_WIDTH. which is 
+    // [-2^(SUM_BIT_WIDTH-1), 2^(SUM_BIT_WIDTH-1)-1].
+    // eg. [-12, 127] for signed 8-bit integer.
+    static bool _will_overflow(const int64_t lhs, const int rhs) {
+        return 
+            // Both integers are positive and the sum is larger than the 
+            // largest number
+            ((lhs > 0) && (rhs > 0)
+                && (lhs + rhs > ((int64_t)MAX_SUM_PER_THREAD >> 1)))
+            // Or both integers are negative and the sum is less than the 
+            // lowest number
+            || ((lhs < 0) && (rhs < 0)
+                && (lhs + rhs < (-((int64_t)MAX_SUM_PER_THREAD >> 1)) - 1));
+            // otherwise the sum cannot overflow if lhs does not overflow
+            // because |sum| < |lhs|.
+    } 
 
 private:
     combiner_type   _combiner;

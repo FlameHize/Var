@@ -56,6 +56,7 @@ test/CMakeFiles/var_test.dir/average_recorder_test.cc.o
  ../src/util/type_traits.h
  ../src/util/vector.h
  ../src/variable.h
+ ../src/window.h
  /home/zgx/Var/test/average_recorder_test.cc
 test/CMakeFiles/var_test.dir/dummy_server_test.cc.o
  ../net/Buffer.h

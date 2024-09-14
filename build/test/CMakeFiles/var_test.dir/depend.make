@@ -55,6 +55,7 @@ test/CMakeFiles/var_test.dir/average_recorder_test.cc.o: ../src/util/time.h
 test/CMakeFiles/var_test.dir/average_recorder_test.cc.o: ../src/util/type_traits.h
 test/CMakeFiles/var_test.dir/average_recorder_test.cc.o: ../src/util/vector.h
 test/CMakeFiles/var_test.dir/average_recorder_test.cc.o: ../src/variable.h
+test/CMakeFiles/var_test.dir/average_recorder_test.cc.o: ../src/window.h
 test/CMakeFiles/var_test.dir/average_recorder_test.cc.o: ../test/average_recorder_test.cc
 
 test/CMakeFiles/var_test.dir/dummy_server_test.cc.o: ../net/Buffer.h

@@ -208,9 +208,27 @@ string
 vector
 -
 
+../src/window.h
+src/variable.h
+../src/src/variable.h
+src/detail/sampler.h
+../src/src/detail/sampler.h
+src/detail/series.h
+../src/src/detail/series.h
+net/base/Logging.h
+../src/net/base/Logging.h
+math.h
+-
+limits
+-
+
 /home/zgx/Var/test/average_recorder_test.cc
 gtest/gtest.h
 -
 src/average_recorder.h
 /home/zgx/Var/test/src/average_recorder.h
+src/window.h
+/home/zgx/Var/test/src/window.h
+src/util/time.h
+/home/zgx/Var/test/src/util/time.h
 
