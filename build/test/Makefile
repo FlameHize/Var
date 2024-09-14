@@ -179,6 +179,33 @@ agent_group_test.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/agent_group_test.cc.s
 .PHONY : agent_group_test.cc.s
 
+average_recorder_test.o: average_recorder_test.cc.o
+
+.PHONY : average_recorder_test.o
+
+# target to build an object file
+average_recorder_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/average_recorder_test.cc.o
+.PHONY : average_recorder_test.cc.o
+
+average_recorder_test.i: average_recorder_test.cc.i
+
+.PHONY : average_recorder_test.i
+
+# target to preprocess a source file
+average_recorder_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/average_recorder_test.cc.i
+.PHONY : average_recorder_test.cc.i
+
+average_recorder_test.s: average_recorder_test.cc.s
+
+.PHONY : average_recorder_test.s
+
+# target to generate assembly for a file
+average_recorder_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/average_recorder_test.cc.s
+.PHONY : average_recorder_test.cc.s
+
 dummy_server_test.o: dummy_server_test.cc.o
 
 .PHONY : dummy_server_test.o
@@ -653,6 +680,9 @@ help:
 	@echo "... agent_group_test.o"
 	@echo "... agent_group_test.i"
 	@echo "... agent_group_test.s"
+	@echo "... average_recorder_test.o"
+	@echo "... average_recorder_test.i"
+	@echo "... average_recorder_test.s"
 	@echo "... dummy_server_test.o"
 	@echo "... dummy_server_test.i"
 	@echo "... dummy_server_test.s"

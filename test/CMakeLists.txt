@@ -23,6 +23,7 @@ set(TEST_SRC_FILES
     window_test.cc
     status_test.cc
     passive_status_test.cc
+    average_recorder_test.cc
 )
 
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})
