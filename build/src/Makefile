@@ -260,6 +260,33 @@ builtin/vars_service.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/vars_service.cc.s
 .PHONY : builtin/vars_service.cc.s
 
+detail/percentile.o: detail/percentile.cc.o
+
+.PHONY : detail/percentile.o
+
+# target to build an object file
+detail/percentile.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/detail/percentile.cc.o
+.PHONY : detail/percentile.cc.o
+
+detail/percentile.i: detail/percentile.cc.i
+
+.PHONY : detail/percentile.i
+
+# target to preprocess a source file
+detail/percentile.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/detail/percentile.cc.i
+.PHONY : detail/percentile.cc.i
+
+detail/percentile.s: detail/percentile.cc.s
+
+.PHONY : detail/percentile.s
+
+# target to generate assembly for a file
+detail/percentile.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/detail/percentile.cc.s
+.PHONY : detail/percentile.cc.s
+
 detail/sampler.o: detail/sampler.cc.o
 
 .PHONY : detail/sampler.o
@@ -341,6 +368,33 @@ service.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/service.cc.s
 .PHONY : service.cc.s
 
+util/fast_rand.o: util/fast_rand.cc.o
+
+.PHONY : util/fast_rand.o
+
+# target to build an object file
+util/fast_rand.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/util/fast_rand.cc.o
+.PHONY : util/fast_rand.cc.o
+
+util/fast_rand.i: util/fast_rand.cc.i
+
+.PHONY : util/fast_rand.i
+
+# target to preprocess a source file
+util/fast_rand.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/util/fast_rand.cc.i
+.PHONY : util/fast_rand.cc.i
+
+util/fast_rand.s: util/fast_rand.cc.s
+
+.PHONY : util/fast_rand.s
+
+# target to generate assembly for a file
+util/fast_rand.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/util/fast_rand.cc.s
+.PHONY : util/fast_rand.cc.s
+
 variable.o: variable.cc.o
 
 .PHONY : variable.o
@@ -392,6 +446,9 @@ help:
 	@echo "... builtin/vars_service.o"
 	@echo "... builtin/vars_service.i"
 	@echo "... builtin/vars_service.s"
+	@echo "... detail/percentile.o"
+	@echo "... detail/percentile.i"
+	@echo "... detail/percentile.s"
 	@echo "... detail/sampler.o"
 	@echo "... detail/sampler.i"
 	@echo "... detail/sampler.s"
@@ -401,6 +458,9 @@ help:
 	@echo "... service.o"
 	@echo "... service.i"
 	@echo "... service.s"
+	@echo "... util/fast_rand.o"
+	@echo "... util/fast_rand.i"
+	@echo "... util/fast_rand.s"
 	@echo "... variable.o"
 	@echo "... variable.i"
 	@echo "... variable.s"

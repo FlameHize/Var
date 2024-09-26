@@ -14,6 +14,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/var_test.dir/linked_list_test.cc.o"
   "CMakeFiles/var_test.dir/main.cc.o"
   "CMakeFiles/var_test.dir/passive_status_test.cc.o"
+  "CMakeFiles/var_test.dir/percentile_test.cc.o"
   "CMakeFiles/var_test.dir/reducer_test.cc.o"
   "CMakeFiles/var_test.dir/sampler_test.cc.o"
   "CMakeFiles/var_test.dir/series_test.cc.o"

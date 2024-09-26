@@ -6,9 +6,11 @@ file(REMOVE_RECURSE
   "CMakeFiles/var.dir/builtin/index_service.cc.o"
   "CMakeFiles/var.dir/builtin/jquery_min_js.cc.o"
   "CMakeFiles/var.dir/builtin/vars_service.cc.o"
+  "CMakeFiles/var.dir/detail/percentile.cc.o"
   "CMakeFiles/var.dir/detail/sampler.cc.o"
   "CMakeFiles/var.dir/server.cc.o"
   "CMakeFiles/var.dir/service.cc.o"
+  "CMakeFiles/var.dir/util/fast_rand.cc.o"
   "CMakeFiles/var.dir/variable.cc.o"
 )
 

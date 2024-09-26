@@ -109,9 +109,35 @@ src/CMakeFiles/var.dir/detail/sampler.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/var.dir/detail/sampler.cc.s"
 	cd /home/zgx/Var/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgx/Var/src/detail/sampler.cc -o CMakeFiles/var.dir/detail/sampler.cc.s
 
+src/CMakeFiles/var.dir/detail/percentile.cc.o: src/CMakeFiles/var.dir/flags.make
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/detail/percentile.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/CMakeFiles/var.dir/detail/percentile.cc.o"
+	cd /home/zgx/Var/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var.dir/detail/percentile.cc.o -c /home/zgx/Var/src/detail/percentile.cc
+
+src/CMakeFiles/var.dir/detail/percentile.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/var.dir/detail/percentile.cc.i"
+	cd /home/zgx/Var/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zgx/Var/src/detail/percentile.cc > CMakeFiles/var.dir/detail/percentile.cc.i
+
+src/CMakeFiles/var.dir/detail/percentile.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/var.dir/detail/percentile.cc.s"
+	cd /home/zgx/Var/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgx/Var/src/detail/percentile.cc -o CMakeFiles/var.dir/detail/percentile.cc.s
+
+src/CMakeFiles/var.dir/util/fast_rand.cc.o: src/CMakeFiles/var.dir/flags.make
+src/CMakeFiles/var.dir/util/fast_rand.cc.o: ../src/util/fast_rand.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object src/CMakeFiles/var.dir/util/fast_rand.cc.o"
+	cd /home/zgx/Var/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var.dir/util/fast_rand.cc.o -c /home/zgx/Var/src/util/fast_rand.cc
+
+src/CMakeFiles/var.dir/util/fast_rand.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/var.dir/util/fast_rand.cc.i"
+	cd /home/zgx/Var/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zgx/Var/src/util/fast_rand.cc > CMakeFiles/var.dir/util/fast_rand.cc.i
+
+src/CMakeFiles/var.dir/util/fast_rand.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/var.dir/util/fast_rand.cc.s"
+	cd /home/zgx/Var/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgx/Var/src/util/fast_rand.cc -o CMakeFiles/var.dir/util/fast_rand.cc.s
+
 src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o: src/CMakeFiles/var.dir/flags.make
 src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o: ../src/builtin/jquery_min_js.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o"
 	cd /home/zgx/Var/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var.dir/builtin/jquery_min_js.cc.o -c /home/zgx/Var/src/builtin/jquery_min_js.cc
 
 src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.i: cmake_force
@@ -124,7 +150,7 @@ src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.s: cmake_force
 
 src/CMakeFiles/var.dir/builtin/flot_min_js.cc.o: src/CMakeFiles/var.dir/flags.make
 src/CMakeFiles/var.dir/builtin/flot_min_js.cc.o: ../src/builtin/flot_min_js.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object src/CMakeFiles/var.dir/builtin/flot_min_js.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object src/CMakeFiles/var.dir/builtin/flot_min_js.cc.o"
 	cd /home/zgx/Var/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var.dir/builtin/flot_min_js.cc.o -c /home/zgx/Var/src/builtin/flot_min_js.cc
 
 src/CMakeFiles/var.dir/builtin/flot_min_js.cc.i: cmake_force
@@ -137,7 +163,7 @@ src/CMakeFiles/var.dir/builtin/flot_min_js.cc.s: cmake_force
 
 src/CMakeFiles/var.dir/builtin/vars_service.cc.o: src/CMakeFiles/var.dir/flags.make
 src/CMakeFiles/var.dir/builtin/vars_service.cc.o: ../src/builtin/vars_service.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object src/CMakeFiles/var.dir/builtin/vars_service.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object src/CMakeFiles/var.dir/builtin/vars_service.cc.o"
 	cd /home/zgx/Var/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var.dir/builtin/vars_service.cc.o -c /home/zgx/Var/src/builtin/vars_service.cc
 
 src/CMakeFiles/var.dir/builtin/vars_service.cc.i: cmake_force
@@ -150,7 +176,7 @@ src/CMakeFiles/var.dir/builtin/vars_service.cc.s: cmake_force
 
 src/CMakeFiles/var.dir/builtin/index_service.cc.o: src/CMakeFiles/var.dir/flags.make
 src/CMakeFiles/var.dir/builtin/index_service.cc.o: ../src/builtin/index_service.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object src/CMakeFiles/var.dir/builtin/index_service.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object src/CMakeFiles/var.dir/builtin/index_service.cc.o"
 	cd /home/zgx/Var/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var.dir/builtin/index_service.cc.o -c /home/zgx/Var/src/builtin/index_service.cc
 
 src/CMakeFiles/var.dir/builtin/index_service.cc.i: cmake_force
@@ -163,7 +189,7 @@ src/CMakeFiles/var.dir/builtin/index_service.cc.s: cmake_force
 
 src/CMakeFiles/var.dir/builtin/get_js_service.cc.o: src/CMakeFiles/var.dir/flags.make
 src/CMakeFiles/var.dir/builtin/get_js_service.cc.o: ../src/builtin/get_js_service.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object src/CMakeFiles/var.dir/builtin/get_js_service.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object src/CMakeFiles/var.dir/builtin/get_js_service.cc.o"
 	cd /home/zgx/Var/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var.dir/builtin/get_js_service.cc.o -c /home/zgx/Var/src/builtin/get_js_service.cc
 
 src/CMakeFiles/var.dir/builtin/get_js_service.cc.i: cmake_force
@@ -180,6 +206,8 @@ var_OBJECTS = \
 "CMakeFiles/var.dir/server.cc.o" \
 "CMakeFiles/var.dir/variable.cc.o" \
 "CMakeFiles/var.dir/detail/sampler.cc.o" \
+"CMakeFiles/var.dir/detail/percentile.cc.o" \
+"CMakeFiles/var.dir/util/fast_rand.cc.o" \
 "CMakeFiles/var.dir/builtin/jquery_min_js.cc.o" \
 "CMakeFiles/var.dir/builtin/flot_min_js.cc.o" \
 "CMakeFiles/var.dir/builtin/vars_service.cc.o" \
@@ -193,6 +221,8 @@ var_EXTERNAL_OBJECTS =
 ../lib/libvar.so: src/CMakeFiles/var.dir/server.cc.o
 ../lib/libvar.so: src/CMakeFiles/var.dir/variable.cc.o
 ../lib/libvar.so: src/CMakeFiles/var.dir/detail/sampler.cc.o
+../lib/libvar.so: src/CMakeFiles/var.dir/detail/percentile.cc.o
+../lib/libvar.so: src/CMakeFiles/var.dir/util/fast_rand.cc.o
 ../lib/libvar.so: src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o
 ../lib/libvar.so: src/CMakeFiles/var.dir/builtin/flot_min_js.cc.o
 ../lib/libvar.so: src/CMakeFiles/var.dir/builtin/vars_service.cc.o
@@ -201,7 +231,7 @@ var_EXTERNAL_OBJECTS =
 ../lib/libvar.so: src/CMakeFiles/var.dir/build.make
 ../lib/libvar.so: ../lib/libvar_net.so
 ../lib/libvar.so: src/CMakeFiles/var.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX shared library ../../lib/libvar.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX shared library ../../lib/libvar.so"
 	cd /home/zgx/Var/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/var.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

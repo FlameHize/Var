@@ -95,6 +95,33 @@ src/CMakeFiles/var.dir/builtin/vars_service.cc.o: ../src/service.h
 src/CMakeFiles/var.dir/builtin/vars_service.cc.o: ../src/builtin/vars_service.cc
 src/CMakeFiles/var.dir/builtin/vars_service.cc.o: ../src/builtin/vars_service.h
 
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../net/base/LogStream.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../net/base/Logging.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../net/base/StringPiece.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../net/base/StringSplitter.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../net/base/StringSplitterInl.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../net/base/Timestamp.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../net/base/Types.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../net/base/copyable.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../net/base/noncopyable.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/common.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/detail/agent_group.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/detail/call_op_returing_void.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/detail/combiner.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/detail/percentile.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/detail/sampler.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/detail/series.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/reducer.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/util/bounded_queue.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/util/fast_rand.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/util/linked_list.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/util/time.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/util/type_traits.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/util/vector.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/variable.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/window.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o: ../src/detail/percentile.cc
+
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/LogStream.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/Logging.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../net/base/StringPiece.h
@@ -176,6 +203,10 @@ src/CMakeFiles/var.dir/service.cc.o: ../net/http/http_status_code.h
 src/CMakeFiles/var.dir/service.cc.o: ../net/http/http_url.h
 src/CMakeFiles/var.dir/service.cc.o: ../src/service.cc
 src/CMakeFiles/var.dir/service.cc.o: ../src/service.h
+
+src/CMakeFiles/var.dir/util/fast_rand.cc.o: ../src/util/fast_rand.h
+src/CMakeFiles/var.dir/util/fast_rand.cc.o: ../src/util/time.h
+src/CMakeFiles/var.dir/util/fast_rand.cc.o: ../src/util/fast_rand.cc
 
 src/CMakeFiles/var.dir/variable.cc.o: ../net/base/CurrentThread.h
 src/CMakeFiles/var.dir/variable.cc.o: ../net/base/LogStream.h

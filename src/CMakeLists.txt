@@ -3,6 +3,8 @@ add_library(var SHARED
     server.cc
     variable.cc
     detail/sampler.cc
+    detail/percentile.cc
+    util/fast_rand.cc
     builtin/jquery_min_js.cc
     builtin/flot_min_js.cc
     builtin/vars_service.cc

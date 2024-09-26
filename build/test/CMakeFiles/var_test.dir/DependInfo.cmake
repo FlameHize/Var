@@ -17,6 +17,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/zgx/Var/test/linked_list_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/linked_list_test.cc.o"
   "/home/zgx/Var/test/main.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/main.cc.o"
   "/home/zgx/Var/test/passive_status_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/passive_status_test.cc.o"
+  "/home/zgx/Var/test/percentile_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/percentile_test.cc.o"
   "/home/zgx/Var/test/reducer_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/reducer_test.cc.o"
   "/home/zgx/Var/test/sampler_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/sampler_test.cc.o"
   "/home/zgx/Var/test/series_test.cc" "/home/zgx/Var/build/test/CMakeFiles/var_test.dir/series_test.cc.o"

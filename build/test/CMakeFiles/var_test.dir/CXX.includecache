@@ -68,16 +68,6 @@ assert.h
 
 ../net/base/noncopyable.h
 
-../src/average_recorder.h
-src/variable.h
-../src/src/variable.h
-src/detail/combiner.h
-../src/src/detail/combiner.h
-src/detail/sampler.h
-../src/src/detail/sampler.h
-src/reducer.h
-../src/src/reducer.h
-
 ../src/common.h
 net/base/StringSplitter.h
 ../src/net/base/StringSplitter.h
@@ -122,6 +112,32 @@ net/base/Logging.h
 atomic
 -
 mutex
+-
+
+../src/detail/percentile.h
+src/common.h
+../src/detail/src/common.h
+src/reducer.h
+../src/detail/src/reducer.h
+src/window.h
+../src/detail/src/window.h
+src/detail/combiner.h
+../src/detail/src/detail/combiner.h
+src/detail/sampler.h
+../src/detail/src/detail/sampler.h
+src/util/fast_rand.h
+../src/detail/src/util/fast_rand.h
+string.h
+-
+stdint.h
+-
+limits
+-
+ostream
+-
+algorithm
+-
+math.h
 -
 
 ../src/detail/sampler.h
@@ -178,6 +194,14 @@ cstdint
 utility
 -
 
+../src/util/fast_rand.h
+cstddef
+-
+stdint.h
+-
+string
+-
+
 ../src/util/linked_list.h
 net/base/noncopyable.h
 ../src/util/net/base/noncopyable.h
@@ -222,13 +246,9 @@ math.h
 limits
 -
 
-/home/zgx/Var/test/average_recorder_test.cc
+/home/zgx/Var/test/percentile_test.cc
 gtest/gtest.h
 -
-src/average_recorder.h
-/home/zgx/Var/test/src/average_recorder.h
-src/window.h
-/home/zgx/Var/test/src/window.h
-src/util/time.h
-/home/zgx/Var/test/src/util/time.h
+src/detail/percentile.h
+/home/zgx/Var/test/src/detail/percentile.h
 

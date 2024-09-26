@@ -476,6 +476,33 @@ passive_status_test.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/passive_status_test.cc.s
 .PHONY : passive_status_test.cc.s
 
+percentile_test.o: percentile_test.cc.o
+
+.PHONY : percentile_test.o
+
+# target to build an object file
+percentile_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/percentile_test.cc.o
+.PHONY : percentile_test.cc.o
+
+percentile_test.i: percentile_test.cc.i
+
+.PHONY : percentile_test.i
+
+# target to preprocess a source file
+percentile_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/percentile_test.cc.i
+.PHONY : percentile_test.cc.i
+
+percentile_test.s: percentile_test.cc.s
+
+.PHONY : percentile_test.s
+
+# target to generate assembly for a file
+percentile_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/percentile_test.cc.s
+.PHONY : percentile_test.cc.s
+
 reducer_test.o: reducer_test.cc.o
 
 .PHONY : reducer_test.o
@@ -713,6 +740,9 @@ help:
 	@echo "... passive_status_test.o"
 	@echo "... passive_status_test.i"
 	@echo "... passive_status_test.s"
+	@echo "... percentile_test.o"
+	@echo "... percentile_test.i"
+	@echo "... percentile_test.s"
 	@echo "... reducer_test.o"
 	@echo "... reducer_test.i"
 	@echo "... reducer_test.s"

@@ -95,6 +95,33 @@ src/CMakeFiles/var.dir/builtin/vars_service.cc.o
  ../src/service.h
  /home/zgx/Var/src/builtin/vars_service.cc
  /home/zgx/Var/src/builtin/vars_service.h
+src/CMakeFiles/var.dir/detail/percentile.cc.o
+ ../net/base/LogStream.h
+ ../net/base/Logging.h
+ ../net/base/StringPiece.h
+ ../net/base/StringSplitter.h
+ ../net/base/StringSplitterInl.h
+ ../net/base/Timestamp.h
+ ../net/base/Types.h
+ ../net/base/copyable.h
+ ../net/base/noncopyable.h
+ ../src/common.h
+ ../src/detail/agent_group.h
+ ../src/detail/call_op_returing_void.h
+ ../src/detail/combiner.h
+ ../src/detail/percentile.h
+ ../src/detail/sampler.h
+ ../src/detail/series.h
+ ../src/reducer.h
+ ../src/util/bounded_queue.h
+ ../src/util/fast_rand.h
+ ../src/util/linked_list.h
+ ../src/util/time.h
+ ../src/util/type_traits.h
+ ../src/util/vector.h
+ ../src/variable.h
+ ../src/window.h
+ /home/zgx/Var/src/detail/percentile.cc
 src/CMakeFiles/var.dir/detail/sampler.cc.o
  ../net/base/LogStream.h
  ../net/base/Logging.h
@@ -177,6 +204,10 @@ src/CMakeFiles/var.dir/service.cc.o
  ../net/http/http_url.h
  /home/zgx/Var/src/service.cc
  /home/zgx/Var/src/service.h
+src/CMakeFiles/var.dir/util/fast_rand.cc.o
+ ../src/util/fast_rand.h
+ ../src/util/time.h
+ /home/zgx/Var/src/util/fast_rand.cc
 src/CMakeFiles/var.dir/variable.cc.o
  ../net/base/CurrentThread.h
  ../net/base/LogStream.h
