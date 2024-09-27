@@ -19,6 +19,7 @@
 
 #include <gtest/gtest.h>
 #include "src/detail/percentile.h"
+#include <fstream>
 
 // Merge 2 PercentileIntervals b1 and b2. b2 has double SAMPLE_SIZE
 // and num_added. Remaining samples of b1 and b2 in merged result should
@@ -93,6 +94,9 @@ TEST(PercentileTest, merge2)
             }
             ASSERT_TRUE(b2.add32(i + N1));
         }
+        // b2 added probability is N2/(N1 + N2)
+        // b1 remain probability is 1 - N2/(N1 + N2)
+        // b1 / b2 = N1 / N2.
         b0.merge(b2);
         for(size_t i = 0; i < b0.sample_count(); ++i) {
             if(b0.get_sample_at(i) < N1) {
@@ -107,4 +111,34 @@ TEST(PercentileTest, merge2)
     EXPECT_LT(fabs(belong_to_b1 / (double)belong_to_b2 - N1 / (double)N2),
               0.1) << "belong_to_b1=" << belong_to_b1
                    << " belong_to_b2=" << belong_to_b2;
+}
+
+TEST(PercentileTest, combine_of)
+{
+    ///@todo
+}
+
+TEST(PercentileTest, add)
+{
+    var::detail::Percentile p;
+    for (int j = 0; j < 10; ++j) {
+        for (int i = 0; i < 10000; ++i) {
+            p << (i + 1);
+        }
+        var::detail::GlobalPercentileSamples b = p.reset();
+        uint32_t last_value = 0;
+        for (uint32_t k = 1; k <= 10u; ++k) {
+            uint32_t value = b.get_number(k / 10.0);
+            EXPECT_GE(value, last_value);
+            last_value = value;
+            EXPECT_GT(value, (k * 1000 - 500)) << "k=" << k;
+            EXPECT_LT(value, (k * 1000 + 500)) << "k=" << k;
+        }
+        LOG_INFO << "99%: " << b.get_number(0.99) << ' '
+                 << "99.9%: " << b.get_number(0.999) << ' '
+                 << "99.99%: " << b.get_number(0.9999);
+
+        std::ofstream out("out.txt");
+        b.describe(out);
+    }
 }

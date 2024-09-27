@@ -29,8 +29,44 @@
 namespace var {
 namespace detail {
 
+// Parameter to merge global, used for ResultTp is not same as ElementTp.
+// GlobalValue is wrapper of TLS->Global processing.
+template<typename Combiner>
+class GlobalValue {
+public:
+    typedef typename Combiner::result_type result_type;
+    typedef typename Combiner::Agent       agent_type;
+
+    GlobalValue(agent_type* agent, Combiner* combiner)
+        : _agent(agent), _combiner(combiner) {}
+    ~GlobalValue() {}
+
+    // Call this method to unlock tls element and lock the combiner.
+    // Unlocking tls element avoids potential deadlock with
+    // AgentCombiner::reset(), which also means that tls element may be
+    // changed during calling of this method. BE AWARE OF THIS!
+    // You are not allowed to change the tls value after call this func
+    // before unlock().
+    result_type* lock() {
+        _agent->element._mutex.unlock();
+        _combiner->_mutex.lock();
+        return &_combiner->_global_result;
+    }
+
+    // Call this method to unlock the combiner and lock tls element again.
+    void unlock() {
+        _combiner->_mutex.unlock();
+        _agent->element._mutex.lock();
+    }
+
+private:
+    agent_type* _agent;
+    Combiner*   _combiner;
+};
+
 template<typename T, typename Enabler = void>
 class ElementContainer {
+template<typename> friend class GlobalValue;
 public:
     void load(T* out) {
         std::lock_guard<std::mutex> guard(_mutex);
@@ -54,13 +90,21 @@ public:
         call_or_returning_void(op, _value, value2);
     }
 
-    // // [Unique]
-    // template<typename Op, typename GlobalValue>
-    // void merge_global(const Op& op, GlobalValue& global_value) {
-    //     std::lock_guard<std::mutex> guard(_mutex);
-    //     call_or_returning_void(op, global_value, _value);
-    //     //op(global_value, _value);
-    // }
+    // [Unique]
+    // Special a new Op to handle the merge process
+    // from functon parameters(like int64_t latency) 
+    // to ElementTp(ThreadLocalPercentleSamples)
+    // and then to ResultTp(GlobalPercentileSamples).
+    template<typename Op, typename GlobalValue>
+    void merge_global(const Op& op, GlobalValue& global_value) {
+        _mutex.lock();
+        // TLS: _value
+        // Global: *global_value.lock()
+        // In this op, process func parameters to ElementTp
+        // and then to ResultTp.
+        op(global_value, _value);
+        _mutex.unlock();
+    }
 
 private:
     T _value;
@@ -118,6 +162,7 @@ public:
     typedef ResultTp result_type;
     typedef ElementTp element_type;
     typedef AgentCombiner<ResultTp, ElementTp, BinaryOp> self_type;
+    friend class GlobalValue<self_type>;
 
     struct Agent : public LinkNode<Agent> {
         Agent() : combiner(nullptr) {}
@@ -133,11 +178,38 @@ public:
             element.store(val);
         }
 
-        // // NOTE: Only available to non-atomical(ElementTp) types.
-        // template<typename Op>
-        // void merge_global(const Op& op) {
-        //     ///@todo
-        // }
+        // Call op(GlobalValue<Combiner> &, ElementTp &) to merge tls element
+        // into global_result. The common impl. is:
+        //   struct XXX {
+        //       void operator()(GlobalValue<Combiner> & global_value,
+        //                       ElementTp & local_value) const {
+        //           if (test_for_merging(local_value)) {
+        // 
+        //               // Unlock tls element and lock combiner. Obviously
+        //               // tls element can be changed during lock().
+        //               ResultTp* g = global_value.lock();
+        // 
+        //               // *g and local_value are not changed provided
+        //               // merge_global is called from the thread owning
+        //               // the agent.
+        //               merge(*g, local_value);
+        //
+        //               // unlock combiner and lock tls element again.
+        //               global_value.unlock();
+        //           }
+        //
+        //           // safe to modify local_value because it's already locked
+        //           // or locked again after merging.
+        //           ...
+        //       }
+        //   };
+        // 
+        // NOTE: Only available to non-atomic types.
+        template<typename Op>
+        void merge_global(const Op& op) {
+            GlobalValue<self_type> g(this, combiner);
+            element.merge_global(op, g);
+        }
 
         self_type* combiner;
         ElementContainer<ElementTp> element;
@@ -167,7 +239,7 @@ public:
     // [ThreadSafe] May be called from anywhere.
     ResultTp combine_agents() const {
         ElementTp tls_value;
-        std::lock_guard guard(_lock);
+        std::lock_guard guard(_mutex);
         ResultTp ret = _global_result;
         for(LinkNode<Agent>* node = _agents.head(); node != _agents.end(); node = node->next()) {
             node->value()->element.load(&tls_value);
@@ -179,7 +251,7 @@ public:
     // [ThreadSafe] May be called from anywhere.
     ResultTp reset_all_agents() {
         ElementTp prev;
-        std::lock_guard guard(_lock);
+        std::lock_guard guard(_mutex);
         ResultTp tmp = _global_result;
         _global_result = _result_identity;
         for(LinkNode<Agent>* node = _agents.head(); node != _agents.end(); node = node->next()) {
@@ -193,7 +265,7 @@ public:
     void commit_and_erase(Agent* agent) {
         if(!agent) return;
         ElementTp local;
-        std::lock_guard guard(_lock);
+        std::lock_guard guard(_mutex);
         agent->element.load(&local);
         call_or_returning_void(_op, _global_result, local);
         agent->RemoveFromList();
@@ -203,7 +275,7 @@ public:
     void commit_and_clear(Agent* agent) {
         if(!agent) return;
         ElementTp prev;
-        std::lock_guard guard(_lock);
+        std::lock_guard guard(_mutex);
         agent->element.exchange(&prev, _element_identity);
         call_or_returning_void(_op, _global_result, prev);
     }
@@ -224,7 +296,7 @@ public:
         }
         agent->reset(_element_identity, this);
         {
-            std::lock_guard guard(_lock);
+            std::lock_guard guard(_mutex);
             _agents.Append(agent);
         }
         return agent;
@@ -234,7 +306,7 @@ public:
     // Set element to be default-constructed so that if its' non-pod,
     // internal allocations should be released.
     void clear_all_agents() {
-        std::lock_guard guard(_lock);
+        std::lock_guard guard(_mutex);
         for(LinkNode<Agent>* node = _agents.head(); node != _agents.end(); ) {
             node->value()->reset(ElementTp(), nullptr);
             LinkNode<Agent>* const saved_next = node->next();
@@ -256,13 +328,15 @@ public:
 
     bool vaild() const { return _id >= 0; }
 
+    // Overload BinaryOp to Parameter Op.
+
 private:
     AgentId                 _id;
     BinaryOp                _op;
     ResultTp                _global_result;
     ResultTp                _result_identity;
     ElementTp               _element_identity;
-    mutable std::mutex      _lock;
+    mutable std::mutex      _mutex;
     LinkedList<Agent>       _agents;
 };
 

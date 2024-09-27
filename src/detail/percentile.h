@@ -65,6 +65,7 @@ public:
         }
         if(!_sorted) {
             std::sort(_samples, _samples + saved_num);
+            _sorted = true;
         }
         return _samples[index];
     }
@@ -221,8 +222,274 @@ private:
     uint32_t _samples[SAMPLE_SIZE];
 };
 
+
 static const size_t NUM_INTERVALS = 32;
 
+class AddLatency;
+
+// Group of PercentileIntervals.
+template<size_t SAMPLE_SIZE_IN>
+class PercentileSamples {
+public:
+    friend class AddLatency;
+    static const size_t SAMPLE_SIZE = SAMPLE_SIZE_IN;
+
+    PercentileSamples() {
+        memset(this, 0, sizeof(*this));
+    }
+
+    ~PercentileSamples() {
+        for(size_t i = 0; i < NUM_INTERVALS; ++i) {
+            if(_intervals[i]) {
+                delete _intervals[i];
+                _intervals[i] = nullptr;
+            }
+        }
+    }
+
+    // Copy-construct from another PercentileSamples.
+    PercentileSamples(const PercentileSamples& rhs) {
+        _num_added = rhs._num_added;
+        for (size_t i = 0; i < NUM_INTERVALS; ++i) {
+            if (rhs._intervals[i] && !rhs._intervals[i]->empty()) {
+                _intervals[i] = new PercentileInterval<SAMPLE_SIZE>(*rhs._intervals[i]);
+            } else {
+                _intervals[i] = nullptr;
+            }
+        }
+    }
+
+    // Assign from another PercentileSamples.
+    // Notice that we keep empty _intervals to avoid future allocations.
+    void operator=(const PercentileSamples& rhs) {
+        _num_added = rhs._num_added;
+        for (size_t i = 0; i < NUM_INTERVALS; ++i) {
+            if (rhs._intervals[i] && !rhs._intervals[i]->empty()) {
+                get_interval_at(i) = *rhs._intervals[i];
+            } else if (_intervals[i]) {
+                _intervals[i]->clear();
+            }
+        }
+    }
+
+    // Get the `ratio'-ile value. E.g. 0.99 means 99%-ile value.
+    // Since we store samples in different intervals internally. We first
+    // address the interval by multiplying ratio with _num_added, then
+    // find the sample inside the interval.
+    uint32_t get_number(double ratio) {
+        size_t n = (size_t)ceil(ratio * _num_added);
+        if(n > _num_added) {
+            n = _num_added;
+        }
+        else if(n == 0) {
+            return 0;
+        }
+        for(size_t i = 0; i < NUM_INTERVALS; ++i) {
+            if(!_intervals[i]) {
+                continue;
+            }
+            PercentileInterval<SAMPLE_SIZE>& invl = *_intervals[i];
+            if(n <= invl.added_count()) {
+                size_t sample_n = n * invl.sample_count() / invl.added_count();
+                size_t sample_index = (sample_n ? sample_n - 1 : 0);
+                return invl.get_sample_at(sample_index);
+            }
+            n -= invl.added_count();
+        }
+        // Can't reach here.
+        return std::numeric_limits<uint32_t>::max();
+    }
+
+    // Add samples in another PercentileSamples.
+    template <size_t size2>
+    void merge(const PercentileSamples<size2> &rhs) {
+        _num_added += rhs._num_added;
+        for (size_t i = 0; i < NUM_INTERVALS; ++i) {
+            if (rhs._intervals[i] && !rhs._intervals[i]->empty()) {
+                get_interval_at(i).merge(*rhs._intervals[i]);
+            }
+        }
+    }
+
+    // Combine multiple into a single PercentileSamples.
+    template<typename Iterator>
+    void combine_of(const Iterator& begin, const Iterator& end) {
+        if (_num_added) {
+            // Very unlikely
+            for (size_t i = 0; i < NUM_INTERVALS; ++i) {
+                if (_intervals[i]) {
+                    _intervals[i]->clear();
+                }
+            }
+            _num_added = 0;
+        }
+
+        for (Iterator iter = begin; iter != end; ++iter) {
+            _num_added += iter->_num_added;
+        }
+
+        // Calculate probabilities for each interval.
+        for(size_t i = 0; i < NUM_INTERVALS; ++i) {
+            size_t total = 0;
+            size_t total_samples = 0;
+            for(Iterator iter = begin; iter != end; ++iter) {
+                if(iter->_intervals[i]) {
+                    total += iter->_intervals[i]->added_count();
+                    total_samples += iter->_intervals[i]->sample_count();
+                }
+            }
+            if(total == 0) {
+                // Empty interval
+                continue;
+            }
+
+            // Consider that sub interval took |a| samples out of |b| totally,
+            // each sample won the probability of |a/b| according to the
+            // algorithm of add32(), so each subintervals expected number 
+            // of samples is |SAMPLE_SIZE * (b / total)|.
+            for(Iterator iter = begin; iter != end; ++iter) {
+                if(!iter->_intervals[i] || iter->_intervals[i]->empty()) {
+                    continue;
+                }
+                typename add_reference<decltype(*(iter->_intervals[i]))>::type
+                        invl = *(iter->_intervals[i]);
+                if(total <= SAMPLE_SIZE) {
+                    get_interval_at(i).merge_with_expectation(invl, invl.sample_count());
+                    continue;
+                }
+                // Each
+                const size_t b = invl.added_count();
+                const size_t remain = std::min(
+                    round_of_expection(SAMPLE_SIZE * b, total), 
+                    (size_t)invl.sample_count());
+                get_interval_at(i).merge_with_expectation(invl, remain);
+            }
+        }
+    }
+
+    // For debuggin.
+    void describe(std::ostream &os) const {
+        os << this << "{num_added = " << _num_added << "}\r\n";
+        for (size_t i = 0; i < NUM_INTERVALS; ++i) {
+            if (_intervals[i] && !_intervals[i]->empty()) {
+                os << " interval[" << i << "]=";
+                _intervals[i]->describe(os);
+                os << "\r\n";
+            }
+        }
+    }
+
+    // True if intervals of two PercentileSamples are exactly same.
+    bool operator==(const PercentileSamples& rhs) const {
+        for (size_t i = 0; i < NUM_INTERVALS; ++i) {
+            if (_intervals != rhs._intervals[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+private:
+    template<size_t size2>
+    friend class PercentileSamples;
+
+    // Get/Create interval on-demand.
+    PercentileInterval<SAMPLE_SIZE>& get_interval_at(size_t index) {
+        if(!_intervals[index]) {
+            _intervals[index] = new PercentileInterval<SAMPLE_SIZE>;
+        }
+        return *_intervals[index];
+    }
+
+    // Sum of _num_added of all intervals. we update this value after any
+    // changes to intervals inside to make it O(1)-time accessible.
+    size_t _num_added;
+    PercentileInterval<SAMPLE_SIZE>* _intervals[NUM_INTERVALS];
+};
+
+template<size_t size> 
+const size_t PercentileSamples<size>::SAMPLE_SIZE;
+
+template<size_t size>
+std::ostream& operator<<(std::ostream& os, const PercentileInterval<size>& p) {
+    p.describe(os);
+    return os;
+}
+
+template<size_t size>
+std::ostream& operator<<(std::ostream& os, const PercentileSamples<size>& p) {
+    p.describe(os);
+    return os;
+}
+
+typedef PercentileSamples<254> GlobalPercentileSamples;
+typedef PercentileSamples<30> ThreadLocalPercentileSamples;
+
+// A specialized reducer for finding the precentile of latencies
+// NOTE: DON'T use it directly, use LatencyRecorder instead.
+class Percentile : public noncopyable {
+public:
+    struct AddPercentileSamples {
+        // Used for Window GlobalSamples merge, NOT call in operator()<<.
+        template<size_t size1, size_t size2>
+        void operator()(PercentileSamples<size1>& b1, 
+                        const PercentileSamples<size2>& b2) const {
+            b1.merge(b2);
+        }
+    };
+
+    typedef GlobalPercentileSamples                 value_type;     // window.h inside need.
+    typedef AgentCombiner<GlobalPercentileSamples,
+                          ThreadLocalPercentileSamples,
+                          AddPercentileSamples>     combiner_type;
+    typedef ReducerSampler<Percentile,
+                           GlobalPercentileSamples,
+                           AddPercentileSamples,
+                           VoidOp>                  sampler_type;
+    typedef combiner_type::Agent                    agent_type;
+
+    Percentile();
+    ~Percentile();
+
+    // The sampler for windows over percentile.
+    sampler_type* get_sampler() {
+        if(!_sampler) {
+            _sampler = new sampler_type(this);
+            _sampler->schedule();
+        }
+    }
+
+    value_type get_value() const;
+
+    // The Reducer::Element::modify() func was passing parameters
+    // directly to the ResultTp. Here, we need to merge global from
+    // passing parameter to TLS and then to Global.
+    Percentile& operator<<(int64_t latency);
+
+    value_type reset();
+
+    AddPercentileSamples op() const { 
+        return AddPercentileSamples();
+    }
+
+    VoidOp inv_op() const { 
+        return VoidOp();
+    }
+
+    bool valid() const {
+        return _combiner != nullptr && _combiner->vaild();
+    }
+
+    // This name is useful for warning negative latencies in operator<<.
+    void set_debug_name(const std::string& name) {
+        _debug_name = name;
+    }
+
+private:
+    combiner_type*  _combiner;
+    sampler_type*   _sampler;
+    std::string     _debug_name;
+};
 
 } // end namespace detail
 } // end namespace var
