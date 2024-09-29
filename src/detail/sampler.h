@@ -180,10 +180,10 @@ public:
             // 2s adder << 2;
             // 3s adder << 3;
             // 4s adder << 4;
-            // When time clock is 3s, oldset Sample data is 1, latest Sample data is 3
-            // result Sample data is 2.
-            // When time clock is 4s, oldset Sample data is 2, latest Sample data is 4
-            // result Sample data is 2.
+            // When time clock is 3s, oldset Sample data is 0, latest Sample data is 6
+            // result Sample data is 6.
+            // When time clock is 4s, oldset Sample data is 1, latest Sample data is 10
+            // result Sample data is 9.
             result->data = latest->data;
             _reducer->inv_op()(result->data, oldset->data);
         }

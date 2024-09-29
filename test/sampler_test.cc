@@ -200,3 +200,49 @@ TEST(SamplerTest, reducer_sampler_within_voidop)
     EXPECT_EQ(samples.at(1), 2);
     EXPECT_EQ(samples.at(2), 3);
 }
+
+TEST(SamplerTest, window_degradation)
+{
+    const time_t window_size = 1;
+    var::Adder<int> adder;
+    var::Adder<int>::sampler_type* add_sampler = adder.get_sampler();
+    add_sampler->set_window_size(window_size);
+    var::detail::Sample<int> adder_result;
+    EXPECT_EQ(false, add_sampler->get_value(window_size, &adder_result));
+
+    adder << 3;
+    sleep(1);
+    EXPECT_EQ(true, add_sampler->get_value(window_size, &adder_result));
+    EXPECT_EQ(3, adder_result.data);
+
+    adder << 2;
+    sleep(1);
+    EXPECT_EQ(true, add_sampler->get_value(window_size, &adder_result));
+    EXPECT_EQ(2, adder_result.data);
+
+    adder << 1;
+    sleep(1);
+    EXPECT_EQ(true, add_sampler->get_value(window_size, &adder_result));
+    EXPECT_EQ(1, adder_result.data);
+
+    var::Maxer<int> maxer;
+    var::Maxer<int>::sampler_type* max_sampler = maxer.get_sampler();
+    max_sampler->set_window_size(window_size);
+    var::detail::Sample<int> maxer_result;
+    EXPECT_EQ(false, max_sampler->get_value(window_size, &maxer_result));
+
+    maxer << 3;
+    sleep(1);   
+    EXPECT_EQ(true, max_sampler->get_value(window_size, &maxer_result));
+    EXPECT_EQ(3, maxer_result.data);
+
+    maxer << 2;
+    sleep(1);   
+    EXPECT_EQ(true, max_sampler->get_value(window_size, &maxer_result));
+    EXPECT_EQ(2, maxer_result.data);
+
+    maxer << 1;
+    sleep(1);   
+    EXPECT_EQ(true, max_sampler->get_value(window_size, &maxer_result));
+    EXPECT_EQ(1, maxer_result.data);
+}
