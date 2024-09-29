@@ -25,6 +25,7 @@ set(TEST_SRC_FILES
     passive_status_test.cc
     average_recorder_test.cc
     percentile_test.cc
+    latency_recorder_test.cc
 )
 
 add_executable(${PROJECT_TEST_NAME} ${TEST_SRC_FILES})

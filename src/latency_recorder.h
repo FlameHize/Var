@@ -29,8 +29,13 @@ namespace var {
 namespace detail {
 
 class Percentile;
-// Record the situation of adding data percentile values every second.
-typedef Window<Percentile, SERIES_IN_WINDOW> PercentileWindow;  
+// SERIES_IN_SECOND: Reflact the changes of input data per second.
+// Record the average latency per second.
+typedef Window<AverageRecorder, SERIES_IN_SECOND> AverageWindow;
+// Record the max latency per second.
+typedef Window<Maxer<int64_t>, SERIES_IN_SECOND> MaxWindow;
+// Record the situation of adding data percentile values per second.
+typedef Window<Percentile, SERIES_IN_SECOND> PercentileWindow;  
 
 
 class CDF : public Variable {
@@ -43,8 +48,96 @@ private:
     PercentileWindow* _w;
 };
 
+class LatencyRecorderBase {
+public:
+    explicit LatencyRecorderBase(time_t window_size);
+    time_t window_size() const {
+        return _latency_window.window_size();
+    }
+
+protected:
+    AverageRecorder     _latency;
+    AverageWindow       _latency_window;
+
+    Maxer<int64_t>      _max_latency;
+    MaxWindow           _max_latency_window;
+
+    Percentile          _latency_percentile;
+    PercentileWindow    _latency_percentile_window;
+    CDF                 _latency_cdf;    
+};
 } // end namespace detail
 
+// Specialized structure to record latency.
+// It's not a Variable, but it contains multiple var inside.
+class LatencyRecorder : public detail::LatencyRecorderBase {
+    typedef detail::LatencyRecorderBase Base;
+public:
+    LatencyRecorder() : Base(-1) {}
+    explicit LatencyRecorder(time_t window_size) : Base(window_size) {}
+    explicit LatencyRecorder(const std::string& prefix) : Base(-1) {
+        expose(prefix);
+    }
+    LatencyRecorder(const std::string& prefix,
+                    time_t window_size) : Base(window_size) {
+        expose(prefix);
+    }
+    LatencyRecorder(const std::string& prefix,
+                    const std::string& name) : Base(-1) {
+        expose(prefix, name);
+    }
+    LatencyRecorder(const std::string& prefix,
+                    const std::string& name,
+                    time_t window_size) : Base(window_size) {
+        expose(prefix, name);
+    }
+    ~LatencyRecorder() { hide(); }
+
+    // Returns 0 on success, -1 otherwise.
+    // Example:
+    //   LatencyRecorder rec;
+    //   rec.expose("foo_bar_write");     // foo_bar_write_latency
+    //                                    // foo_bar_write_max_latency
+    //                                    // foo_bar_write_count
+    //                                    // foo_bar_write_qps
+    //   rec.expose("foo_bar", "read");   // foo_bar_read_latency
+    //                                    // foo_bar_read_max_latency
+    //                                    // foo_bar_read_count
+    //                                    // foo_bar_read_qps
+    int expose(const std::string& name) {
+        return expose(std::string(), name);
+    }
+    int expose(const std::string& prefix, const std::string& name);
+
+    // Hide all internal variables, called in dtor as well.
+    void hide();
+
+    // Record the latency
+    inline LatencyRecorder& operator<<(int64_t latency) {
+        _latency << latency;
+        _max_latency << latency;
+        _latency_percentile << latency;
+        return *this;
+    }
+
+    // Get the average latency in recent |window_size| seconds.
+    int64_t latency(time_t window_size) const {
+        return _latency_window.get_value(window_size).get_average_int();
+    }
+    int64_t latency() const {
+        return _latency_window.get_value().get_average_int();
+    }
+
+    // Get the max latency in recent window_size seconds.
+    int64_t max_latency() const {
+        return _max_latency_window.get_value();
+    }
+
+    // Get |ratio|-ile latency in recent |window_size| seconds.
+    int64_t latency_percentile(double ratio) const;
+};
+
+std::ostream& operator<<(std::ostream& os, const LatencyRecorder& latency_recorder);
 
 } // end namespace var
 #endif // VAR_LATENCY_RECORDER_H

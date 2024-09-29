@@ -147,6 +147,36 @@ src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/util/vector.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/variable.h
 src/CMakeFiles/var.dir/detail/sampler.cc.o: ../src/detail/sampler.cc
 
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../net/base/LogStream.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../net/base/Logging.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../net/base/StringPiece.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../net/base/StringSplitter.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../net/base/StringSplitterInl.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../net/base/Timestamp.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../net/base/Types.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../net/base/copyable.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../net/base/noncopyable.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/average_recorder.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/common.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/detail/agent_group.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/detail/call_op_returing_void.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/detail/combiner.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/detail/percentile.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/detail/sampler.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/detail/series.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/latency_recorder.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/passive_status.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/reducer.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/util/bounded_queue.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/util/fast_rand.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/util/linked_list.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/util/time.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/util/type_traits.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/util/vector.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/variable.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/window.h
+src/CMakeFiles/var.dir/latency_recorder.cc.o: ../src/latency_recorder.cc
+
 src/CMakeFiles/var.dir/server.cc.o: ../net/Buffer.h
 src/CMakeFiles/var.dir/server.cc.o: ../net/Callbacks.h
 src/CMakeFiles/var.dir/server.cc.o: ../net/Endian.h

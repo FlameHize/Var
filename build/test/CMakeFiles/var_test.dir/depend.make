@@ -126,6 +126,36 @@ test/CMakeFiles/var_test.dir/http_status_code_test.cc.o: ../test/http_status_cod
 test/CMakeFiles/var_test.dir/http_url_test.cc.o: ../net/http/http_url.h
 test/CMakeFiles/var_test.dir/http_url_test.cc.o: ../test/http_url_test.cc
 
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../net/base/LogStream.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../net/base/Logging.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../net/base/StringPiece.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../net/base/StringSplitter.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../net/base/StringSplitterInl.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../net/base/Timestamp.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../net/base/Types.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../net/base/copyable.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../net/base/noncopyable.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/average_recorder.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/common.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/detail/agent_group.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/detail/call_op_returing_void.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/detail/combiner.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/detail/percentile.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/detail/sampler.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/detail/series.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/latency_recorder.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/passive_status.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/reducer.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/util/bounded_queue.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/util/fast_rand.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/util/linked_list.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/util/time.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/util/type_traits.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/util/vector.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/variable.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../src/window.h
+test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o: ../test/latency_recorder_test.cc
+
 test/CMakeFiles/var_test.dir/linked_list_test.cc.o: ../net/base/noncopyable.h
 test/CMakeFiles/var_test.dir/linked_list_test.cc.o: ../src/util/linked_list.h
 test/CMakeFiles/var_test.dir/linked_list_test.cc.o: ../test/linked_list_test.cc

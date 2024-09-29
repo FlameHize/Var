@@ -8,6 +8,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/var.dir/builtin/vars_service.cc.o"
   "CMakeFiles/var.dir/detail/percentile.cc.o"
   "CMakeFiles/var.dir/detail/sampler.cc.o"
+  "CMakeFiles/var.dir/latency_recorder.cc.o"
   "CMakeFiles/var.dir/server.cc.o"
   "CMakeFiles/var.dir/service.cc.o"
   "CMakeFiles/var.dir/util/fast_rand.cc.o"

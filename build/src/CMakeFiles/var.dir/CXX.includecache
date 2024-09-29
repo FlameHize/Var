@@ -68,6 +68,16 @@ assert.h
 
 ../net/base/noncopyable.h
 
+../src/average_recorder.h
+src/variable.h
+../src/src/variable.h
+src/detail/combiner.h
+../src/src/detail/combiner.h
+src/detail/sampler.h
+../src/src/detail/sampler.h
+src/reducer.h
+../src/src/reducer.h
+
 ../src/common.h
 net/base/StringSplitter.h
 ../src/net/base/StringSplitter.h
@@ -170,6 +180,22 @@ ostream
 mutex
 -
 
+../src/latency_recorder.h
+src/reducer.h
+../src/src/reducer.h
+src/average_recorder.h
+../src/src/average_recorder.h
+src/passive_status.h
+../src/src/passive_status.h
+src/detail/percentile.h
+../src/src/detail/percentile.h
+
+../src/passive_status.h
+src/variable.h
+../src/src/variable.h
+src/reducer.h
+../src/src/reducer.h
+
 ../src/reducer.h
 src/variable.h
 ../src/src/variable.h
@@ -246,7 +272,9 @@ math.h
 limits
 -
 
-/home/zgx/Var/src/detail/percentile.cc
-src/detail/percentile.h
-/home/zgx/Var/src/detail/src/detail/percentile.h
+/home/zgx/Var/src/latency_recorder.cc
+src/latency_recorder.h
+/home/zgx/Var/src/src/latency_recorder.h
+memory
+-
 

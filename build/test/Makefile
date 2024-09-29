@@ -395,6 +395,33 @@ http_url_test.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_url_test.cc.s
 .PHONY : http_url_test.cc.s
 
+latency_recorder_test.o: latency_recorder_test.cc.o
+
+.PHONY : latency_recorder_test.o
+
+# target to build an object file
+latency_recorder_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/latency_recorder_test.cc.o
+.PHONY : latency_recorder_test.cc.o
+
+latency_recorder_test.i: latency_recorder_test.cc.i
+
+.PHONY : latency_recorder_test.i
+
+# target to preprocess a source file
+latency_recorder_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/latency_recorder_test.cc.i
+.PHONY : latency_recorder_test.cc.i
+
+latency_recorder_test.s: latency_recorder_test.cc.s
+
+.PHONY : latency_recorder_test.s
+
+# target to generate assembly for a file
+latency_recorder_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/latency_recorder_test.cc.s
+.PHONY : latency_recorder_test.cc.s
+
 linked_list_test.o: linked_list_test.cc.o
 
 .PHONY : linked_list_test.o
@@ -731,6 +758,9 @@ help:
 	@echo "... http_url_test.o"
 	@echo "... http_url_test.i"
 	@echo "... http_url_test.s"
+	@echo "... latency_recorder_test.o"
+	@echo "... latency_recorder_test.i"
+	@echo "... latency_recorder_test.s"
 	@echo "... linked_list_test.o"
 	@echo "... linked_list_test.i"
 	@echo "... linked_list_test.s"

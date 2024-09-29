@@ -314,6 +314,33 @@ detail/sampler.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/detail/sampler.cc.s
 .PHONY : detail/sampler.cc.s
 
+latency_recorder.o: latency_recorder.cc.o
+
+.PHONY : latency_recorder.o
+
+# target to build an object file
+latency_recorder.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/latency_recorder.cc.o
+.PHONY : latency_recorder.cc.o
+
+latency_recorder.i: latency_recorder.cc.i
+
+.PHONY : latency_recorder.i
+
+# target to preprocess a source file
+latency_recorder.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/latency_recorder.cc.i
+.PHONY : latency_recorder.cc.i
+
+latency_recorder.s: latency_recorder.cc.s
+
+.PHONY : latency_recorder.s
+
+# target to generate assembly for a file
+latency_recorder.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/latency_recorder.cc.s
+.PHONY : latency_recorder.cc.s
+
 server.o: server.cc.o
 
 .PHONY : server.o
@@ -452,6 +479,9 @@ help:
 	@echo "... detail/sampler.o"
 	@echo "... detail/sampler.i"
 	@echo "... detail/sampler.s"
+	@echo "... latency_recorder.o"
+	@echo "... latency_recorder.i"
+	@echo "... latency_recorder.s"
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"
