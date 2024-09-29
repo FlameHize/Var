@@ -389,10 +389,6 @@ public:
         return true;
     }
 
-private:
-    template<size_t size2>
-    friend class PercentileSamples;
-
     // Get/Create interval on-demand.
     PercentileInterval<SAMPLE_SIZE>& get_interval_at(size_t index) {
         if(!_intervals[index]) {
@@ -400,6 +396,10 @@ private:
         }
         return *_intervals[index];
     }
+
+private:
+    template<size_t size2>
+    friend class PercentileSamples;
 
     // Sum of _num_added of all intervals. we update this value after any
     // changes to intervals inside to make it O(1)-time accessible.

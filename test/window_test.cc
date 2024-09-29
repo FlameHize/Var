@@ -66,4 +66,11 @@ TEST(WindowTest, window)
     ASSERT_EQ(window_ex_maxer.get_value(), 10);
     ASSERT_EQ(window_miner.get_value(), 2);
     ASSERT_EQ(window_ex_miner.get_value(), 2);
+
+    // window_degradation to just only recorder current input value
+    // when window_size is 1.
+    ASSERT_EQ(window_adder.get_value(1), 2);
+    ASSERT_EQ(per_second_adder.get_value(1), 2);
+    ASSERT_EQ(window_maxer.get_value(1), 2);
+    ASSERT_EQ(window_miner.get_value(1), 2);
 }

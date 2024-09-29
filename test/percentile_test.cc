@@ -115,7 +115,61 @@ TEST(PercentileTest, merge2)
 
 TEST(PercentileTest, combine_of)
 {
-    ///@todo
+    // Combine multiple percentile samplers into one.
+    const int num_samplers = 10;
+    // Define a base time to make all samples are in the same interval.
+    const uint32_t base = (1 << 30) + 1;
+
+    const int N = 1000;
+    size_t belong[num_samplers] = {0};
+    size_t total = 0;
+    for(int repeat = 0; repeat < 100; ++repeat) {
+        var::detail::Percentile p[num_samplers];
+        for(int i = 0; i < num_samplers; ++i) {
+            // Set base = 0.
+            // p[0] [0 * 1000, 0 * 1000 + 1000 * 1)
+            // p[1] [1 * 1000, 1 * 1000 + 1000 * 2)
+            // p[2] [3 * 1000, 3 * 1000 + 1000 * 3)
+            // p[3] [6 * 1000, 6 * 1000 + 1000 * 4)
+            // ...
+            // p[9] [45 * 1000, 45 * 1000 + 1000 * 10]
+            // N * (i + 1) is the input count of each p[i].
+            // Expect ratio is 1:2:3:...:10
+            for(int j = 0; j < N * (i + 1); ++j) {
+                p[i] << base + i * (i + 1) / 2 * N + j;
+            }
+        }
+        std::vector<var::detail::GlobalPercentileSamples> result;
+        result.reserve(num_samplers);
+        for(int i = 0; i < num_samplers; ++i) {
+            result.push_back(p[i].get_value());
+        }
+        var::detail::PercentileSamples<510>g;
+        g.combine_of(result.begin(), result.end());
+        for(size_t i = 0; i < var::detail::NUM_INTERVALS; ++i) {
+            if(!g.get_interval_at(i).added_count()) {
+                continue;
+            }
+            var::detail::PercentileInterval<510>& p = g.get_interval_at(i);
+            total += p.sample_count();
+            for(size_t j = 0; j < p.sample_count(); ++j) {
+                for(int k = 0; k < num_samplers; ++k) {
+                    if((p.get_sample_at(j) - base) / N < (k + 1) * (k + 2) / 2u) {
+                        belong[k]++;
+                        break;
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < num_samplers; ++i) {
+            double expect_ratio = (double)(i + 1) * 2 /
+                                    (num_samplers * (num_samplers + 1));
+            double actual_ratio = (double)(belong[i]) / total;
+            EXPECT_LT(fabs(expect_ratio / actual_ratio) - 1, 0.2)
+                << "expect_ratio=" << expect_ratio
+                << " actual_ratio=" << actual_ratio;
+        }
+    }
 }
 
 TEST(PercentileTest, add)
