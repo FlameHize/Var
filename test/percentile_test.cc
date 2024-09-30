@@ -19,6 +19,7 @@
 
 #include <gtest/gtest.h>
 #include "src/detail/percentile.h"
+#include "src/window.h"
 #include <fstream>
 
 // Merge 2 PercentileIntervals b1 and b2. b2 has double SAMPLE_SIZE

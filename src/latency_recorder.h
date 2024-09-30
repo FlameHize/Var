@@ -122,8 +122,8 @@ public:
 
     // Record the latency
     inline LatencyRecorder& operator<<(int64_t latency) {
-        // _latency << latency;
-        // _max_latency << latency;
+        _latency << latency;
+        _max_latency << latency;
         _latency_percentile << latency;
         return *this;
     }
@@ -159,6 +159,14 @@ public:
     }
     const std::string& latency_percentiles_name() const {
         return _latency_percentiles.name();
+    }
+
+    ///@cite used for debug.
+    detail::Percentile* get_latency_percentile() {
+        return &_latency_percentile;
+    }
+    detail::PercentileWindow* get_latency_percentile_window() {
+        return &_latency_percentile_window;
     }
 };
 

@@ -197,6 +197,7 @@ void LatencyRecorder::hide() {
     _latency_p3.hide();
     _latency_999.hide();
     _latency_9999.hide();
+    _latency_percentiles.hide();
 }
 
 int64_t LatencyRecorder::latency_percentile(double ratio) const {
@@ -206,14 +207,6 @@ int64_t LatencyRecorder::latency_percentile(double ratio) const {
 }
 
 Vector<int64_t, 4> LatencyRecorder::latency_percentiles() const {
-    ///@bug _latency_percentile has no data.
-    var::detail::GlobalPercentileSamples g = _latency_percentile.get_value();
-    uint32_t total = 0;
-    for(size_t i = 0; i < var::detail::NUM_INTERVALS; ++i) {
-        total += g.get_interval_at(i).added_count();
-    }
-    LOG_INFO << "added count: " << total;
-
     return detail::get_latencies(
         const_cast<detail::PercentileWindow*>(&_latency_percentile_window));
 }

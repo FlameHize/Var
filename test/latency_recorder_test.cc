@@ -25,17 +25,44 @@ TEST(LatencyRecorder, latency)
     const int N = 100;
     var::LatencyRecorder recorder(3);
 
-    for(int i = 1; i < N; ++i) {
-        recorder << (5 + i);
+    for(int i = 0; i < N; ++i) {
+        recorder << i;
     }
-    // sleep(1);
-    var::Vector<int64_t, 4> latency_percentiles = recorder.latency_percentiles();
-    LOG_INFO << latency_percentiles[0];
-    LOG_INFO << latency_percentiles[2];
-    LOG_INFO << latency_percentiles[3];
-    LOG_INFO << latency_percentiles[4];
+    var::detail::Percentile* latency_percentile = recorder.get_latency_percentile();
+    var::detail::GlobalPercentileSamples g = latency_percentile->get_value();
+    uint32_t total = 0;
+    for(size_t i = 0; i < var::detail::NUM_INTERVALS; ++i) {
+        total += g.get_interval_at(i).added_count();
+    }
+    EXPECT_EQ(total, N);
 
+    // PercentileWindow has reset() the precentile.
+    sleep(1);
+    g = latency_percentile->get_value();
+    total = 0;
+    for(size_t i = 0; i < var::detail::NUM_INTERVALS; ++i) {
+        total += g.get_interval_at(i).added_count();
+    }
+    EXPECT_EQ(total, 0);
 
+    ///@bug PercentileWindow.get_value() has no data.
+    var::detail::PercentileWindow* lp_window = recorder.get_latency_percentile_window();
+    var::detail::GlobalPercentileSamples g_window = lp_window->get_value();
+    total = 0;
+    for(size_t i = 0; i < var::detail::NUM_INTERVALS; ++i) {
+        total += g_window.get_interval_at(i).added_count();
+    }
+    EXPECT_EQ(total, N);
+
+    // var::Vector<int64_t, 4> latency_percentiles = recorder.latency_percentiles();
+    // LOG_INFO << latency_percentiles[0];
+    // LOG_INFO << latency_percentiles[2];
+    // LOG_INFO << latency_percentiles[3];
+    // LOG_INFO << latency_percentiles[4];
+
+    // for(int i = 1; i < N; ++i) {
+    //     recorder << (5 + i);
+    // }
     // sleep(1);
 
     // for(int i = 1; i < N; ++i) {
