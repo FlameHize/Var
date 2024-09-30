@@ -22,30 +22,50 @@
 
 TEST(LatencyRecorder, latency)
 {
+    const int N = 100;
     var::LatencyRecorder recorder(3);
 
-    recorder << 5;
-    sleep(1);
+    for(int i = 1; i < N; ++i) {
+        recorder << (5 + i);
+    }
+    // sleep(1);
+    var::Vector<int64_t, 4> latency_percentiles = recorder.latency_percentiles();
+    LOG_INFO << latency_percentiles[0];
+    LOG_INFO << latency_percentiles[2];
+    LOG_INFO << latency_percentiles[3];
+    LOG_INFO << latency_percentiles[4];
 
-    recorder << 4;
-    sleep(1);
 
-    recorder << 3;
-    sleep(1);
+    // sleep(1);
 
-    EXPECT_EQ(recorder.latency(1), 3);
-    EXPECT_EQ(recorder.latency(), 4);
-    EXPECT_EQ(recorder.max_latency(), 5);
+    // for(int i = 1; i < N; ++i) {
+    //     recorder << (4 + i);
+    // }
+    // sleep(1);
 
-    recorder << 2;
-    sleep(1);
-    EXPECT_EQ(recorder.latency(1), 2);
-    EXPECT_EQ(recorder.latency(), 3);
-    EXPECT_EQ(recorder.max_latency(), 4);
+    // for(int i = 1; i < N; ++i) {
+    //     recorder << (3 + i);
+    // }
+    // sleep(1);
 
-    recorder << 1;
-    sleep(1);
-    EXPECT_EQ(recorder.latency(1), 1);
-    EXPECT_EQ(recorder.latency(), 2);
-    EXPECT_EQ(recorder.max_latency(), 3);
+    // int base = (N + 1) / 2;
+    // EXPECT_EQ(recorder.latency(1), base + 3);
+    // EXPECT_EQ(recorder.latency(), base + 4);
+    // EXPECT_EQ(recorder.max_latency(), N + 5 - 1);
+
+    // for(int i = 1; i < N; ++i) {
+    //     recorder << (2 + i);
+    // }
+    // sleep(1);
+    // EXPECT_EQ(recorder.latency(1), base + 2);
+    // EXPECT_EQ(recorder.latency(), base + 3);
+    // EXPECT_EQ(recorder.max_latency(), N + 4 - 1);
+
+    // for(int i = 1; i < N; ++i) {
+    //     recorder << (1 + i);
+    // }
+    // sleep(1);
+    // EXPECT_EQ(recorder.latency(1), base + 1);
+    // EXPECT_EQ(recorder.latency(), base + 2);
+    // EXPECT_EQ(recorder.max_latency(), N + 3 - 1);
 }

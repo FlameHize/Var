@@ -56,15 +56,23 @@ public:
     }
 
 protected:
-    AverageRecorder     _latency;
-    AverageWindow       _latency_window;
+    AverageRecorder                     _latency;
+    AverageWindow                       _latency_window;
 
-    Maxer<int64_t>      _max_latency;
-    MaxWindow           _max_latency_window;
+    Maxer<int64_t>                      _max_latency;
+    MaxWindow                           _max_latency_window;
 
-    Percentile          _latency_percentile;
-    PercentileWindow    _latency_percentile_window;
-    CDF                 _latency_cdf;    
+    Percentile                          _latency_percentile;
+    PercentileWindow                    _latency_percentile_window;
+    CDF                                 _latency_cdf;
+
+    PassiveStatus<int64_t>              _latency_p1;
+    PassiveStatus<int64_t>              _latency_p2;
+    PassiveStatus<int64_t>              _latency_p3;
+    PassiveStatus<int64_t>              _latency_999;
+    PassiveStatus<int64_t>              _latency_9999;
+
+    PassiveStatus<Vector<int64_t, 4>>   _latency_percentiles;
 };
 } // end namespace detail
 
@@ -114,8 +122,8 @@ public:
 
     // Record the latency
     inline LatencyRecorder& operator<<(int64_t latency) {
-        _latency << latency;
-        _max_latency << latency;
+        // _latency << latency;
+        // _max_latency << latency;
         _latency_percentile << latency;
         return *this;
     }
@@ -135,6 +143,23 @@ public:
 
     // Get |ratio|-ile latency in recent |window_size| seconds.
     int64_t latency_percentile(double ratio) const;
+
+    // Get p1/p2/p3/99.9 -ile latencies in recent |window_size| seconds.
+    Vector<int64_t, 4> latency_percentiles() const;
+
+    // Get name of a sub-var.
+    const std::string& latency_name() const { 
+        return _latency_window.name(); 
+    }
+    const std::string& max_latency_name() const {
+        return _max_latency_window.name();
+    }
+    const std::string& latency_cdf_name() const {
+        return _latency_cdf.name();
+    }
+    const std::string& latency_percentiles_name() const {
+        return _latency_percentiles.name();
+    }
 };
 
 std::ostream& operator<<(std::ostream& os, const LatencyRecorder& latency_recorder);
