@@ -457,6 +457,7 @@ public:
             _sampler = new sampler_type(this);
             _sampler->schedule();
         }
+        return _sampler;
     }
 
     value_type get_value() const;

@@ -46,6 +46,7 @@ TEST(LatencyRecorder, latency)
     EXPECT_EQ(total, 0);
 
     ///@bug PercentileWindow.get_value() has no data.
+    ///@cite fixed, bug problem is Percentile::get_sampler() does not return _sampler pointer to window. 
     var::detail::PercentileWindow* lp_window = recorder.get_latency_percentile_window();
     var::detail::GlobalPercentileSamples g_window = lp_window->get_value();
     total = 0;
