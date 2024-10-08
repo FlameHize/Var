@@ -155,6 +155,12 @@ public:
         return 0;
     }
 
+    // Adapt for Window->Reducer->reset().
+    T reset() {
+        LOG_ERROR << "PassiveStatus::reset() should never be called, abort";
+        abort();
+    }
+
 protected:
     int expose_impl(const std::string& prefix,
                     const std::string& name,

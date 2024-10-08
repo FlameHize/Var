@@ -3,6 +3,7 @@ add_library(var SHARED
     server.cc
     variable.cc
     latency_recorder.cc
+    default_variables.cc
     detail/sampler.cc
     detail/percentile.cc
     util/fast_rand.cc

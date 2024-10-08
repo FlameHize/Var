@@ -260,6 +260,33 @@ builtin/vars_service.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/vars_service.cc.s
 .PHONY : builtin/vars_service.cc.s
 
+default_variables.o: default_variables.cc.o
+
+.PHONY : default_variables.o
+
+# target to build an object file
+default_variables.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/default_variables.cc.o
+.PHONY : default_variables.cc.o
+
+default_variables.i: default_variables.cc.i
+
+.PHONY : default_variables.i
+
+# target to preprocess a source file
+default_variables.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/default_variables.cc.i
+.PHONY : default_variables.cc.i
+
+default_variables.s: default_variables.cc.s
+
+.PHONY : default_variables.s
+
+# target to generate assembly for a file
+default_variables.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/default_variables.cc.s
+.PHONY : default_variables.cc.s
+
 detail/percentile.o: detail/percentile.cc.o
 
 .PHONY : detail/percentile.o
@@ -473,6 +500,9 @@ help:
 	@echo "... builtin/vars_service.o"
 	@echo "... builtin/vars_service.i"
 	@echo "... builtin/vars_service.s"
+	@echo "... default_variables.o"
+	@echo "... default_variables.i"
+	@echo "... default_variables.s"
 	@echo "... detail/percentile.o"
 	@echo "... detail/percentile.i"
 	@echo "... detail/percentile.s"

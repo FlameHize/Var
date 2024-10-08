@@ -24,6 +24,38 @@
 
 namespace var {
 
+// ---------------------------------------------------------------------
+// Convert timeval to and from a single integer.                                             
+// For conversions between timespec and timeval, use TIMEVAL_TO_TIMESPEC
+// and TIMESPEC_TO_TIMEVAL defined in <sys/time.h>
+// ---------------------------------------------------------------------
+inline int64_t timeval_to_microseconds(const timeval& tv) {
+    return tv.tv_sec * 1000000L + tv.tv_usec;
+}
+
+inline int64_t timeval_to_milliseconds(const timeval& tv) {
+    return timeval_to_microseconds(tv) / 1000L;
+}
+
+inline int64_t timeval_to_seconds(const timeval& tv) {
+    return timeval_to_microseconds(tv) / 1000000L;
+}
+
+inline timeval microseconds_to_timeval(int64_t us) {
+    timeval tv;
+    tv.tv_sec = us / 1000000L;
+    tv.tv_usec = us - tv.tv_sec * 1000000L;
+    return tv;
+}
+
+inline timeval milliseconds_to_timeval(int64_t ms) {
+    return microseconds_to_timeval(ms * 1000L);
+}
+
+inline timeval seconds_to_timeval(int64_t s) {
+    return microseconds_to_timeval(s * 1000000L);
+}
+
 // --------------------------------------------------------------------
 // Get elapse since the Epoch.                                          
 // No gettimeofday_ns() because resolution of timeval is microseconds.  

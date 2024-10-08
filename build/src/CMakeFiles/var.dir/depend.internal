@@ -95,6 +95,38 @@ src/CMakeFiles/var.dir/builtin/vars_service.cc.o
  ../src/service.h
  /home/zgx/Var/src/builtin/vars_service.cc
  /home/zgx/Var/src/builtin/vars_service.h
+src/CMakeFiles/var.dir/default_variables.cc.o
+ ../net/base/LogStream.h
+ ../net/base/Logging.h
+ ../net/base/StringPiece.h
+ ../net/base/StringSplitter.h
+ ../net/base/StringSplitterInl.h
+ ../net/base/Timestamp.h
+ ../net/base/Types.h
+ ../net/base/copyable.h
+ ../net/base/noncopyable.h
+ ../src/common.h
+ ../src/detail/agent_group.h
+ ../src/detail/call_op_returing_void.h
+ ../src/detail/combiner.h
+ ../src/detail/sampler.h
+ ../src/detail/series.h
+ ../src/passive_status.h
+ ../src/reducer.h
+ ../src/util/bounded_queue.h
+ ../src/util/cmd_reader_linux.h
+ ../src/util/dir_reader_linux.h
+ ../src/util/fd_guard.h
+ ../src/util/file_reader_linux.h
+ ../src/util/linked_list.h
+ ../src/util/move.h
+ ../src/util/singleton.h
+ ../src/util/time.h
+ ../src/util/type_traits.h
+ ../src/util/vector.h
+ ../src/variable.h
+ ../src/window.h
+ /home/zgx/Var/src/default_variables.cc
 src/CMakeFiles/var.dir/detail/percentile.cc.o
  ../net/base/LogStream.h
  ../net/base/Logging.h
