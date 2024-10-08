@@ -73,6 +73,9 @@ protected:
     PassiveStatus<int64_t>              _latency_9999;
 
     PassiveStatus<Vector<int64_t, 4>>   _latency_percentiles;
+
+    PassiveStatus<int64_t>              _count;
+    PassiveStatus<int64_t>              _qps;
 };
 } // end namespace detail
 
@@ -147,6 +150,18 @@ public:
     // Get p1/p2/p3/99.9 -ile latencies in recent |window_size| seconds.
     Vector<int64_t, 4> latency_percentiles() const;
 
+    // Get the total number of recorded latencies.
+    int64_t count() const {
+        return _latency.get_value().num;
+    }
+
+    // Get qps in recent |window_size| seconds. The 'q' means latencies
+    // recorded by operator<<().
+    int64_t qps(time_t window_size) const;
+    int64_t qps() const {
+        return _qps.get_value();
+    }
+
     // Get name of a sub-var.
     const std::string& latency_name() const { 
         return _latency_window.name(); 
@@ -160,8 +175,14 @@ public:
     const std::string& latency_percentiles_name() const {
         return _latency_percentiles.name();
     }
+    const std::string& count_name() const {
+        return _count.name();
+    }
+    const std::string& qps_name() const {
+        return _qps.name();
+    }
 
-    ///@cite used for debug.
+    // used for debug.
     detail::Percentile* get_latency_percentile() {
         return &_latency_percentile;
     }

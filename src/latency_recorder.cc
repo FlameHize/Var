@@ -98,6 +98,27 @@ static Vector<int64_t, 4> get_latencies(void* arg) {
     return result;
 }
 
+static int64_t double_to_random_int(double dval) {
+    int64_t ival = static_cast<int64_t>(dval);
+    if(dval > ival + fast_rand_double()) {
+        ival += 1;
+    }
+    return ival;
+}
+
+static int64_t get_recorder_count(void* arg) {
+    return static_cast<AverageRecorder*>(arg)->get_value().num;
+}
+
+static int64_t get_recorder_qps(void* arg) {
+    detail::Sample<Stat> s;
+    static_cast<AverageWindow*>(arg)->get_span(&s);
+    if(s.time_us <= 0) {
+        return 0;
+    }
+    return double_to_random_int(s.data.num * 1000000.0 / s.time_us);
+}
+
 LatencyRecorderBase::LatencyRecorderBase(time_t window_size)
     : _latency_window(&_latency, window_size)
     , _max_latency_window(&_max_latency, window_size)
@@ -109,6 +130,8 @@ LatencyRecorderBase::LatencyRecorderBase(time_t window_size)
     , _latency_999(get_percentile<999,1000>, this)
     , _latency_9999(get_percentile<9999,10000>, this)
     , _latency_percentiles(get_latencies, &_latency_percentile_window)
+    , _count(get_recorder_count, &_latency)
+    , _qps(get_recorder_qps, &_latency_window)
     {}
 
 } // end namespace detail
@@ -174,7 +197,6 @@ int LatencyRecorder::expose(const std::string& prefix,
     if(_latency_9999.expose_as(prefix, "latency_9999", DISPLAY_ON_ALL) != 0) {
         return -1;
     }
-
     snprintf(namebuf, sizeof(namebuf), "%d%%,%d%%,%d%%,99.9%%",
              (int)detail::var_latency_p1, (int)detail::var_latency_p2,
              (int)detail::var_latency_p3);
@@ -182,6 +204,14 @@ int LatencyRecorder::expose(const std::string& prefix,
     if(_latency_percentiles.expose_as(prefix, "latency_percentiles", DISPLAY_ON_HTML) != 0) {
         return -1;
     }
+
+    if(_count.expose_as(prefix, "count") != 0) {
+        return -1;
+    }
+    if(_qps.expose_as(prefix, "qps") != 0) {
+        return -1;
+    }
+
     return 0;
 }
 
@@ -198,6 +228,8 @@ void LatencyRecorder::hide() {
     _latency_999.hide();
     _latency_9999.hide();
     _latency_percentiles.hide();
+    _count.hide();
+    _qps.hide();
 }
 
 int64_t LatencyRecorder::latency_percentile(double ratio) const {
@@ -209,6 +241,15 @@ int64_t LatencyRecorder::latency_percentile(double ratio) const {
 Vector<int64_t, 4> LatencyRecorder::latency_percentiles() const {
     return detail::get_latencies(
         const_cast<detail::PercentileWindow*>(&_latency_percentile_window));
+}
+
+int64_t LatencyRecorder::qps(time_t window_size) const {
+    detail::Sample<Stat> s;
+    _latency_window.get_span(window_size, &s);
+    if (s.time_us <= 0) {
+        return 0;
+    }
+    return detail::double_to_random_int(s.data.num * 1000000.0 / s.time_us);
 }
 
 std::ostream& operator<<(std::ostream& os, const LatencyRecorder& latency_recorder) {

@@ -42,6 +42,9 @@ void init_fast_rand_seed(FastRandSeed* seed);
 //   std::random_shuffle(myvector.begin(), myvector.end(), butil::fast_rand_less_than);
 uint64_t fast_rand_less_than(uint64_t range);
 
+// Generate a random double in [0, 1) from thread-local seed.
+// Cost: ~15ns
+double fast_rand_double();
 
 } // end namespace var
 

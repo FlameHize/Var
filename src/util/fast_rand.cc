@@ -1,5 +1,7 @@
 #include "src/util/fast_rand.h"
 #include "src/util/time.h"
+#include <limits>
+#include <math.h>
 
 namespace var {
 
@@ -70,6 +72,21 @@ uint64_t fast_rand_less_than(uint64_t range) {
         init_fast_rand_seed(&_tls_seed);
     }
     return fast_rand_impl(range, &_tls_seed);
+}
+
+inline double fast_rand_double(FastRandSeed* seed) {
+    // Copied from rand_util.cc
+    static const int kBits = std::numeric_limits<double>::digits;
+    uint64_t random_bits = xorshift128_next(seed) & ((UINT64_C(1) << kBits) - 1);
+    double result = ldexp(static_cast<double>(random_bits), -1 * kBits);
+    return result;
+}
+
+double fast_rand_double() {
+    if (need_init(_tls_seed)) {
+        init_fast_rand_seed(&_tls_seed);
+    }
+    return fast_rand_double(&_tls_seed);
 }
 
 
