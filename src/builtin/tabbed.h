@@ -88,7 +88,7 @@ private:
 class Tabbed {
 public:
     virtual ~Tabbed() = default;
-    virtual void GetTabInfo(TabInfoList* info_list) const = 0;
+    virtual void GetTabInfo(TabInfoList* info_list) const {};
 };
 
 } // end namespace var

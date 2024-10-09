@@ -19,6 +19,7 @@
 #include "net/tcp/TcpClient.h"
 #include "net/EventLoopThread.h"
 #include "src/server.h"
+#include "src/var.h"
 
 using namespace var;
 
@@ -29,7 +30,19 @@ TEST(DummyServerTest, StartDummyServer) {
     StartDummyServerAt(addr.port());
     
 #if SERVER_ONLY
-    while(true){}
+    while(true){
+        var::Maxer<int64_t> maxer;
+        maxer.expose("FPGA_max");
+        var::LatencyRecorder lr("FPGA", 10);
+        var::Timer timer;
+        timer.start();
+        sleep(1);
+        timer.stop();
+        int64_t interval = timer.n_elapsed();
+        maxer << interval;
+        LOG_INFO << maxer.get_value();
+        lr << interval;
+    }
 #else
     net::EventLoop loop;
     net::EventLoopThread loop_thread;

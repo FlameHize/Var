@@ -15,21 +15,17 @@
 // specific language governing permissions and limitations
 // under the License.
 
-#ifndef VARS_BUILTIN_VARS_SERVICE_H
-#define VARS_BUILTIN_VARS_SERVICE_H
+// Date Oct Wed 09 15:45:38 CST 2024.
 
-#include "service.h"
+#ifndef VAR_VAR_H
+#define VAR_VAR_H
 
-namespace var {
+#include "reducer.h"
+#include "average_recorder.h"
+#include "status.h"
+#include "passive_status.h"
+#include "latency_recorder.h"
+#include "window.h"
+#include "util/time.h"
 
-class VarsService : public Service {
-public:
-    void default_method(net::HttpRequest* request,
-                        net::HttpResponse* response) override;
-
-    void GetTabInfo(TabInfoList*) const override;
-}; 
-
-} // end namespace var
-
-#endif // VARS_BUILTIN_VARS_SERVICE_H
+#endif // VAR_VAR_H

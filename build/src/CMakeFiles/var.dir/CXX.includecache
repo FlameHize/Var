@@ -272,9 +272,9 @@ tcp/TcpConnection.h
 map
 -
 
-../src/builtin/common.h
-net/http/http_header.h
-../src/builtin/net/http/http_header.h
+../src/builtin/get_js_service.h
+service.h
+../src/builtin/service.h
 
 ../src/builtin/index_service.h
 src/service.h
@@ -285,6 +285,10 @@ string
 -
 vector
 -
+
+../src/builtin/vars_service.h
+service.h
+../src/builtin/service.h
 
 ../src/server.h
 src/service.h
@@ -310,11 +314,13 @@ memory
 functional
 -
 
-/home/zgx/Var/src/builtin/index_service.cc
-src/builtin/index_service.h
-/home/zgx/Var/src/builtin/src/builtin/index_service.h
-src/builtin/common.h
-/home/zgx/Var/src/builtin/src/builtin/common.h
+/home/zgx/Var/src/server.cc
 src/server.h
-/home/zgx/Var/src/builtin/src/server.h
+/home/zgx/Var/src/src/server.h
+src/builtin/index_service.h
+/home/zgx/Var/src/src/builtin/index_service.h
+src/builtin/vars_service.h
+/home/zgx/Var/src/src/builtin/vars_service.h
+src/builtin/get_js_service.h
+/home/zgx/Var/src/src/builtin/get_js_service.h
 

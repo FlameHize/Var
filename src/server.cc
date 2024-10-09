@@ -43,15 +43,15 @@ Server::~Server() {
 }
 
 void Server::Start() {
+    if(!AddBuiltinService("vars", new (std::nothrow) VarsService)) {
+        LOG_ERROR << "Failed to add VarsService";
+    }
+    if(!AddBuiltinService("js", new (std::nothrow) GetJsService)) {
+        LOG_ERROR << "Failed to add GetJsService";
+    }
     if(!AddBuiltinService("index", new (std::nothrow) IndexService)) {
         LOG_ERROR << "Failed to add IndexService";
     }
-    // if(!AddBuiltinService("vars", new (std::nothrow) VarsService)) {
-    //     LOG_ERROR << "Failed to add VarsService";
-    // }
-    // if(!AddBuiltinService("js", new (std::nothrow) GetJsService)) {
-    //     LOG_ERROR << "Failed to add GetJsService";
-    // }
     
     LOG_INFO << "Server is serving on port: " << _addr.port();
     LOG_INFO << "Check out http://" << _addr.toIpPort() << " in web browser";
@@ -112,18 +112,16 @@ bool Server::RemoveService(Service* service) {
     return true;
 }
 
-const Service*
-Server::FindServiceByName(const std::string& service_name) const {
+Service* Server::FindServiceByName(const std::string& service_name) const {
     auto iter = _service_map.find(service_name);
     return iter != _service_map.end() ? iter->second : nullptr;
 }
 
-const Service::Method*
-Server::FindMethodByUrl(const std::string& url_path, std::string* unresolved_path) const {
+Service::Method* Server::FindMethodByUrl(const std::string& url_path, std::string* unresolved_path) const {
     StringSplitter splitter(url_path.c_str(), '/');
     if(!splitter) {
-        const Service* index_service = FindServiceByName("index");
-        const Service::Method* index_method = index_service->FindMethodByName("default-method");
+        Service* index_service = FindServiceByName("index");
+        Service::Method* index_method = index_service->FindMethodByName("default-method");
         return index_method;
     }
     std::string service_name(splitter.field(), splitter.length());
@@ -131,7 +129,7 @@ Server::FindMethodByUrl(const std::string& url_path, std::string* unresolved_pat
     if(!service)
         return nullptr;
 
-    const Service::Method* method = nullptr;
+    Service::Method* method = nullptr;
     std::string method_name;
     splitter++;
     // Regard URL as [service_name]/[method_name].
@@ -175,7 +173,8 @@ inline void tabs_li(std::ostream& os, const char* link,
     os << '>' << tab_name << "</li>\n";
 }
 
-void Server::PrintTabsBody(std::ostream& os, const char* current_tab_name) {
+void Server::PrintTabsBody(std::ostream& os, 
+                           const char* current_tab_name) const {
     os << "<ul class='tabs-menu'>\n";
     if(_tab_info_list) {
         for(size_t i = 0; i < _tab_info_list->size(); ++i) {

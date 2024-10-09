@@ -1,20 +1,24 @@
 #include "src/builtin/index_service.h"
+#include "src/builtin/vars_service.h"
 #include "src/builtin/common.h"
 #include "src/server.h"
 
 namespace var {
 
-void IndexService::GetTabInfo(TabInfoList* info_list) const {
-    TabInfo* info = info_list->add();
-    info->path = "/index?as_more";
-    info->tab_name = "更多";
-}
-
 void IndexService::default_method(net::HttpRequest* request, net::HttpResponse* response) {
-    response->header().set_content_type("text/html");
+    const Server* server = static_cast<Server*>(_owner);
     const bool use_html = UseHTML(request->header());
-    // const bool as_more = request->header().url().GetQuery("as_more");
+    const bool as_more = request->header().url().GetQuery("as_more");
+    if(use_html && !as_more) {
+        Service* svc = server->FindServiceByName("vars");
+        if(!svc) {
+            LOG_ERROR << "Failed to find VarsService";
+            return;
+        }
+        return svc->default_method(request, response);
+    }
     
+    response->header().set_content_type(use_html ? "text/html" : "text/plain");
     net::BufferStream os;
     if(use_html) {
         os << "<!DOCTYPE html><html>";
@@ -26,7 +30,6 @@ void IndexService::default_method(net::HttpRequest* request, net::HttpResponse* 
             << "</head>\n";
         os << "<body>\n";
         // for as more.
-        Server* server = static_cast<Server*>(_owner);
         if(server) {
             server->PrintTabsBody(os, "more"); 
         }
@@ -50,6 +53,12 @@ void IndexService::default_method(net::HttpRequest* request, net::HttpResponse* 
     net::Buffer content;
     os.moveTo(content);
     response->set_body(content);
+}
+
+void IndexService::GetTabInfo(TabInfoList* info_list) const {
+    TabInfo* info = info_list->add();
+    info->path = "/index?as_more";
+    info->tab_name = "更多";
 }
 
 } // end namespace var

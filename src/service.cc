@@ -26,10 +26,12 @@ void Service::AddMethod(const std::string& method_name, const Method& method) {
     _method_map[method_name] = method;
 }
 
-const Service::Method*
-Service::FindMethodByName(const std::string& method_name) const {
-    auto iter = _method_map.find(method_name);
-    return iter != _method_map.end() ? &iter->second : nullptr;
+Service::Method* Service::FindMethodByName(const std::string& method_name) const {
+    MethodMap::const_iterator iter = _method_map.find(method_name);
+    if(iter == _method_map.end()) {
+        return nullptr;
+    }
+    return const_cast<Method*>(&iter->second);
 }
 
 void Service::default_method(net::HttpRequest* request, net::HttpResponse* response) {

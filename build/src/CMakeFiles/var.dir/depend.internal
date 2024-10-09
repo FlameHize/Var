@@ -74,6 +74,7 @@ src/CMakeFiles/var.dir/builtin/index_service.cc.o
  ../src/builtin/common.h
  ../src/builtin/index_service.h
  ../src/builtin/tabbed.h
+ ../src/builtin/vars_service.h
  ../src/server.h
  ../src/service.h
  /home/zgx/Var/src/builtin/index_service.cc
@@ -87,10 +88,23 @@ src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o
  /home/zgx/Var/src/builtin/jquery_min_js.h
 src/CMakeFiles/var.dir/builtin/vars_service.cc.o
  ../net/Buffer.h
+ ../net/Callbacks.h
  ../net/Endian.h
+ ../net/EventLoop.h
+ ../net/InetAddress.h
+ ../net/TimerId.h
+ ../net/base/Atomic.h
+ ../net/base/Condition.h
+ ../net/base/CountDownLatch.h
+ ../net/base/CurrentThread.h
  ../net/base/LogStream.h
  ../net/base/Logging.h
+ ../net/base/Mutex.h
  ../net/base/StringPiece.h
+ ../net/base/StringPrintf.h
+ ../net/base/StringSplitter.h
+ ../net/base/StringSplitterInl.h
+ ../net/base/Thread.h
  ../net/base/Timestamp.h
  ../net/base/Types.h
  ../net/base/copyable.h
@@ -100,12 +114,38 @@ src/CMakeFiles/var.dir/builtin/vars_service.cc.o
  ../net/http/http_message.h
  ../net/http/http_method.h
  ../net/http/http_parser.h
+ ../net/http/http_server.h
  ../net/http/http_status_code.h
  ../net/http/http_url.h
+ ../net/tcp/TcpConnection.h
+ ../net/tcp/TcpServer.h
+ ../src/average_recorder.h
+ ../src/builtin/common.h
  ../src/builtin/tabbed.h
+ ../src/builtin/vars_service.h
+ ../src/common.h
+ ../src/detail/agent_group.h
+ ../src/detail/call_op_returing_void.h
+ ../src/detail/combiner.h
+ ../src/detail/percentile.h
+ ../src/detail/sampler.h
+ ../src/detail/series.h
+ ../src/latency_recorder.h
+ ../src/passive_status.h
+ ../src/reducer.h
+ ../src/server.h
  ../src/service.h
+ ../src/status.h
+ ../src/util/bounded_queue.h
+ ../src/util/fast_rand.h
+ ../src/util/linked_list.h
+ ../src/util/time.h
+ ../src/util/type_traits.h
+ ../src/util/vector.h
+ ../src/var.h
+ ../src/variable.h
+ ../src/window.h
  /home/zgx/Var/src/builtin/vars_service.cc
- /home/zgx/Var/src/builtin/vars_service.h
 src/CMakeFiles/var.dir/default_variables.cc.o
  ../net/base/LogStream.h
  ../net/base/Logging.h

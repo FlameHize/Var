@@ -40,16 +40,16 @@ public:
 
     bool RemoveService(Service* service);
 
-    void PrintTabsBody(std::ostream& os, const char* current_tab_name);
+    Service* FindServiceByName(const std::string& service_name) const;
+
+    Service::Method* FindMethodByUrl(const std::string& url_path, 
+                                     std::string* unresolved_path) const;
+
+    void PrintTabsBody(std::ostream& os, const char* current_tab_name) const;
 
 private:
-    const Service*
-    FindServiceByName(const std::string& service_name) const;
-
-    const Service::Method*
-    FindMethodByUrl(const std::string& url_path, std::string* unresolved_path) const;
-
-    void ProcessRequest(net::HttpRequest* request, net::HttpResponse* response);
+    void ProcessRequest(net::HttpRequest* request, 
+                        net::HttpResponse* response);
 
 private:    
     ServiceMap _service_map;
