@@ -125,6 +125,33 @@ var/fast:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/build
 .PHONY : var/fast
 
+builtin/common.o: builtin/common.cc.o
+
+.PHONY : builtin/common.o
+
+# target to build an object file
+builtin/common.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/common.cc.o
+.PHONY : builtin/common.cc.o
+
+builtin/common.i: builtin/common.cc.i
+
+.PHONY : builtin/common.i
+
+# target to preprocess a source file
+builtin/common.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/common.cc.i
+.PHONY : builtin/common.cc.i
+
+builtin/common.s: builtin/common.cc.s
+
+.PHONY : builtin/common.s
+
+# target to generate assembly for a file
+builtin/common.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/common.cc.s
+.PHONY : builtin/common.cc.s
+
 builtin/flot_min_js.o: builtin/flot_min_js.cc.o
 
 .PHONY : builtin/flot_min_js.o
@@ -485,6 +512,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... var"
+	@echo "... builtin/common.o"
+	@echo "... builtin/common.i"
+	@echo "... builtin/common.s"
 	@echo "... builtin/flot_min_js.o"
 	@echo "... builtin/flot_min_js.i"
 	@echo "... builtin/flot_min_js.s"

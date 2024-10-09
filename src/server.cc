@@ -1,7 +1,7 @@
-#include "server.h"
-#include "builtin/index_service.h"
-#include "builtin/vars_service.h"
-#include "builtin/get_js_service.h"
+#include "src/server.h"
+#include "src/builtin/index_service.h"
+#include "src/builtin/vars_service.h"
+#include "src/builtin/get_js_service.h"
 
 namespace var {
 
@@ -17,6 +17,7 @@ bool StartDummyServerAt(int port) {
         LOG_ERROR << "Invalid port=" << port;
         return false;
     }
+
     if(!g_dummy_server) {
         g_thread = new Thread([port](){
             net::InetAddress addr(port);
@@ -31,7 +32,9 @@ bool StartDummyServerAt(int port) {
 }
 
 Server::Server(const net::InetAddress& addr) 
-    :_server(&_loop, addr, std::string("DummyServer")) {
+    : _addr(addr)
+    , _server(&_loop, _addr, std::string("DummyServer"))
+    , _tab_info_list(nullptr) {
     _server.SetHttpCallback(std::bind(&Server::ProcessRequest, this, _1, _2));
 }
 
@@ -43,13 +46,15 @@ void Server::Start() {
     if(!AddBuiltinService("index", new (std::nothrow) IndexService)) {
         LOG_ERROR << "Failed to add IndexService";
     }
-    if(!AddBuiltinService("vars", new (std::nothrow) VarsService)) {
-        LOG_ERROR << "Failed to add VarsService";
-    }
-    if(!AddBuiltinService("js", new (std::nothrow) GetJsService)) {
-        LOG_ERROR << "Failed to add GetJsService";
-    }
+    // if(!AddBuiltinService("vars", new (std::nothrow) VarsService)) {
+    //     LOG_ERROR << "Failed to add VarsService";
+    // }
+    // if(!AddBuiltinService("js", new (std::nothrow) GetJsService)) {
+    //     LOG_ERROR << "Failed to add GetJsService";
+    // }
     
+    LOG_INFO << "Server is serving on port: " << _addr.port();
+    LOG_INFO << "Check out http://" << _addr.toIpPort() << " in web browser";
     _server.Start();
     _loop.loop();
 }
@@ -63,7 +68,47 @@ bool Server::AddBuiltinService(const std::string& service_name, Service* service
         LOG_WARN << "Service " << service_name << " has already added";
         return false;
     }
+    service->_name = service_name;
+    service->_owner = this;
     _service_map[service_name] = service;
+
+    // tabbed.
+    // must called with -rtti.
+    // Tabbed* tabbed = dynamic_cast<Tabbed*>(service);
+    Tabbed* tabbed = (Tabbed*)(service);
+    if(tabbed) {
+        if(!_tab_info_list) {
+            _tab_info_list = new TabInfoList;
+        }
+        const size_t last_size = _tab_info_list->size();
+        tabbed->GetTabInfo(_tab_info_list);
+        const size_t cur_size = _tab_info_list->size();
+        for(size_t i = last_size; i != cur_size; ++i) {
+            const TabInfo& info = (*_tab_info_list)[i];
+            if(!info.valid()) {
+                LOG_ERROR << "Invalid Tabinfo: path = " << info.path
+                          << " tab_name = " << info.tab_name;
+                _tab_info_list->resize(last_size);
+                RemoveService(service);
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Server::RemoveService(Service* service) {
+    if(!service) {
+        LOG_ERROR << "Parameter[service] is NULL";
+        return false;
+    }
+    const std::string& service_name = service->_name;
+    auto iter = _service_map.find(service_name);
+    if(iter == _service_map.end()) {
+        LOG_ERROR << "Failed to remove service[" << service_name << "]";
+        return false;
+    }
+    _service_map.erase(service_name);
     return true;
 }
 
@@ -119,6 +164,28 @@ void Server::ProcessRequest(net::HttpRequest* request, net::HttpResponse* respon
         header.set_unresolved_path(unresolved_path);
         (*method)(request, response);
     }
+} 
+
+inline void tabs_li(std::ostream& os, const char* link,
+                    const char* tab_name, const char* current_tab_name) {
+    os << "<li id='" << link << '\'';
+    if(strcmp(current_tab_name, tab_name) == 0) {
+        os << " class='current'";
+    }
+    os << '>' << tab_name << "</li>\n";
+}
+
+void Server::PrintTabsBody(std::ostream& os, const char* current_tab_name) {
+    os << "<ul class='tabs-menu'>\n";
+    if(_tab_info_list) {
+        for(size_t i = 0; i < _tab_info_list->size(); ++i) {
+            const TabInfo& info = (*_tab_info_list)[i];
+            tabs_li(os, info.path.c_str(), info.tab_name.c_str(), current_tab_name);
+        }
+    }
+    os << "<li id='https://github.com/apache/brpc/blob/master/docs/cn/builtin_service.md' "
+        "class='help'>?</li>\n</ul>\n"
+        "<div style='height:40px;'></div>";  // placeholder
 }
 
 } // end namespace var

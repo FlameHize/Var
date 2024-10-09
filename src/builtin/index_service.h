@@ -18,7 +18,7 @@
 #ifndef VAR_BUILTIN_INDEX_SERVICE_H
 #define VAR_BUILTIN_INDEX_SERVICE_H
 
-#include "server.h"
+#include "src/service.h"
 
 namespace var {
 
@@ -26,6 +26,8 @@ class IndexService : public Service {
 public:
     void default_method(net::HttpRequest* request,
                         net::HttpResponse* response) override;
+
+    void GetTabInfo(TabInfoList*) const override;
 };
 
 } // end namespace var

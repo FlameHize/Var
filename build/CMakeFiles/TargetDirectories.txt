@@ -4,6 +4,7 @@
 /home/zgx/Var/build/src/CMakeFiles/edit_cache.dir
 /home/zgx/Var/build/src/CMakeFiles/var.dir
 /home/zgx/Var/build/test/CMakeFiles/edit_cache.dir
+/home/zgx/Var/build/test/CMakeFiles/dummy_server_case.dir
 /home/zgx/Var/build/test/CMakeFiles/rebuild_cache.dir
 /home/zgx/Var/build/test/CMakeFiles/var_test.dir
 /home/zgx/Var/build/net/CMakeFiles/rebuild_cache.dir

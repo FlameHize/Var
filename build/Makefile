@@ -124,6 +124,19 @@ var/fast:
 .PHONY : var/fast
 
 #=============================================================================
+# Target rules for targets named dummy_server_case
+
+# Build rule for target.
+dummy_server_case: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 dummy_server_case
+.PHONY : dummy_server_case
+
+# fast build rule for target.
+dummy_server_case/fast:
+	$(MAKE) -f test/CMakeFiles/dummy_server_case.dir/build.make test/CMakeFiles/dummy_server_case.dir/build
+.PHONY : dummy_server_case/fast
+
+#=============================================================================
 # Target rules for targets named var_test
 
 # Build rule for target.
@@ -301,6 +314,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... var"
+	@echo "... dummy_server_case"
 	@echo "... var_test"
 	@echo "... var_net"
 	@echo "... httpserver_test"

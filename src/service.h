@@ -18,8 +18,11 @@
 #ifndef VAR_SERVICE_H
 #define VAR_SERVICE_H
 
+#include "src/builtin/tabbed.h"
 #include "net/http/http_context.h"
 #include "net/base/Logging.h"
+#include <memory>
+#include <functional>
 
 namespace var {
 
@@ -33,7 +36,7 @@ struct CommonStrings {
 
 // Dispatches requests from web browser url.
 // Abstract, Inherit this class to implement different types services.
-class Service {
+class Service : public Tabbed {
 public:
     typedef std::function<void(net::HttpRequest*, net::HttpResponse*)> Method;
     typedef std::unordered_map<std::string, Method> MethodMap;
@@ -45,6 +48,10 @@ public:
     
     virtual void default_method(net::HttpRequest* request,
                                 net::HttpResponse* response);
+
+public:
+    void* _owner;
+    std::string _name;
 
 private:
     MethodMap _method_map;

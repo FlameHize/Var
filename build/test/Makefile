@@ -111,6 +111,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+test/CMakeFiles/dummy_server_case.dir/rule:
+	cd /home/zgx/Var/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/dummy_server_case.dir/rule
+.PHONY : test/CMakeFiles/dummy_server_case.dir/rule
+
+# Convenience name for target.
+dummy_server_case: test/CMakeFiles/dummy_server_case.dir/rule
+
+.PHONY : dummy_server_case
+
+# fast build rule for target.
+dummy_server_case/fast:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/dummy_server_case.dir/build.make test/CMakeFiles/dummy_server_case.dir/build
+.PHONY : dummy_server_case/fast
+
+# Convenience name for target.
 test/CMakeFiles/var_test.dir/rule:
 	cd /home/zgx/Var/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/var_test.dir/rule
 .PHONY : test/CMakeFiles/var_test.dir/rule
@@ -124,6 +139,276 @@ var_test: test/CMakeFiles/var_test.dir/rule
 var_test/fast:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/build
 .PHONY : var_test/fast
+
+agent_combiner_test.o: agent_combiner_test.cc.o
+
+.PHONY : agent_combiner_test.o
+
+# target to build an object file
+agent_combiner_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/agent_combiner_test.cc.o
+.PHONY : agent_combiner_test.cc.o
+
+agent_combiner_test.i: agent_combiner_test.cc.i
+
+.PHONY : agent_combiner_test.i
+
+# target to preprocess a source file
+agent_combiner_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/agent_combiner_test.cc.i
+.PHONY : agent_combiner_test.cc.i
+
+agent_combiner_test.s: agent_combiner_test.cc.s
+
+.PHONY : agent_combiner_test.s
+
+# target to generate assembly for a file
+agent_combiner_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/agent_combiner_test.cc.s
+.PHONY : agent_combiner_test.cc.s
+
+agent_group_test.o: agent_group_test.cc.o
+
+.PHONY : agent_group_test.o
+
+# target to build an object file
+agent_group_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/agent_group_test.cc.o
+.PHONY : agent_group_test.cc.o
+
+agent_group_test.i: agent_group_test.cc.i
+
+.PHONY : agent_group_test.i
+
+# target to preprocess a source file
+agent_group_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/agent_group_test.cc.i
+.PHONY : agent_group_test.cc.i
+
+agent_group_test.s: agent_group_test.cc.s
+
+.PHONY : agent_group_test.s
+
+# target to generate assembly for a file
+agent_group_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/agent_group_test.cc.s
+.PHONY : agent_group_test.cc.s
+
+average_recorder_test.o: average_recorder_test.cc.o
+
+.PHONY : average_recorder_test.o
+
+# target to build an object file
+average_recorder_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/average_recorder_test.cc.o
+.PHONY : average_recorder_test.cc.o
+
+average_recorder_test.i: average_recorder_test.cc.i
+
+.PHONY : average_recorder_test.i
+
+# target to preprocess a source file
+average_recorder_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/average_recorder_test.cc.i
+.PHONY : average_recorder_test.cc.i
+
+average_recorder_test.s: average_recorder_test.cc.s
+
+.PHONY : average_recorder_test.s
+
+# target to generate assembly for a file
+average_recorder_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/average_recorder_test.cc.s
+.PHONY : average_recorder_test.cc.s
+
+dummy_server_test.o: dummy_server_test.cc.o
+
+.PHONY : dummy_server_test.o
+
+# target to build an object file
+dummy_server_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/dummy_server_case.dir/build.make test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o
+.PHONY : dummy_server_test.cc.o
+
+dummy_server_test.i: dummy_server_test.cc.i
+
+.PHONY : dummy_server_test.i
+
+# target to preprocess a source file
+dummy_server_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/dummy_server_case.dir/build.make test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.i
+.PHONY : dummy_server_test.cc.i
+
+dummy_server_test.s: dummy_server_test.cc.s
+
+.PHONY : dummy_server_test.s
+
+# target to generate assembly for a file
+dummy_server_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/dummy_server_case.dir/build.make test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.s
+.PHONY : dummy_server_test.cc.s
+
+http_header_test.o: http_header_test.cc.o
+
+.PHONY : http_header_test.o
+
+# target to build an object file
+http_header_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_header_test.cc.o
+.PHONY : http_header_test.cc.o
+
+http_header_test.i: http_header_test.cc.i
+
+.PHONY : http_header_test.i
+
+# target to preprocess a source file
+http_header_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_header_test.cc.i
+.PHONY : http_header_test.cc.i
+
+http_header_test.s: http_header_test.cc.s
+
+.PHONY : http_header_test.s
+
+# target to generate assembly for a file
+http_header_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_header_test.cc.s
+.PHONY : http_header_test.cc.s
+
+http_message_test.o: http_message_test.cc.o
+
+.PHONY : http_message_test.o
+
+# target to build an object file
+http_message_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_message_test.cc.o
+.PHONY : http_message_test.cc.o
+
+http_message_test.i: http_message_test.cc.i
+
+.PHONY : http_message_test.i
+
+# target to preprocess a source file
+http_message_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_message_test.cc.i
+.PHONY : http_message_test.cc.i
+
+http_message_test.s: http_message_test.cc.s
+
+.PHONY : http_message_test.s
+
+# target to generate assembly for a file
+http_message_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_message_test.cc.s
+.PHONY : http_message_test.cc.s
+
+http_method_test.o: http_method_test.cc.o
+
+.PHONY : http_method_test.o
+
+# target to build an object file
+http_method_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_method_test.cc.o
+.PHONY : http_method_test.cc.o
+
+http_method_test.i: http_method_test.cc.i
+
+.PHONY : http_method_test.i
+
+# target to preprocess a source file
+http_method_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_method_test.cc.i
+.PHONY : http_method_test.cc.i
+
+http_method_test.s: http_method_test.cc.s
+
+.PHONY : http_method_test.s
+
+# target to generate assembly for a file
+http_method_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_method_test.cc.s
+.PHONY : http_method_test.cc.s
+
+http_parser_test.o: http_parser_test.cc.o
+
+.PHONY : http_parser_test.o
+
+# target to build an object file
+http_parser_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_parser_test.cc.o
+.PHONY : http_parser_test.cc.o
+
+http_parser_test.i: http_parser_test.cc.i
+
+.PHONY : http_parser_test.i
+
+# target to preprocess a source file
+http_parser_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_parser_test.cc.i
+.PHONY : http_parser_test.cc.i
+
+http_parser_test.s: http_parser_test.cc.s
+
+.PHONY : http_parser_test.s
+
+# target to generate assembly for a file
+http_parser_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_parser_test.cc.s
+.PHONY : http_parser_test.cc.s
+
+http_status_code_test.o: http_status_code_test.cc.o
+
+.PHONY : http_status_code_test.o
+
+# target to build an object file
+http_status_code_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_status_code_test.cc.o
+.PHONY : http_status_code_test.cc.o
+
+http_status_code_test.i: http_status_code_test.cc.i
+
+.PHONY : http_status_code_test.i
+
+# target to preprocess a source file
+http_status_code_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_status_code_test.cc.i
+.PHONY : http_status_code_test.cc.i
+
+http_status_code_test.s: http_status_code_test.cc.s
+
+.PHONY : http_status_code_test.s
+
+# target to generate assembly for a file
+http_status_code_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_status_code_test.cc.s
+.PHONY : http_status_code_test.cc.s
+
+http_url_test.o: http_url_test.cc.o
+
+.PHONY : http_url_test.o
+
+# target to build an object file
+http_url_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_url_test.cc.o
+.PHONY : http_url_test.cc.o
+
+http_url_test.i: http_url_test.cc.i
+
+.PHONY : http_url_test.i
+
+# target to preprocess a source file
+http_url_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_url_test.cc.i
+.PHONY : http_url_test.cc.i
+
+http_url_test.s: http_url_test.cc.s
+
+.PHONY : http_url_test.s
+
+# target to generate assembly for a file
+http_url_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/http_url_test.cc.s
+.PHONY : http_url_test.cc.s
 
 latency_recorder_test.o: latency_recorder_test.cc.o
 
@@ -152,12 +437,40 @@ latency_recorder_test.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/latency_recorder_test.cc.s
 .PHONY : latency_recorder_test.cc.s
 
+linked_list_test.o: linked_list_test.cc.o
+
+.PHONY : linked_list_test.o
+
+# target to build an object file
+linked_list_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/linked_list_test.cc.o
+.PHONY : linked_list_test.cc.o
+
+linked_list_test.i: linked_list_test.cc.i
+
+.PHONY : linked_list_test.i
+
+# target to preprocess a source file
+linked_list_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/linked_list_test.cc.i
+.PHONY : linked_list_test.cc.i
+
+linked_list_test.s: linked_list_test.cc.s
+
+.PHONY : linked_list_test.s
+
+# target to generate assembly for a file
+linked_list_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/linked_list_test.cc.s
+.PHONY : linked_list_test.cc.s
+
 main.o: main.cc.o
 
 .PHONY : main.o
 
 # target to build an object file
 main.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/dummy_server_case.dir/build.make test/CMakeFiles/dummy_server_case.dir/main.cc.o
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/main.cc.o
 .PHONY : main.cc.o
 
@@ -167,6 +480,7 @@ main.i: main.cc.i
 
 # target to preprocess a source file
 main.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/dummy_server_case.dir/build.make test/CMakeFiles/dummy_server_case.dir/main.cc.i
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/main.cc.i
 .PHONY : main.cc.i
 
@@ -176,8 +490,252 @@ main.s: main.cc.s
 
 # target to generate assembly for a file
 main.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/dummy_server_case.dir/build.make test/CMakeFiles/dummy_server_case.dir/main.cc.s
 	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/main.cc.s
 .PHONY : main.cc.s
+
+passive_status_test.o: passive_status_test.cc.o
+
+.PHONY : passive_status_test.o
+
+# target to build an object file
+passive_status_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/passive_status_test.cc.o
+.PHONY : passive_status_test.cc.o
+
+passive_status_test.i: passive_status_test.cc.i
+
+.PHONY : passive_status_test.i
+
+# target to preprocess a source file
+passive_status_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/passive_status_test.cc.i
+.PHONY : passive_status_test.cc.i
+
+passive_status_test.s: passive_status_test.cc.s
+
+.PHONY : passive_status_test.s
+
+# target to generate assembly for a file
+passive_status_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/passive_status_test.cc.s
+.PHONY : passive_status_test.cc.s
+
+percentile_test.o: percentile_test.cc.o
+
+.PHONY : percentile_test.o
+
+# target to build an object file
+percentile_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/percentile_test.cc.o
+.PHONY : percentile_test.cc.o
+
+percentile_test.i: percentile_test.cc.i
+
+.PHONY : percentile_test.i
+
+# target to preprocess a source file
+percentile_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/percentile_test.cc.i
+.PHONY : percentile_test.cc.i
+
+percentile_test.s: percentile_test.cc.s
+
+.PHONY : percentile_test.s
+
+# target to generate assembly for a file
+percentile_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/percentile_test.cc.s
+.PHONY : percentile_test.cc.s
+
+reducer_test.o: reducer_test.cc.o
+
+.PHONY : reducer_test.o
+
+# target to build an object file
+reducer_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/reducer_test.cc.o
+.PHONY : reducer_test.cc.o
+
+reducer_test.i: reducer_test.cc.i
+
+.PHONY : reducer_test.i
+
+# target to preprocess a source file
+reducer_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/reducer_test.cc.i
+.PHONY : reducer_test.cc.i
+
+reducer_test.s: reducer_test.cc.s
+
+.PHONY : reducer_test.s
+
+# target to generate assembly for a file
+reducer_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/reducer_test.cc.s
+.PHONY : reducer_test.cc.s
+
+sampler_test.o: sampler_test.cc.o
+
+.PHONY : sampler_test.o
+
+# target to build an object file
+sampler_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/sampler_test.cc.o
+.PHONY : sampler_test.cc.o
+
+sampler_test.i: sampler_test.cc.i
+
+.PHONY : sampler_test.i
+
+# target to preprocess a source file
+sampler_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/sampler_test.cc.i
+.PHONY : sampler_test.cc.i
+
+sampler_test.s: sampler_test.cc.s
+
+.PHONY : sampler_test.s
+
+# target to generate assembly for a file
+sampler_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/sampler_test.cc.s
+.PHONY : sampler_test.cc.s
+
+series_test.o: series_test.cc.o
+
+.PHONY : series_test.o
+
+# target to build an object file
+series_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/series_test.cc.o
+.PHONY : series_test.cc.o
+
+series_test.i: series_test.cc.i
+
+.PHONY : series_test.i
+
+# target to preprocess a source file
+series_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/series_test.cc.i
+.PHONY : series_test.cc.i
+
+series_test.s: series_test.cc.s
+
+.PHONY : series_test.s
+
+# target to generate assembly for a file
+series_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/series_test.cc.s
+.PHONY : series_test.cc.s
+
+status_test.o: status_test.cc.o
+
+.PHONY : status_test.o
+
+# target to build an object file
+status_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/status_test.cc.o
+.PHONY : status_test.cc.o
+
+status_test.i: status_test.cc.i
+
+.PHONY : status_test.i
+
+# target to preprocess a source file
+status_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/status_test.cc.i
+.PHONY : status_test.cc.i
+
+status_test.s: status_test.cc.s
+
+.PHONY : status_test.s
+
+# target to generate assembly for a file
+status_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/status_test.cc.s
+.PHONY : status_test.cc.s
+
+string_splitter_test.o: string_splitter_test.cc.o
+
+.PHONY : string_splitter_test.o
+
+# target to build an object file
+string_splitter_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/string_splitter_test.cc.o
+.PHONY : string_splitter_test.cc.o
+
+string_splitter_test.i: string_splitter_test.cc.i
+
+.PHONY : string_splitter_test.i
+
+# target to preprocess a source file
+string_splitter_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/string_splitter_test.cc.i
+.PHONY : string_splitter_test.cc.i
+
+string_splitter_test.s: string_splitter_test.cc.s
+
+.PHONY : string_splitter_test.s
+
+# target to generate assembly for a file
+string_splitter_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/string_splitter_test.cc.s
+.PHONY : string_splitter_test.cc.s
+
+variable_test.o: variable_test.cc.o
+
+.PHONY : variable_test.o
+
+# target to build an object file
+variable_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/variable_test.cc.o
+.PHONY : variable_test.cc.o
+
+variable_test.i: variable_test.cc.i
+
+.PHONY : variable_test.i
+
+# target to preprocess a source file
+variable_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/variable_test.cc.i
+.PHONY : variable_test.cc.i
+
+variable_test.s: variable_test.cc.s
+
+.PHONY : variable_test.s
+
+# target to generate assembly for a file
+variable_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/variable_test.cc.s
+.PHONY : variable_test.cc.s
+
+window_test.o: window_test.cc.o
+
+.PHONY : window_test.o
+
+# target to build an object file
+window_test.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/window_test.cc.o
+.PHONY : window_test.cc.o
+
+window_test.i: window_test.cc.i
+
+.PHONY : window_test.i
+
+# target to preprocess a source file
+window_test.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/window_test.cc.i
+.PHONY : window_test.cc.i
+
+window_test.s: window_test.cc.s
+
+.PHONY : window_test.s
+
+# target to generate assembly for a file
+window_test.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f test/CMakeFiles/var_test.dir/build.make test/CMakeFiles/var_test.dir/window_test.cc.s
+.PHONY : window_test.cc.s
 
 # Help Target
 help:
@@ -186,14 +744,75 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... dummy_server_case"
 	@echo "... rebuild_cache"
 	@echo "... var_test"
+	@echo "... agent_combiner_test.o"
+	@echo "... agent_combiner_test.i"
+	@echo "... agent_combiner_test.s"
+	@echo "... agent_group_test.o"
+	@echo "... agent_group_test.i"
+	@echo "... agent_group_test.s"
+	@echo "... average_recorder_test.o"
+	@echo "... average_recorder_test.i"
+	@echo "... average_recorder_test.s"
+	@echo "... dummy_server_test.o"
+	@echo "... dummy_server_test.i"
+	@echo "... dummy_server_test.s"
+	@echo "... http_header_test.o"
+	@echo "... http_header_test.i"
+	@echo "... http_header_test.s"
+	@echo "... http_message_test.o"
+	@echo "... http_message_test.i"
+	@echo "... http_message_test.s"
+	@echo "... http_method_test.o"
+	@echo "... http_method_test.i"
+	@echo "... http_method_test.s"
+	@echo "... http_parser_test.o"
+	@echo "... http_parser_test.i"
+	@echo "... http_parser_test.s"
+	@echo "... http_status_code_test.o"
+	@echo "... http_status_code_test.i"
+	@echo "... http_status_code_test.s"
+	@echo "... http_url_test.o"
+	@echo "... http_url_test.i"
+	@echo "... http_url_test.s"
 	@echo "... latency_recorder_test.o"
 	@echo "... latency_recorder_test.i"
 	@echo "... latency_recorder_test.s"
+	@echo "... linked_list_test.o"
+	@echo "... linked_list_test.i"
+	@echo "... linked_list_test.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... passive_status_test.o"
+	@echo "... passive_status_test.i"
+	@echo "... passive_status_test.s"
+	@echo "... percentile_test.o"
+	@echo "... percentile_test.i"
+	@echo "... percentile_test.s"
+	@echo "... reducer_test.o"
+	@echo "... reducer_test.i"
+	@echo "... reducer_test.s"
+	@echo "... sampler_test.o"
+	@echo "... sampler_test.i"
+	@echo "... sampler_test.s"
+	@echo "... series_test.o"
+	@echo "... series_test.i"
+	@echo "... series_test.s"
+	@echo "... status_test.o"
+	@echo "... status_test.i"
+	@echo "... status_test.s"
+	@echo "... string_splitter_test.o"
+	@echo "... string_splitter_test.i"
+	@echo "... string_splitter_test.s"
+	@echo "... variable_test.o"
+	@echo "... variable_test.i"
+	@echo "... variable_test.s"
+	@echo "... window_test.o"
+	@echo "... window_test.i"
+	@echo "... window_test.s"
 .PHONY : help
 
 

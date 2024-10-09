@@ -5,26 +5,25 @@ find_package(GTest REQUIRED)
 set(PROJECT_TEST_NAME var_test)
 set(TEST_SRC_FILES 
     main.cc
-    # http_parser_test.cc
-    # http_method_test.cc
-    # http_header_test.cc
-    # http_url_test.cc
-    # http_status_code_test.cc
-    # http_message_test.cc
-    # string_splitter_test.cc
-    # dummy_server_test.cc
-    # linked_list_test.cc
-    # variable_test.cc
-    # agent_group_test.cc
-    # agent_combiner_test.cc
-    # reducer_test.cc
-    # sampler_test.cc
-    # series_test.cc
-    # window_test.cc
-    # status_test.cc
-    # passive_status_test.cc
-    # average_recorder_test.cc
-    # percentile_test.cc
+    http_parser_test.cc
+    http_method_test.cc
+    http_header_test.cc
+    http_url_test.cc
+    http_status_code_test.cc
+    http_message_test.cc
+    string_splitter_test.cc
+    linked_list_test.cc
+    variable_test.cc
+    agent_group_test.cc
+    agent_combiner_test.cc
+    reducer_test.cc
+    sampler_test.cc
+    series_test.cc
+    window_test.cc
+    status_test.cc
+    passive_status_test.cc
+    average_recorder_test.cc
+    percentile_test.cc
     latency_recorder_test.cc
 )
 
@@ -38,6 +37,16 @@ target_include_directories(${PROJECT_TEST_NAME} PRIVATE
                     ${PROJECT_SOURCE_DIR}/net)
 
 target_link_libraries(${PROJECT_TEST_NAME} 
+                    ${GTEST_LIBRARIES} 
+                    var
+                    pthread)
+
+# for dummy server running example.
+add_executable(dummy_server_case dummy_server_test.cc main.cc)
+target_include_directories(dummy_server_case PRIVATE 
+                    ${GTEST_INCLUDE_DIRS}
+                    ${PROJECT_SOURCE_DIR}/net)
+target_link_libraries(dummy_server_case
                     ${GTEST_LIBRARIES} 
                     var
                     pthread)

@@ -18,7 +18,8 @@
 #ifndef VAR_SERVER_H
 #define VAR_SERVER_H
 
-#include "service.h"
+#include "src/service.h"
+#include "src/builtin/tabbed.h"
 #include "net/http/http_server.h"
 #include "net/base/Thread.h"
 #include "net/EventLoop.h"
@@ -32,9 +33,14 @@ public:
     typedef std::unordered_map<std::string, Service*> ServiceMap;
     explicit Server(const net::InetAddress& addr);
     virtual ~Server();
+    
     void Start();
 
     bool AddBuiltinService(const std::string& service_name, Service* service);
+
+    bool RemoveService(Service* service);
+
+    void PrintTabsBody(std::ostream& os, const char* current_tab_name);
 
 private:
     const Service*
@@ -47,8 +53,12 @@ private:
 
 private:    
     ServiceMap _service_map;
+    net::InetAddress _addr;
     net::HttpServer _server;
     net::EventLoop _loop;
+
+    // Store TabInfo of services inheriting Tabbed.
+    TabInfoList* _tab_info_list;
 };
 
 // Test if a dummy server was already started.

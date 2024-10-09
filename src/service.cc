@@ -8,7 +8,8 @@ CommonStrings::CommonStrings()
     , DEFAULT_METHOD("default-method")
 {}
 
-Service::Service() {
+Service::Service() 
+    : _owner(nullptr) {
     AddMethod("default-method", std::bind(&Service::default_method,
                 this, std::placeholders::_1, std::placeholders::_2));
 }
