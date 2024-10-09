@@ -28,20 +28,26 @@ using namespace var;
 TEST(DummyServerTest, StartDummyServer) {
     net::InetAddress addr(2008);
     StartDummyServerAt(addr.port());
+
+    var::Maxer<int> maxer("FpgaMax");
+    var::Miner<int> miner("FpgaMin");
+    var::Status<int> status("FpgaStatus", 0);
+    var::Adder<int> adder;
+    var::Window<var::Adder<int>> window_adder("FpgaWindow", &adder, 10);
+    var::LatencyRecorder recorder("DSP");
     
 #if SERVER_ONLY
-    while(true){
-        var::Maxer<int64_t> maxer;
-        maxer.expose("FPGA_max");
-        var::LatencyRecorder lr("FPGA", 10);
+    while(true) {
         var::Timer timer;
         timer.start();
         sleep(1);
         timer.stop();
         int64_t interval = timer.n_elapsed();
         maxer << interval;
-        LOG_INFO << maxer.get_value();
-        lr << interval;
+        miner << interval;
+        status.set_value(interval);
+        adder << 1;
+        recorder << interval;
     }
 #else
     net::EventLoop loop;

@@ -171,7 +171,7 @@ public:
         return _value.load(std::memory_order_relaxed);
     }
 
-    void set_value(const T& value) const {
+    void set_value(const T& value) {
         _value.store(value, std::memory_order_relaxed);
     }
 
