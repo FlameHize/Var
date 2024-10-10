@@ -283,9 +283,7 @@ void VarsService::default_method(net::HttpRequest* request,
             (request->header().unresolved_path(), os);
         if(rc == 0) {
             response->header().set_content_type("application/json");
-            net::Buffer content;
-            os.moveTo(content);
-            response->set_body(content);
+            response->set_body(os);
         }
         else if(rc < 0) {
             LOG_ERROR << "Failed to find any var by "
@@ -393,9 +391,7 @@ void VarsService::default_method(net::HttpRequest* request,
     if(with_tabs) {
         os << "</div></body></html>";
     }
-    net::Buffer content;
-    os.moveTo(content);
-    response->set_body(content);
+    response->set_body(os);
 }
 
 void VarsService::GetTabInfo(TabInfoList* info_list) const {

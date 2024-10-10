@@ -50,6 +50,9 @@ public:
         _body.retrieveAll();
         _body.append(str);
     }
+    void set_body(BufferStream& body) {
+        body.moveTo(_body);
+    }
     const Buffer &body() const { return _body; }
     Buffer &body() { return _body; }
 

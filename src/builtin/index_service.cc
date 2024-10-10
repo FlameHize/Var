@@ -50,9 +50,7 @@ void IndexService::default_method(net::HttpRequest* request, net::HttpResponse* 
     if(use_html) {
         os << "</body></html>";
     }
-    net::Buffer content;
-    os.moveTo(content);
-    response->set_body(content);
+    response->set_body(os);
 }
 
 void IndexService::GetTabInfo(TabInfoList* info_list) const {

@@ -6,6 +6,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/var.dir/builtin/get_js_service.cc.o"
   "CMakeFiles/var.dir/builtin/index_service.cc.o"
   "CMakeFiles/var.dir/builtin/jquery_min_js.cc.o"
+  "CMakeFiles/var.dir/builtin/log_service.cc.o"
   "CMakeFiles/var.dir/builtin/vars_service.cc.o"
   "CMakeFiles/var.dir/default_variables.cc.o"
   "CMakeFiles/var.dir/detail/percentile.cc.o"

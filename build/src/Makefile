@@ -260,6 +260,33 @@ builtin/jquery_min_js.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.s
 .PHONY : builtin/jquery_min_js.cc.s
 
+builtin/log_service.o: builtin/log_service.cc.o
+
+.PHONY : builtin/log_service.o
+
+# target to build an object file
+builtin/log_service.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/log_service.cc.o
+.PHONY : builtin/log_service.cc.o
+
+builtin/log_service.i: builtin/log_service.cc.i
+
+.PHONY : builtin/log_service.i
+
+# target to preprocess a source file
+builtin/log_service.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/log_service.cc.i
+.PHONY : builtin/log_service.cc.i
+
+builtin/log_service.s: builtin/log_service.cc.s
+
+.PHONY : builtin/log_service.s
+
+# target to generate assembly for a file
+builtin/log_service.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/log_service.cc.s
+.PHONY : builtin/log_service.cc.s
+
 builtin/vars_service.o: builtin/vars_service.cc.o
 
 .PHONY : builtin/vars_service.o
@@ -527,6 +554,9 @@ help:
 	@echo "... builtin/jquery_min_js.o"
 	@echo "... builtin/jquery_min_js.i"
 	@echo "... builtin/jquery_min_js.s"
+	@echo "... builtin/log_service.o"
+	@echo "... builtin/log_service.i"
+	@echo "... builtin/log_service.s"
 	@echo "... builtin/vars_service.o"
 	@echo "... builtin/vars_service.i"
 	@echo "... builtin/vars_service.s"

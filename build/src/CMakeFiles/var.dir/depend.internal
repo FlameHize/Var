@@ -86,6 +86,44 @@ src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o
  ../net/base/copyable.h
  /home/zgx/Var/src/builtin/jquery_min_js.cc
  /home/zgx/Var/src/builtin/jquery_min_js.h
+src/CMakeFiles/var.dir/builtin/log_service.cc.o
+ ../net/Buffer.h
+ ../net/Callbacks.h
+ ../net/Endian.h
+ ../net/EventLoop.h
+ ../net/InetAddress.h
+ ../net/TimerId.h
+ ../net/base/Atomic.h
+ ../net/base/Condition.h
+ ../net/base/CountDownLatch.h
+ ../net/base/CurrentThread.h
+ ../net/base/LogStream.h
+ ../net/base/Logging.h
+ ../net/base/Mutex.h
+ ../net/base/StringPiece.h
+ ../net/base/StringSplitter.h
+ ../net/base/StringSplitterInl.h
+ ../net/base/Thread.h
+ ../net/base/Timestamp.h
+ ../net/base/Types.h
+ ../net/base/copyable.h
+ ../net/base/noncopyable.h
+ ../net/http/http_context.h
+ ../net/http/http_header.h
+ ../net/http/http_message.h
+ ../net/http/http_method.h
+ ../net/http/http_parser.h
+ ../net/http/http_server.h
+ ../net/http/http_status_code.h
+ ../net/http/http_url.h
+ ../net/tcp/TcpConnection.h
+ ../net/tcp/TcpServer.h
+ ../src/builtin/common.h
+ ../src/builtin/log_service.h
+ ../src/builtin/tabbed.h
+ ../src/server.h
+ ../src/service.h
+ /home/zgx/Var/src/builtin/log_service.cc
 src/CMakeFiles/var.dir/builtin/vars_service.cc.o
  ../net/Buffer.h
  ../net/Callbacks.h
@@ -294,6 +332,7 @@ src/CMakeFiles/var.dir/server.cc.o
  ../net/tcp/TcpServer.h
  ../src/builtin/get_js_service.h
  ../src/builtin/index_service.h
+ ../src/builtin/log_service.h
  ../src/builtin/tabbed.h
  ../src/builtin/vars_service.h
  ../src/server.h

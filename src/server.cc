@@ -1,6 +1,7 @@
 #include "src/server.h"
 #include "src/builtin/index_service.h"
 #include "src/builtin/vars_service.h"
+#include "src/builtin/log_service.h"
 #include "src/builtin/get_js_service.h"
 
 namespace var {
@@ -43,6 +44,9 @@ Server::~Server() {
 }
 
 void Server::Start() {
+    if(!AddBuiltinService("log", new(std::nothrow) LogService)) {
+        LOG_ERROR << "Failed to add LogService";
+    }
     if(!AddBuiltinService("vars", new (std::nothrow) VarsService)) {
         LOG_ERROR << "Failed to add VarsService";
     }

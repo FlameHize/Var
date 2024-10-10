@@ -12,7 +12,8 @@ add_library(var SHARED
     builtin/flot_min_js.cc
     builtin/vars_service.cc
     builtin/index_service.cc
-    builtin/get_js_service.cc)
+    builtin/get_js_service.cc
+    builtin/log_service.cc)
 
 target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR}/src)
 target_link_libraries(var var_net)
