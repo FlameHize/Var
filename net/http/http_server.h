@@ -34,7 +34,7 @@ public:
                         const std::string& name);
 
     void Start() { _server.start(); }
-    void SetVerbose() { _verbose = true; }
+    void SetVerbose() { _verbose = false; }
     void SetHttpCallback(const HttpCallback& cb) { _http_callback = cb; }
 
     static std::string MakeHttpRequestStr(HttpHeader* header, Buffer* content);

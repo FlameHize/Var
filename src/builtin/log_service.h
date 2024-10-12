@@ -34,6 +34,9 @@ public:
     void disable(net::HttpRequest* request,
                  net::HttpResponse* response);
 
+    void set_log_level(net::HttpRequest* request,
+                       net::HttpResponse* response);
+
     void default_method(net::HttpRequest* request,
                         net::HttpResponse* response) override;
 

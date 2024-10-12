@@ -156,10 +156,6 @@ http_status_code.h
 http_method.h
 /home/zgx/Var/net/http/http_method.h
 
-/home/zgx/Var/net/http/http_message.cc
-http_message.h
-/home/zgx/Var/net/http/http_message.h
-
 /home/zgx/Var/net/http/http_message.h
 http_header.h
 /home/zgx/Var/net/http/http_header.h
