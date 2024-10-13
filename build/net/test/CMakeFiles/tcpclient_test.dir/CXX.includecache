@@ -176,13 +176,17 @@ memory
 any
 -
 
-/home/zgx/Var/net/test/TcpClient_test.cc
+/home/zgx/project/Var/net/test/TcpClient_test.cc
 base/Logging.h
-/home/zgx/Var/net/test/base/Logging.h
+/home/zgx/project/Var/net/test/base/Logging.h
 EventLoopThread.h
-/home/zgx/Var/net/test/EventLoopThread.h
+/home/zgx/project/Var/net/test/EventLoopThread.h
 tcp/TcpClient.h
-/home/zgx/Var/net/test/tcp/TcpClient.h
+/home/zgx/project/Var/net/test/tcp/TcpClient.h
+gtest/gtest.h
+-
+
+/home/zgx/project/Var/net/test/main.cc
 gtest/gtest.h
 -
 

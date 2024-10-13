@@ -204,15 +204,19 @@ tcp/TcpConnection.h
 map
 -
 
-/home/zgx/Var/net/test/TcpServer_test.cc
+/home/zgx/project/Var/net/test/TcpServer_test.cc
 base/Logging.h
-/home/zgx/Var/net/test/base/Logging.h
+/home/zgx/project/Var/net/test/base/Logging.h
 EventLoop.h
-/home/zgx/Var/net/test/EventLoop.h
+/home/zgx/project/Var/net/test/EventLoop.h
 EventLoopThread.h
-/home/zgx/Var/net/test/EventLoopThread.h
+/home/zgx/project/Var/net/test/EventLoopThread.h
 tcp/TcpServer.h
-/home/zgx/Var/net/test/tcp/TcpServer.h
+/home/zgx/project/Var/net/test/tcp/TcpServer.h
+gtest/gtest.h
+-
+
+/home/zgx/project/Var/net/test/main.cc
 gtest/gtest.h
 -
 

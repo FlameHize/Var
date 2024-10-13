@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/zgx/Var/test/dummy_server_test.cc" "/home/zgx/Var/build/test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o"
-  "/home/zgx/Var/test/main.cc" "/home/zgx/Var/build/test/CMakeFiles/dummy_server_case.dir/main.cc.o"
+  "/home/zgx/project/Var/test/dummy_server_test.cc" "/home/zgx/project/Var/build/test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o"
+  "/home/zgx/project/Var/test/main.cc" "/home/zgx/project/Var/build/test/CMakeFiles/dummy_server_case.dir/main.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -17,8 +17,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/zgx/Var/build/src/CMakeFiles/var.dir/DependInfo.cmake"
-  "/home/zgx/Var/build/net/CMakeFiles/var_net.dir/DependInfo.cmake"
+  "/home/zgx/project/Var/build/src/CMakeFiles/var.dir/DependInfo.cmake"
+  "/home/zgx/project/Var/build/net/CMakeFiles/var_net.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

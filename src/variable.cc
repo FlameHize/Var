@@ -3,6 +3,7 @@
 #include "net/base/Logging.h"
 #include "net/base/Mutex.h"
 #include <sstream>
+#include <unordered_map>
 
 namespace var {
 

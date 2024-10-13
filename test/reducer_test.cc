@@ -18,6 +18,7 @@
 #include <gtest/gtest.h>
 #include "src/reducer.h"
 #include "src/util/time.h"
+#include <unordered_map>
 
 TEST(ReducerTest, adder) 
 {

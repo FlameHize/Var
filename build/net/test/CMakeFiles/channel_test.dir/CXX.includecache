@@ -110,13 +110,13 @@ assert.h
 
 ../net/base/noncopyable.h
 
-/home/zgx/Var/net/test/Channel_test.cc
+/home/zgx/project/Var/net/test/Channel_test.cc
 base/Logging.h
-/home/zgx/Var/net/test/base/Logging.h
+/home/zgx/project/Var/net/test/base/Logging.h
 Channel.h
-/home/zgx/Var/net/test/Channel.h
+/home/zgx/project/Var/net/test/Channel.h
 EventLoop.h
-/home/zgx/Var/net/test/EventLoop.h
+/home/zgx/project/Var/net/test/EventLoop.h
 functional
 -
 map
@@ -130,7 +130,7 @@ unistd.h
 sys/timerfd.h
 -
 
-/home/zgx/Var/net/test/main.cc
+/home/zgx/project/Var/net/test/main.cc
 gtest/gtest.h
 -
 

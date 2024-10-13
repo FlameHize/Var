@@ -54,9 +54,13 @@ assert.h
 
 ../net/base/copyable.h
 
-/home/zgx/Var/net/test/Buffer_test.cc
+/home/zgx/project/Var/net/test/Buffer_test.cc
 Buffer.h
-/home/zgx/Var/net/test/Buffer.h
+/home/zgx/project/Var/net/test/Buffer.h
+gtest/gtest.h
+-
+
+/home/zgx/project/Var/net/test/main.cc
 gtest/gtest.h
 -
 

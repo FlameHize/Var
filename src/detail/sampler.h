@@ -26,6 +26,7 @@
 #include "src/util/time.h"
 #include "net/base/Logging.h"
 #include <mutex>
+#include <vector>
 
 namespace var {
 namespace detail {

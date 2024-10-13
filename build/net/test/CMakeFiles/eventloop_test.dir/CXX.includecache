@@ -106,11 +106,11 @@ assert.h
 
 ../net/base/noncopyable.h
 
-/home/zgx/Var/net/test/EventLoop_test.cc
+/home/zgx/project/Var/net/test/EventLoop_test.cc
 EventLoop.h
-/home/zgx/Var/net/test/EventLoop.h
+/home/zgx/project/Var/net/test/EventLoop.h
 base/Thread.h
-/home/zgx/Var/net/test/base/Thread.h
+/home/zgx/project/Var/net/test/base/Thread.h
 gtest/gtest.h
 -
 assert.h
@@ -120,7 +120,7 @@ stdio.h
 unistd.h
 -
 
-/home/zgx/Var/net/test/main.cc
+/home/zgx/project/Var/net/test/main.cc
 gtest/gtest.h
 -
 

@@ -18,6 +18,7 @@
 #include <gtest/gtest.h>
 #include "src/detail/agent_group.h"
 #include "src/util/time.h"
+#include <atomic>
 
 using namespace var;
 using namespace var::detail;

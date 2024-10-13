@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "../../../bin/eventloopthreadpool_test"
-  "../../../bin/eventloopthreadpool_test.pdb"
   "CMakeFiles/eventloopthreadpool_test.dir/EventLoopThread_test.cc.o"
   "CMakeFiles/eventloopthreadpool_test.dir/main.cc.o"
+  "../../../bin/eventloopthreadpool_test.pdb"
+  "../../../bin/eventloopthreadpool_test"
 )
 
 # Per-language clean rules from dependency scanning.

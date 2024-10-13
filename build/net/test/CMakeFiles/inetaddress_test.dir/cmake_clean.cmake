@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "../../../bin/inetaddress_test"
-  "../../../bin/inetaddress_test.pdb"
   "CMakeFiles/inetaddress_test.dir/InetAddress_test.cc.o"
   "CMakeFiles/inetaddress_test.dir/main.cc.o"
+  "../../../bin/inetaddress_test.pdb"
+  "../../../bin/inetaddress_test"
 )
 
 # Per-language clean rules from dependency scanning.
