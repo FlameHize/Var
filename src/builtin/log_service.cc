@@ -71,6 +71,8 @@ LogService::LogService() {
                 this, std::placeholders::_1, std::placeholders::_2));
     AddMethod("level", std::bind(&LogService::set_log_level,
                 this, std::placeholders::_1, std::placeholders::_2));
+    AddMethod("update", std::bind(&LogService::update,
+                this, std::placeholders::_1, std::placeholders::_2));
     Logger::setOutput(&LogFilter::log_to_stdout);
 }
 
@@ -145,9 +147,25 @@ void LogService::set_log_level(net::HttpRequest* request,
     response->set_body(os);
 }
 
+void LogService::update(net::HttpRequest* request,
+                        net::HttpResponse* response) {
+    net::BufferStream os;
+    std::deque<std::string> logs;
+    LogFilter::list_logs(logs);
+    if(logs.empty()) {
+        os << "Failed find any logs";
+    }
+    else {
+        while(logs.size()) {
+            os << logs.back();
+            logs.pop_back();
+        }
+    }
+    response->set_body(os);
+}
+
 void LogService::default_method(net::HttpRequest* request,
                                 net::HttpResponse* response) {
-    LOG_DEBUG << "Test once";
     const Server* server = static_cast<Server*>(_owner);
     const bool use_html = UseHTML(request->header());
     response->header().set_content_type(use_html ? "text/html" : "text/plain");
@@ -171,15 +189,9 @@ void LogService::default_method(net::HttpRequest* request,
             os << "log is not enabled yet. You can turn on/off log by accessing"
             "/log/enable and /log/disable respectively";
         }
-
-        // if(use_html) {
-        //     os << "<br></br>\n";
-        //     PutLogLevelHeading(os, true);
-        // }
-        // else {
-        //     os << "You can change log level by accessing /log/level respectively";
-        // }
-        os << "</body></html>";
+        if(use_html) {
+            os << "</body></html>";
+        }
         response->set_body(os);
         return;
     }
@@ -217,18 +229,36 @@ void LogService::default_method(net::HttpRequest* request,
     }
 
     if(use_html) {
-        os << "<pre>\n";
-    }
-    std::deque<std::string> logs;
-    LogFilter::list_logs(logs);
-    if(logs.empty()) {
-        os << "Failed find any logs";
+        os << "<script>\n"
+            "function fetchData() {\n"
+                "$.ajax({\n"
+                "url: \"/log/update\",\n"
+                "type: \"GET\",\n"
+                "dataType: \"html\",\n"
+                "success: function(data) {\n"
+                "    $('#logs-content').html(data);\n"
+                "}\n"
+            "});\n"
+        "}\n"
+        "setInterval(fetchData, 1000);\n"
+        "</script>\n";
     }
     else {
-        while(logs.size()) {
-            os << logs.back();
-            logs.pop_back();
+        std::deque<std::string> logs;
+        LogFilter::list_logs(logs);
+        if(logs.empty()) {
+            os << "Failed find any logs";
         }
+        else {
+            while(logs.size()) {
+                os << logs.back();
+                logs.pop_back();
+            }
+        }
+    }
+
+    if(use_html) {
+        os << "<pre id = \"logs-content\">\n";
     }
 
     if(use_html) {
