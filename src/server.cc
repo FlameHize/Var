@@ -1,8 +1,9 @@
 #include "src/server.h"
+#include "src/builtin/get_js_service.h"
 #include "src/builtin/index_service.h"
 #include "src/builtin/vars_service.h"
 #include "src/builtin/log_service.h"
-#include "src/builtin/get_js_service.h"
+#include "src/builtin/inside_status_service.h"
 
 namespace var {
 
@@ -44,14 +45,17 @@ Server::~Server() {
 }
 
 void Server::Start() {
-    if(!AddBuiltinService("log", new(std::nothrow) LogService)) {
-        LOG_ERROR << "Failed to add LogService";
+    if(!AddBuiltinService("js", new (std::nothrow) GetJsService)) {
+        LOG_ERROR << "Failed to add GetJsService";
     }
     if(!AddBuiltinService("vars", new (std::nothrow) VarsService)) {
         LOG_ERROR << "Failed to add VarsService";
     }
-    if(!AddBuiltinService("js", new (std::nothrow) GetJsService)) {
-        LOG_ERROR << "Failed to add GetJsService";
+    if(!AddBuiltinService("log", new(std::nothrow) LogService)) {
+        LOG_ERROR << "Failed to add LogService";
+    }
+    if(!AddBuiltinService("inside_status", new(std::nothrow) InsideStatusService)) {
+        LOG_ERROR << "Failed to add InsideStatusService";
     }
     if(!AddBuiltinService("index", new (std::nothrow) IndexService)) {
         LOG_ERROR << "Failed to add IndexService";

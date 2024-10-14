@@ -99,7 +99,7 @@ LogService::LogService()
         std::string path = LogFileSaveDir;
         if(!DirReaderLinux::CreateDirectoryIfNotExists(path.c_str())) {
             path.clear();
-            LOG_ERROR << "Log save file dir created failed";
+            LOG_ERROR << "Log save file dir not existed";
         }
         _file = new LogFile(path, LogFileLimitSize, 
                             true, LogFlushTimeInterval, LogFlushCheckEveryN);

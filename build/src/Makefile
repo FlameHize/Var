@@ -233,6 +233,33 @@ builtin/index_service.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/index_service.cc.s
 .PHONY : builtin/index_service.cc.s
 
+builtin/inside_status_service.o: builtin/inside_status_service.cc.o
+
+.PHONY : builtin/inside_status_service.o
+
+# target to build an object file
+builtin/inside_status_service.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o
+.PHONY : builtin/inside_status_service.cc.o
+
+builtin/inside_status_service.i: builtin/inside_status_service.cc.i
+
+.PHONY : builtin/inside_status_service.i
+
+# target to preprocess a source file
+builtin/inside_status_service.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/inside_status_service.cc.i
+.PHONY : builtin/inside_status_service.cc.i
+
+builtin/inside_status_service.s: builtin/inside_status_service.cc.s
+
+.PHONY : builtin/inside_status_service.s
+
+# target to generate assembly for a file
+builtin/inside_status_service.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/inside_status_service.cc.s
+.PHONY : builtin/inside_status_service.cc.s
+
 builtin/jquery_min_js.o: builtin/jquery_min_js.cc.o
 
 .PHONY : builtin/jquery_min_js.o
@@ -578,6 +605,9 @@ help:
 	@echo "... builtin/index_service.o"
 	@echo "... builtin/index_service.i"
 	@echo "... builtin/index_service.s"
+	@echo "... builtin/inside_status_service.o"
+	@echo "... builtin/inside_status_service.i"
+	@echo "... builtin/inside_status_service.s"
 	@echo "... builtin/jquery_min_js.o"
 	@echo "... builtin/jquery_min_js.i"
 	@echo "... builtin/jquery_min_js.s"
