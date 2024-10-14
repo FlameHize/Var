@@ -1,4 +1,4 @@
-# Install script for directory: /home/zgx/project/Var/net
+# Install script for directory: /home/zgx/Var/net
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/zgx/project/Var/build/net/test/cmake_install.cmake")
+  include("/home/zgx/Var/build/net/test/cmake_install.cmake")
 
 endif()
 

@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
+  "../../../bin/tcpclient_test"
+  "../../../bin/tcpclient_test.pdb"
   "CMakeFiles/tcpclient_test.dir/TcpClient_test.cc.o"
   "CMakeFiles/tcpclient_test.dir/main.cc.o"
-  "../../../bin/tcpclient_test.pdb"
-  "../../../bin/tcpclient_test"
 )
 
 # Per-language clean rules from dependency scanning.

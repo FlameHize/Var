@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
+  "../../../bin/httpserver_test"
+  "../../../bin/httpserver_test.pdb"
   "CMakeFiles/httpserver_test.dir/HttpServer_test.cc.o"
   "CMakeFiles/httpserver_test.dir/main.cc.o"
-  "../../../bin/httpserver_test.pdb"
-  "../../../bin/httpserver_test"
 )
 
 # Per-language clean rules from dependency scanning.

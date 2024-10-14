@@ -1,4 +1,4 @@
-# Install script for directory: /home/zgx/project/Var/test
+# Install script for directory: /home/zgx/Var/test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

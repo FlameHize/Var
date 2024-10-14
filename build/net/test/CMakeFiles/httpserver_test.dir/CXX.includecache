@@ -286,19 +286,19 @@ tcp/TcpConnection.h
 map
 -
 
-/home/zgx/project/Var/net/test/HttpServer_test.cc
+/home/zgx/Var/net/test/HttpServer_test.cc
 gtest/gtest.h
 -
 http/http_server.h
-/home/zgx/project/Var/net/test/http/http_server.h
+/home/zgx/Var/net/test/http/http_server.h
 tcp/TcpClient.h
-/home/zgx/project/Var/net/test/tcp/TcpClient.h
+/home/zgx/Var/net/test/tcp/TcpClient.h
 EventLoop.h
-/home/zgx/project/Var/net/test/EventLoop.h
+/home/zgx/Var/net/test/EventLoop.h
 EventLoopThread.h
-/home/zgx/project/Var/net/test/EventLoopThread.h
+/home/zgx/Var/net/test/EventLoopThread.h
 
-/home/zgx/project/Var/net/test/main.cc
+/home/zgx/Var/net/test/main.cc
 gtest/gtest.h
 -
 

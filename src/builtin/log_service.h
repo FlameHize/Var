@@ -21,12 +21,14 @@
 #define VAR_BUILTIN_LOG_SERVICE_H
 
 #include "src/service.h"
+#include "net/base/LogFile.h"
 
 namespace var {
 
 class LogService : public Service {
 public:
     LogService();
+    virtual ~LogService();
     
     void enable(net::HttpRequest* request,
                 net::HttpResponse* response);
@@ -44,6 +46,9 @@ public:
                         net::HttpResponse* response) override;
 
     void GetTabInfo(TabInfoList*) const override;
+
+private:
+    LogFile* _file;
 };
 
 } // end namespace var

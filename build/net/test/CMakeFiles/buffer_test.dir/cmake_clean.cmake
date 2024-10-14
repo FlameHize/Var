@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
+  "../../../bin/buffer_test"
+  "../../../bin/buffer_test.pdb"
   "CMakeFiles/buffer_test.dir/Buffer_test.cc.o"
   "CMakeFiles/buffer_test.dir/main.cc.o"
-  "../../../bin/buffer_test.pdb"
-  "../../../bin/buffer_test"
 )
 
 # Per-language clean rules from dependency scanning.

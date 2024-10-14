@@ -62,15 +62,15 @@ assert.h
 
 ../net/base/noncopyable.h
 
-/home/zgx/project/Var/net/test/InetAddress_test.cc
+/home/zgx/Var/net/test/InetAddress_test.cc
 InetAddress.h
-/home/zgx/project/Var/net/test/InetAddress.h
+/home/zgx/Var/net/test/InetAddress.h
 base/Logging.h
-/home/zgx/project/Var/net/test/base/Logging.h
+/home/zgx/Var/net/test/base/Logging.h
 gtest/gtest.h
 -
 
-/home/zgx/project/Var/net/test/main.cc
+/home/zgx/Var/net/test/main.cc
 gtest/gtest.h
 -
 

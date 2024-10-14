@@ -1,11 +1,10 @@
 #include "src/builtin/log_service.h"
 #include "src/builtin/common.h"
+#include "src/util/dir_reader_linux.h"
 #include "src/server.h"
 #include <deque>
 
 namespace var {
-
-bool FLAGS_enable_log = false;
 
 void PutLogLevelHeading(std::ostream& os, bool selected) {
     os << "<form action=\"/log/level\" method=\"get\">\n"
@@ -36,7 +35,14 @@ void PutLogLevelSelect(std::ostream& os, const std::string& level) {
 class LogFilter {
 public:
     static void log_to_stdout(const char* msg, int len) {
-        log_to_browser(msg, len);
+        std::string tmp(msg, len);
+        if(_logs.size() >= _limit) {
+            size_t num = _logs.size() - _limit;
+            for(size_t i = 0; i <= num; ++i) {
+                _logs.pop_front();
+            }
+        }
+        _logs.push_back(tmp);
         fwrite(msg, 1, len, stdout);
     }
 
@@ -49,22 +55,38 @@ public:
             }
         }
         _logs.push_back(tmp);
+        if(_file) {
+            _file->append(msg, len);
+        }
     }
 
     static void list_logs(std::deque<std::string>& out) {
         out = _logs;
     }
 
+    static void set_log_file(LogFile* file) {
+        _file = file;
+    }
+
 private:
     static size_t _limit;
     static std::deque<std::string> _logs;
+    static LogFile* _file;
 };
 
-size_t LogFilter::_limit = 100;
+size_t LogFilter::_limit = 1024;
 std::deque<std::string> LogFilter::_logs;
+LogFile* LogFilter::_file = nullptr;
 
+const std::string LogFileSaveDir = "data/log/";
+const size_t LogFileLimitSize = 64 * 1024 * 1024;
+const size_t LogFlushTimeInterval = 3;
+const size_t LogFlushCheckEveryN = 10;
 
-LogService::LogService() {
+bool FLAGS_enable_log = false;
+
+LogService::LogService()  
+    : _file(nullptr) {
     AddMethod("enable", std::bind(&LogService::enable,
                 this, std::placeholders::_1, std::placeholders::_2));
     AddMethod("disable", std::bind(&LogService::disable,
@@ -73,7 +95,27 @@ LogService::LogService() {
                 this, std::placeholders::_1, std::placeholders::_2));
     AddMethod("update", std::bind(&LogService::update,
                 this, std::placeholders::_1, std::placeholders::_2));
-    Logger::setOutput(&LogFilter::log_to_stdout);
+    if(FLAGS_enable_log) {
+        std::string path = LogFileSaveDir;
+        if(!DirReaderLinux::CreateDirectoryIfNotExists(path.c_str())) {
+            path.clear();
+            LOG_ERROR << "Log save file dir created failed";
+        }
+        _file = new LogFile(path, LogFileLimitSize, 
+                            true, LogFlushTimeInterval, LogFlushCheckEveryN);
+        LogFilter::set_log_file(_file);
+        Logger::setOutput(&LogFilter::log_to_browser);
+    }
+    else {
+        Logger::setOutput(&LogFilter::log_to_stdout);
+    }
+}
+
+LogService::~LogService() {
+    if(_file) {
+        delete _file;
+        _file = nullptr;
+    }
 }
 
 void LogService::enable(net::HttpRequest* request,
@@ -81,6 +123,23 @@ void LogService::enable(net::HttpRequest* request,
     const bool use_html = UseHTML(request->header());
     response->header().set_content_type(use_html ? "text/html" : "text/plain");
     FLAGS_enable_log = true;
+    if(!_file) {
+        std::string path = LogFileSaveDir;
+        if(!DirReaderLinux::CreateDirectoryIfNotExists(path.c_str())) {
+            path.clear();
+            LOG_ERROR << "Log save file dir created failed";
+        }
+        _file = new LogFile(path, LogFileLimitSize, 
+                            true, LogFlushTimeInterval, LogFlushCheckEveryN);
+        // Supply logs before enable.
+        std::deque<std::string> logs;
+        LogFilter::list_logs(logs);
+        for(size_t i = 0; i < logs.size(); ++i) {
+            std::string& log = logs.at(i);
+            _file->append(log.data(), log.length());
+        } 
+        LogFilter::set_log_file(_file);
+    }
     Logger::setOutput(&LogFilter::log_to_browser);
     net::BufferStream os;
     if(use_html) {
@@ -104,7 +163,7 @@ void LogService::disable(net::HttpRequest* request,
         // Redirect to /log
         os << "<!DOCTYPE html><html><head>"
         "<meta http-equiv=\"refresh\" content=\"0; url=/log\" />"
-        "</head><body>";
+        "</head><body>"
         "<pre>log is disabled</pre></body></html>";
     }
     response->set_body(os);

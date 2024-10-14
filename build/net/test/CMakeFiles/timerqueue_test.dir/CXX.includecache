@@ -114,13 +114,13 @@ assert.h
 
 ../net/base/noncopyable.h
 
-/home/zgx/project/Var/net/test/TimerQueue_test.cc
+/home/zgx/Var/net/test/TimerQueue_test.cc
 EventLoop.h
-/home/zgx/project/Var/net/test/EventLoop.h
+/home/zgx/Var/net/test/EventLoop.h
 EventLoopThread.h
-/home/zgx/project/Var/net/test/EventLoopThread.h
+/home/zgx/Var/net/test/EventLoopThread.h
 base/Thread.h
-/home/zgx/project/Var/net/test/base/Thread.h
+/home/zgx/Var/net/test/base/Thread.h
 gtest/gtest.h
 -
 stdio.h
@@ -128,7 +128,7 @@ stdio.h
 unistd.h
 -
 
-/home/zgx/project/Var/net/test/main.cc
+/home/zgx/Var/net/test/main.cc
 gtest/gtest.h
 -
 
