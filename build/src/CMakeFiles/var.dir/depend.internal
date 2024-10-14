@@ -365,6 +365,9 @@ src/CMakeFiles/var.dir/util/fast_rand.cc.o
  ../src/util/fast_rand.h
  ../src/util/time.h
  /home/zgx/Var/src/util/fast_rand.cc
+src/CMakeFiles/var.dir/util/tinyxml2.cpp.o
+ /home/zgx/Var/src/util/tinyxml2.cpp
+ /home/zgx/Var/src/util/tinyxml2.h
 src/CMakeFiles/var.dir/variable.cc.o
  ../net/base/CurrentThread.h
  ../net/base/LogStream.h

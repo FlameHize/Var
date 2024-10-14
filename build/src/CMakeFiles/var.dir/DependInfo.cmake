@@ -18,6 +18,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/zgx/Var/src/server.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/server.cc.o"
   "/home/zgx/Var/src/service.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/service.cc.o"
   "/home/zgx/Var/src/util/fast_rand.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/util/fast_rand.cc.o"
+  "/home/zgx/Var/src/util/tinyxml2.cpp" "/home/zgx/Var/build/src/CMakeFiles/var.dir/util/tinyxml2.cpp.o"
   "/home/zgx/Var/src/variable.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/variable.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

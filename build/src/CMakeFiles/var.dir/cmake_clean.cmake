@@ -15,6 +15,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/var.dir/server.cc.o"
   "CMakeFiles/var.dir/service.cc.o"
   "CMakeFiles/var.dir/util/fast_rand.cc.o"
+  "CMakeFiles/var.dir/util/tinyxml2.cpp.o"
   "CMakeFiles/var.dir/variable.cc.o"
 )
 

@@ -503,6 +503,33 @@ util/fast_rand.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/util/fast_rand.cc.s
 .PHONY : util/fast_rand.cc.s
 
+util/tinyxml2.o: util/tinyxml2.cpp.o
+
+.PHONY : util/tinyxml2.o
+
+# target to build an object file
+util/tinyxml2.cpp.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/util/tinyxml2.cpp.o
+.PHONY : util/tinyxml2.cpp.o
+
+util/tinyxml2.i: util/tinyxml2.cpp.i
+
+.PHONY : util/tinyxml2.i
+
+# target to preprocess a source file
+util/tinyxml2.cpp.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/util/tinyxml2.cpp.i
+.PHONY : util/tinyxml2.cpp.i
+
+util/tinyxml2.s: util/tinyxml2.cpp.s
+
+.PHONY : util/tinyxml2.s
+
+# target to generate assembly for a file
+util/tinyxml2.cpp.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/util/tinyxml2.cpp.s
+.PHONY : util/tinyxml2.cpp.s
+
 variable.o: variable.cc.o
 
 .PHONY : variable.o
@@ -581,6 +608,9 @@ help:
 	@echo "... util/fast_rand.o"
 	@echo "... util/fast_rand.i"
 	@echo "... util/fast_rand.s"
+	@echo "... util/tinyxml2.o"
+	@echo "... util/tinyxml2.i"
+	@echo "... util/tinyxml2.s"
 	@echo "... variable.o"
 	@echo "... variable.i"
 	@echo "... variable.s"

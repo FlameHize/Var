@@ -7,6 +7,7 @@ add_library(var SHARED
     detail/sampler.cc
     detail/percentile.cc
     util/fast_rand.cc
+    util/tinyxml2.cpp
     builtin/common.cc
     builtin/jquery_min_js.cc
     builtin/flot_min_js.cc
