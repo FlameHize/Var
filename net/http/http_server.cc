@@ -59,7 +59,9 @@ void HttpServer::OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp 
         if(rc >= 0) {
             buf->retrieve(rc);
             if(http_context->Completed()) {
-                // Already return the message before, do not return again.
+                // !Drop it! Already return the message before, do not return again.
+                // Used of big file trans.
+                OnHttpMessage(conn, static_cast<HttpMessage*>(http_context));
                 ResetConnContext(conn);
                 return;
             }
@@ -92,9 +94,9 @@ void HttpServer::OnMessage(const TcpConnectionPtr& conn, Buffer* buf, Timestamp 
             return;
         }
         else if(http_context->stage() >= HTTP_ON_HEADERS_COMPLETE) {
-            // Returned content contains the complete header but does not 
-            // include any content, which can be parsed in advance. 
-            OnHttpMessage(conn, static_cast<HttpMessage*>(http_context));
+            // // Returned content contains the complete header but does not 
+            // // include any content, which can be parsed in advance. 
+            // OnHttpMessage(conn, static_cast<HttpMessage*>(http_context));
             http_context->SetStageToResolved();
             return;
         }

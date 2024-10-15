@@ -21,12 +21,16 @@
 #define VAR_BUILTIN_INSIDE_STATUS_SERVICE_H
 
 #include "src/service.h"
+#include "src/builtin/inside_cmd_status_user.h"
 
 namespace var {
 
 class InsideStatusService : public Service {
 public:
     InsideStatusService();
+
+    void show(net::HttpRequest* request,
+              net::HttpResponse* response);
     
     void default_method(net::HttpRequest* request,
                         net::HttpResponse* response) override;

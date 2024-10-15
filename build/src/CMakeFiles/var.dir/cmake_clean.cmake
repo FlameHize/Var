@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/var.dir/builtin/flot_min_js.cc.o"
   "CMakeFiles/var.dir/builtin/get_js_service.cc.o"
   "CMakeFiles/var.dir/builtin/index_service.cc.o"
+  "CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o"
   "CMakeFiles/var.dir/builtin/inside_status_service.cc.o"
   "CMakeFiles/var.dir/builtin/jquery_min_js.cc.o"
   "CMakeFiles/var.dir/builtin/log_service.cc.o"

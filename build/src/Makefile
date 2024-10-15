@@ -233,6 +233,33 @@ builtin/index_service.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/index_service.cc.s
 .PHONY : builtin/index_service.cc.s
 
+builtin/inside_cmd_status_user.o: builtin/inside_cmd_status_user.cc.o
+
+.PHONY : builtin/inside_cmd_status_user.o
+
+# target to build an object file
+builtin/inside_cmd_status_user.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o
+.PHONY : builtin/inside_cmd_status_user.cc.o
+
+builtin/inside_cmd_status_user.i: builtin/inside_cmd_status_user.cc.i
+
+.PHONY : builtin/inside_cmd_status_user.i
+
+# target to preprocess a source file
+builtin/inside_cmd_status_user.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.i
+.PHONY : builtin/inside_cmd_status_user.cc.i
+
+builtin/inside_cmd_status_user.s: builtin/inside_cmd_status_user.cc.s
+
+.PHONY : builtin/inside_cmd_status_user.s
+
+# target to generate assembly for a file
+builtin/inside_cmd_status_user.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.s
+.PHONY : builtin/inside_cmd_status_user.cc.s
+
 builtin/inside_status_service.o: builtin/inside_status_service.cc.o
 
 .PHONY : builtin/inside_status_service.o
@@ -605,6 +632,9 @@ help:
 	@echo "... builtin/index_service.o"
 	@echo "... builtin/index_service.i"
 	@echo "... builtin/index_service.s"
+	@echo "... builtin/inside_cmd_status_user.o"
+	@echo "... builtin/inside_cmd_status_user.i"
+	@echo "... builtin/inside_cmd_status_user.s"
 	@echo "... builtin/inside_status_service.o"
 	@echo "... builtin/inside_status_service.i"
 	@echo "... builtin/inside_status_service.s"

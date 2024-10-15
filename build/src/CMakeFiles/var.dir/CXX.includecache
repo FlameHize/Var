@@ -276,9 +276,17 @@ map
 net/http/http_header.h
 ../src/builtin/net/http/http_header.h
 
+../src/builtin/inside_cmd_status_user.h
+string
+-
+vector
+-
+
 ../src/builtin/inside_status_service.h
 src/service.h
 ../src/builtin/src/service.h
+src/builtin/inside_cmd_status_user.h
+../src/builtin/src/builtin/inside_cmd_status_user.h
 
 ../src/builtin/tabbed.h
 string
@@ -330,36 +338,6 @@ unistd.h
 string.h
 -
 
-../src/util/tinyxml2.h
-ctype.h
--
-limits.h
--
-stdio.h
--
-stdlib.h
--
-string.h
--
-stddef.h
--
-cctype
--
-climits
--
-cstdio
--
-cstdlib
--
-cstring
--
-stdint.h
--
-android/log.h
--
-assert.h
--
-
 /home/zgx/Var/src/builtin/inside_status_service.cc
 src/builtin/inside_status_service.h
 /home/zgx/Var/src/builtin/src/builtin/inside_status_service.h
@@ -369,6 +347,4 @@ src/server.h
 /home/zgx/Var/src/builtin/src/server.h
 src/util/dir_reader_linux.h
 /home/zgx/Var/src/builtin/src/util/dir_reader_linux.h
-src/util/tinyxml2.h
-/home/zgx/Var/src/builtin/src/util/tinyxml2.h
 

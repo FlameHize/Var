@@ -78,6 +78,17 @@ src/CMakeFiles/var.dir/builtin/index_service.cc.o: ../src/server.h
 src/CMakeFiles/var.dir/builtin/index_service.cc.o: ../src/service.h
 src/CMakeFiles/var.dir/builtin/index_service.cc.o: ../src/builtin/index_service.cc
 
+src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o: ../net/base/LogStream.h
+src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o: ../net/base/Logging.h
+src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o: ../net/base/StringPiece.h
+src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o: ../net/base/Timestamp.h
+src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o: ../net/base/Types.h
+src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o: ../net/base/copyable.h
+src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o: ../net/base/noncopyable.h
+src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o: ../src/builtin/inside_cmd_status_user.h
+src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o: ../src/util/tinyxml2.h
+src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o: ../src/builtin/inside_cmd_status_user.cc
+
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../net/Buffer.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../net/Callbacks.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../net/Endian.h
@@ -110,12 +121,12 @@ src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../net/http/http_url.
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../net/tcp/TcpConnection.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../net/tcp/TcpServer.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/builtin/common.h
+src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/builtin/inside_cmd_status_user.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/builtin/inside_status_service.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/builtin/tabbed.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/server.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/service.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/util/dir_reader_linux.h
-src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/util/tinyxml2.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/builtin/inside_status_service.cc
 
 src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o: ../net/Buffer.h
@@ -374,6 +385,7 @@ src/CMakeFiles/var.dir/server.cc.o: ../net/tcp/TcpConnection.h
 src/CMakeFiles/var.dir/server.cc.o: ../net/tcp/TcpServer.h
 src/CMakeFiles/var.dir/server.cc.o: ../src/builtin/get_js_service.h
 src/CMakeFiles/var.dir/server.cc.o: ../src/builtin/index_service.h
+src/CMakeFiles/var.dir/server.cc.o: ../src/builtin/inside_cmd_status_user.h
 src/CMakeFiles/var.dir/server.cc.o: ../src/builtin/inside_status_service.h
 src/CMakeFiles/var.dir/server.cc.o: ../src/builtin/log_service.h
 src/CMakeFiles/var.dir/server.cc.o: ../src/builtin/tabbed.h
