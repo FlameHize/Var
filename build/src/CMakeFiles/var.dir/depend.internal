@@ -87,6 +87,7 @@ src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o
  ../net/base/copyable.h
  ../net/base/noncopyable.h
  ../src/builtin/inside_cmd_status_user.h
+ ../src/builtin/tabbed.h
  ../src/util/tinyxml2.h
  /home/zgx/Var/src/builtin/inside_cmd_status_user.cc
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o
@@ -100,6 +101,7 @@ src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o
  ../net/base/Condition.h
  ../net/base/CountDownLatch.h
  ../net/base/CurrentThread.h
+ ../net/base/FileUtil.h
  ../net/base/LogStream.h
  ../net/base/Logging.h
  ../net/base/Mutex.h
@@ -128,6 +130,7 @@ src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o
  ../src/server.h
  ../src/service.h
  ../src/util/dir_reader_linux.h
+ ../src/util/json.hpp
  /home/zgx/Var/src/builtin/inside_status_service.cc
 src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o
  ../net/Buffer.h

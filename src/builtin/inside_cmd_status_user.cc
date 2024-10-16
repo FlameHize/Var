@@ -6,7 +6,10 @@ using namespace tinyxml2;
 
 namespace var {
 
-int InsideCmdStatusUser::parse(const std::string& path) {
+const size_t kFixedChipBytes = 256;
+
+int InsideCmdStatusUser::parse(const std::string& path,
+                               size_t chip_group_index) {
     if(path.empty()) {
         return -1;
     }
@@ -16,6 +19,7 @@ int InsideCmdStatusUser::parse(const std::string& path) {
         LOG_ERROR << "Failed to load " << path << ", error code: " << load_result;
         return load_result;
     }
+    
     XMLElement* field_num_element = doc.RootElement();
     if(!field_num_element) {
         LOG_ERROR << path << " file's Parameter[FieldNum] is NULL";
@@ -26,6 +30,9 @@ int InsideCmdStatusUser::parse(const std::string& path) {
         LOG_WARN << "Setting FieldNum is " << field_num 
                  << " but actual is " << field_num_element->ChildElementCount();
     }
+
+    _chip_group_index = chip_group_index;
+    size_t chip_count = _chip_group_index;
     for(XMLElement* elem = field_num_element->FirstChildElement();
         elem; elem = elem->NextSiblingElement()) {
 
@@ -33,13 +40,17 @@ int InsideCmdStatusUser::parse(const std::string& path) {
         chip_info.label = elem->Attribute("Label");
         chip_info.key_num = elem->IntAttribute("KeyNum");
         chip_info.field_byte = elem->IntAttribute("FieldByte");
+        chip_info.index = chip_count++;
+        chip_info.GetTabInfo(&_tab_info_list);
 
-        // if(chip_info.key_num != elem->ChildElementCount()) {
-        //     LOG_WARN << chip_info.label << " setting KeyNum is " 
-        //              << chip_info.key_num << " but actual is "
-        //              << elem->ChildElementCount();
-        // }
-
+#ifdef DEBUG
+        if(chip_info.key_num != elem->ChildElementCount()) {
+            LOG_WARN << chip_info.label << " setting KeyNum is " 
+                     << chip_info.key_num << " but actual is "
+                     << elem->ChildElementCount();
+        }
+#endif
+        size_t value_addr = chip_info.index * kFixedChipBytes;
         for(XMLElement* key_elem = elem->FirstChildElement();
             key_elem; key_elem = key_elem->NextSiblingElement()) {
             KeyInfo key_info;
@@ -57,11 +68,23 @@ int InsideCmdStatusUser::parse(const std::string& path) {
             if(dimension) {
                 key_info.dimension = dimension;
             }
-            chip_info._key_info_list.push_back(key_info);
+            // resolved_addr calculate.
+            key_info.resolved_addr = value_addr;
+            value_addr += key_info.type;
+
+            chip_info.key_info_list.push_back(key_info);
         }
         _chip_info_list.push_back(chip_info);
     }
     return XML_SUCCESS;
+}
+
+void InsideCmdStatusUser::describe(const char* data, size_t len,
+                                   std::ostream& os, bool use_html) {
+    for(size_t i = 0; i < _tab_info_list.size(); ++i) {
+        const TabInfo& info = _tab_info_list[i];
+        os << info.tab_name << "\n";
+    }
 }
 
 } // end namespace var

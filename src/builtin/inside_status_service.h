@@ -29,6 +29,7 @@ class InsideStatusService : public Service {
 public:
     InsideStatusService();
 
+    ///@cite used for test.
     void show(net::HttpRequest* request,
               net::HttpResponse* response);
     

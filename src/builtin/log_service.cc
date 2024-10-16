@@ -235,7 +235,7 @@ void LogService::default_method(net::HttpRequest* request,
            << "<script language=\"javascript\" type=\"text/javascript\" src=\"/js/jquery_min\"></script>\n"
            << TabsHead()
            << "</head><body>";
-        server->PrintTabsBody(os, "log");
+        server->PrintTabsBody(os, "日志");
     }
     if(!FLAGS_enable_log) {
         if(use_html) {

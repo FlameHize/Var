@@ -31,7 +31,7 @@ void IndexService::default_method(net::HttpRequest* request, net::HttpResponse* 
         os << "<body>\n";
         // for as more.
         if(server) {
-            server->PrintTabsBody(os, "more"); 
+            server->PrintTabsBody(os, "更多"); 
         }
         os << "<pre>";
     }

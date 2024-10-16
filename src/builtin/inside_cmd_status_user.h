@@ -22,10 +22,13 @@
 
 #include <string>
 #include <vector>
+#include <ostream>
+#include "src/builtin/tabbed.h"
 
 namespace var {
 
 struct KeyInfo {
+public:
     std::string name;
     int         type;
     int         byte;
@@ -36,23 +39,40 @@ struct KeyInfo {
     double      offset;
     int         precesion;
     std::string dimension;
+
+    size_t      resolved_addr;
 };
 
-struct ChipInfo {
+struct ChipInfo : public Tabbed {
+public:
+    void describe(const char* data, size_t len,
+                  std::ostream& os, bool use_html);
+
+    void GetTabInfo(TabInfoList*) const override;
+
 public:
     std::string             label;
     int                     key_num;
     int                     field_byte;
-    std::vector<KeyInfo>    _key_info_list;
+    std::vector<KeyInfo>    key_info_list;
+
+    size_t                  index;
 };
 
 // InsideCmdStatusUser("fbb", 8); // fbb是获取上级目录的名称得到的
+// 8 -> (12) 8 9 10 11 12-> 各Variable解析地址
 class InsideCmdStatusUser {
 public: 
-    int parse(const std::string& path);
+    int parse(const std::string& path, size_t chip_group_index);
 
-public:
+    // 在输出时，依据key_info的各种属性，进行文字输出
+    void describe(const char* data, size_t len,
+                  std::ostream& os, bool use_html);
+
+private:
     std::vector<ChipInfo> _chip_info_list;
+    size_t                _chip_group_index;
+    TabInfoList           _tab_info_list;
 };
 
 } // end namespace var

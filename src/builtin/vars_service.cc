@@ -369,7 +369,7 @@ void VarsService::default_method(net::HttpRequest* request,
             "}\n"
             "</script>\n"
             "</head>\n<body>\n";
-        server->PrintTabsBody(os, "vars");
+        server->PrintTabsBody(os, "变量查询");
         os << "<p>Search : <input id='searchbox' type='text'"
             " onkeyup='onQueryChanged()'></p>"
             "<div id=\"layer1\">\n";
