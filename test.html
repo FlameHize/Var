@@ -463,17 +463,46 @@
     $(prepareGraphs);
     </script>
 
-    <!-- <script>
-      document.getElementById('fileInput').addEventListener('change', function(event){
-        const file = event.target.file[0];
+    <form id="user-form" enctype="multipart/form-data">
+      <label for="user-name">用户名称:</label>
+      <input type="text" id="user-name" name="user-name" required><br></br>
+      <label for="user-id">板卡组起始序号:</label>
+      <input type="text" id="user-id" name="user-id" required><br></br>
+      <label for="user-file">所属XML文件:</label>
+      <input type="file" id="user-file" name="user-file" required><br></br>
+      <button type="button" onclick="submitForm()">确定</button>
+    </form>
+    <script>
+      var fileName;
+      var fileContent;
+      document.getElementById('user-file').addEventListener('change', function(event){
+        const file = event.target.files[0];
         if(file) {
           const reader = new FileReader();
           reader.onload = function(e) {
-            const content = e.target.result;
+            fileName = file.name;
+            fileContent = e.target.result;
           };
+          reader.readAsText(file);
         }
       });
-    </script> -->
+      function submitForm() {
+        var userName = document.getElementById('user-name').value;
+        var userId = document.getElementById('user-id').value;
+        $.ajax({
+          url: '/inside_status/add_user_internal',
+          type: "POST",
+          data: JSON.stringify({
+            userName: userName,
+            userId: userId,
+            fileName: fileName,
+            fileContent: fileContent
+          }),
+          processData: false,
+          contentType: false
+        });
+      }
+    </script>
 
     <!-- default_method() -->
     <script type="text/javascript">

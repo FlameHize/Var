@@ -29,14 +29,22 @@ class InsideStatusService : public Service {
 public:
     InsideStatusService();
 
-    ///@cite used for test.
-    void show(net::HttpRequest* request,
-              net::HttpResponse* response);
+    void add_user(net::HttpRequest* request,
+                  net::HttpResponse* response);
+
+    void add_user_internal(net::HttpRequest* request,
+                           net::HttpResponse* response);
+
+    void delete_user(net::HttpRequest* request,
+                     net::HttpResponse* response);
     
     void default_method(net::HttpRequest* request,
                         net::HttpResponse* response) override;
 
     void GetTabInfo(TabInfoList*) const override;
+
+private:
+    std::vector<InsideCmdStatusUser*> _user_list;
 };
 
 } // end namespace var

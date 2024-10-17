@@ -28,8 +28,10 @@
 #include <stdint.h>
 #include <sys/syscall.h>
 #include <sys/stat.h>
+#include <dirent.h>
 #include <unistd.h>
 #include <string.h>
+#include <vector>
 
 namespace var {
 
@@ -109,6 +111,77 @@ class DirReaderLinux {
       }
       return true;
     }
+  }
+
+  static bool ClearDirectory(const char* directory_path) {
+    if(!directory_path) {
+      LOG_ERROR << "Parameter[directory_path] is NULL";
+      return false;
+    }
+    DIR* dir = opendir(directory_path);
+    if(!dir) {
+      LOG_ERROR << "Failed to open directory: " << directory_path;
+      return false;
+    }
+    struct dirent* entry;
+    auto is_regular_file = [](const std::string& path) -> bool {
+      struct stat path_stat;
+      if(stat(path.c_str(), &path_stat) == 0) {
+        return S_ISREG(path_stat.st_mode);
+      }
+      return false;
+    };
+
+    while((entry = readdir(dir)) != nullptr) {
+      if(strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+        continue;
+      }
+      std::string full_path = std::string(directory_path) + "/" + entry->d_name;
+      if(is_regular_file(full_path)) {
+        if(unlink(full_path.c_str()) == -1) {
+          LOG_ERROR << "Failed to remove file: " << full_path;
+          return false;
+        }
+      }
+    }
+    closedir(dir);
+    return true;
+  }
+
+  static bool DeleteDirectory(const char* directory_path) {
+    if(!ClearDirectory(directory_path)) {
+      return false;
+    }
+    if(rmdir(directory_path) != 0) {
+      return false;
+    }
+    return true;
+  }
+
+  static bool ListChildDirectorys(const char* directory_path,
+                                  std::vector<std::string>& sub_dir_paths) {
+    if(!directory_path) {
+      LOG_ERROR << "Parameter[directory_path] is NULL";
+      return false;
+    }
+    DIR* dir = opendir(directory_path);
+    if(!dir) {
+      LOG_ERROR << "Failed to open directory: " << directory_path;
+      return false;
+    }
+    struct dirent* entry;
+    while((entry = readdir(dir)) != nullptr) {
+      if(entry->d_type == DT_DIR && entry->d_name[0] != '.') {
+        std::string dir_path = directory_path;
+        if(dir_path.back() != '/') {
+          dir_path += '/';
+        }
+        dir_path += entry->d_name;
+        sub_dir_paths.push_back(dir_path);
+      }
+    }
+    closedir(dir);
+    return true;
   }
 
   // Move to the next entry returning false if the iteration is complete.

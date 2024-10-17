@@ -59,20 +59,29 @@ public:
     size_t                  index;
 };
 
-// InsideCmdStatusUser("fbb", 8); // fbb是获取上级目录的名称得到的
-// 8 -> (12) 8 9 10 11 12-> 各Variable解析地址
 class InsideCmdStatusUser {
 public: 
-    int parse(const std::string& path, size_t chip_group_index);
+    InsideCmdStatusUser(const std::string& user_name, size_t user_id);
+
+    int parse(const std::string& path);
 
     // 在输出时，依据key_info的各种属性，进行文字输出
     void describe(const char* data, size_t len,
                   std::ostream& os, bool use_html);
 
+    std::string name() const {
+        return _user_name;
+    }
+    size_t id() const {
+        return _user_id;
+    }
+
 private:
     std::vector<ChipInfo> _chip_info_list;
-    size_t                _chip_group_index;
     TabInfoList           _tab_info_list;
+
+    std::string           _user_name;
+    size_t                _user_id;
 };
 
 } // end namespace var

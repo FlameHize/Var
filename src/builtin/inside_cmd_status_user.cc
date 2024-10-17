@@ -8,8 +8,13 @@ namespace var {
 
 const size_t kFixedChipBytes = 256;
 
-int InsideCmdStatusUser::parse(const std::string& path,
-                               size_t chip_group_index) {
+InsideCmdStatusUser::InsideCmdStatusUser(const std::string& user_name,
+                                         size_t user_id)
+    : _user_name(user_name)
+    , _user_id(user_id) {
+}
+
+int InsideCmdStatusUser::parse(const std::string& path) {
     if(path.empty()) {
         return -1;
     }
@@ -31,8 +36,7 @@ int InsideCmdStatusUser::parse(const std::string& path,
                  << " but actual is " << field_num_element->ChildElementCount();
     }
 
-    _chip_group_index = chip_group_index;
-    size_t chip_count = _chip_group_index;
+    size_t chip_count = _user_id;
     for(XMLElement* elem = field_num_element->FirstChildElement();
         elem; elem = elem->NextSiblingElement()) {
 
