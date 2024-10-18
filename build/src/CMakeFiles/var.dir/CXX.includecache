@@ -102,14 +102,6 @@ StringPiece.h
 sys/types.h
 -
 
-../net/base/LogFile.h
-Mutex.h
-../net/base/Mutex.h
-Types.h
-../net/base/Types.h
-memory
--
-
 ../net/base/LogStream.h
 noncopyable.h
 ../net/base/noncopyable.h
@@ -292,14 +284,6 @@ map
 net/http/http_header.h
 ../src/builtin/net/http/http_header.h
 
-../src/builtin/get_js_service.h
-service.h
-../src/builtin/service.h
-
-../src/builtin/index_service.h
-src/service.h
-../src/builtin/src/service.h
-
 ../src/builtin/inside_cmd_status_user.h
 string
 -
@@ -316,21 +300,11 @@ src/service.h
 src/builtin/inside_cmd_status_user.h
 ../src/builtin/src/builtin/inside_cmd_status_user.h
 
-../src/builtin/log_service.h
-src/service.h
-../src/builtin/src/service.h
-net/base/LogFile.h
-../src/builtin/net/base/LogFile.h
-
 ../src/builtin/tabbed.h
 string
 -
 vector
 -
-
-../src/builtin/vars_service.h
-service.h
-../src/builtin/service.h
 
 ../src/server.h
 src/service.h
@@ -779,18 +753,6 @@ src/util/json.hpp
 /home/zgx/Var/src/builtin/src/util/json.hpp
 net/base/FileUtil.h
 /home/zgx/Var/src/builtin/net/base/FileUtil.h
-
-/home/zgx/Var/src/server.cc
-src/server.h
-/home/zgx/Var/src/src/server.h
-src/builtin/get_js_service.h
-/home/zgx/Var/src/src/builtin/get_js_service.h
-src/builtin/index_service.h
-/home/zgx/Var/src/src/builtin/index_service.h
-src/builtin/vars_service.h
-/home/zgx/Var/src/src/builtin/vars_service.h
-src/builtin/log_service.h
-/home/zgx/Var/src/src/builtin/log_service.h
-src/builtin/inside_status_service.h
-/home/zgx/Var/src/src/builtin/inside_status_service.h
+fstream
+-
 

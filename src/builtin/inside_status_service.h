@@ -37,6 +37,15 @@ public:
 
     void delete_user(net::HttpRequest* request,
                      net::HttpResponse* response);
+
+    void update_file(net::HttpRequest* request,
+                     net::HttpResponse* response);
+
+    void export_file(net::HttpRequest* request,
+                     net::HttpResponse* response);
+
+    void download_file(net::HttpRequest* request,
+                       net::HttpResponse* response);
     
     void default_method(net::HttpRequest* request,
                         net::HttpResponse* response) override;
