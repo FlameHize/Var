@@ -23,7 +23,6 @@
 #include <string>
 #include <vector>
 #include <ostream>
-#include "src/builtin/tabbed.h"
 
 namespace var {
 
@@ -43,12 +42,10 @@ public:
     size_t      resolved_addr;
 };
 
-struct ChipInfo : public Tabbed {
+struct ChipInfo {
 public:
     void describe(const char* data, size_t len,
                   std::ostream& os, bool use_html);
-
-    void GetTabInfo(TabInfoList*) const override;
 
 public:
     std::string             label;
@@ -65,7 +62,6 @@ public:
 
     int parse(const std::string& path);
 
-    // 在输出时，依据key_info的各种属性，进行文字输出
     void describe(const char* data, size_t len,
                   std::ostream& os, bool use_html);
 
@@ -78,7 +74,6 @@ public:
 
 private:
     std::vector<ChipInfo> _chip_info_list;
-    TabInfoList           _tab_info_list;
 
     std::string           _user_name;
     size_t                _user_id;

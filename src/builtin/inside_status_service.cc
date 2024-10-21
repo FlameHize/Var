@@ -492,21 +492,36 @@ void InsideStatusService::default_method(net::HttpRequest* request,
 
     const std::string* user_name = request->header().url().GetQuery("username");
     if(user_name) {
-        os << "<input type='button' style='margin-top:10px;'"
+        InsideCmdStatusUser* user = nullptr;
+        for(size_t i = 0; i < _user_list.size(); ++i) {
+            InsideCmdStatusUser* tmp = _user_list.at(i);
+            if(tmp->name() == *user_name) {
+                user = tmp;
+                break;
+            }
+        }
+        if(!user) {
+            if(use_html) {
+                os << "</body></html>";
+                response->set_body(os);
+            }
+            return;
+        }
+
+        // Update/Export file.
+        os << "<input type='button' style='margin-top:10px; margin-bottom:10px;'"
            << "onclick='location.href=\"/inside_status/update_file"
            << "?username=" << *user_name << "\";'"
            << "value='更新文件'>\n";
-        os << "<input type='button' style='margin-top:10px;'"
+        os << "<input type='button' style='margin-top:10px; margin-bottom:10px;'"
            << "onclick='location.href=\"/inside_status/export_file"
            << "?username=" << *user_name << "\";'"
            << "value='导出文件'>\n";
+
         ///@todo show user's all chip info.
+        user->describe(nullptr, 0, os, use_html);
     }
 
-    if(use_html) {
-        os << "<pre id = \"status-content\">\n";
-    }
-    
     if(use_html) {
         os << "</pre></body></html>";
     }
@@ -517,12 +532,6 @@ void InsideStatusService::GetTabInfo(TabInfoList* info_list) const {
     TabInfo* info = info_list->add();
     info->path = "/inside_status";
     info->tab_name = "内部状态";
-}
-
-void ChipInfo::GetTabInfo(TabInfoList* info_list) const {
-    TabInfo* info = info_list->add();
-    info->path = "/inside_status/" + label;
-    info->tab_name = label;
 }
 
 } // namespace var

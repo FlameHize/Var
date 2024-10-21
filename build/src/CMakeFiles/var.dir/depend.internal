@@ -87,7 +87,6 @@ src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o
  ../net/base/copyable.h
  ../net/base/noncopyable.h
  ../src/builtin/inside_cmd_status_user.h
- ../src/builtin/tabbed.h
  ../src/util/tinyxml2.h
  /home/zgx/Var/src/builtin/inside_cmd_status_user.cc
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o

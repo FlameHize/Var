@@ -45,7 +45,6 @@ int InsideCmdStatusUser::parse(const std::string& path) {
         chip_info.key_num = elem->IntAttribute("KeyNum");
         chip_info.field_byte = elem->IntAttribute("FieldByte");
         chip_info.index = chip_count++;
-        chip_info.GetTabInfo(&_tab_info_list);
 
 #ifdef DEBUG
         if(chip_info.key_num != elem->ChildElementCount()) {
@@ -85,10 +84,97 @@ int InsideCmdStatusUser::parse(const std::string& path) {
 
 void InsideCmdStatusUser::describe(const char* data, size_t len,
                                    std::ostream& os, bool use_html) {
-    for(size_t i = 0; i < _tab_info_list.size(); ++i) {
-        const TabInfo& info = _tab_info_list[i];
-        os << info.tab_name << "\n";
+    os << "<style>\n"  
+    "table {\n"  
+    "    width: 100%;\n"  
+    "    border-collapse: collapse;\n"  
+    "}\n"  
+    "th, td {\n"  
+    "    border: 1px solid black;\n"  
+    "    padding: 8px;\n"  
+    "    text-align: center;\n"  
+    "    cursor: pointer;\n"  
+    "}\n"  
+    "th {\n"  
+    "    background-color: #f2f2f2;\n"  
+    "}\n"  
+    "tr {\n"
+    "    height: 40px;\n"
+    "}\n"
+    ".content-section {\n"  
+    "    margin-top: 20px;\n"  
+    "    padding: 20px;\n"  
+    "    border: 1px solid #ccc;\n"  
+    "    display: none;\n"  
+    "}\n"  
+    ".content-section.active {\n"  
+    "    display: block;\n"
+    "}\n"  
+    ".table-container {\n"
+    "    display: grid;\n"
+    "    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));\n"
+    "    gap: 30px;\n"
+    "}\n"
+    "</style>\n"; 
+
+    os << "<table>\n"  
+    "    <thead>\n"  
+    "        <tr>\n"; 
+    for(size_t i = 0; i < _chip_info_list.size(); ++i) {
+        const ChipInfo& chip = _chip_info_list.at(i);
+        os << "<th onclick=\"showContent('" << chip.label 
+           << "')\">" << chip.label << "</th>\n"; 
+    } 
+    os << "  </tr>\n"  
+    "    </thead>\n"  
+    "</table>\n";  
+  
+    os << "<div id=\"content-container\">\n";
+    for(size_t i = 0; i < _chip_info_list.size(); ++i) {
+        ChipInfo& chip = _chip_info_list.at(i);
+        os << "<div id=\"" << chip.label << "\"";
+        os << "class=\"content-section\">\n";
+        chip.describe(data, len, os, use_html);
+        os << "</div>\n";
     }
+    os << "</div>\n"  
+    "<script>\n"  
+    "    function showContent(pageId) {\n"    
+    "        var contentSections = document.querySelectorAll('.content-section');\n"  
+    "        contentSections.forEach(function(section) {\n"  
+    "            section.classList.remove('active');\n"  
+    "        });\n"    
+    "        var selectedSection = document.getElementById(pageId);\n"  
+    "        if(selectedSection) {\n"  
+    "            selectedSection.classList.add('active');\n" 
+    "        }\n"  
+    "    }\n"    
+    "</script>\n";  
+}
+
+void ChipInfo::describe(const char* data, size_t len,
+                        std::ostream& os, bool use_html) {
+    os << "<div class=\"table-container\">\n";
+    int rows = 16;
+    int count = 0;
+    for(size_t i = 0; i < key_info_list.size(); ++i) {
+        const KeyInfo& info = key_info_list.at(i);
+        if(count == 0) {
+            os << "<table>\n";
+        }
+        os << "<tr><td>\n";
+        os << info.name << " : " << std::to_string(info.default_value);
+        os << "</td></tr>\n"; 
+        ++count;
+        if(count == rows) {
+            count = 0;
+            os << "</table>\n";
+        }
+    }
+    if(count != 0) {
+        os << "</table>\n";
+    }
+    os << "</div>\n";
 }
 
 } // end namespace var
