@@ -1,12 +1,42 @@
 #include "src/builtin/inside_cmd_status_user.h"
 #include "src/util/tinyxml2.h"
 #include "net/base/Logging.h"
+#include <iomanip>
 
 using namespace tinyxml2;
 
 namespace var {
 
 const size_t kFixedChipBytes = 256;
+
+std::string double_to_string(double value, int decimal) {
+    std::ostringstream out;
+    out << std::fixed;
+    out << std::setprecision(decimal);
+    out << value;
+    return out.str();
+}
+
+std::string decimal_to_hex(int decimal) {
+    std::ostringstream out;
+    out << std::hex;
+    out << decimal;
+    return out.str();
+}
+
+std::string decimal_to_binary(int decimal) {
+    if(decimal == 0) {
+        return "0";
+    }
+    std::ostringstream out;
+    while(decimal > 0) {
+        out << (decimal % 2);
+        decimal /= 2;
+    }
+    std::string binary_str = out.str();
+    std::reverse(binary_str.begin(), binary_str.end());
+    return binary_str;
+}
 
 InsideCmdStatusUser::InsideCmdStatusUser(const std::string& user_name,
                                          size_t user_id)
@@ -158,12 +188,12 @@ void ChipInfo::describe(const char* data, size_t len,
     int rows = 16;
     int count = 0;
     for(size_t i = 0; i < key_info_list.size(); ++i) {
-        const KeyInfo& info = key_info_list.at(i);
+        KeyInfo& info = key_info_list.at(i);
         if(count == 0) {
             os << "<table>\n";
         }
         os << "<tr><td>\n";
-        os << info.name << " : " << std::to_string(info.default_value);
+        info.describe(data, len, os, use_html);
         os << "</td></tr>\n"; 
         ++count;
         if(count == rows) {
@@ -175,6 +205,58 @@ void ChipInfo::describe(const char* data, size_t len,
         os << "</table>\n";
     }
     os << "</div>\n";
+}
+
+void KeyInfo::describe(const char* data, size_t len,
+                       std::ostream& os, bool use_html) {
+    if(!data) {
+        os << name << " : " << std::to_string(default_value)
+           << dimension;
+    }
+    else {
+        double resolved_value = 0;
+        switch (byte) {
+        case 1: {
+            int8_t value = 0;
+            memcpy((char*)&value, data + resolved_addr, 1);
+            resolved_value = value;
+            break;
+        }
+        case 2: {
+            int16_t value = 0;
+            memcpy((char*)&value, data + resolved_addr, 2);
+            resolved_value = value;
+            break;
+        }
+        case 4: {
+            int32_t value = 0;
+            memcpy((char*)&value, data + resolved_addr, 4);
+            resolved_value = value;
+            break;
+        }
+        case 8: {
+            int64_t value = 0;
+            memcpy((char*)&value, data + resolved_addr, 8);
+            resolved_value = value;
+            break;
+        }
+        default:
+            break;
+        }
+        double format_value = offset + unit * resolved_value;
+        std::string format_value_str;
+        if(enable == 2) {
+            format_value_str = decimal_to_binary(format_value);
+        }
+        else if(enable == 16) {
+            format_value_str = decimal_to_hex(format_value);
+        }
+        else {
+            format_value_str = double_to_string(format_value,precesion);
+            format_value_str += dimension;
+        }
+        os << name << " : " << format_value_str;
+    }
 }
 
 } // end namespace var

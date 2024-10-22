@@ -62,7 +62,9 @@ InsideStatusService::InsideStatusService() {
     AddMethod("export_file", std::bind(&InsideStatusService::export_file,
                 this, std::placeholders::_1, std::placeholders::_2));   
     AddMethod("download_file", std::bind(&InsideStatusService::download_file,
-                this, std::placeholders::_1, std::placeholders::_2));         
+                this, std::placeholders::_1, std::placeholders::_2));       
+    AddMethod("show_info", std::bind(&InsideStatusService::show_info,
+                this, std::placeholders::_1, std::placeholders::_2));  
 }
 
 void InsideStatusService::add_user(net::HttpRequest* request,
@@ -419,21 +421,32 @@ void InsideStatusService::download_file(net::HttpRequest* request,
     }
 }
 
+void InsideStatusService::show_info(net::HttpRequest* request,
+                                    net::HttpResponse* response) {
+    // const std::string* user_name = request->header().url().GetQuery("username");
+    // if(!user_name) {
+    //     return;
+    // }
+    // InsideCmdStatusUser* user = nullptr;
+    // for(size_t i = 0; i < _user_list.size(); ++i) {
+    //     InsideCmdStatusUser* tmp = _user_list.at(i);
+    //     if(tmp->name() == *user_name) {
+    //         user = tmp;
+    //         break;
+    //     }
+    // }
+    // if(!user) {
+    //     return;
+    // }
+    // net::BufferStream os;
+    // ///@todo Get data from somewhere.
+    // user->describe(nullptr, 0, os, true);
+    // response->set_body(os);
+    ///@todo
+}
+
 void InsideStatusService::default_method(net::HttpRequest* request,
                                          net::HttpResponse* response) {
-    const Server* server = static_cast<Server*>(_owner);
-    const bool use_html = UseHTML(request->header());
-    response->header().set_content_type(use_html ? "text/html" : "text/plain");
-    net::BufferStream os;
-    if(use_html) {
-        os << "<!DOCTYPE html><html><head>\n"
-           << "<meta charset=\"UTF-8\">\n"
-           << "<script language=\"javascript\" type=\"text/javascript\" src=\"/js/jquery_min\"></script>\n"
-           << TabsHead()
-           << "</head><body>";
-        server->PrintTabsBody(os, "内部状态");
-    }
-
     // Just init once resource.
     if(!kInitFlag) {
         std::vector<string> user_dir_paths;
@@ -467,7 +480,21 @@ void InsideStatusService::default_method(net::HttpRequest* request,
         kInitFlag = true;
     }
     
-    // User Layer.
+    // Tabs head layer.
+    const Server* server = static_cast<Server*>(_owner);
+    const bool use_html = UseHTML(request->header());
+    response->header().set_content_type(use_html ? "text/html" : "text/plain");
+    net::BufferStream os;
+    if(use_html) {
+        os << "<!DOCTYPE html><html><head>\n"
+           << "<meta charset=\"UTF-8\">\n"
+           << "<script language=\"javascript\" type=\"text/javascript\" src=\"/js/jquery_min\"></script>\n"
+           << TabsHead()
+           << "</head><body>";
+        server->PrintTabsBody(os, "内部状态");
+    }
+
+    // User operation layer.
     if(use_html) {
         os << "<form id=\"form_user\" method=\"get\">\n" 
            << "<label for=\"selected-user\">选择用户</label>\n"
@@ -491,39 +518,40 @@ void InsideStatusService::default_method(net::HttpRequest* request,
     }
 
     const std::string* user_name = request->header().url().GetQuery("username");
-    if(user_name) {
-        InsideCmdStatusUser* user = nullptr;
-        for(size_t i = 0; i < _user_list.size(); ++i) {
-            InsideCmdStatusUser* tmp = _user_list.at(i);
-            if(tmp->name() == *user_name) {
-                user = tmp;
-                break;
-            }
+    if(!user_name) {
+        response->set_body(os);
+        return;
+    }
+    InsideCmdStatusUser* user = nullptr;
+    for(size_t i = 0; i < _user_list.size(); ++i) {
+        InsideCmdStatusUser* tmp = _user_list.at(i);
+        if(tmp->name() == *user_name) {
+            user = tmp;
+            break;
         }
-        if(!user) {
-            if(use_html) {
-                os << "</body></html>";
-                response->set_body(os);
-            }
-            return;
-        }
-
-        // Update/Export file.
-        os << "<input type='button' style='margin-top:10px; margin-bottom:10px;'"
-           << "onclick='location.href=\"/inside_status/update_file"
-           << "?username=" << *user_name << "\";'"
-           << "value='更新文件'>\n";
-        os << "<input type='button' style='margin-top:10px; margin-bottom:10px;'"
-           << "onclick='location.href=\"/inside_status/export_file"
-           << "?username=" << *user_name << "\";'"
-           << "value='导出文件'>\n";
-
-        ///@todo show user's all chip info.
-        user->describe(nullptr, 0, os, use_html);
+    }
+    if(!user) {
+        os << "<script>alert('user_name" << *user_name << "not found');</script>";
+        response->set_body(os);
+        return;
     }
 
+    // Update/Export file.
     if(use_html) {
-        os << "</pre></body></html>";
+        os << "<input type='button' style='margin-top:10px; margin-bottom:10px;'"
+            << "onclick='location.href=\"/inside_status/update_file"
+            << "?username=" << *user_name << "\";'"
+            << "value='更新文件'>\n";
+        os << "<input type='button' style='margin-top:10px; margin-bottom:10px;'"
+            << "onclick='location.href=\"/inside_status/export_file"
+            << "?username=" << *user_name << "\";'"
+            << "value='导出文件'>\n";
+    }
+    
+    // Resolved user's all chip info internal.
+    user->describe(NULL, 0, os, use_html);
+    if(use_html) {
+        os << "</body></html>";
     }
     response->set_body(os);
 }

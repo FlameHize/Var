@@ -28,6 +28,9 @@ namespace var {
 
 struct KeyInfo {
 public:
+    void describe(const char* data, size_t len,
+                  std::ostream& os, bool use_html);
+                  
     std::string name;
     int         type;
     int         byte;
