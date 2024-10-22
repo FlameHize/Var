@@ -63,7 +63,7 @@ InsideStatusService::InsideStatusService() {
                 this, std::placeholders::_1, std::placeholders::_2));   
     AddMethod("download_file", std::bind(&InsideStatusService::download_file,
                 this, std::placeholders::_1, std::placeholders::_2));       
-    AddMethod("show_info", std::bind(&InsideStatusService::show_info,
+    AddMethod("show_chip_info", std::bind(&InsideStatusService::show_chip_info,
                 this, std::placeholders::_1, std::placeholders::_2));  
 }
 
@@ -421,28 +421,34 @@ void InsideStatusService::download_file(net::HttpRequest* request,
     }
 }
 
-void InsideStatusService::show_info(net::HttpRequest* request,
-                                    net::HttpResponse* response) {
-    // const std::string* user_name = request->header().url().GetQuery("username");
-    // if(!user_name) {
-    //     return;
-    // }
-    // InsideCmdStatusUser* user = nullptr;
-    // for(size_t i = 0; i < _user_list.size(); ++i) {
-    //     InsideCmdStatusUser* tmp = _user_list.at(i);
-    //     if(tmp->name() == *user_name) {
-    //         user = tmp;
-    //         break;
-    //     }
-    // }
-    // if(!user) {
-    //     return;
-    // }
-    // net::BufferStream os;
-    // ///@todo Get data from somewhere.
-    // user->describe(nullptr, 0, os, true);
-    // response->set_body(os);
-    ///@todo
+void InsideStatusService::show_chip_info(net::HttpRequest* request,
+                                         net::HttpResponse* response) {
+    const std::string* chip_index = request->header().url().GetQuery("chipIndex");
+    net::BufferStream os;
+    if(!chip_index) {
+        return;
+    }
+    bool find = false;
+    ChipInfo chip;
+    for(size_t i = 0; i < _user_list.size(); ++i) {
+        const InsideCmdStatusUser* user = _user_list.at(i);
+        const std::vector<ChipInfo>& chip_group = user->chip_group();
+        for(size_t j = 0; j < chip_group.size(); ++j) {
+            const ChipInfo& tmp = chip_group.at(j);
+            if(static_cast<int>(tmp.index) == std::stoi(*chip_index)) {
+                find = true;
+                chip = tmp;
+                break;
+            }
+        }
+    }
+    if(!find) {
+        os << "<script>alert('未找到当前板卡信息')</script>";
+        response->set_body(os);
+        return;
+    }
+    chip.describe(NULL, 0, os, true);
+    response->set_body(os);
 }
 
 void InsideStatusService::default_method(net::HttpRequest* request,

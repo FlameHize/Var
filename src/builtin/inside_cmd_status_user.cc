@@ -163,12 +163,14 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     for(size_t i = 0; i < _chip_info_list.size(); ++i) {
         ChipInfo& chip = _chip_info_list.at(i);
         os << "<div id=\"" << chip.label << "\"";
-        os << "class=\"content-section\">\n";
+        os << "class=\"content-section\"";
+        os << "data-index=\"" << chip.index << "\">\n";
         chip.describe(data, len, os, use_html);
         os << "</div>\n";
     }
     os << "</div>\n"  
-    "<script>\n"  
+    "<script>\n" 
+    "    var timerId = {}\n" 
     "    function showContent(pageId) {\n"    
     "        var contentSections = document.querySelectorAll('.content-section');\n"  
     "        contentSections.forEach(function(section) {\n"  
@@ -177,6 +179,20 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     "        var selectedSection = document.getElementById(pageId);\n"  
     "        if(selectedSection) {\n"  
     "            selectedSection.classList.add('active');\n" 
+    "            var chipIndex = selectedSection.getAttribute(\"data-index\");\n"
+    "            if(timerId) {\n"
+    "               clearInterval(timerId);\n"
+    "            }\n"
+    "            timerId = setInterval(function(){\n"
+    "            $.ajax({\n"
+    "               url: \"/inside_status/show_chip_info?chipIndex=\" + chipIndex,\n"
+    "               type: \"GET\",\n"
+    "               dataType: \"html\",\n"
+    "               success: function(data) {\n"
+    "                   selectedSection.innerHTML = data;\n"
+    "               }\n"
+    "            });\n"
+    "            }, 1000);\n"
     "        }\n"  
     "    }\n"    
     "</script>\n";  

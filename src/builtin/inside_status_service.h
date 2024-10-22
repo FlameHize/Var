@@ -47,8 +47,8 @@ public:
     void download_file(net::HttpRequest* request,
                        net::HttpResponse* response);
 
-    void show_info(net::HttpRequest* request,
-                   net::HttpResponse* response);
+    void show_chip_info(net::HttpRequest* request,
+                        net::HttpResponse* response);
     
     void default_method(net::HttpRequest* request,
                         net::HttpResponse* response) override;

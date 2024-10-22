@@ -75,6 +75,10 @@ public:
         return _user_id;
     }
 
+    const std::vector<ChipInfo>& chip_group() const {
+        return _chip_info_list;
+    }
+
 private:
     std::vector<ChipInfo> _chip_info_list;
 
