@@ -94,14 +94,6 @@ Mutex.h
 Types.h
 ../net/base/Types.h
 
-../net/base/FileUtil.h
-noncopyable.h
-../net/base/noncopyable.h
-StringPiece.h
-../net/base/StringPiece.h
-sys/types.h
--
-
 ../net/base/LogStream.h
 noncopyable.h
 ../net/base/noncopyable.h
@@ -284,6 +276,12 @@ map
 net/http/http_header.h
 ../src/builtin/net/http/http_header.h
 
+../src/builtin/file_transfer_service.h
+src/service.h
+../src/builtin/src/service.h
+src/builtin/inside_cmd_status_user.h
+../src/builtin/src/builtin/inside_cmd_status_user.h
+
 ../src/builtin/inside_cmd_status_user.h
 src/util/tinyxml2.h
 ../src/builtin/src/util/tinyxml2.h
@@ -296,14 +294,6 @@ string
 vector
 -
 ostream
--
-
-../src/builtin/inside_status_service.h
-src/service.h
-../src/builtin/src/service.h
-src/builtin/inside_cmd_status_user.h
-../src/builtin/src/builtin/inside_cmd_status_user.h
-mutex
 -
 
 ../src/builtin/tabbed.h
@@ -334,30 +324,6 @@ net/base/Logging.h
 memory
 -
 functional
--
-
-../src/util/dir_reader_linux.h
-net/base/Logging.h
-../src/util/net/base/Logging.h
-net/base/StringSplitter.h
-../src/util/net/base/StringSplitter.h
-errno.h
--
-fcntl.h
--
-stdint.h
--
-sys/syscall.h
--
-sys/stat.h
--
-dirent.h
--
-unistd.h
--
-string.h
--
-vector
 -
 
 ../src/util/json.hpp
@@ -776,19 +742,13 @@ android/log.h
 assert.h
 -
 
-/home/zgx/Var/src/builtin/inside_status_service.cc
-src/builtin/inside_status_service.h
-/home/zgx/Var/src/builtin/src/builtin/inside_status_service.h
+/home/zgx/Var/src/builtin/file_transfer_service.cc
+src/builtin/file_transfer_service.h
+/home/zgx/Var/src/builtin/src/builtin/file_transfer_service.h
 src/builtin/common.h
 /home/zgx/Var/src/builtin/src/builtin/common.h
-src/server.h
-/home/zgx/Var/src/builtin/src/server.h
-src/util/dir_reader_linux.h
-/home/zgx/Var/src/builtin/src/util/dir_reader_linux.h
 src/util/json.hpp
 /home/zgx/Var/src/builtin/src/util/json.hpp
-net/base/FileUtil.h
-/home/zgx/Var/src/builtin/net/base/FileUtil.h
-fstream
--
+src/server.h
+/home/zgx/Var/src/builtin/src/server.h
 

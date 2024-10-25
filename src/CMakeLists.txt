@@ -17,7 +17,9 @@ add_library(var SHARED
     builtin/get_js_service.cc
     builtin/log_service.cc
     builtin/inside_cmd_status_user.cc
-    builtin/inside_status_service.cc)
+    builtin/inside_status_service.cc
+    builtin/inside_cmd_service.cc
+    builtin/file_transfer_service.cc)
 
 target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR}/src)
 target_link_libraries(var var_net)

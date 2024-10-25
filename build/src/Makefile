@@ -152,6 +152,33 @@ builtin/common.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/common.cc.s
 .PHONY : builtin/common.cc.s
 
+builtin/file_transfer_service.o: builtin/file_transfer_service.cc.o
+
+.PHONY : builtin/file_transfer_service.o
+
+# target to build an object file
+builtin/file_transfer_service.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/file_transfer_service.cc.o
+.PHONY : builtin/file_transfer_service.cc.o
+
+builtin/file_transfer_service.i: builtin/file_transfer_service.cc.i
+
+.PHONY : builtin/file_transfer_service.i
+
+# target to preprocess a source file
+builtin/file_transfer_service.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/file_transfer_service.cc.i
+.PHONY : builtin/file_transfer_service.cc.i
+
+builtin/file_transfer_service.s: builtin/file_transfer_service.cc.s
+
+.PHONY : builtin/file_transfer_service.s
+
+# target to generate assembly for a file
+builtin/file_transfer_service.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/file_transfer_service.cc.s
+.PHONY : builtin/file_transfer_service.cc.s
+
 builtin/flot_min_js.o: builtin/flot_min_js.cc.o
 
 .PHONY : builtin/flot_min_js.o
@@ -232,6 +259,33 @@ builtin/index_service.s: builtin/index_service.cc.s
 builtin/index_service.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/index_service.cc.s
 .PHONY : builtin/index_service.cc.s
+
+builtin/inside_cmd_service.o: builtin/inside_cmd_service.cc.o
+
+.PHONY : builtin/inside_cmd_service.o
+
+# target to build an object file
+builtin/inside_cmd_service.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/inside_cmd_service.cc.o
+.PHONY : builtin/inside_cmd_service.cc.o
+
+builtin/inside_cmd_service.i: builtin/inside_cmd_service.cc.i
+
+.PHONY : builtin/inside_cmd_service.i
+
+# target to preprocess a source file
+builtin/inside_cmd_service.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/inside_cmd_service.cc.i
+.PHONY : builtin/inside_cmd_service.cc.i
+
+builtin/inside_cmd_service.s: builtin/inside_cmd_service.cc.s
+
+.PHONY : builtin/inside_cmd_service.s
+
+# target to generate assembly for a file
+builtin/inside_cmd_service.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/inside_cmd_service.cc.s
+.PHONY : builtin/inside_cmd_service.cc.s
 
 builtin/inside_cmd_status_user.o: builtin/inside_cmd_status_user.cc.o
 
@@ -623,6 +677,9 @@ help:
 	@echo "... builtin/common.o"
 	@echo "... builtin/common.i"
 	@echo "... builtin/common.s"
+	@echo "... builtin/file_transfer_service.o"
+	@echo "... builtin/file_transfer_service.i"
+	@echo "... builtin/file_transfer_service.s"
 	@echo "... builtin/flot_min_js.o"
 	@echo "... builtin/flot_min_js.i"
 	@echo "... builtin/flot_min_js.s"
@@ -632,6 +689,9 @@ help:
 	@echo "... builtin/index_service.o"
 	@echo "... builtin/index_service.i"
 	@echo "... builtin/index_service.s"
+	@echo "... builtin/inside_cmd_service.o"
+	@echo "... builtin/inside_cmd_service.i"
+	@echo "... builtin/inside_cmd_service.s"
 	@echo "... builtin/inside_cmd_status_user.o"
 	@echo "... builtin/inside_cmd_status_user.i"
 	@echo "... builtin/inside_cmd_status_user.s"

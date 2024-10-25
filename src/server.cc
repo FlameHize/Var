@@ -4,6 +4,8 @@
 #include "src/builtin/vars_service.h"
 #include "src/builtin/log_service.h"
 #include "src/builtin/inside_status_service.h"
+#include "src/builtin/inside_cmd_service.h"
+#include "src/builtin/file_transfer_service.h"
 
 namespace var {
 
@@ -67,8 +69,14 @@ void Server::Start() {
     if(!AddBuiltinService("log", new(std::nothrow) LogService)) {
         LOG_ERROR << "Failed to add LogService";
     }
+    if(!AddBuiltinService("inside_cmd", new(std::nothrow) InsideCmdService)) {
+        LOG_ERROR << "Failed to add InsideCmdService";
+    }
     if(!AddBuiltinService("inside_status", new(std::nothrow) InsideStatusService)) {
         LOG_ERROR << "Failed to add InsideStatusService";
+    }
+    if(!AddBuiltinService("file_transfer", new(std::nothrow) FileTransferService)) {
+        LOG_ERROR << "Failed to add FileTransferService";
     }
     if(!AddBuiltinService("index", new (std::nothrow) IndexService)) {
         LOG_ERROR << "Failed to add IndexService";
