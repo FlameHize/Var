@@ -33,6 +33,19 @@ bool StartDummyServerAt(int port) {
     return false;
 }
 
+void UpdateInsideStatusData(const char* data, size_t len) {
+    if(!IsDummyServerRunning()) {
+        LOG_ERROR << "Dummy server has not running";
+        return;
+    }
+    Service* service = g_dummy_server->FindServiceByName("inside_status");
+    if(!service) {
+        LOG_ERROR << "Inside status service has not registered";
+        return;
+    }
+    static_cast<InsideStatusService*>(service)->SetData(data, len);
+}
+
 Server::Server(const net::InetAddress& addr) 
     : _addr(addr)
     , _server(&_loop, _addr, std::string("DummyServer"))

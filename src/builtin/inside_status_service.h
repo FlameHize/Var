@@ -22,11 +22,14 @@
 
 #include "src/service.h"
 #include "src/builtin/inside_cmd_status_user.h"
+#include <mutex>
 
 namespace var {
 
 class InsideStatusService : public Service {
 public:
+    typedef std::shared_ptr<net::Buffer> BufPtr;
+
     InsideStatusService();
 
     void add_user(net::HttpRequest* request,
@@ -55,8 +58,14 @@ public:
 
     void GetTabInfo(TabInfoList*) const override;
 
+    // Used for resolved data transfer.
+    void SetData(const char* data, size_t len);
+    BufPtr GetData();
+
 private:
     std::vector<InsideCmdStatusUser*> _user_list;
+    BufPtr _data;
+    std::mutex _mutex;
 };
 
 } // end namespace var

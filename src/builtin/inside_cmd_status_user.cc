@@ -1,7 +1,4 @@
 #include "src/builtin/inside_cmd_status_user.h"
-#include "src/util/tinyxml2.h"
-#include "net/base/Logging.h"
-#include <iomanip>
 
 using namespace tinyxml2;
 
@@ -54,10 +51,26 @@ int InsideCmdStatusUser::parse(const std::string& path) {
         LOG_ERROR << "Failed to load " << path << ", error code: " << load_result;
         return load_result;
     }
-    
+    return parse_internal(doc);
+}
+
+int InsideCmdStatusUser::parse(const char* data, size_t len) {
+    if(!data) {
+        return -1;
+    }
+    XMLDocument doc;
+    XMLError load_result = doc.Parse(data, len);
+    if(load_result != XML_SUCCESS) {
+        LOG_ERROR << "Failed to load data" << ", error code: " << load_result;
+        return load_result;
+    }
+    return parse_internal(doc);
+}
+
+int InsideCmdStatusUser::parse_internal(XMLDocument& doc) {
     XMLElement* field_num_element = doc.RootElement();
     if(!field_num_element) {
-        LOG_ERROR << path << " file's Parameter[FieldNum] is NULL";
+        LOG_ERROR << "Parameter[FieldNum] is NULL";
         return -1;
     }
     int field_num = field_num_element->IntAttribute("FieldNum");
@@ -128,8 +141,15 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     "th {\n"  
     "    background-color: #f2f2f2;\n"  
     "}\n"  
+    "th:hover {\n"
+    "    background-color: #999999;\n"
+    "}\n"
     "tr {\n"
+    "    font-size: 14px;\n"
     "    height: 40px;\n"
+    "}\n"
+    ".content-tab.current {\n"
+    "    background-color: #999999;\n"
     "}\n"
     ".content-section {\n"  
     "    margin-top: 20px;\n"  
@@ -153,7 +173,8 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     for(size_t i = 0; i < _chip_info_list.size(); ++i) {
         const ChipInfo& chip = _chip_info_list.at(i);
         os << "<th onclick=\"showContent('" << chip.label 
-           << "')\">" << chip.label << "</th>\n"; 
+           << "'); changeColor(this)\" class=\"content-tab\">" 
+           << chip.label << "</th>\n"; 
     } 
     os << "  </tr>\n"  
     "    </thead>\n"  
@@ -195,6 +216,13 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     "            }, 1000);\n"
     "        }\n"  
     "    }\n"    
+    "   function changeColor(element) {\n"
+    "       var contentTabs = document.querySelectorAll('.content-tab');\n"
+    "       contentTabs.forEach(function(tab) {\n"
+    "           tab.classList.remove('current');\n"
+    "       });\n" 
+    "       element.classList.add('current');\n"
+    "   }\n"
     "</script>\n";  
 }
 
@@ -225,35 +253,67 @@ void ChipInfo::describe(const char* data, size_t len,
 
 void KeyInfo::describe(const char* data, size_t len,
                        std::ostream& os, bool use_html) {
-    if(!data) {
+    if(!data || len == 0) {
+        os << name << " : " << std::to_string(default_value)
+           << dimension;
+    }
+    if(resolved_addr + byte > len) {
         os << name << " : " << std::to_string(default_value)
            << dimension;
     }
     else {
         double resolved_value = 0;
-        switch (byte) {
+        switch(byte) {
         case 1: {
-            int8_t value = 0;
-            memcpy((char*)&value, data + resolved_addr, 1);
-            resolved_value = value;
+            if(sign) {
+                int8_t value = 0;
+                memcpy((char*)&value, data + resolved_addr, sizeof(value));
+                resolved_value = value;
+            }
+            else {
+                uint8_t value = 0;
+                memcpy((char*)&value, data + resolved_addr, sizeof(value));
+                resolved_value = value;
+            }
             break;
         }
         case 2: {
-            int16_t value = 0;
-            memcpy((char*)&value, data + resolved_addr, 2);
-            resolved_value = value;
+            if(sign) {
+                int16_t value = 0;
+                memcpy((char*)&value, data + resolved_addr, sizeof(value));
+                resolved_value = value;
+            }
+            else {
+                uint16_t value = 0;
+                memcpy((char*)&value, data + resolved_addr, sizeof(value));
+                resolved_value = value;
+            }
             break;
         }
         case 4: {
-            int32_t value = 0;
-            memcpy((char*)&value, data + resolved_addr, 4);
-            resolved_value = value;
+            if(sign) {
+                int32_t value = 0;
+                memcpy((char*)&value, data + resolved_addr, sizeof(value));
+                resolved_value = value;
+            }
+            else {
+                uint32_t value = 0;
+                memcpy((char*)&value, data + resolved_addr, sizeof(value));
+                resolved_value = value;
+            }
             break;
         }
         case 8: {
-            int64_t value = 0;
-            memcpy((char*)&value, data + resolved_addr, 8);
-            resolved_value = value;
+            if(sign) {
+                int64_t value = 0;
+                memcpy((char*)&value, data + resolved_addr, sizeof(value));
+                resolved_value = value;
+            }
+            else {
+                uint64_t value = 0;
+                memcpy((char*)&value, data + resolved_addr, sizeof(value));
+                resolved_value = value;
+            }
             break;
         }
         default:

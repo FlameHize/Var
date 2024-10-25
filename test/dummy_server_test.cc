@@ -36,13 +36,27 @@ TEST(DummyServerTest, StartDummyServer) {
     var::Window<var::Adder<int>> window_adder("FpgaWindow", &adder, 10);
     var::LatencyRecorder recorder("DSP");
     
+    var::net::Buffer buf;
+    char c = 1;
+    for(size_t i = 0; i < 60 * 256; ++i) {
+        buf.append((char*)&c, sizeof(c));
+    }
+    
 #if SERVER_ONLY
     while(true) {
         var::Timer timer;
         timer.start();
         sleep(1);
+
+        var::UpdateInsideStatusData(buf.peek(), buf.readableBytes());
+        buf.retrieveAll();
+        ++c;
+        for(size_t i = 0; i < 60 * 256; ++i) {
+            buf.append((char*)&c, sizeof(c));
+        }
+
         timer.stop();
-        int64_t interval = timer.n_elapsed();
+        int64_t interval = timer.u_elapsed();
         maxer << interval;
         miner << interval;
         status.set_value(interval);

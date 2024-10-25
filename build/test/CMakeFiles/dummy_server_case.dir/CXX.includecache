@@ -572,7 +572,3 @@ src/server.h
 src/var.h
 /home/zgx/Var/test/src/var.h
 
-/home/zgx/Var/test/main.cc
-gtest/gtest.h
--
-

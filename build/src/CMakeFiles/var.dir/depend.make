@@ -129,6 +129,7 @@ src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/server.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/service.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/util/dir_reader_linux.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/util/json.hpp
+src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/util/tinyxml2.h
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o: ../src/builtin/inside_status_service.cc
 
 src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o: ../net/Buffer.h
@@ -394,6 +395,7 @@ src/CMakeFiles/var.dir/server.cc.o: ../src/builtin/tabbed.h
 src/CMakeFiles/var.dir/server.cc.o: ../src/builtin/vars_service.h
 src/CMakeFiles/var.dir/server.cc.o: ../src/server.h
 src/CMakeFiles/var.dir/server.cc.o: ../src/service.h
+src/CMakeFiles/var.dir/server.cc.o: ../src/util/tinyxml2.h
 src/CMakeFiles/var.dir/server.cc.o: ../src/server.cc
 
 src/CMakeFiles/var.dir/service.cc.o: ../net/Buffer.h

@@ -20,6 +20,9 @@
 #ifndef VAR_BUILTIN_INSIDE_CMD_STATUS_USER_H
 #define VAR_BUILTIN_INSIDE_CMD_STATUS_USER_H
 
+#include "src/util/tinyxml2.h"
+#include "net/base/Logging.h"
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <ostream>
@@ -64,6 +67,7 @@ public:
     InsideCmdStatusUser(const std::string& user_name, size_t user_id);
 
     int parse(const std::string& path);
+    int parse(const char* data, size_t len);
 
     void describe(const char* data, size_t len,
                   std::ostream& os, bool use_html);
@@ -78,6 +82,9 @@ public:
     const std::vector<ChipInfo>& chip_group() const {
         return _chip_info_list;
     }
+
+private:
+    int parse_internal(tinyxml2::XMLDocument& doc);
 
 private:
     std::vector<ChipInfo> _chip_info_list;

@@ -130,6 +130,7 @@ src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o
  ../src/service.h
  ../src/util/dir_reader_linux.h
  ../src/util/json.hpp
+ ../src/util/tinyxml2.h
  /home/zgx/Var/src/builtin/inside_status_service.cc
 src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o
  ../net/Buffer.h
@@ -395,6 +396,7 @@ src/CMakeFiles/var.dir/server.cc.o
  ../src/builtin/vars_service.h
  ../src/server.h
  ../src/service.h
+ ../src/util/tinyxml2.h
  /home/zgx/Var/src/server.cc
 src/CMakeFiles/var.dir/service.cc.o
  ../net/Buffer.h

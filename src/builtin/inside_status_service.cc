@@ -50,7 +50,8 @@ std::string url_encode(const std::string& value) {
 static bool kInitFlag = false;
 const std::string InsideStatusXMLFileSaveDir = "data/inside_status/";
 
-InsideStatusService::InsideStatusService() {
+InsideStatusService::InsideStatusService() 
+    : _data(std::make_shared<net::Buffer>()) {
     AddMethod("add_user", std::bind(&InsideStatusService::add_user,
                 this, std::placeholders::_1, std::placeholders::_2));
     AddMethod("add_user_internal", std::bind(&InsideStatusService::add_user_internal,
@@ -82,11 +83,11 @@ void InsideStatusService::add_user(net::HttpRequest* request,
     if(use_html) {
         os << "<form id=\"user-form\" enctype=\"multipart/form-data\">\n"
         "       <label for=\"user-name\">用户名称:</label>\n"
-        "       <input type=\"text\" id=\"user-name\" name=\"user-name\" required>\n"
+        "       <input type=\"text\" id=\"user-name\" name=\"user-name\" placeholder=\"请输入英文字符\">\n"
         "       <label for=\"user-id\">板卡组起始序号:</label>\n"
-        "       <input type=\"text\" id=\"user-id\" name=\"user-id\" required>\n"
+        "       <input type=\"text\" id=\"user-id\" name=\"user-id\" placeholder=\"请输入数字\">\n"
         "       <label for=\"user-file\">所属XML文件:</label>\n"
-        "       <input type=\"file\" id=\"user-file\" name=\"user-file\" required>\n"
+        "       <input type=\"file\" id=\"user-file\" name=\"user-file\">\n"
         "       <button type=\"button\" onclick=\"submitForm()\">确定</button>\n"
         "</form>\n"
         "<script>\n"
@@ -106,6 +107,22 @@ void InsideStatusService::add_user(net::HttpRequest* request,
         "function submitForm() {\n"
         "    var userName = document.getElementById('user-name').value;\n"
         "    var userId = document.getElementById('user-id').value;\n"
+        "    if(userName.trim() == '') {\n"
+        "        alert('用户名为空，请输入');\n"
+        "        return;\n"
+        "    }\n"
+        "    if(userId.trim() == '') {\n"
+        "        alert('用户板卡组起始序号为空，请输入');\n"
+        "        return;\n"
+        "    }\n"
+        "    if(fileName == null) {\n"
+        "        alert('用户未选择所属XML文件，请选择');\n"
+        "        return;\n"
+        "    }\n"
+        "    if(fileContent.trim() == '') {\n"
+        "        alert('用户选择文件内容为空，请重新选择');\n"
+        "        return;\n"
+        "    }\n"
         "    $.ajax({\n"
         "    url: '/inside_status/add_user_internal',\n"
         "    type: \"POST\",\n"
@@ -122,11 +139,29 @@ void InsideStatusService::add_user(net::HttpRequest* request,
         "        window.location.href = '/inside_status';\n"
         "    },\n"
         "    error: function(error) {\n"
-        "        alert('导入用户信息失败，请稍后重试');\n"
-        "        console.log('Failed submit form', error);\n"
+        "        var errStr = \"导入用户信息失败: \" + error.responseText;"
+        "        alert(errStr);\n"
         "    }\n"
         "    });\n"
         "}\n"
+        "document.getElementById('user-name').addEventListener('input', function(event) {\n"
+        "   var value = event.target.value;\n"
+        "   var regex = /^[A-Za-z0-9]*$/;\n"
+        "   if(!regex.test(value)) {\n"
+        "       event.preventDefault();\n"
+        "       event.target.value = value.slice(0,-1);\n"
+        "   }\n"
+        "   this.value = this.value.replace(/[\u4e00-\u9fa5]/g, '');\n"
+        "});\n"
+        "document.getElementById('user-id').addEventListener('input', function(event) {\n"
+        "   var value = event.target.value;\n"
+        "   var regex = /^[0-9]*$/;\n"
+        "   if(!regex.test(value)) {\n"
+        "       event.preventDefault();\n"
+        "       event.target.value = value.slice(0,-1);\n"
+        "   }\n"
+        "   this.value = this.value.replace(/[\u4e00-\u9fa5]/g, '');\n"
+        "});\n"
         "</script>\n";
     }
 
@@ -145,44 +180,53 @@ void InsideStatusService::add_user_internal(net::HttpRequest* request,
     std::string file_name = body_json["fileName"];
     std::string file_content = body_json["fileContent"];
     
+    net::BufferStream os;
     if(file_name.empty() || file_content.empty()) {
-        LOG_ERROR << "Inside status xml file format error";
+        os << "Upload xml file is empty";
+        response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
+        response->set_body(os);
         return;
     }
+
+    InsideCmdStatusUser *user = new InsideCmdStatusUser(user_name, std::stoi(user_id));
+    if(user->parse(file_content.data(), file_content.length()) != 0) {
+        delete user;
+        user = nullptr;
+        os << "User:" << user_name << "'s xml file " 
+           << file_name <<  " format is incorrect";
+        response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
+        response->set_body(os);
+        return;
+    }
+    for(auto iter = _user_list.begin(); iter != _user_list.end(); ++iter) {
+        InsideCmdStatusUser* tmp = *iter;
+        if(tmp->name() == user_name) {
+            _user_list.erase(iter);
+            delete tmp;
+            tmp = nullptr;
+            break;
+        }
+    }
+    _user_list.push_back(user);
     
     std::string path = InsideStatusXMLFileSaveDir;
     path += (user_name + '_' + user_id);
     if(!DirReaderLinux::CreateDirectoryIfNotExists(path.c_str())) {
-        LOG_ERROR << "Inside status xml file dir not existed";
+        os << "Inside status xml file" << path << "dir not existed";
+        response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
+        response->set_body(os);
         return;
     }
     if(!DirReaderLinux::ClearDirectory(path.c_str())) {
-        LOG_ERROR << "Clear " << path << " old xml file failed";
+        os << "Clear " << path << " old xml file failed";
+        response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
+        response->set_body(os);
         return;
     }
     std::string file_path = path + '/' + file_name;
     FileUtil::AppendFile file(file_path);
     file.append(file_content.data(), file_content.length());
     file.flush();
-
-    InsideCmdStatusUser *user = new InsideCmdStatusUser(user_name, std::stoi(user_id));
-    if(user->parse(file_path.c_str()) == 0) {
-        for(auto iter = _user_list.begin(); iter != _user_list.end(); ++iter) {
-            InsideCmdStatusUser* tmp = *iter;
-            if(tmp->name() == user_name) {
-                _user_list.erase(iter);
-                delete tmp;
-                tmp = nullptr;
-                break;
-            }
-        }
-        _user_list.push_back(user);
-    }
-    else {
-        LOG_ERROR << "Parse " << user_name << "'s xml file "
-                  << file_name << " failed";
-    }
-    return;
 }
 
 void InsideStatusService::delete_user(net::HttpRequest* request,
@@ -306,6 +350,14 @@ void InsideStatusService::update_file(net::HttpRequest* request,
         "    }\n"
         "});\n"
         "function submitForm() {\n"
+        "    if(fileName == null) {\n"
+        "        alert('用户未选择所属XML文件，请选择');\n"
+        "        return;\n"
+        "    }\n"
+        "    if(fileContent.trim() == '') {\n"
+        "        alert('用户选择文件内容为空，请重新选择');\n"
+        "        return;\n"
+        "    }\n"
         "    $.ajax({\n"
         "    url: '/inside_status/add_user_internal',\n"
         "    type: \"POST\",\n"
@@ -322,8 +374,8 @@ void InsideStatusService::update_file(net::HttpRequest* request,
         "        window.location.href = '/inside_status';\n"
         "    },\n"
         "    error: function(error) {\n"
-        "        alert('更新用户内部状态文件失败，请稍后重试');\n"
-        "        console.log('Failed submit form', error);\n"
+        "        var errStr = \"更新用户内部状态文件失败: \" + error.responseText;"
+        "        alert(errStr);\n"
         "    }\n"
         "    });\n"
         "}\n"
@@ -423,6 +475,8 @@ void InsideStatusService::download_file(net::HttpRequest* request,
 
 void InsideStatusService::show_chip_info(net::HttpRequest* request,
                                          net::HttpResponse* response) {
+    const bool use_html = UseHTML(request->header());
+    response->header().set_content_type(use_html ? "text/html" : "text/plain");
     const std::string* chip_index = request->header().url().GetQuery("chipIndex");
     net::BufferStream os;
     if(!chip_index) {
@@ -447,7 +501,8 @@ void InsideStatusService::show_chip_info(net::HttpRequest* request,
         response->set_body(os);
         return;
     }
-    chip.describe(NULL, 0, os, true);
+    BufPtr buf = GetData();
+    chip.describe(buf->peek(), buf->readableBytes(), os, use_html);
     response->set_body(os);
 }
 
@@ -555,7 +610,8 @@ void InsideStatusService::default_method(net::HttpRequest* request,
     }
     
     // Resolved user's all chip info internal.
-    user->describe(NULL, 0, os, use_html);
+    BufPtr buf = GetData();
+    user->describe(buf->peek(), buf->readableBytes(), os, use_html);
     if(use_html) {
         os << "</body></html>";
     }
@@ -566,6 +622,21 @@ void InsideStatusService::GetTabInfo(TabInfoList* info_list) const {
     TabInfo* info = info_list->add();
     info->path = "/inside_status";
     info->tab_name = "内部状态";
+}
+
+void InsideStatusService::SetData(const char* data, size_t len) {
+    std::lock_guard lock(_mutex);
+    if(!_data.unique()) {
+        BufPtr new_data(new net::Buffer(*_data));
+        _data.swap(new_data);
+    }
+    _data->retrieveAll();
+    _data->append(data, len);
+}
+
+InsideStatusService::BufPtr InsideStatusService::GetData() {
+    std::lock_guard lock(_mutex);
+    return _data;
 }
 
 } // namespace var

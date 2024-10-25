@@ -71,6 +71,9 @@ bool IsDummyServerRunning();
 // Return 0 on success, -1 otherwise.
 bool StartDummyServerAt(int port);
 
+// Used to update inside status data in builtin services.
+void UpdateInsideStatusData(const char* data, size_t len);
+
 } // end namespace var
 
 #endif // VAR_SERVER_H
