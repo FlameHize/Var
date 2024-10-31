@@ -32,6 +32,13 @@ const char* const USER_AGENT_STR = "user-agent";
 
 bool UseHTML(const net::HttpHeader& header);
 
+std::string UrlEncode(const std::string& value);
+std::string UrlDecode(const std::string& value);
+
+std::string double_to_string(double value, int decimal);
+std::string decimal_to_hex(int decimal);
+std::string decimal_to_binary(int decimal);
+
 // Put inside <head></head> of html to work with Tabbed.
 const char* TabsHead();
 

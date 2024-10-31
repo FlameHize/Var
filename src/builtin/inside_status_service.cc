@@ -33,20 +33,6 @@ std::string get_first_xml_file(const std::string& dir_path) {
     return std::string();
 }
 
-std::string url_encode(const std::string& value) {
-    std::ostringstream escaped;
-    for(char c : value) {
-        if(isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
-            escaped << c;
-        }
-        else {
-            escaped << '%' << std::setw(2) << std::setfill('0')
-                    << std::hex << (int)(unsigned char)(c);
-        }
-    }
-    return escaped.str();
-}
-
 static bool kInitFlag = false;
 const std::string InsideStatusXMLFileSaveDir = "data/inside_status/";
 
@@ -438,7 +424,7 @@ void InsideStatusService::export_file(net::HttpRequest* request,
     for(; sp; ++sp) {
         file_name = std::string(sp.field(), sp.length());
     }
-    os << "<a href=\"download_file?userdir=" << user_dir_path << "\" download=\"" 
+    os << "<a href=\"/inside_status/download_file?userdir=" << user_dir_path << "\" download=\"" 
        << file_name << "\">下载链接: " << file_name << "</a>\n";
     os << "</body></html>";
     response->set_body(os); 
@@ -461,7 +447,7 @@ void InsideStatusService::download_file(net::HttpRequest* request,
     if(file) {
         net::BufferStream os;
         response->header().set_content_type("text/plain");
-        std::string encoded_filename = url_encode(file_name);
+        std::string encoded_filename = UrlEncode(file_name);
         response->header().SetHeader("Content-Disposition", 
         "attachment:filename=\"" + file_name + "\"; filename*=UTF-8''" + encoded_filename);
         std::string line;

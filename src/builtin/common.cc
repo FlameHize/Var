@@ -1,6 +1,19 @@
 #include "src/builtin/common.h"
+#include <sstream>
+#include <iomanip>
 
 namespace var {
+
+// 将十六进制字符转换为整数  
+int hexCharToInt(char c) {  
+    if (std::isdigit(c)) {  
+        return c - '0';  
+    } else if (std::isxdigit(c)) {  
+        return std::tolower(c) - 'a' + 10;  
+    } else {  
+        throw std::invalid_argument("Invalid hex character");  
+    }  
+}  
 
 bool UseHTML(const net::HttpHeader& header) {
 const std::string* console = header.url().GetQuery(CONSOLE_STR);
@@ -14,6 +27,68 @@ if (agent == NULL) {  // use text when user-agent is absent
     return false;
 }
 return agent->find("curl/") == std::string::npos;
+}
+
+std::string UrlEncode(const std::string& value) {
+    std::ostringstream escaped;
+    for(char c : value) {
+        if(isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+            escaped << c;
+        }
+        else {
+            escaped << '%' << std::setw(2) << std::setfill('0')
+                    << std::hex << (int)(unsigned char)(c);
+        }
+    }
+    return escaped.str();
+}
+
+std::string UrlDecode(const std::string& encode_str) {
+    std::ostringstream oss;  
+    std::string::const_iterator it = encode_str.cbegin();  
+    while (it != encode_str.cend()) {  
+        if (*it == '%' && std::next(it) != encode_str.cend() && std::next(std::next(it)) != encode_str.cend()) {   
+            char hex[3] = { *(it + 1), *(it + 2), '\0' };  
+            unsigned char byte = static_cast<unsigned char>((hexCharToInt(hex[0]) << 4) | hexCharToInt(hex[1]));  
+            oss << byte;  
+            it += 2; 
+        } else if (*it == '+') {   
+            oss << ' ';  
+        } else {  
+            oss << *it;  
+        }  
+        ++it;  
+    }  
+    return oss.str();  
+}
+
+std::string double_to_string(double value, int decimal) {
+    std::ostringstream out;
+    out << std::fixed;
+    out << std::setprecision(decimal);
+    out << value;
+    return out.str();
+}
+
+std::string decimal_to_hex(int decimal) {
+    std::ostringstream out;
+    out << std::hex;
+    out << decimal;
+    return out.str();
+}
+
+std::string decimal_to_binary(int decimal) {
+    if(decimal == 0) {
+        return "0";
+    }
+    std::ostringstream out;
+    while(decimal > 0) {
+        out << (decimal % 2);
+        decimal /= 2;
+    }
+    std::string binary_str = out.str();
+    std::reverse(binary_str.begin(), binary_str.end());
+    return binary_str;
 }
 
 const char* TabsHead() {

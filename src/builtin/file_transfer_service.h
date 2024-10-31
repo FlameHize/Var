@@ -29,8 +29,11 @@ class FileTransferService : public Service {
 public:
     FileTransferService();
 
-    void update_file(net::HttpRequest* request,
+    void upload_file(net::HttpRequest* request,
                      net::HttpResponse* response);
+
+    void download_file(net::HttpRequest* request,
+                       net::HttpResponse* response);
 
     void default_method(net::HttpRequest* request,
                         net::HttpResponse* response) override;

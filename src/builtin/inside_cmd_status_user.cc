@@ -1,39 +1,11 @@
 #include "src/builtin/inside_cmd_status_user.h"
+#include "src/builtin/common.h"
 
 using namespace tinyxml2;
 
 namespace var {
 
 const size_t kFixedChipBytes = 256;
-
-std::string double_to_string(double value, int decimal) {
-    std::ostringstream out;
-    out << std::fixed;
-    out << std::setprecision(decimal);
-    out << value;
-    return out.str();
-}
-
-std::string decimal_to_hex(int decimal) {
-    std::ostringstream out;
-    out << std::hex;
-    out << decimal;
-    return out.str();
-}
-
-std::string decimal_to_binary(int decimal) {
-    if(decimal == 0) {
-        return "0";
-    }
-    std::ostringstream out;
-    while(decimal > 0) {
-        out << (decimal % 2);
-        decimal /= 2;
-    }
-    std::string binary_str = out.str();
-    std::reverse(binary_str.begin(), binary_str.end());
-    return binary_str;
-}
 
 InsideCmdStatusUser::InsideCmdStatusUser(const std::string& user_name,
                                          size_t user_id)

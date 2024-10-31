@@ -36,6 +36,7 @@ test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../net/tcp/TcpClie
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../net/tcp/TcpConnection.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../net/tcp/TcpServer.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../src/average_recorder.h
+test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../src/builtin/common.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../src/builtin/tabbed.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../src/common.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../src/detail/agent_group.h

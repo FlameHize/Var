@@ -302,6 +302,10 @@ src/detail/sampler.h
 src/reducer.h
 ../src/src/reducer.h
 
+../src/builtin/common.h
+net/http/http_header.h
+../src/builtin/net/http/http_header.h
+
 ../src/builtin/tabbed.h
 string
 -
@@ -571,4 +575,6 @@ src/server.h
 /home/zgx/Var/test/src/server.h
 src/var.h
 /home/zgx/Var/test/src/var.h
+src/builtin/common.h
+/home/zgx/Var/test/src/builtin/common.h
 

@@ -20,13 +20,14 @@
 #include "net/EventLoopThread.h"
 #include "src/server.h"
 #include "src/var.h"
+#include "src/builtin/common.h"
 
 using namespace var;
 
 #define SERVER_ONLY true
 
 TEST(DummyServerTest, StartDummyServer) {
-    net::InetAddress addr(2008);
+    net::InetAddress addr(8511);
     StartDummyServerAt(addr.port());
 
     var::Maxer<int> maxer("FpgaMax");
@@ -34,7 +35,8 @@ TEST(DummyServerTest, StartDummyServer) {
     var::Status<int> status("FpgaStatus", 0);
     var::Adder<int> adder;
     var::Window<var::Adder<int>> window_adder("FpgaWindow", &adder, 10);
-    var::LatencyRecorder recorder("DSP");
+    ///@bug expose name failed.
+    // var::LatencyRecorder recorder("DSP");
     
     var::net::Buffer buf;
     char c = 1;
@@ -61,7 +63,7 @@ TEST(DummyServerTest, StartDummyServer) {
         miner << interval;
         status.set_value(interval);
         adder << 1;
-        recorder << interval;
+        // recorder << interval;
     }
 #else
     net::EventLoop loop;

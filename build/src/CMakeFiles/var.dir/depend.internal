@@ -19,6 +19,7 @@ src/CMakeFiles/var.dir/builtin/file_transfer_service.cc.o
  ../net/base/Condition.h
  ../net/base/CountDownLatch.h
  ../net/base/CurrentThread.h
+ ../net/base/FileUtil.h
  ../net/base/LogStream.h
  ../net/base/Logging.h
  ../net/base/Mutex.h
@@ -46,7 +47,9 @@ src/CMakeFiles/var.dir/builtin/file_transfer_service.cc.o
  ../src/builtin/tabbed.h
  ../src/server.h
  ../src/service.h
- ../src/util/json.hpp
+ ../src/util/dir_reader_linux.h
+ ../src/util/file_reader_linux.h
+ ../src/util/move.h
  ../src/util/tinyxml2.h
  /home/zgx/Var/src/builtin/file_transfer_service.cc
 src/CMakeFiles/var.dir/builtin/flot_min_js.cc.o
@@ -167,6 +170,11 @@ src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o
  ../net/base/Types.h
  ../net/base/copyable.h
  ../net/base/noncopyable.h
+ ../net/http/http_header.h
+ ../net/http/http_method.h
+ ../net/http/http_status_code.h
+ ../net/http/http_url.h
+ ../src/builtin/common.h
  ../src/builtin/inside_cmd_status_user.h
  ../src/util/tinyxml2.h
  /home/zgx/Var/src/builtin/inside_cmd_status_user.cc

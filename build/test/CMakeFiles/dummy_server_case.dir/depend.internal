@@ -37,6 +37,7 @@ test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o
  ../net/tcp/TcpConnection.h
  ../net/tcp/TcpServer.h
  ../src/average_recorder.h
+ ../src/builtin/common.h
  ../src/builtin/tabbed.h
  ../src/common.h
  ../src/detail/agent_group.h
