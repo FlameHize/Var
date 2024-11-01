@@ -1,5 +1,6 @@
 #include "src/builtin/inside_cmd_status_user.h"
 #include "src/builtin/common.h"
+#include "src/util/dir_reader_linux.h"
 
 using namespace tinyxml2;
 
@@ -56,6 +57,7 @@ int InsideCmdStatusUser::parse_internal(XMLDocument& doc) {
         elem; elem = elem->NextSiblingElement()) {
 
         ChipInfo chip_info;
+        chip_info.owner = (void*)this;
         chip_info.label = elem->Attribute("Label");
         chip_info.key_num = elem->IntAttribute("KeyNum");
         chip_info.field_byte = elem->IntAttribute("FieldByte");
@@ -72,6 +74,7 @@ int InsideCmdStatusUser::parse_internal(XMLDocument& doc) {
         for(XMLElement* key_elem = elem->FirstChildElement();
             key_elem; key_elem = key_elem->NextSiblingElement()) {
             KeyInfo key_info;
+            key_info.owner = (void*)&chip_info;
             key_info.name = key_elem->FirstChildElement("name")->GetText();
             key_info.type = key_elem->FirstChildElement("type")->IntText();
             key_info.byte = key_elem->FirstChildElement("byte")->IntText();
@@ -86,9 +89,17 @@ int InsideCmdStatusUser::parse_internal(XMLDocument& doc) {
             if(dimension) {
                 key_info.dimension = dimension;
             }
+
+            XMLElement* list_elem = key_elem->FirstChildElement("list");
+            key_info.list_num = std::stoi(list_elem->Attribute("ListNum"));
+            for(XMLElement* select_elem = list_elem->FirstChildElement(); 
+                select_elem; select_elem = select_elem->NextSiblingElement()) {
+                key_info.select_list.push_back(select_elem->GetText());
+            }
+
             // resolved_addr calculate.
             key_info.resolved_addr = value_addr;
-            value_addr += key_info.type;
+            value_addr += key_info.byte;
 
             chip_info.key_info_list.push_back(key_info);
         }
@@ -98,7 +109,7 @@ int InsideCmdStatusUser::parse_internal(XMLDocument& doc) {
 }
 
 void InsideCmdStatusUser::describe(const char* data, size_t len,
-                                   std::ostream& os, bool use_html) {
+                                   std::ostream& os, bool cmd_or_status) {
     os << "<style>\n"  
     "table {\n"  
     "    width: 100%;\n"  
@@ -109,15 +120,18 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     "    padding: 8px;\n"  
     "    text-align: center;\n"  
     "    cursor: pointer;\n"  
+    "    justify-content: space-between;\n"
+    "    align-items:center;\n"
     "}\n"  
     "th {\n"  
+    "    font-size: 14px;\n"
     "    background-color: #f2f2f2;\n"  
     "}\n"  
     "th:hover {\n"
     "    background-color: #999999;\n"
     "}\n"
     "tr {\n"
-    "    font-size: 14px;\n"
+    "    font-size: 12px;\n"
     "    height: 40px;\n"
     "}\n"
     ".content-tab.current {\n"
@@ -136,6 +150,21 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     "    display: grid;\n"
     "    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));\n"
     "    gap: 30px;\n"
+    "}\n"
+    ".fixed-button {\n"
+    "    position: fixed;\n"
+    "    bottom: 10px;\n"
+    "    right: 10px;\n"
+    "    background-color: #007bff;\n"
+    "    color: white;\n"
+    "    border: none;\n"
+    "    border-radius: 5px;\n"
+    "    cursor: pointer;\n"
+    "    font-size: 18px;\n"
+    "    gap: 30px;\n"
+    "}\n"
+    ".fixed-button:hover {\n"
+    "    background-color: #0056b3;\n"
     "}\n"
     "</style>\n"; 
 
@@ -158,7 +187,7 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
         os << "<div id=\"" << chip.label << "\"";
         os << "class=\"content-section\"";
         os << "data-index=\"" << chip.index << "\">\n";
-        chip.describe(data, len, os, use_html);
+        chip.describe(data, len, os, cmd_or_status);
         os << "</div>\n";
     }
     os << "</div>\n"  
@@ -178,7 +207,7 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     "            }\n"
     "            timerId = setInterval(function(){\n"
     "            $.ajax({\n"
-    "               url: \"/inside_status/show_chip_info?chipIndex=\" + chipIndex,\n"
+    "               url: \"/" << (cmd_or_status ? "inside_cmd" : "inside_status") << "/show_chip_info?chipIndex=\" + chipIndex,\n"
     "               type: \"GET\",\n"
     "               dataType: \"html\",\n"
     "               success: function(data) {\n"
@@ -186,6 +215,9 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     "               }\n"
     "            });\n"
     "            }, 1000);\n"
+    "            if(" << cmd_or_status << ") {\n"
+    "               clearInterval(timerId);\n"
+    "            }\n"
     "        }\n"  
     "    }\n"    
     "   function changeColor(element) {\n"
@@ -196,10 +228,30 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     "       element.classList.add('current');\n"
     "   }\n"
     "</script>\n";  
+
+    ///@todo 发送ajax请求更新数据值
+    ///@bug chipName error.
+    if(cmd_or_status) {
+        os << "<button class=\"fixed-button\">发送</button>\n"
+        "<script>\n"
+        "   function getTextValue(element) {\n"
+        "       console.log(element.value);\n"
+        "       console.log(element.dataset.userName);\n"
+        "       console.log(element.dataset.chipName);\n"
+        "       console.log(element.dataset.itemName);\n"
+        "   }\n"
+        "   function getSelectValue(element) {\n"
+        "       console.log(element.selectedIndex);\n"
+        "       console.log(element.dataset.userName);\n"
+        "       console.log(element.dataset.chipName);\n"
+        "       console.log(element.dataset.itemName);\n"
+        "   }\n"
+        "</script>\n";
+    }
 }
 
 void ChipInfo::describe(const char* data, size_t len,
-                        std::ostream& os, bool use_html) {
+                        std::ostream& os, bool cmd_or_status) {
     os << "<div class=\"table-container\">\n";
     int rows = 16;
     int count = 0;
@@ -209,7 +261,7 @@ void ChipInfo::describe(const char* data, size_t len,
             os << "<table>\n";
         }
         os << "<tr><td>\n";
-        info.describe(data, len, os, use_html);
+        info.describe(data, len, os, cmd_or_status);
         os << "</td></tr>\n"; 
         ++count;
         if(count == rows) {
@@ -224,14 +276,49 @@ void ChipInfo::describe(const char* data, size_t len,
 }
 
 void KeyInfo::describe(const char* data, size_t len,
-                       std::ostream& os, bool use_html) {
-    if(!data || len == 0) {
-        os << name << " : " << std::to_string(default_value)
-           << dimension;
-    }
-    if(resolved_addr + byte > len) {
-        os << name << " : " << std::to_string(default_value)
-           << dimension;
+                       std::ostream& os, bool cmd_or_status) {
+    //// need this.
+    // if(!data || len == 0) {
+    //     os << name << " : " << std::to_string(default_value) << dimension;
+    //     return;
+    // }
+    // if(resolved_addr + byte > len) {
+    //     os << name << " : " << std::to_string(default_value) << dimension;
+    //     return;
+    // }
+
+    ///@todo Set id.
+    if(cmd_or_status) {
+        std::string user_name;
+        std::string chip_name;
+        if(owner) {
+            ChipInfo* chip = static_cast<ChipInfo*>(owner);
+            chip_name = chip->label;
+            if(chip->owner) {
+                InsideCmdStatusUser* user = static_cast<InsideCmdStatusUser*>(chip->owner);
+                user_name = user->name();
+            }
+        }
+        os << "<label style=\"text-align: left;\">" << name << ": " << "</label>\n";
+        if(type) {
+            os << "<input type=\"text\" style=\"width:100px; font-size:12px; text-align: center;\"" 
+               << "data-user-name=\"" << user_name << "\""
+               << "data-chip-name=\"" << chip_name << "\""
+               << "data-item-name=\"" << name << "\"" 
+               << "class=\"cmd-text-input\" onblur=\"getTextValue(this)\""
+               << "value=\"" << std::to_string(default_value) << "\">\n";
+        }
+        else {
+            os << "<select style=\"width:100px; font-size:12px; text-align: center;\"" 
+               << "data-user-name=\"" << user_name << "\""
+               << "data-chip-name=\"" << chip_name << "\""
+               << "data-item-name=\"" << name << "\"" 
+               << "class=\"cmd-select-input\" onblur=\"getSelectValue(this)\">\n";
+            for(size_t i = 0; i < select_list.size(); ++i) {
+                os << "<option>" << select_list.at(i) << "</option>\n";
+            }
+            os << "</select>\n";
+        }
     }
     else {
         double resolved_value = 0;
@@ -300,11 +387,46 @@ void KeyInfo::describe(const char* data, size_t len,
             format_value_str = decimal_to_hex(format_value);
         }
         else {
-            format_value_str = double_to_string(format_value,precesion);
+            format_value_str = double_to_string(format_value, precesion);
+            if(list_num != 0) {
+                size_t num = std::stoi(format_value_str);
+                if(num >= 0 && num < select_list.size()) {
+                    format_value_str = select_list[num];
+                }
+                else {
+                    format_value_str += std::string("(!超出范围!)");
+                }
+            }
             format_value_str += dimension;
         }
         os << name << " : " << format_value_str;
     }
+
+}
+
+std::string get_first_xml_file(const std::string& dir_path) {
+    if(dir_path.empty()) {
+        return std::string();
+    }
+    DIR* dir = opendir(dir_path.c_str());
+    if(!dir) {
+        LOG_ERROR << "Failed to open directory: " << dir_path;
+        return std::string();
+    }
+    struct dirent* entry;
+    while((entry = readdir(dir)) != nullptr) {
+        if(entry->d_type == DT_REG && entry->d_name[0] != '.') {
+            size_t name_len = strlen(entry->d_name);
+            if(name_len >= 4 && 
+                strcmp(entry->d_name + name_len - 4, ".xml") == 0) {
+                std::string file_path = dir_path + '/';
+                file_path += std::string(entry->d_name); 
+                closedir(dir);
+                return file_path;
+            }
+        }
+    }
+    return std::string();
 }
 
 } // end namespace var

@@ -32,7 +32,7 @@ namespace var {
 struct KeyInfo {
 public:
     void describe(const char* data, size_t len,
-                  std::ostream& os, bool use_html);
+                  std::ostream& os, bool cmd_or_status);
                   
     std::string name;
     int         type;
@@ -44,14 +44,19 @@ public:
     double      offset;
     int         precesion;
     std::string dimension;
+    int         list_num;
+    std::vector<std::string> select_list;
 
+    // used for inside status.
     size_t      resolved_addr;
+
+    void*       owner;
 };
 
 struct ChipInfo {
 public:
     void describe(const char* data, size_t len,
-                  std::ostream& os, bool use_html);
+                  std::ostream& os, bool cmd_or_status);
 
 public:
     std::string             label;
@@ -60,6 +65,8 @@ public:
     std::vector<KeyInfo>    key_info_list;
 
     size_t                  index;
+
+    void*                   owner;
 };
 
 class InsideCmdStatusUser {
@@ -70,7 +77,7 @@ public:
     int parse(const char* data, size_t len);
 
     void describe(const char* data, size_t len,
-                  std::ostream& os, bool use_html);
+                  std::ostream& os, bool cmd_or_status);
 
     std::string name() const {
         return _user_name;
@@ -92,6 +99,8 @@ private:
     std::string           _user_name;
     size_t                _user_id;
 };
+
+std::string get_first_xml_file(const std::string& dir_path);
 
 } // end namespace var
 

@@ -133,6 +133,7 @@ src/CMakeFiles/var.dir/builtin/inside_cmd_service.cc.o
  ../net/base/Condition.h
  ../net/base/CountDownLatch.h
  ../net/base/CurrentThread.h
+ ../net/base/FileUtil.h
  ../net/base/LogStream.h
  ../net/base/Logging.h
  ../net/base/Mutex.h
@@ -160,12 +161,16 @@ src/CMakeFiles/var.dir/builtin/inside_cmd_service.cc.o
  ../src/builtin/tabbed.h
  ../src/server.h
  ../src/service.h
+ ../src/util/dir_reader_linux.h
+ ../src/util/json.hpp
  ../src/util/tinyxml2.h
  /home/zgx/Var/src/builtin/inside_cmd_service.cc
 src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o
  ../net/base/LogStream.h
  ../net/base/Logging.h
  ../net/base/StringPiece.h
+ ../net/base/StringSplitter.h
+ ../net/base/StringSplitterInl.h
  ../net/base/Timestamp.h
  ../net/base/Types.h
  ../net/base/copyable.h
@@ -176,6 +181,7 @@ src/CMakeFiles/var.dir/builtin/inside_cmd_status_user.cc.o
  ../net/http/http_url.h
  ../src/builtin/common.h
  ../src/builtin/inside_cmd_status_user.h
+ ../src/util/dir_reader_linux.h
  ../src/util/tinyxml2.h
  /home/zgx/Var/src/builtin/inside_cmd_status_user.cc
 src/CMakeFiles/var.dir/builtin/inside_status_service.cc.o

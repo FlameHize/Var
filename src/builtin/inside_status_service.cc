@@ -8,31 +8,6 @@
 
 namespace var {
 
-std::string get_first_xml_file(const std::string& dir_path) {
-    if(dir_path.empty()) {
-        return std::string();
-    }
-    DIR* dir = opendir(dir_path.c_str());
-    if(!dir) {
-        LOG_ERROR << "Failed to open directory: " << dir_path;
-        return std::string();
-    }
-    struct dirent* entry;
-    while((entry = readdir(dir)) != nullptr) {
-        if(entry->d_type == DT_REG && entry->d_name[0] != '.') {
-            size_t name_len = strlen(entry->d_name);
-            if(name_len >= 4 && 
-                strcmp(entry->d_name + name_len - 4, ".xml") == 0) {
-                std::string file_path = dir_path + '/';
-                file_path += std::string(entry->d_name); 
-                closedir(dir);
-                return file_path;
-            }
-        }
-    }
-    return std::string();
-}
-
 static bool kInitFlag = false;
 const std::string InsideStatusXMLFileSaveDir = "data/inside_status/";
 
@@ -488,7 +463,7 @@ void InsideStatusService::show_chip_info(net::HttpRequest* request,
         return;
     }
     BufPtr buf = GetData();
-    chip.describe(buf->peek(), buf->readableBytes(), os, use_html);
+    chip.describe(buf->peek(), buf->readableBytes(), os, false);
     response->set_body(os);
 }
 
@@ -496,6 +471,11 @@ void InsideStatusService::default_method(net::HttpRequest* request,
                                          net::HttpResponse* response) {
     // Just init once resource.
     if(!kInitFlag) {
+        if(!DirReaderLinux::CreateDirectoryIfNotExists(InsideStatusXMLFileSaveDir.c_str())) {
+            LOG_ERROR << "Inside status xml file" << InsideStatusXMLFileSaveDir 
+                      << "dir not existed";
+            return;
+        }
         std::vector<string> user_dir_paths;
         if(!DirReaderLinux::ListChildDirectorys(InsideStatusXMLFileSaveDir.c_str(), 
                                                 user_dir_paths)) {
@@ -597,7 +577,7 @@ void InsideStatusService::default_method(net::HttpRequest* request,
     
     // Resolved user's all chip info internal.
     BufPtr buf = GetData();
-    user->describe(buf->peek(), buf->readableBytes(), os, use_html);
+    user->describe(buf->peek(), buf->readableBytes(), os, false);
     if(use_html) {
         os << "</body></html>";
     }
