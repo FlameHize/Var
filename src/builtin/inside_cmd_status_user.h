@@ -34,27 +34,34 @@ public:
     void describe(const char* data, size_t len,
                   std::ostream& os, bool cmd_or_status);
                   
-    std::string name;
-    int         type;
-    int         byte;
-    bool        sign;
-    int         default_value;
-    int         enable;
-    double      unit;
-    double      offset;
-    int         precesion;
-    std::string dimension;
-    int         list_num;
-    std::vector<std::string> select_list;
+    std::string                 name;
+    int                         type;
+    int                         byte;
+    bool                        sign;
+    int                         default_value;
+    int                         enable;
+    double                      unit;
+    double                      offset;
+    int                         precesion;
+    std::string                 dimension;
+    int                         list_num;
+    std::vector<std::string>    select_list;
 
     // used for inside status.
-    size_t      resolved_addr;
+    size_t                      resolved_addr;
 
-    void*       owner;
+    // used for inside cmd.
+    int                         set_value;
+
+    void*                       owner;
+
+    tinyxml2::XMLElement*       xml_element;
 };
 
 struct ChipInfo {
 public:
+    ChipInfo();
+    ~ChipInfo();
     void describe(const char* data, size_t len,
                   std::ostream& os, bool cmd_or_status);
 
@@ -62,16 +69,19 @@ public:
     std::string             label;
     int                     key_num;
     int                     field_byte;
-    std::vector<KeyInfo>    key_info_list;
+    std::vector<KeyInfo*>   key_info_list;
 
     size_t                  index;
 
     void*                   owner;
+
+    tinyxml2::XMLElement*   xml_element;
 };
 
 class InsideCmdStatusUser {
 public: 
     InsideCmdStatusUser(const std::string& user_name, size_t user_id);
+    ~InsideCmdStatusUser();
 
     int parse(const std::string& path);
     int parse(const char* data, size_t len);
@@ -86,18 +96,24 @@ public:
         return _user_id;
     }
 
-    const std::vector<ChipInfo>& chip_group() const {
+    const std::vector<ChipInfo*>& chip_group() const {
         return _chip_info_list;
     }
 
-private:
-    int parse_internal(tinyxml2::XMLDocument& doc);
+    tinyxml2::XMLDocument* xml_doc() {
+        return _doc;
+    }
 
 private:
-    std::vector<ChipInfo> _chip_info_list;
+    int parse_internal(tinyxml2::XMLDocument* doc);
 
-    std::string           _user_name;
-    size_t                _user_id;
+private:
+    std::vector<ChipInfo*>      _chip_info_list;
+
+    std::string                 _user_name;
+    size_t                      _user_id;
+
+    tinyxml2::XMLDocument*      _doc;
 };
 
 std::string get_first_xml_file(const std::string& dir_path);

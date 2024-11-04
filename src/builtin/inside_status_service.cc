@@ -443,27 +443,25 @@ void InsideStatusService::show_chip_info(net::HttpRequest* request,
     if(!chip_index) {
         return;
     }
-    bool find = false;
-    ChipInfo chip;
+    ChipInfo* chip = nullptr;
     for(size_t i = 0; i < _user_list.size(); ++i) {
         const InsideCmdStatusUser* user = _user_list.at(i);
-        const std::vector<ChipInfo>& chip_group = user->chip_group();
+        const std::vector<ChipInfo*>& chip_group = user->chip_group();
         for(size_t j = 0; j < chip_group.size(); ++j) {
-            const ChipInfo& tmp = chip_group.at(j);
-            if(static_cast<int>(tmp.index) == std::stoi(*chip_index)) {
-                find = true;
+            ChipInfo* tmp = chip_group.at(j);
+            if(static_cast<int>(tmp->index) == std::stoi(*chip_index)) {
                 chip = tmp;
                 break;
             }
         }
     }
-    if(!find) {
+    if(!chip) {
         os << "<script>alert('未找到当前板卡信息')</script>";
         response->set_body(os);
         return;
     }
     BufPtr buf = GetData();
-    chip.describe(buf->peek(), buf->readableBytes(), os, false);
+    chip->describe(buf->peek(), buf->readableBytes(), os, false);
     response->set_body(os);
 }
 

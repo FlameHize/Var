@@ -14,13 +14,30 @@ InsideCmdStatusUser::InsideCmdStatusUser(const std::string& user_name,
     , _user_id(user_id) {
 }
 
+InsideCmdStatusUser::~InsideCmdStatusUser() {
+    if(_doc) {
+        delete _doc;
+        _doc = nullptr;
+    }
+    for(size_t i = 0; i < _chip_info_list.size(); ++i) {
+        ChipInfo* chip = _chip_info_list.at(i);
+        if(chip) {
+            delete chip;
+            chip = nullptr;
+        }
+    }
+    _chip_info_list.clear();
+}
+
 int InsideCmdStatusUser::parse(const std::string& path) {
     if(path.empty()) {
         return -1;
     }
-    XMLDocument doc;
-    XMLError load_result = doc.LoadFile(path.c_str());
+    XMLDocument* doc = new XMLDocument;
+    XMLError load_result = doc->LoadFile(path.c_str());
     if(load_result != XML_SUCCESS) {
+        delete doc;
+        doc = nullptr;
         LOG_ERROR << "Failed to load " << path << ", error code: " << load_result;
         return load_result;
     }
@@ -31,21 +48,24 @@ int InsideCmdStatusUser::parse(const char* data, size_t len) {
     if(!data) {
         return -1;
     }
-    XMLDocument doc;
-    XMLError load_result = doc.Parse(data, len);
+    XMLDocument* doc = new XMLDocument;
+    XMLError load_result = doc->Parse(data, len);
     if(load_result != XML_SUCCESS) {
+        delete doc;
+        doc = nullptr;
         LOG_ERROR << "Failed to load data" << ", error code: " << load_result;
         return load_result;
     }
     return parse_internal(doc);
 }
 
-int InsideCmdStatusUser::parse_internal(XMLDocument& doc) {
-    XMLElement* field_num_element = doc.RootElement();
+int InsideCmdStatusUser::parse_internal(XMLDocument* doc) {
+    XMLElement* field_num_element = doc->RootElement();
     if(!field_num_element) {
         LOG_ERROR << "Parameter[FieldNum] is NULL";
         return -1;
     }
+    _doc = doc;
     int field_num = field_num_element->IntAttribute("FieldNum");
     if(field_num != field_num_element->ChildElementCount()) {
         LOG_WARN << "Setting FieldNum is " << field_num 
@@ -56,12 +76,13 @@ int InsideCmdStatusUser::parse_internal(XMLDocument& doc) {
     for(XMLElement* elem = field_num_element->FirstChildElement();
         elem; elem = elem->NextSiblingElement()) {
 
-        ChipInfo chip_info;
-        chip_info.owner = (void*)this;
-        chip_info.label = elem->Attribute("Label");
-        chip_info.key_num = elem->IntAttribute("KeyNum");
-        chip_info.field_byte = elem->IntAttribute("FieldByte");
-        chip_info.index = chip_count++;
+        ChipInfo* chip_info = new ChipInfo;
+        chip_info->xml_element = elem;
+        chip_info->owner = (void*)this;
+        chip_info->label = elem->Attribute("Label");
+        chip_info->key_num = elem->IntAttribute("KeyNum");
+        chip_info->field_byte = elem->IntAttribute("FieldByte");
+        chip_info->index = chip_count++;
 
 #ifdef DEBUG
         if(chip_info.key_num != elem->ChildElementCount()) {
@@ -70,38 +91,42 @@ int InsideCmdStatusUser::parse_internal(XMLDocument& doc) {
                      << elem->ChildElementCount();
         }
 #endif
-        size_t value_addr = chip_info.index * kFixedChipBytes;
+        size_t value_addr = chip_info->index * kFixedChipBytes;
         for(XMLElement* key_elem = elem->FirstChildElement();
             key_elem; key_elem = key_elem->NextSiblingElement()) {
-            KeyInfo key_info;
-            key_info.owner = (void*)&chip_info;
-            key_info.name = key_elem->FirstChildElement("name")->GetText();
-            key_info.type = key_elem->FirstChildElement("type")->IntText();
-            key_info.byte = key_elem->FirstChildElement("byte")->IntText();
-            key_info.sign =  key_elem->FirstChildElement("sign")->IntText();
-            key_info.default_value =  key_elem->FirstChildElement("default")->IntText();
-            key_info.enable = key_elem->FirstChildElement("enable")->IntText();
-            key_info.unit = key_elem->FirstChildElement("unit")->DoubleText();
-            key_info.offset = key_elem->FirstChildElement("offset")->DoubleText();
-            key_info.precesion = key_elem->FirstChildElement("precision")->IntText();
+            KeyInfo* key_info = new KeyInfo;
+            key_info->xml_element = key_elem;
+            key_info->owner = (void*)chip_info;
+            key_info->name = key_elem->FirstChildElement("name")->GetText();
+            key_info->type = key_elem->FirstChildElement("type")->IntText();
+            key_info->byte = key_elem->FirstChildElement("byte")->IntText();
+            key_info->sign =  key_elem->FirstChildElement("sign")->IntText();
+            key_info->default_value =  key_elem->FirstChildElement("default")->IntText();
+            key_info->enable = key_elem->FirstChildElement("enable")->IntText();
+            key_info->unit = key_elem->FirstChildElement("unit")->DoubleText();
+            key_info->offset = key_elem->FirstChildElement("offset")->DoubleText();
+            key_info->precesion = key_elem->FirstChildElement("precision")->IntText();
             
             const char* dimension = key_elem->FirstChildElement("dimension")->GetText();
             if(dimension) {
-                key_info.dimension = dimension;
+                key_info->dimension = dimension;
             }
 
             XMLElement* list_elem = key_elem->FirstChildElement("list");
-            key_info.list_num = std::stoi(list_elem->Attribute("ListNum"));
+            key_info->list_num = std::stoi(list_elem->Attribute("ListNum"));
             for(XMLElement* select_elem = list_elem->FirstChildElement(); 
                 select_elem; select_elem = select_elem->NextSiblingElement()) {
-                key_info.select_list.push_back(select_elem->GetText());
+                key_info->select_list.push_back(select_elem->GetText());
             }
 
-            // resolved_addr calculate.
-            key_info.resolved_addr = value_addr;
-            value_addr += key_info.byte;
+            // Resolved_addr calculate for inside status.
+            key_info->resolved_addr = value_addr;
+            value_addr += key_info->byte;
 
-            chip_info.key_info_list.push_back(key_info);
+            // Init set value for inside cmd.
+            key_info->set_value = -1;
+
+            chip_info->key_info_list.push_back(key_info);
         }
         _chip_info_list.push_back(chip_info);
     }
@@ -172,10 +197,10 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     "    <thead>\n"  
     "        <tr>\n"; 
     for(size_t i = 0; i < _chip_info_list.size(); ++i) {
-        const ChipInfo& chip = _chip_info_list.at(i);
-        os << "<th onclick=\"showContent('" << chip.label 
+        const ChipInfo* chip = _chip_info_list.at(i);
+        os << "<th onclick=\"showContent('" << chip->label 
            << "'); changeColor(this)\" class=\"content-tab\">" 
-           << chip.label << "</th>\n"; 
+           << chip->label << "</th>\n"; 
     } 
     os << "  </tr>\n"  
     "    </thead>\n"  
@@ -183,11 +208,11 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
   
     os << "<div id=\"content-container\">\n";
     for(size_t i = 0; i < _chip_info_list.size(); ++i) {
-        ChipInfo& chip = _chip_info_list.at(i);
-        os << "<div id=\"" << chip.label << "\"";
+        ChipInfo* chip = _chip_info_list.at(i);
+        os << "<div id=\"" << chip->label << "\"";
         os << "class=\"content-section\"";
-        os << "data-index=\"" << chip.index << "\">\n";
-        chip.describe(data, len, os, cmd_or_status);
+        os << "data-index=\"" << chip->index << "\">\n";
+        chip->describe(data, len, os, cmd_or_status);
         os << "</div>\n";
     }
     os << "</div>\n"  
@@ -229,25 +254,59 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     "   }\n"
     "</script>\n";  
 
-    ///@todo 发送ajax请求更新数据值
-    ///@bug chipName error.
     if(cmd_or_status) {
         os << "<button class=\"fixed-button\">发送</button>\n"
         "<script>\n"
+        "   function updateItem(userName, chipIndex, itemName, setValue) {\n"
+        "       $.ajax({\n"
+        "       url: '/inside_cmd/update_chip_info',\n"
+        "       type: \"POST\",\n"
+        "       data: JSON.stringify({\n"
+        "           userName: userName,\n"
+        "           chipIndex: chipIndex,\n"
+        "           itemName: itemName,\n"
+        "           setValue: setValue\n"
+        "       }),\n"
+        "       processData: false,\n"
+        "       contentType: false,\n"
+        "       success: function(response) {\n"
+        "       },\n"
+        "       error: function(error) {\n"
+        "           var errStr = \"当前指令数据更新失败: \" + error.responseText;"
+        "           alert(errStr);\n"
+        "       }\n"
+        "       });\n"
+        "   }\n"
         "   function getTextValue(element) {\n"
-        "       console.log(element.value);\n"
-        "       console.log(element.dataset.userName);\n"
-        "       console.log(element.dataset.chipName);\n"
-        "       console.log(element.dataset.itemName);\n"
+        "       var userName = element.dataset.userName;\n"
+        "       var chipIndex = element.dataset.chipIndex;\n"
+        "       var itemName = element.dataset.itemName;\n"
+        "       var setValue = element.value.toString();\n"
+        "       updateItem(userName, chipIndex, itemName, setValue);\n"
         "   }\n"
         "   function getSelectValue(element) {\n"
-        "       console.log(element.selectedIndex);\n"
-        "       console.log(element.dataset.userName);\n"
-        "       console.log(element.dataset.chipName);\n"
-        "       console.log(element.dataset.itemName);\n"
+        "       var userName = element.dataset.userName;\n"
+        "       var chipIndex = element.dataset.chipIndex;\n"
+        "       var itemName = element.dataset.itemName;\n"
+        "       var setValue = element.selectedIndex.toString();\n"
+        "       updateItem(userName, chipIndex, itemName, setValue);\n"
         "   }\n"
         "</script>\n";
     }
+}
+
+ChipInfo::ChipInfo() {
+}
+
+ChipInfo::~ChipInfo() {
+    for(size_t i = 0; i < key_info_list.size(); ++i) {
+        KeyInfo* key = key_info_list.at(i);
+        if(key) {
+            delete key;
+            key = nullptr;
+        }
+    }
+    key_info_list.clear();
 }
 
 void ChipInfo::describe(const char* data, size_t len,
@@ -256,12 +315,12 @@ void ChipInfo::describe(const char* data, size_t len,
     int rows = 16;
     int count = 0;
     for(size_t i = 0; i < key_info_list.size(); ++i) {
-        KeyInfo& info = key_info_list.at(i);
+        KeyInfo* info = key_info_list.at(i);
         if(count == 0) {
             os << "<table>\n";
         }
         os << "<tr><td>\n";
-        info.describe(data, len, os, cmd_or_status);
+        info->describe(data, len, os, cmd_or_status);
         os << "</td></tr>\n"; 
         ++count;
         if(count == rows) {
@@ -290,10 +349,10 @@ void KeyInfo::describe(const char* data, size_t len,
     ///@todo Set id.
     if(cmd_or_status) {
         std::string user_name;
-        std::string chip_name;
+        std::string chip_index;
         if(owner) {
             ChipInfo* chip = static_cast<ChipInfo*>(owner);
-            chip_name = chip->label;
+            chip_index = std::to_string(chip->index);
             if(chip->owner) {
                 InsideCmdStatusUser* user = static_cast<InsideCmdStatusUser*>(chip->owner);
                 user_name = user->name();
@@ -303,7 +362,7 @@ void KeyInfo::describe(const char* data, size_t len,
         if(type) {
             os << "<input type=\"text\" style=\"width:100px; font-size:12px; text-align: center;\"" 
                << "data-user-name=\"" << user_name << "\""
-               << "data-chip-name=\"" << chip_name << "\""
+               << "data-chip-index=\"" << chip_index << "\""
                << "data-item-name=\"" << name << "\"" 
                << "class=\"cmd-text-input\" onblur=\"getTextValue(this)\""
                << "value=\"" << std::to_string(default_value) << "\">\n";
@@ -311,7 +370,7 @@ void KeyInfo::describe(const char* data, size_t len,
         else {
             os << "<select style=\"width:100px; font-size:12px; text-align: center;\"" 
                << "data-user-name=\"" << user_name << "\""
-               << "data-chip-name=\"" << chip_name << "\""
+               << "data-chip-index=\"" << chip_index << "\""
                << "data-item-name=\"" << name << "\"" 
                << "class=\"cmd-select-input\" onblur=\"getSelectValue(this)\">\n";
             for(size_t i = 0; i < select_list.size(); ++i) {

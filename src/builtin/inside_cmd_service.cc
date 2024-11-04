@@ -27,6 +27,8 @@ InsideCmdService::InsideCmdService()
                 this, std::placeholders::_1, std::placeholders::_2));       
     AddMethod("show_chip_info", std::bind(&InsideCmdService::show_chip_info,
                 this, std::placeholders::_1, std::placeholders::_2)); 
+    AddMethod("update_chip_info", std::bind(&InsideCmdService::update_chip_info,
+                this, std::placeholders::_1, std::placeholders::_2)); 
 }
 
 void InsideCmdService::add_user(net::HttpRequest* request,
@@ -443,28 +445,103 @@ void InsideCmdService::show_chip_info(net::HttpRequest* request,
     if(!chip_index) {
         return;
     }
-    bool find = false;
-    ChipInfo chip;
+    ChipInfo* chip = nullptr;
     for(size_t i = 0; i < _user_list.size(); ++i) {
         const InsideCmdStatusUser* user = _user_list.at(i);
-        const std::vector<ChipInfo>& chip_group = user->chip_group();
+        const std::vector<ChipInfo*>& chip_group = user->chip_group();
         for(size_t j = 0; j < chip_group.size(); ++j) {
-            const ChipInfo& tmp = chip_group.at(j);
-            if(static_cast<int>(tmp.index) == std::stoi(*chip_index)) {
-                find = true;
+            ChipInfo* tmp = chip_group.at(j);
+            if(static_cast<int>(tmp->index) == std::stoi(*chip_index)) {
                 chip = tmp;
                 break;
             }
         }
     }
-    if(!find) {
+    if(!chip) {
         os << "<script>alert('未找到当前板卡信息')</script>";
         response->set_body(os);
         return;
     }
     BufPtr buf = GetData();
-    chip.describe(buf->peek(), buf->readableBytes(), os, true);
+    chip->describe(buf->peek(), buf->readableBytes(), os, true);
     response->set_body(os);
+}
+
+void InsideCmdService::update_chip_info(net::HttpRequest* request,
+                                        net::HttpResponse* response) {
+    std::string body_str = request->body().retrieveAllAsString();
+    nlohmann::json body_json = nlohmann::json::parse(body_str);
+    std::string user_name = body_json["userName"];
+    std::string chip_index = body_json["chipIndex"];
+    std::string item_name = body_json["itemName"];
+    std::string set_value = body_json["setValue"];
+    
+    net::BufferStream os;
+    if(user_name.empty() || chip_index.empty() ||
+        item_name.empty() || set_value.empty()) {
+        os << "Upload chip info is empty";
+        response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
+        response->set_body(os);
+        return;
+    }
+    InsideCmdStatusUser* user = nullptr;
+    for(size_t i = 0; i < _user_list.size(); ++i) {
+        InsideCmdStatusUser* tmp = _user_list.at(i);
+        if(tmp->name() == user_name) {
+            user = tmp;
+            break;
+        }
+    }
+    if(!user) {
+        os << "Could not found user which name is " << user_name;
+        response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
+        response->set_body(os);
+        return;
+    }
+    const std::vector<ChipInfo*>& chips = user->chip_group();
+    ChipInfo* chip = nullptr;
+    for(size_t i = 0; i < chips.size(); ++i) {
+        ChipInfo* tmp = chips.at(i);
+        if(tmp->index == static_cast<size_t>(std::stoi(chip_index))) {
+            chip = tmp;
+            break;
+        }
+    }
+    if(!chip) {
+        os << "Could not found chip which index is " << chip_index;
+        response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
+        response->set_body(os);
+        return;
+    }
+    std::vector<KeyInfo*>& infos = chip->key_info_list;
+    KeyInfo* info = nullptr;
+    for(size_t i = 0; i < infos.size(); ++i) {
+        KeyInfo* tmp = infos.at(i);
+        if(tmp->name == item_name) {
+            info = tmp;
+            break;
+        }
+    }
+    if(!chip) {
+        os << "Could not found item which index is " << item_name;
+        response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
+        response->set_body(os);
+        return;
+    }
+    info->set_value = std::stoi(set_value);
+
+    // ///@cite just for tinyxml2 test.
+    // info->default_value = info->set_value;
+    // tinyxml2::XMLElement* elem = info->xml_element->FirstChildElement("default");
+    // if(elem) {
+    //     elem->SetText(info->default_value);
+    // }
+    // std::string user_dir_path = InsideCmdXMLFileSaveDir + user_name + '_' + std::to_string(user->id());
+    // std::string file_name = get_first_xml_file(user_dir_path);
+    // tinyxml2::XMLError error = user->xml_doc()->SaveFile(file_name.c_str());
+    // if(error == tinyxml2::XML_SUCCESS) {
+    //     LOG_INFO << "Save XML file success";
+    // }
 }
 
 void InsideCmdService::default_method(net::HttpRequest* request,
