@@ -11,8 +11,12 @@ namespace var {
 static bool kInitFlag = false;
 const std::string InsideCmdXMLFileSaveDir = "data/inside_cmd/";
 
-InsideCmdService::InsideCmdService() 
-    : _data(std::make_shared<net::Buffer>()) {
+void default_cmd_recv_process(const char* data, size_t len, size_t index) {
+    LOG_INFO << "Cmd belong to chip index: " << index
+             << ", data len is " << len;
+}
+
+InsideCmdService::InsideCmdService() {
     AddMethod("add_user", std::bind(&InsideCmdService::add_user,
                 this, std::placeholders::_1, std::placeholders::_2));
     AddMethod("add_user_internal", std::bind(&InsideCmdService::add_user_internal,
@@ -29,6 +33,13 @@ InsideCmdService::InsideCmdService()
                 this, std::placeholders::_1, std::placeholders::_2)); 
     AddMethod("update_chip_info", std::bind(&InsideCmdService::update_chip_info,
                 this, std::placeholders::_1, std::placeholders::_2)); 
+    AddMethod("send", std::bind(&InsideCmdService::send,
+                this, std::placeholders::_1, std::placeholders::_2)); 
+    register_cmd_recv_callback(default_cmd_recv_process);
+}
+
+void InsideCmdService::register_cmd_recv_callback(const CmdRecvCallback& cb) {
+    _cmd_recv_cb = cb;
 }
 
 void InsideCmdService::add_user(net::HttpRequest* request,
@@ -49,7 +60,7 @@ void InsideCmdService::add_user(net::HttpRequest* request,
         "       <input type=\"text\" id=\"user-name\" name=\"user-name\" placeholder=\"请输入英文字符\">\n"
         "       <label for=\"user-id\">板卡组起始序号:</label>\n"
         "       <input type=\"text\" id=\"user-id\" name=\"user-id\" placeholder=\"请输入数字\">\n"
-        "       <label for=\"user-file\">所属XML文件:</label>\n"
+        "       <label for=\"user-file\">所属内部指令文件:</label>\n"
         "       <input type=\"file\" id=\"user-file\" name=\"user-file\">\n"
         "       <button type=\"button\" onclick=\"submitForm()\">确定</button>\n"
         "</form>\n"
@@ -79,7 +90,7 @@ void InsideCmdService::add_user(net::HttpRequest* request,
         "        return;\n"
         "    }\n"
         "    if(fileName == null) {\n"
-        "        alert('用户未选择所属XML文件，请选择');\n"
+        "        alert('用户未选择所属内部指令XML文件，请选择');\n"
         "        return;\n"
         "    }\n"
         "    if(fileContent.trim() == '') {\n"
@@ -149,6 +160,16 @@ void InsideCmdService::add_user_internal(net::HttpRequest* request,
         response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
         response->set_body(os);
         return;
+    }
+
+    for(auto iter = _user_list.begin(); iter != _user_list.end(); ++iter) {
+        InsideCmdStatusUser* tmp = *iter;
+        if(tmp->name() == user_name) {
+            os << "User " << user_name << " has already added, do not add repeat";
+            response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
+            response->set_body(os);
+            return;
+        }
     }
 
     InsideCmdStatusUser *user = new InsideCmdStatusUser(user_name, std::stoi(user_id));
@@ -247,9 +268,16 @@ void InsideCmdService::delete_user(net::HttpRequest* request,
                 StringSplitter sp2(user_name_id, '_');
                 std::string user_name(sp2.field(), sp2.length());
                 if(user_name == *name) {
-                    // Do not delete file memory now, because
-                    // other users may using this at same time.
                     DirReaderLinux::DeleteDirectory(user_path.c_str());
+                    break;
+                }
+            }
+            for(auto iter = _user_list.begin(); iter != _user_list.end(); ++iter) {
+                InsideCmdStatusUser* tmp = *iter;
+                if(tmp->name() == *name) {
+                    _user_list.erase(iter);
+                    delete tmp;
+                    tmp = nullptr;
                     break;
                 }
             }
@@ -294,7 +322,7 @@ void InsideCmdService::update_file(net::HttpRequest* request,
 
     if(use_html) {
         os << "<form id=\"user-form\" enctype=\"multipart/form-data\">\n"
-        "       <label for=\"user-file\">所属XML文件:</label>\n"
+        "       <label for=\"user-file\">所属内部指令XML文件:</label>\n"
         "       <input type=\"file\" id=\"user-file\" name=\"user-file\" required>\n"
         "       <button type=\"button\" onclick=\"submitForm()\">确定</button>\n"
         "</form>\n"
@@ -314,7 +342,7 @@ void InsideCmdService::update_file(net::HttpRequest* request,
         "});\n"
         "function submitForm() {\n"
         "    if(fileName == null) {\n"
-        "        alert('用户未选择所属XML文件，请选择');\n"
+        "        alert('用户未选择所属内部指令XML文件，请选择');\n"
         "        return;\n"
         "    }\n"
         "    if(fileContent.trim() == '') {\n"
@@ -462,8 +490,8 @@ void InsideCmdService::show_chip_info(net::HttpRequest* request,
         response->set_body(os);
         return;
     }
-    BufPtr buf = GetData();
-    chip->describe(buf->peek(), buf->readableBytes(), os, true);
+    net::Buffer buf;
+    chip->describe(buf.peek(), buf.readableBytes(), os, true);
     response->set_body(os);
 }
 
@@ -529,19 +557,164 @@ void InsideCmdService::update_chip_info(net::HttpRequest* request,
         return;
     }
     info->set_value = std::stoi(set_value);
+}
 
-    // ///@cite just for tinyxml2 test.
-    // info->default_value = info->set_value;
-    // tinyxml2::XMLElement* elem = info->xml_element->FirstChildElement("default");
-    // if(elem) {
-    //     elem->SetText(info->default_value);
-    // }
-    // std::string user_dir_path = InsideCmdXMLFileSaveDir + user_name + '_' + std::to_string(user->id());
-    // std::string file_name = get_first_xml_file(user_dir_path);
-    // tinyxml2::XMLError error = user->xml_doc()->SaveFile(file_name.c_str());
-    // if(error == tinyxml2::XML_SUCCESS) {
-    //     LOG_INFO << "Save XML file success";
-    // }
+void InsideCmdService::send(net::HttpRequest* request,
+                            net::HttpResponse* response) {
+    std::string body_str = request->body().retrieveAllAsString();
+    nlohmann::json body_json = nlohmann::json::parse(body_str);
+    std::string user_name = body_json["userName"];
+    net::BufferStream os;
+    if(user_name.empty()) {
+        os << "Send user cmd data is empty";
+        response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
+        response->set_body(os);
+        return;
+    }
+    InsideCmdStatusUser* user = nullptr;
+    for(size_t i = 0; i < _user_list.size(); ++i) {
+        InsideCmdStatusUser* tmp = _user_list.at(i);
+        if(tmp->name() == user_name) {
+            user = tmp;
+            break;
+        }
+    }
+    if(!user) {
+        os << "Could not found user which name is " << user_name;
+        response->header().set_status_code(net::HTTP_STATUS_BAD_REQUEST);
+        response->set_body(os);
+        return;
+    }
+    const std::vector<ChipInfo*>& chips = user->chip_group();
+
+    // Set send data buf.
+    std::vector<net::Buffer> bufs;
+    for(size_t i = 0; i < chips.size(); ++i) {
+        ChipInfo* chip = chips.at(i);
+        std::vector<KeyInfo*>& infos = chip->key_info_list;
+        int field_bytes = chip->field_byte;
+        int already_bytes = 0;
+        char c = 0;
+        net::Buffer buf;
+
+        for(size_t j = 0; j < infos.size(); ++j) {
+            KeyInfo* info = infos.at(j);
+            int byte = info->byte;
+            bool sign = info->sign;
+            double unit = info->unit;
+
+            int resolved_value = 0;
+            if(info->set_value != -1) {
+                resolved_value = info->set_value / unit;
+            }
+            else {
+                resolved_value = info->default_value / unit;
+            }
+            switch (byte) {
+                case 1: {
+                    if(sign) {
+                        int8_t value = resolved_value;
+                        buf.append((char*)&value, sizeof(value));
+                    }
+                    else {
+                        uint8_t value = resolved_value;
+                        buf.append((char*)&value, sizeof(value));
+                    }
+                    break;
+                }
+                case 2: {
+                    if(sign) {
+                        int16_t value = resolved_value;
+                        buf.append((char*)&value, sizeof(value));
+                    }
+                    else {
+                        uint16_t value = resolved_value;
+                        buf.append((char*)&value, sizeof(value));
+                    }
+                    break;
+                }
+                case 4: {
+                    if(sign) {
+                        int32_t value = resolved_value;
+                        buf.append((char*)&value, sizeof(value));
+                    }
+                    else {
+                        uint32_t value = resolved_value;
+                        buf.append((char*)&value, sizeof(value));
+                    }
+                    break;
+                }
+                case 8: {
+                    if(sign) {
+                        int64_t value = resolved_value;
+                        buf.append((char*)&value, sizeof(value));
+                    }
+                    else {
+                        uint64_t value = resolved_value;
+                        buf.append((char*)&value, sizeof(value));
+                    }
+                    break;
+                }
+                default: {
+                    // other bytes set to 0.
+                    for(int i = 0; i < byte; ++i) {
+                        buf.append((char*)&c, sizeof(c));
+                    }
+                }
+            }
+            already_bytes += byte;
+        }
+        // Supply data.
+        if(already_bytes != field_bytes) {
+            int left = 0;
+            if(already_bytes < field_bytes) {
+                left = field_bytes - already_bytes;
+                for(int i = 0; i < left; ++i) {
+                    buf.append((char*)&c, sizeof(c));
+                }
+            }
+            else {
+                left = already_bytes - field_bytes;
+                buf.retrieve(left);
+            }
+        }
+        bufs.push_back(buf);
+    }
+
+    // User callback.
+    size_t index = user->id();
+    for(size_t i = 0; i < bufs.size(); ++i) {
+        net::Buffer& buf = bufs.at(i);
+        _cmd_recv_cb(buf.peek(), buf.readableBytes(), index++);
+    }
+
+    // Deserialize xml data to file.
+    for(size_t i = 0; i < chips.size(); ++i) {
+        ChipInfo* chip = chips.at(i);
+        std::vector<KeyInfo*>& infos = chip->key_info_list;
+        for(size_t j = 0; j < infos.size(); ++j) {
+            KeyInfo* info = infos.at(j);
+            tinyxml2::XMLElement* elem = info->xml_element->FirstChildElement("default");
+            if(!elem) {
+                LOG_WARN << user_name << '-' << chip->label << '-' << info->name
+                         << ": could not found default xml node";
+                continue;
+            }
+            int user_set_value = info->set_value;
+            if(user_set_value == -1) {
+                continue;
+            }
+            elem->SetText(user_set_value);
+        }
+    }
+    std::string user_path = InsideCmdXMLFileSaveDir + user_name;
+    user_path += ('_' + std::to_string(user->id()));
+    std::string file_name = get_first_xml_file(user_path);
+    tinyxml2::XMLError error = user->xml_doc()->SaveFile(file_name.c_str());
+    if(error != tinyxml2::XML_SUCCESS) {
+        LOG_ERROR << "Save " << user_name << "'s new cmd xml file failed";
+    }
+    return;
 }
 
 void InsideCmdService::default_method(net::HttpRequest* request,
@@ -653,8 +826,8 @@ void InsideCmdService::default_method(net::HttpRequest* request,
     }
     
     // Resolved user's all chip info internal.
-    BufPtr buf = GetData();
-    user->describe(buf->peek(), buf->readableBytes(), os, true);
+    net::Buffer buf;
+    user->describe(buf.peek(), buf.readableBytes(), os, true);
     if(use_html) {
         os << "</body></html>";
     }
@@ -665,21 +838,6 @@ void InsideCmdService::GetTabInfo(TabInfoList* info_list) const {
     TabInfo* info = info_list->add();
     info->path = "/inside_cmd";
     info->tab_name = "内部指令";
-}
-
-void InsideCmdService::SetData(const char* data, size_t len) {
-    std::lock_guard lock(_mutex);
-    if(!_data.unique()) {
-        BufPtr new_data(new net::Buffer(*_data));
-        _data.swap(new_data);
-    }
-    _data->retrieveAll();
-    _data->append(data, len);
-}
-
-InsideCmdService::BufPtr InsideCmdService::GetData() {
-    std::lock_guard lock(_mutex);
-    return _data;
 }
 
 } // end namespace var

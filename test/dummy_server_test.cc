@@ -37,6 +37,13 @@ TEST(DummyServerTest, StartDummyServer) {
     var::Window<var::Adder<int>> window_adder("FpgaWindow", &adder, 10);
     ///@bug expose name failed.
     // var::LatencyRecorder recorder("DSP");
+
+    auto cmd_callback = [](const char* data, size_t len, size_t index) {
+        LOG_INFO << "Registered cmd callback";
+        LOG_INFO << "Cmd belong to chip index: " << index
+                 << ", data len is " << len;
+    };
+    RegisterInsideCmdCallback(cmd_callback);
     
     var::net::Buffer buf;
     char c = 1;

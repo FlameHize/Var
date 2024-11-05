@@ -23,14 +23,17 @@
 #include "src/service.h"
 #include "src/builtin/inside_cmd_status_user.h"
 #include <mutex>
+#include <functional>
 
 namespace var {
 
 class InsideCmdService : public Service {
 public:
-    typedef std::shared_ptr<net::Buffer> BufPtr;
+    typedef std::function<void(const char*, size_t, size_t)> CmdRecvCallback;
 
     InsideCmdService();
+
+    void register_cmd_recv_callback(const CmdRecvCallback& cb);
 
     void add_user(net::HttpRequest* request,
                   net::HttpResponse* response);
@@ -56,19 +59,17 @@ public:
     void update_chip_info(net::HttpRequest* request,
                           net::HttpResponse* response);
 
+    void send(net::HttpRequest* request,
+              net::HttpResponse* response);
+
     void default_method(net::HttpRequest* request,
                         net::HttpResponse* response) override;
 
     void GetTabInfo(TabInfoList*) const override;
 
-    // Used for resolved data transfer.
-    void SetData(const char* data, size_t len);
-    BufPtr GetData();
-
 private:
-    std::vector<InsideCmdStatusUser*> _user_list;
-    BufPtr _data;
-    std::mutex _mutex;
+    std::vector<InsideCmdStatusUser*>   _user_list;
+    CmdRecvCallback                     _cmd_recv_cb;
 };
 
 } // end namespace var

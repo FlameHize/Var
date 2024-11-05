@@ -255,8 +255,26 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
     "</script>\n";  
 
     if(cmd_or_status) {
-        os << "<button class=\"fixed-button\">发送</button>\n"
+        os << "<button class=\"fixed-button\" onclick=\"sendCommand()\">发送</button>\n"
         "<script>\n"
+        "   function sendCommand() {\n"
+        "       $.ajax({\n"
+        "       url: '/inside_cmd/send',\n"
+        "       type: \"POST\",\n"
+        "       data: JSON.stringify({\n"
+        "           userName: \"" << name() << "\"\n"
+        "       }),\n"
+        "       processData: false,\n"
+        "       contentType: false,\n"
+        "       success: function(response) {\n"
+        "           alert('用户" << name() << ": 内部指令下发成功');\n"
+        "       },\n"
+        "       error: function(error) {\n"
+        "           var errStr = \"指令下发失败: \" + error.responseText;"
+        "           alert(errStr);\n"
+        "       }\n"
+        "       });\n"
+        "   }\n"
         "   function updateItem(userName, chipIndex, itemName, setValue) {\n"
         "       $.ajax({\n"
         "       url: '/inside_cmd/update_chip_info',\n"
@@ -278,11 +296,18 @@ void InsideCmdStatusUser::describe(const char* data, size_t len,
         "       });\n"
         "   }\n"
         "   function getTextValue(element) {\n"
-        "       var userName = element.dataset.userName;\n"
-        "       var chipIndex = element.dataset.chipIndex;\n"
-        "       var itemName = element.dataset.itemName;\n"
-        "       var setValue = element.value.toString();\n"
-        "       updateItem(userName, chipIndex, itemName, setValue);\n"
+        "       if(element.value < 0) {\n"
+        "           alert('仅允许非负数输入');\n"
+        "           element.value = element.dataset.lastVaildValue;\n"
+        "       }\n"
+        "       else {\n"
+        "           element.dataset.lastVaildValue = element.value;\n"
+        "           var userName = element.dataset.userName;\n"
+        "           var chipIndex = element.dataset.chipIndex;\n"
+        "           var itemName = element.dataset.itemName;\n"
+        "           var setValue = element.value.toString();\n"
+        "           updateItem(userName, chipIndex, itemName, setValue);\n"
+        "       }\n"
         "   }\n"
         "   function getSelectValue(element) {\n"
         "       var userName = element.dataset.userName;\n"
@@ -336,17 +361,17 @@ void ChipInfo::describe(const char* data, size_t len,
 
 void KeyInfo::describe(const char* data, size_t len,
                        std::ostream& os, bool cmd_or_status) {
-    //// need this.
-    // if(!data || len == 0) {
-    //     os << name << " : " << std::to_string(default_value) << dimension;
-    //     return;
-    // }
-    // if(resolved_addr + byte > len) {
-    //     os << name << " : " << std::to_string(default_value) << dimension;
-    //     return;
-    // }
+    if(!cmd_or_status) {
+        if(!data || len == 0) {
+            os << name << " : " << std::to_string(default_value) << dimension;
+            return;
+        }
+        if(resolved_addr + byte > len) {
+            os << name << " : " << std::to_string(default_value) << dimension;
+            return;
+        }
+    }
 
-    ///@todo Set id.
     if(cmd_or_status) {
         std::string user_name;
         std::string chip_index;
@@ -360,21 +385,43 @@ void KeyInfo::describe(const char* data, size_t len,
         }
         os << "<label style=\"text-align: left;\">" << name << ": " << "</label>\n";
         if(type) {
-            os << "<input type=\"text\" style=\"width:100px; font-size:12px; text-align: center;\"" 
-               << "data-user-name=\"" << user_name << "\""
-               << "data-chip-index=\"" << chip_index << "\""
-               << "data-item-name=\"" << name << "\"" 
-               << "class=\"cmd-text-input\" onblur=\"getTextValue(this)\""
-               << "value=\"" << std::to_string(default_value) << "\">\n";
+            // Display priority: set_value > default_value.
+            std::string value;
+            value = (set_value != -1 ? std::to_string(set_value) : std::to_string(default_value));
+            os << "<input type=\"number\" style=\"width:100px; font-size:12px; text-align: center;\" " 
+               << "min=\"0\" "
+               << "data-user-name=\"" << user_name << "\" "
+               << "data-chip-index=\"" << chip_index << "\" "
+               << "data-item-name=\"" << name << "\" " 
+               << "data-last-vaild-value=\"" << value << "\" "
+               << "class=\"cmd-text-input\" onblur=\"getTextValue(this)\" "
+               << "value=\"" << value << "\">\n";
         }
         else {
-            os << "<select style=\"width:100px; font-size:12px; text-align: center;\"" 
-               << "data-user-name=\"" << user_name << "\""
-               << "data-chip-index=\"" << chip_index << "\""
-               << "data-item-name=\"" << name << "\"" 
+            os << "<select style=\"width:100px; font-size:12px; text-align: center;\" " 
+               << "data-user-name=\"" << user_name << "\" "
+               << "data-chip-index=\"" << chip_index << "\" "
+               << "data-item-name=\"" << name << "\" " 
                << "class=\"cmd-select-input\" onblur=\"getSelectValue(this)\">\n";
             for(size_t i = 0; i < select_list.size(); ++i) {
-                os << "<option>" << select_list.at(i) << "</option>\n";
+                os << "<option";
+                if(set_value != -1) {
+                    if(i == static_cast<size_t>(set_value)) {
+                        os << " selected>";
+                    }
+                    else {
+                        os << ">";
+                    }
+                }
+                else {
+                    if(i == static_cast<size_t>(default_value)) {
+                        os << " selected>";
+                    }
+                    else {
+                        os << ">";
+                    }
+                }
+                os << select_list.at(i) << "</option>\n";
             }
             os << "</select>\n";
         }

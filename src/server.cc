@@ -11,6 +11,7 @@ namespace var {
 
 static Server* g_dummy_server = nullptr;
 static Thread* g_thread = nullptr;
+static InsideCmdCallback g_inside_cmd_callback;
 
 bool IsDummyServerRunning() {
     return g_dummy_server != nullptr;
@@ -48,6 +49,10 @@ void UpdateInsideStatusData(const char* data, size_t len) {
     static_cast<InsideStatusService*>(service)->SetData(data, len);
 }
 
+void RegisterInsideCmdCallback(const InsideCmdCallback& cb) {
+    g_inside_cmd_callback = cb;
+}
+
 Server::Server(const net::InetAddress& addr) 
     : _addr(addr)
     , _server(&_loop, _addr, std::string("DummyServer"))
@@ -80,6 +85,17 @@ void Server::Start() {
     }
     if(!AddBuiltinService("index", new (std::nothrow) IndexService)) {
         LOG_ERROR << "Failed to add IndexService";
+    }
+
+    if(g_inside_cmd_callback) {
+        Service* service = g_dummy_server->FindServiceByName("inside_cmd");
+        if(!service) {
+            LOG_ERROR << "Inside cmd service has not registered";
+        }
+        else {
+            static_cast<InsideCmdService*>(service)
+                ->register_cmd_recv_callback(g_inside_cmd_callback);
+        }
     }
     
     LOG_INFO << "Server is serving on port: " << _addr.port();

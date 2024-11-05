@@ -291,6 +291,8 @@ src/builtin/inside_cmd_status_user.h
 ../src/builtin/src/builtin/inside_cmd_status_user.h
 mutex
 -
+functional
+-
 
 ../src/builtin/inside_cmd_status_user.h
 src/util/tinyxml2.h
@@ -304,6 +306,14 @@ string
 vector
 -
 ostream
+-
+
+../src/builtin/inside_status_service.h
+src/service.h
+../src/builtin/src/service.h
+src/builtin/inside_cmd_status_user.h
+../src/builtin/src/builtin/inside_cmd_status_user.h
+mutex
 -
 
 ../src/builtin/tabbed.h
@@ -779,6 +789,22 @@ assert.h
 /home/zgx/Var/src/builtin/inside_cmd_service.cc
 src/builtin/inside_cmd_service.h
 /home/zgx/Var/src/builtin/src/builtin/inside_cmd_service.h
+src/builtin/common.h
+/home/zgx/Var/src/builtin/src/builtin/common.h
+src/server.h
+/home/zgx/Var/src/builtin/src/server.h
+src/util/dir_reader_linux.h
+/home/zgx/Var/src/builtin/src/util/dir_reader_linux.h
+src/util/json.hpp
+/home/zgx/Var/src/builtin/src/util/json.hpp
+net/base/FileUtil.h
+/home/zgx/Var/src/builtin/net/base/FileUtil.h
+fstream
+-
+
+/home/zgx/Var/src/builtin/inside_status_service.cc
+src/builtin/inside_status_service.h
+/home/zgx/Var/src/builtin/src/builtin/inside_status_service.h
 src/builtin/common.h
 /home/zgx/Var/src/builtin/src/builtin/common.h
 src/server.h

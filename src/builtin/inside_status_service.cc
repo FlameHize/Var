@@ -47,7 +47,7 @@ void InsideStatusService::add_user(net::HttpRequest* request,
         "       <input type=\"text\" id=\"user-name\" name=\"user-name\" placeholder=\"请输入英文字符\">\n"
         "       <label for=\"user-id\">板卡组起始序号:</label>\n"
         "       <input type=\"text\" id=\"user-id\" name=\"user-id\" placeholder=\"请输入数字\">\n"
-        "       <label for=\"user-file\">所属XML文件:</label>\n"
+        "       <label for=\"user-file\">所属内部状态XML文件:</label>\n"
         "       <input type=\"file\" id=\"user-file\" name=\"user-file\">\n"
         "       <button type=\"button\" onclick=\"submitForm()\">确定</button>\n"
         "</form>\n"
@@ -77,7 +77,7 @@ void InsideStatusService::add_user(net::HttpRequest* request,
         "        return;\n"
         "    }\n"
         "    if(fileName == null) {\n"
-        "        alert('用户未选择所属XML文件，请选择');\n"
+        "        alert('用户未选择所属内部状态XML文件，请选择');\n"
         "        return;\n"
         "    }\n"
         "    if(fileContent.trim() == '') {\n"
@@ -245,9 +245,16 @@ void InsideStatusService::delete_user(net::HttpRequest* request,
                 StringSplitter sp2(user_name_id, '_');
                 std::string user_name(sp2.field(), sp2.length());
                 if(user_name == *name) {
-                    // Do not delete file memory now, because
-                    // other users may using this at same time.
                     DirReaderLinux::DeleteDirectory(user_path.c_str());
+                    break;
+                }
+            }
+            for(auto iter = _user_list.begin(); iter != _user_list.end(); ++iter) {
+                InsideCmdStatusUser* tmp = *iter;
+                if(tmp->name() == *name) {
+                    _user_list.erase(iter);
+                    delete tmp;
+                    tmp = nullptr;
                     break;
                 }
             }
@@ -292,7 +299,7 @@ void InsideStatusService::update_file(net::HttpRequest* request,
 
     if(use_html) {
         os << "<form id=\"user-form\" enctype=\"multipart/form-data\">\n"
-        "       <label for=\"user-file\">所属XML文件:</label>\n"
+        "       <label for=\"user-file\">所属内部状态XML文件:</label>\n"
         "       <input type=\"file\" id=\"user-file\" name=\"user-file\" required>\n"
         "       <button type=\"button\" onclick=\"submitForm()\">确定</button>\n"
         "</form>\n"
@@ -312,7 +319,7 @@ void InsideStatusService::update_file(net::HttpRequest* request,
         "});\n"
         "function submitForm() {\n"
         "    if(fileName == null) {\n"
-        "        alert('用户未选择所属XML文件，请选择');\n"
+        "        alert('用户未选择所属内部状态XML文件，请选择');\n"
         "        return;\n"
         "    }\n"
         "    if(fileContent.trim() == '') {\n"

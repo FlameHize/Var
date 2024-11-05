@@ -31,6 +31,7 @@ namespace var {
 class Server : public noncopyable {
 public:
     typedef std::unordered_map<std::string, Service*> ServiceMap;
+
     explicit Server(const net::InetAddress& addr);
     virtual ~Server();
     
@@ -71,8 +72,12 @@ bool IsDummyServerRunning();
 // Return 0 on success, -1 otherwise.
 bool StartDummyServerAt(int port);
 
-// Used to update inside status data in builtin services.
+// *Used to update inside status data in builtin services.
 void UpdateInsideStatusData(const char* data, size_t len);
+
+// *Used to send inside cmd data in builtin services.
+typedef std::function<void(const char*, size_t, size_t)> InsideCmdCallback;
+void RegisterInsideCmdCallback(const InsideCmdCallback& cb);
 
 } // end namespace var
 
