@@ -29,7 +29,7 @@ UdpServer::UdpServer(const InetAddress& listenAddr,
     : ipPort_(listenAddr.toIpPort()), 
       name_(nameArg),
       listenAddr_(listenAddr),
-      recv_buf_size_(1472),
+      recv_buf_size_(64 * 1024),
       thread_(std::bind(&UdpServer::RecvLoop, this), nameArg) { }
 
 UdpServer::~UdpServer() {

@@ -422,6 +422,33 @@ builtin/vars_service.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/vars_service.cc.s
 .PHONY : builtin/vars_service.cc.s
 
+builtin/xvc_service.o: builtin/xvc_service.cc.o
+
+.PHONY : builtin/xvc_service.o
+
+# target to build an object file
+builtin/xvc_service.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/xvc_service.cc.o
+.PHONY : builtin/xvc_service.cc.o
+
+builtin/xvc_service.i: builtin/xvc_service.cc.i
+
+.PHONY : builtin/xvc_service.i
+
+# target to preprocess a source file
+builtin/xvc_service.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/xvc_service.cc.i
+.PHONY : builtin/xvc_service.cc.i
+
+builtin/xvc_service.s: builtin/xvc_service.cc.s
+
+.PHONY : builtin/xvc_service.s
+
+# target to generate assembly for a file
+builtin/xvc_service.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/builtin/xvc_service.cc.s
+.PHONY : builtin/xvc_service.cc.s
+
 default_variables.o: default_variables.cc.o
 
 .PHONY : default_variables.o
@@ -707,6 +734,9 @@ help:
 	@echo "... builtin/vars_service.o"
 	@echo "... builtin/vars_service.i"
 	@echo "... builtin/vars_service.s"
+	@echo "... builtin/xvc_service.o"
+	@echo "... builtin/xvc_service.i"
+	@echo "... builtin/xvc_service.s"
 	@echo "... default_variables.o"
 	@echo "... default_variables.i"
 	@echo "... default_variables.s"

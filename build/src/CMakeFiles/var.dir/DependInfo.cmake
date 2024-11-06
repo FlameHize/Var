@@ -15,6 +15,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/zgx/Var/src/builtin/jquery_min_js.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/builtin/jquery_min_js.cc.o"
   "/home/zgx/Var/src/builtin/log_service.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/builtin/log_service.cc.o"
   "/home/zgx/Var/src/builtin/vars_service.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/builtin/vars_service.cc.o"
+  "/home/zgx/Var/src/builtin/xvc_service.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/builtin/xvc_service.cc.o"
   "/home/zgx/Var/src/default_variables.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/default_variables.cc.o"
   "/home/zgx/Var/src/detail/percentile.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/detail/percentile.cc.o"
   "/home/zgx/Var/src/detail/sampler.cc" "/home/zgx/Var/build/src/CMakeFiles/var.dir/detail/sampler.cc.o"

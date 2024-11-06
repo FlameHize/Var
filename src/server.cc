@@ -5,6 +5,7 @@
 #include "src/builtin/log_service.h"
 #include "src/builtin/inside_status_service.h"
 #include "src/builtin/inside_cmd_service.h"
+#include "src/builtin/xvc_service.h"
 #include "src/builtin/file_transfer_service.h"
 
 namespace var {
@@ -79,6 +80,9 @@ void Server::Start() {
     }
     if(!AddBuiltinService("inside_status", new(std::nothrow) InsideStatusService)) {
         LOG_ERROR << "Failed to add InsideStatusService";
+    }
+    if(!AddBuiltinService("xvc", new(std::nothrow) XvcService)) {
+        LOG_ERROR << "Failed to add XvcService";
     }
     if(!AddBuiltinService("file_transfer", new(std::nothrow) FileTransferService)) {
         LOG_ERROR << "Failed to add FileTransferService";
