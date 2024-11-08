@@ -21,15 +21,33 @@
 #define VAR_BUILTIN_XVC_SERVICE_H
 
 #include "src/service.h"
+#include "net/base/Thread.h"
 
 namespace var {
 
 class XvcService : public Service {
 public:
+    XvcService();
+
+    void add_card(net::HttpRequest* request,
+                  net::HttpResponse* response);
+
+    void add_card_internal(net::HttpRequest* request,
+                           net::HttpResponse* response);
+
+    void delete_card(net::HttpRequest* request,
+                     net::HttpResponse* response);
+
+    void update(net::HttpRequest* request,
+                net::HttpResponse* response);
+
     void default_method(net::HttpRequest* request,
                         net::HttpResponse* response) override;
 
     void GetTabInfo(TabInfoList*) const override;
+
+private:
+    Thread _thread;
 };
 
 } // end namespace var

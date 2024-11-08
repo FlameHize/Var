@@ -136,6 +136,7 @@ void FileTransferService::upload_file(net::HttpRequest* request,
             meta_out << meta_line << "\n";
             meta_out.close();
         }
+        meta.close();
         LOG_INFO << "Success upload file: " << file_name;
     }
 }

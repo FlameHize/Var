@@ -38,6 +38,9 @@ TEST(DummyServerTest, StartDummyServer) {
     ///@bug expose name failed.
     // var::LatencyRecorder recorder("DSP");
 
+    var::WindowEx<var::Adder<int>>* window_ex_adder = 
+    new var::WindowEx<var::Adder<int>>("FpgaExWindow");
+
     auto cmd_callback = [](const char* data, size_t len, size_t index) {
         LOG_INFO << "Registered cmd callback";
         LOG_INFO << "Cmd belong to chip index: " << index
@@ -70,6 +73,8 @@ TEST(DummyServerTest, StartDummyServer) {
         miner << interval;
         status.set_value(interval);
         adder << 1;
+        *window_ex_adder << 1;
+        window_ex_adder->get_value();
         // recorder << interval;
     }
 #else
