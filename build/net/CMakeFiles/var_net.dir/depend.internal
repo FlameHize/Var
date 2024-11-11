@@ -358,6 +358,77 @@ net/CMakeFiles/var_net.dir/http/http_url.cc.o
  /home/zgx/Var/net/http/http_parser.h
  /home/zgx/Var/net/http/http_url.cc
  /home/zgx/Var/net/http/http_url.h
+net/CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.o
+ ../net/Buffer.h
+ ../net/Endian.h
+ ../net/base/Atomic.h
+ ../net/base/Condition.h
+ ../net/base/CountDownLatch.h
+ ../net/base/CurrentThread.h
+ ../net/base/LogStream.h
+ ../net/base/Logging.h
+ ../net/base/Mutex.h
+ ../net/base/StringPiece.h
+ ../net/base/Thread.h
+ ../net/base/Timestamp.h
+ ../net/base/Types.h
+ ../net/base/copyable.h
+ ../net/base/noncopyable.h
+ ../net/pcie/PCIeGlobal.h
+ ../net/pcie/PCIeLoopThread.h
+ /home/zgx/Var/net/pcie/PCIeLoopThread.cc
+net/CMakeFiles/var_net.dir/pcie/PCIeServer.cc.o
+ ../net/Buffer.h
+ ../net/Callbacks.h
+ ../net/Endian.h
+ ../net/EventLoop.h
+ ../net/InetAddress.h
+ ../net/TimerId.h
+ ../net/base/Atomic.h
+ ../net/base/Condition.h
+ ../net/base/CountDownLatch.h
+ ../net/base/CurrentThread.h
+ ../net/base/LogStream.h
+ ../net/base/Logging.h
+ ../net/base/Mutex.h
+ ../net/base/StringPiece.h
+ ../net/base/Thread.h
+ ../net/base/Timestamp.h
+ ../net/base/Types.h
+ ../net/base/copyable.h
+ ../net/base/noncopyable.h
+ ../net/pcie/PCIeGlobal.h
+ ../net/pcie/PCIeLoopThread.h
+ ../net/pcie/PCIeServer.h
+ ../net/pcie/XvcServer.h
+ ../net/tcp/TcpConnection.h
+ ../net/tcp/TcpServer.h
+ /home/zgx/Var/net/pcie/PCIeServer.cc
+net/CMakeFiles/var_net.dir/pcie/XvcServer.cc.o
+ ../net/Buffer.h
+ ../net/Callbacks.h
+ ../net/Endian.h
+ ../net/EventLoop.h
+ ../net/InetAddress.h
+ ../net/TimerId.h
+ ../net/base/Atomic.h
+ ../net/base/Condition.h
+ ../net/base/CountDownLatch.h
+ ../net/base/CurrentThread.h
+ ../net/base/LogStream.h
+ ../net/base/Logging.h
+ ../net/base/Mutex.h
+ ../net/base/StringPiece.h
+ ../net/base/Thread.h
+ ../net/base/Timestamp.h
+ ../net/base/Types.h
+ ../net/base/copyable.h
+ ../net/base/noncopyable.h
+ ../net/pcie/PCIeGlobal.h
+ ../net/pcie/XvcServer.h
+ ../net/tcp/TcpConnection.h
+ ../net/tcp/TcpServer.h
+ /home/zgx/Var/net/pcie/XvcServer.cc
 net/CMakeFiles/var_net.dir/poller/DefaultPoller.cc.o
  ../net/Callbacks.h
  ../net/EventLoop.h

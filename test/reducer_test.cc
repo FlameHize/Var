@@ -16,8 +16,8 @@
 // under the License.
 
 #include <gtest/gtest.h>
-#include "src/reducer.h"
-#include "src/util/time.h"
+#include "metric/reducer.h"
+#include "metric/util/time.h"
 #include <unordered_map>
 
 TEST(ReducerTest, adder) 

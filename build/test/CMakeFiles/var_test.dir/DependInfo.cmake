@@ -36,7 +36,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/zgx/Var/build/src/CMakeFiles/var.dir/DependInfo.cmake"
+  "/home/zgx/Var/build/metric/CMakeFiles/var.dir/DependInfo.cmake"
   "/home/zgx/Var/build/net/CMakeFiles/var_net.dir/DependInfo.cmake"
   )
 

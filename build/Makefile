@@ -120,7 +120,7 @@ var: cmake_check_build_system
 
 # fast build rule for target.
 var/fast:
-	$(MAKE) -f src/CMakeFiles/var.dir/build.make src/CMakeFiles/var.dir/build
+	$(MAKE) -f metric/CMakeFiles/var.dir/build.make metric/CMakeFiles/var.dir/build
 .PHONY : var/fast
 
 #=============================================================================

@@ -18,8 +18,8 @@
 // Date Wed Sep 11 14:52:23 CST 2024.
 
 #include <gtest/gtest.h>
-#include "src/window.h"
-#include "src/reducer.h"
+#include "metric/window.h"
+#include "metric/reducer.h"
 
 TEST(WindowTest, window)
 {

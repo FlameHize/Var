@@ -317,9 +317,48 @@ net/CMakeFiles/var_net.dir/poller/DefaultPoller.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/var_net.dir/poller/DefaultPoller.cc.s"
 	cd /home/zgx/Var/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgx/Var/net/poller/DefaultPoller.cc -o CMakeFiles/var_net.dir/poller/DefaultPoller.cc.s
 
+net/CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.o: net/CMakeFiles/var_net.dir/flags.make
+net/CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.o: ../net/pcie/PCIeLoopThread.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object net/CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.o"
+	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.o -c /home/zgx/Var/net/pcie/PCIeLoopThread.cc
+
+net/CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.i"
+	cd /home/zgx/Var/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zgx/Var/net/pcie/PCIeLoopThread.cc > CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.i
+
+net/CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.s"
+	cd /home/zgx/Var/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgx/Var/net/pcie/PCIeLoopThread.cc -o CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.s
+
+net/CMakeFiles/var_net.dir/pcie/PCIeServer.cc.o: net/CMakeFiles/var_net.dir/flags.make
+net/CMakeFiles/var_net.dir/pcie/PCIeServer.cc.o: ../net/pcie/PCIeServer.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object net/CMakeFiles/var_net.dir/pcie/PCIeServer.cc.o"
+	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/pcie/PCIeServer.cc.o -c /home/zgx/Var/net/pcie/PCIeServer.cc
+
+net/CMakeFiles/var_net.dir/pcie/PCIeServer.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/var_net.dir/pcie/PCIeServer.cc.i"
+	cd /home/zgx/Var/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zgx/Var/net/pcie/PCIeServer.cc > CMakeFiles/var_net.dir/pcie/PCIeServer.cc.i
+
+net/CMakeFiles/var_net.dir/pcie/PCIeServer.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/var_net.dir/pcie/PCIeServer.cc.s"
+	cd /home/zgx/Var/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgx/Var/net/pcie/PCIeServer.cc -o CMakeFiles/var_net.dir/pcie/PCIeServer.cc.s
+
+net/CMakeFiles/var_net.dir/pcie/XvcServer.cc.o: net/CMakeFiles/var_net.dir/flags.make
+net/CMakeFiles/var_net.dir/pcie/XvcServer.cc.o: ../net/pcie/XvcServer.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object net/CMakeFiles/var_net.dir/pcie/XvcServer.cc.o"
+	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/pcie/XvcServer.cc.o -c /home/zgx/Var/net/pcie/XvcServer.cc
+
+net/CMakeFiles/var_net.dir/pcie/XvcServer.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/var_net.dir/pcie/XvcServer.cc.i"
+	cd /home/zgx/Var/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zgx/Var/net/pcie/XvcServer.cc > CMakeFiles/var_net.dir/pcie/XvcServer.cc.i
+
+net/CMakeFiles/var_net.dir/pcie/XvcServer.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/var_net.dir/pcie/XvcServer.cc.s"
+	cd /home/zgx/Var/build/net && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zgx/Var/net/pcie/XvcServer.cc -o CMakeFiles/var_net.dir/pcie/XvcServer.cc.s
+
 net/CMakeFiles/var_net.dir/http/http_parser.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/http/http_parser.cc.o: ../net/http/http_parser.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object net/CMakeFiles/var_net.dir/http/http_parser.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object net/CMakeFiles/var_net.dir/http/http_parser.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/http/http_parser.cc.o -c /home/zgx/Var/net/http/http_parser.cc
 
 net/CMakeFiles/var_net.dir/http/http_parser.cc.i: cmake_force
@@ -332,7 +371,7 @@ net/CMakeFiles/var_net.dir/http/http_parser.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/http/http_method.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/http/http_method.cc.o: ../net/http/http_method.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object net/CMakeFiles/var_net.dir/http/http_method.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object net/CMakeFiles/var_net.dir/http/http_method.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/http/http_method.cc.o -c /home/zgx/Var/net/http/http_method.cc
 
 net/CMakeFiles/var_net.dir/http/http_method.cc.i: cmake_force
@@ -345,7 +384,7 @@ net/CMakeFiles/var_net.dir/http/http_method.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/http/http_status_code.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/http/http_status_code.cc.o: ../net/http/http_status_code.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object net/CMakeFiles/var_net.dir/http/http_status_code.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object net/CMakeFiles/var_net.dir/http/http_status_code.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/http/http_status_code.cc.o -c /home/zgx/Var/net/http/http_status_code.cc
 
 net/CMakeFiles/var_net.dir/http/http_status_code.cc.i: cmake_force
@@ -358,7 +397,7 @@ net/CMakeFiles/var_net.dir/http/http_status_code.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/http/http_url.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/http/http_url.cc.o: ../net/http/http_url.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object net/CMakeFiles/var_net.dir/http/http_url.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object net/CMakeFiles/var_net.dir/http/http_url.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/http/http_url.cc.o -c /home/zgx/Var/net/http/http_url.cc
 
 net/CMakeFiles/var_net.dir/http/http_url.cc.i: cmake_force
@@ -371,7 +410,7 @@ net/CMakeFiles/var_net.dir/http/http_url.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/http/http_header.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/http/http_header.cc.o: ../net/http/http_header.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object net/CMakeFiles/var_net.dir/http/http_header.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object net/CMakeFiles/var_net.dir/http/http_header.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/http/http_header.cc.o -c /home/zgx/Var/net/http/http_header.cc
 
 net/CMakeFiles/var_net.dir/http/http_header.cc.i: cmake_force
@@ -384,7 +423,7 @@ net/CMakeFiles/var_net.dir/http/http_header.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/http/http_message.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/http/http_message.cc.o: ../net/http/http_message.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object net/CMakeFiles/var_net.dir/http/http_message.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object net/CMakeFiles/var_net.dir/http/http_message.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/http/http_message.cc.o -c /home/zgx/Var/net/http/http_message.cc
 
 net/CMakeFiles/var_net.dir/http/http_message.cc.i: cmake_force
@@ -397,7 +436,7 @@ net/CMakeFiles/var_net.dir/http/http_message.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/http/http_server.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/http/http_server.cc.o: ../net/http/http_server.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object net/CMakeFiles/var_net.dir/http/http_server.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object net/CMakeFiles/var_net.dir/http/http_server.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/http/http_server.cc.o -c /home/zgx/Var/net/http/http_server.cc
 
 net/CMakeFiles/var_net.dir/http/http_server.cc.i: cmake_force
@@ -410,7 +449,7 @@ net/CMakeFiles/var_net.dir/http/http_server.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/AsyncLogging.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/AsyncLogging.cc.o: ../net/base/AsyncLogging.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object net/CMakeFiles/var_net.dir/base/AsyncLogging.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object net/CMakeFiles/var_net.dir/base/AsyncLogging.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/AsyncLogging.cc.o -c /home/zgx/Var/net/base/AsyncLogging.cc
 
 net/CMakeFiles/var_net.dir/base/AsyncLogging.cc.i: cmake_force
@@ -423,7 +462,7 @@ net/CMakeFiles/var_net.dir/base/AsyncLogging.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/Condition.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/Condition.cc.o: ../net/base/Condition.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object net/CMakeFiles/var_net.dir/base/Condition.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object net/CMakeFiles/var_net.dir/base/Condition.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/Condition.cc.o -c /home/zgx/Var/net/base/Condition.cc
 
 net/CMakeFiles/var_net.dir/base/Condition.cc.i: cmake_force
@@ -436,7 +475,7 @@ net/CMakeFiles/var_net.dir/base/Condition.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/CountDownLatch.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/CountDownLatch.cc.o: ../net/base/CountDownLatch.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object net/CMakeFiles/var_net.dir/base/CountDownLatch.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object net/CMakeFiles/var_net.dir/base/CountDownLatch.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/CountDownLatch.cc.o -c /home/zgx/Var/net/base/CountDownLatch.cc
 
 net/CMakeFiles/var_net.dir/base/CountDownLatch.cc.i: cmake_force
@@ -449,7 +488,7 @@ net/CMakeFiles/var_net.dir/base/CountDownLatch.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/CurrentThread.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/CurrentThread.cc.o: ../net/base/CurrentThread.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object net/CMakeFiles/var_net.dir/base/CurrentThread.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object net/CMakeFiles/var_net.dir/base/CurrentThread.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/CurrentThread.cc.o -c /home/zgx/Var/net/base/CurrentThread.cc
 
 net/CMakeFiles/var_net.dir/base/CurrentThread.cc.i: cmake_force
@@ -462,7 +501,7 @@ net/CMakeFiles/var_net.dir/base/CurrentThread.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/Date.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/Date.cc.o: ../net/base/Date.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object net/CMakeFiles/var_net.dir/base/Date.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object net/CMakeFiles/var_net.dir/base/Date.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/Date.cc.o -c /home/zgx/Var/net/base/Date.cc
 
 net/CMakeFiles/var_net.dir/base/Date.cc.i: cmake_force
@@ -475,7 +514,7 @@ net/CMakeFiles/var_net.dir/base/Date.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/Exception.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/Exception.cc.o: ../net/base/Exception.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object net/CMakeFiles/var_net.dir/base/Exception.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object net/CMakeFiles/var_net.dir/base/Exception.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/Exception.cc.o -c /home/zgx/Var/net/base/Exception.cc
 
 net/CMakeFiles/var_net.dir/base/Exception.cc.i: cmake_force
@@ -488,7 +527,7 @@ net/CMakeFiles/var_net.dir/base/Exception.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/FileUtil.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/FileUtil.cc.o: ../net/base/FileUtil.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object net/CMakeFiles/var_net.dir/base/FileUtil.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object net/CMakeFiles/var_net.dir/base/FileUtil.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/FileUtil.cc.o -c /home/zgx/Var/net/base/FileUtil.cc
 
 net/CMakeFiles/var_net.dir/base/FileUtil.cc.i: cmake_force
@@ -501,7 +540,7 @@ net/CMakeFiles/var_net.dir/base/FileUtil.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/LogFile.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/LogFile.cc.o: ../net/base/LogFile.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object net/CMakeFiles/var_net.dir/base/LogFile.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object net/CMakeFiles/var_net.dir/base/LogFile.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/LogFile.cc.o -c /home/zgx/Var/net/base/LogFile.cc
 
 net/CMakeFiles/var_net.dir/base/LogFile.cc.i: cmake_force
@@ -514,7 +553,7 @@ net/CMakeFiles/var_net.dir/base/LogFile.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/Logging.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/Logging.cc.o: ../net/base/Logging.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object net/CMakeFiles/var_net.dir/base/Logging.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object net/CMakeFiles/var_net.dir/base/Logging.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/Logging.cc.o -c /home/zgx/Var/net/base/Logging.cc
 
 net/CMakeFiles/var_net.dir/base/Logging.cc.i: cmake_force
@@ -527,7 +566,7 @@ net/CMakeFiles/var_net.dir/base/Logging.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/LogStream.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/LogStream.cc.o: ../net/base/LogStream.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object net/CMakeFiles/var_net.dir/base/LogStream.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object net/CMakeFiles/var_net.dir/base/LogStream.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/LogStream.cc.o -c /home/zgx/Var/net/base/LogStream.cc
 
 net/CMakeFiles/var_net.dir/base/LogStream.cc.i: cmake_force
@@ -540,7 +579,7 @@ net/CMakeFiles/var_net.dir/base/LogStream.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o: ../net/base/ProcessInfo.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/ProcessInfo.cc.o -c /home/zgx/Var/net/base/ProcessInfo.cc
 
 net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.i: cmake_force
@@ -553,7 +592,7 @@ net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/Thread.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/Thread.cc.o: ../net/base/Thread.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object net/CMakeFiles/var_net.dir/base/Thread.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object net/CMakeFiles/var_net.dir/base/Thread.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/Thread.cc.o -c /home/zgx/Var/net/base/Thread.cc
 
 net/CMakeFiles/var_net.dir/base/Thread.cc.i: cmake_force
@@ -566,7 +605,7 @@ net/CMakeFiles/var_net.dir/base/Thread.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/Timestamp.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/Timestamp.cc.o: ../net/base/Timestamp.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object net/CMakeFiles/var_net.dir/base/Timestamp.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object net/CMakeFiles/var_net.dir/base/Timestamp.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/Timestamp.cc.o -c /home/zgx/Var/net/base/Timestamp.cc
 
 net/CMakeFiles/var_net.dir/base/Timestamp.cc.i: cmake_force
@@ -579,7 +618,7 @@ net/CMakeFiles/var_net.dir/base/Timestamp.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/TimeZone.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/TimeZone.cc.o: ../net/base/TimeZone.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object net/CMakeFiles/var_net.dir/base/TimeZone.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object net/CMakeFiles/var_net.dir/base/TimeZone.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/TimeZone.cc.o -c /home/zgx/Var/net/base/TimeZone.cc
 
 net/CMakeFiles/var_net.dir/base/TimeZone.cc.i: cmake_force
@@ -592,7 +631,7 @@ net/CMakeFiles/var_net.dir/base/TimeZone.cc.s: cmake_force
 
 net/CMakeFiles/var_net.dir/base/StringPrintf.cc.o: net/CMakeFiles/var_net.dir/flags.make
 net/CMakeFiles/var_net.dir/base/StringPrintf.cc.o: ../net/base/StringPrintf.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object net/CMakeFiles/var_net.dir/base/StringPrintf.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object net/CMakeFiles/var_net.dir/base/StringPrintf.cc.o"
 	cd /home/zgx/Var/build/net && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/var_net.dir/base/StringPrintf.cc.o -c /home/zgx/Var/net/base/StringPrintf.cc
 
 net/CMakeFiles/var_net.dir/base/StringPrintf.cc.i: cmake_force
@@ -625,6 +664,9 @@ var_net_OBJECTS = \
 "CMakeFiles/var_net.dir/poller/PollPoller.cc.o" \
 "CMakeFiles/var_net.dir/poller/EpollPoller.cc.o" \
 "CMakeFiles/var_net.dir/poller/DefaultPoller.cc.o" \
+"CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.o" \
+"CMakeFiles/var_net.dir/pcie/PCIeServer.cc.o" \
+"CMakeFiles/var_net.dir/pcie/XvcServer.cc.o" \
 "CMakeFiles/var_net.dir/http/http_parser.cc.o" \
 "CMakeFiles/var_net.dir/http/http_method.cc.o" \
 "CMakeFiles/var_net.dir/http/http_status_code.cc.o" \
@@ -671,6 +713,9 @@ var_net_EXTERNAL_OBJECTS =
 ../lib/libvar_net.so: net/CMakeFiles/var_net.dir/poller/PollPoller.cc.o
 ../lib/libvar_net.so: net/CMakeFiles/var_net.dir/poller/EpollPoller.cc.o
 ../lib/libvar_net.so: net/CMakeFiles/var_net.dir/poller/DefaultPoller.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/pcie/PCIeServer.cc.o
+../lib/libvar_net.so: net/CMakeFiles/var_net.dir/pcie/XvcServer.cc.o
 ../lib/libvar_net.so: net/CMakeFiles/var_net.dir/http/http_parser.cc.o
 ../lib/libvar_net.so: net/CMakeFiles/var_net.dir/http/http_method.cc.o
 ../lib/libvar_net.so: net/CMakeFiles/var_net.dir/http/http_status_code.cc.o
@@ -695,7 +740,7 @@ var_net_EXTERNAL_OBJECTS =
 ../lib/libvar_net.so: net/CMakeFiles/var_net.dir/base/StringPrintf.cc.o
 ../lib/libvar_net.so: net/CMakeFiles/var_net.dir/build.make
 ../lib/libvar_net.so: net/CMakeFiles/var_net.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Linking CXX shared library ../../lib/libvar_net.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Linking CXX shared library ../../lib/libvar_net.so"
 	cd /home/zgx/Var/build/net && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/var_net.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

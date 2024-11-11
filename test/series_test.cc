@@ -18,7 +18,7 @@
 // Date Wed Sep 11 09:50:01 CST 2024.
 
 #include <gtest/gtest.h>
-#include "src/detail/series.h"
+#include "metric/detail/series.h"
 #include "net/Buffer.h"
 #include "net/base/Logging.h"
 

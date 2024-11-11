@@ -18,9 +18,9 @@
 #include <gtest/gtest.h>
 #include "net/tcp/TcpClient.h"
 #include "net/EventLoopThread.h"
-#include "src/server.h"
-#include "src/var.h"
-#include "src/builtin/common.h"
+#include "metric/server.h"
+#include "metric/var.h"
+#include "metric/builtin/common.h"
 
 using namespace var;
 

@@ -1070,6 +1070,87 @@ http/http_url.cc.s:
 	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/http/http_url.cc.s
 .PHONY : http/http_url.cc.s
 
+pcie/PCIeLoopThread.o: pcie/PCIeLoopThread.cc.o
+
+.PHONY : pcie/PCIeLoopThread.o
+
+# target to build an object file
+pcie/PCIeLoopThread.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.o
+.PHONY : pcie/PCIeLoopThread.cc.o
+
+pcie/PCIeLoopThread.i: pcie/PCIeLoopThread.cc.i
+
+.PHONY : pcie/PCIeLoopThread.i
+
+# target to preprocess a source file
+pcie/PCIeLoopThread.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.i
+.PHONY : pcie/PCIeLoopThread.cc.i
+
+pcie/PCIeLoopThread.s: pcie/PCIeLoopThread.cc.s
+
+.PHONY : pcie/PCIeLoopThread.s
+
+# target to generate assembly for a file
+pcie/PCIeLoopThread.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/pcie/PCIeLoopThread.cc.s
+.PHONY : pcie/PCIeLoopThread.cc.s
+
+pcie/PCIeServer.o: pcie/PCIeServer.cc.o
+
+.PHONY : pcie/PCIeServer.o
+
+# target to build an object file
+pcie/PCIeServer.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/pcie/PCIeServer.cc.o
+.PHONY : pcie/PCIeServer.cc.o
+
+pcie/PCIeServer.i: pcie/PCIeServer.cc.i
+
+.PHONY : pcie/PCIeServer.i
+
+# target to preprocess a source file
+pcie/PCIeServer.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/pcie/PCIeServer.cc.i
+.PHONY : pcie/PCIeServer.cc.i
+
+pcie/PCIeServer.s: pcie/PCIeServer.cc.s
+
+.PHONY : pcie/PCIeServer.s
+
+# target to generate assembly for a file
+pcie/PCIeServer.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/pcie/PCIeServer.cc.s
+.PHONY : pcie/PCIeServer.cc.s
+
+pcie/XvcServer.o: pcie/XvcServer.cc.o
+
+.PHONY : pcie/XvcServer.o
+
+# target to build an object file
+pcie/XvcServer.cc.o:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/pcie/XvcServer.cc.o
+.PHONY : pcie/XvcServer.cc.o
+
+pcie/XvcServer.i: pcie/XvcServer.cc.i
+
+.PHONY : pcie/XvcServer.i
+
+# target to preprocess a source file
+pcie/XvcServer.cc.i:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/pcie/XvcServer.cc.i
+.PHONY : pcie/XvcServer.cc.i
+
+pcie/XvcServer.s: pcie/XvcServer.cc.s
+
+.PHONY : pcie/XvcServer.s
+
+# target to generate assembly for a file
+pcie/XvcServer.cc.s:
+	cd /home/zgx/Var/build && $(MAKE) -f net/CMakeFiles/var_net.dir/build.make net/CMakeFiles/var_net.dir/pcie/XvcServer.cc.s
+.PHONY : pcie/XvcServer.cc.s
+
 poller/DefaultPoller.o: poller/DefaultPoller.cc.o
 
 .PHONY : poller/DefaultPoller.o
@@ -1373,6 +1454,15 @@ help:
 	@echo "... http/http_url.o"
 	@echo "... http/http_url.i"
 	@echo "... http/http_url.s"
+	@echo "... pcie/PCIeLoopThread.o"
+	@echo "... pcie/PCIeLoopThread.i"
+	@echo "... pcie/PCIeLoopThread.s"
+	@echo "... pcie/PCIeServer.o"
+	@echo "... pcie/PCIeServer.i"
+	@echo "... pcie/PCIeServer.s"
+	@echo "... pcie/XvcServer.o"
+	@echo "... pcie/XvcServer.i"
+	@echo "... pcie/XvcServer.s"
 	@echo "... poller/DefaultPoller.o"
 	@echo "... poller/DefaultPoller.i"
 	@echo "... poller/DefaultPoller.s"

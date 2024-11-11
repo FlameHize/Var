@@ -18,7 +18,7 @@
 // Date Sun Sep 29 19:25:30 CST 2024.
 
 #include <gtest/gtest.h>
-#include "src/latency_recorder.h"
+#include "metric/latency_recorder.h"
 
 TEST(LatencyRecorderTest, latency)
 {

@@ -18,9 +18,9 @@
 // Date Fri Sep 13 09:06:10 CST 2024.
 
 #include <gtest/gtest.h>
-#include "src/average_recorder.h"
-#include "src/window.h"
-#include "src/util/time.h"
+#include "metric/average_recorder.h"
+#include "metric/window.h"
+#include "metric/util/time.h"
 
 TEST(AverageRecorderTest, average)
 {

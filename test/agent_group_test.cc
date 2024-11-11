@@ -16,8 +16,8 @@
 // under the License.
 
 #include <gtest/gtest.h>
-#include "src/detail/agent_group.h"
-#include "src/util/time.h"
+#include "metric/detail/agent_group.h"
+#include "metric/util/time.h"
 #include <atomic>
 
 using namespace var;

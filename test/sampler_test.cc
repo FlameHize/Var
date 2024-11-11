@@ -18,8 +18,8 @@
 // Date Tue Sep 10 11:22:36 CST 2024.
 
 #include <gtest/gtest.h>
-#include "src/detail/sampler.h"
-#include "src/reducer.h"
+#include "metric/detail/sampler.h"
+#include "metric/reducer.h"
 
 TEST(SamplerTest, linked_list)
 {

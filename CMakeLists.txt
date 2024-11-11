@@ -8,6 +8,6 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
-add_subdirectory(src)
+add_subdirectory(metric)
 add_subdirectory(test)
 add_subdirectory(net)

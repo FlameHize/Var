@@ -18,7 +18,7 @@
 // Date Thur Sep 12 14:19:33 CST 2024.
 
 #include <gtest/gtest.h>
-#include "src/status.h"
+#include "metric/status.h"
 
 TEST(StatusTest, status)
 {

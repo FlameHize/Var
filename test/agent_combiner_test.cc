@@ -17,7 +17,7 @@
 
 #include <gtest/gtest.h>
 #include <thread>
-#include "src/detail/combiner.h"
+#include "metric/detail/combiner.h"
 
 using namespace var;
 using namespace var::detail;

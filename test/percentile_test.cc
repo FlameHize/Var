@@ -18,8 +18,8 @@
 // Date Thur Sep 26 16:02:05 CST 2024.
 
 #include <gtest/gtest.h>
-#include "src/detail/percentile.h"
-#include "src/window.h"
+#include "metric/detail/percentile.h"
+#include "metric/window.h"
 #include <fstream>
 
 // Merge 2 PercentileIntervals b1 and b2. b2 has double SAMPLE_SIZE

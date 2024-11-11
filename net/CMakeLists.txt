@@ -19,6 +19,9 @@ add_library(var_net SHARED
     poller/PollPoller.cc
     poller/EpollPoller.cc
     poller/DefaultPoller.cc
+    pcie/PCIeLoopThread.cc
+    pcie/PCIeServer.cc
+    pcie/XvcServer.cc
     http/http_parser.cc
     http/http_method.cc
     http/http_status_code.cc

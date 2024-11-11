@@ -16,7 +16,7 @@
 // under the License.
 
 #include <gtest/gtest.h>
-#include "src/variable.h"
+#include "metric/variable.h"
 
 using namespace var;
 
