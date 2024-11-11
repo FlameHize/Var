@@ -22,5 +22,5 @@ add_library(var SHARED
     builtin/file_transfer_service.cc
     builtin/xvc_service.cc)
 
-target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR}/src)
+target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR}/metric)
 target_link_libraries(var var_net)
