@@ -1,6 +1,7 @@
 #include "src/builtin/common.h"
 #include <sstream>
 #include <iomanip>
+#include <cmath>
 
 namespace var {
 
@@ -89,6 +90,28 @@ std::string decimal_to_binary(int decimal) {
     std::string binary_str = out.str();
     std::reverse(binary_str.begin(), binary_str.end());
     return binary_str;
+}
+
+std::string format_byte_size(size_t value) {
+    std::string str;
+    if(value < 1024) {
+        str = std::to_string(value) + "B";
+    }
+    else if(value >= 1024 && value < std::pow(1024, 2)) {
+        value /= 1024;
+        str = std::to_string(value) + "KB";
+    }
+    else if(value >= std::pow(1024, 2) && value < std::pow(1024, 3)) {
+        double d_value = value / std::pow(1024, 2);
+        str = double_to_string(d_value, 1);
+        str += "MB";
+    }
+    else {
+        double d_value = value / std::pow(1024, 3);
+        str = double_to_string(d_value, 2);
+        str += "GB";
+    }
+    return str;
 }
 
 const char* TabsHead() {

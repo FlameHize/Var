@@ -79,7 +79,8 @@ public:
     friend class XvcService;
     inline XvcServer(net::EventLoop* loop, const net::InetAddress& addr) 
         : _tcp_server(loop, addr, "XvcTcpServer")
-        , _udp_server(addr, "XvcUdpServer") {
+        , _udp_server(addr, "XvcUdpServer") 
+        , _conn_num("xvc_conn_num") {
         _tcp_server.setConnectionCallback(
             std::bind(&XvcServer::on_vivado_onnection, this, _1));
         _tcp_server.setMessageCallback(
@@ -177,6 +178,7 @@ private:
                 }
             }
         }
+        conn->connected() ? _conn_num << 1 : _conn_num << -1;
         LOG_INFO << "Vivado - " << conn->peerAddress().toIpPort() << " -> "
                  << conn->localAddress().toIpPort() << " is "
                  << (conn->connected() ? "UP" : "DOWN");
@@ -344,6 +346,7 @@ private:
     net::UdpServer                      _udp_server;
     std::vector<XvcInfo>                _info_list;
     std::vector<net::TcpConnectionPtr>  _conn_list;
+    Adder<int>                          _conn_num;
     std::string                         _error;
 };
 
@@ -763,7 +766,7 @@ void XvcService::default_method(net::HttpRequest* request,
             os << "<td>" << info.card_port << "</td>\n";
             os << "<td>" << info.user_ip << "</td>\n";
             os << "<td>" << info.card_clk << "</td>\n";
-            os << "<td>" << info.speed->get_value() << "</td>\n";
+            os << "<td>" << format_byte_size(info.speed->get_value()) + "/s" << "</td>\n";
             os << "<td class=\"state\"></td>\n";
             os << "</tr>\n";
         }

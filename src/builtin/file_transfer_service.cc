@@ -29,28 +29,6 @@ void get_all_file(const std::string& dir_path,
     }
 }
 
-std::string format_file_size(int value) {
-    std::string str;
-    if(value < 1024) {
-        str = std::to_string(value) + "B";
-    }
-    else if(value >= 1024 && value < std::pow(1024, 2)) {
-        value /= 1024;
-        str = std::to_string(value) + "KB";
-    }
-    else if(value >= std::pow(1024, 2) && value < std::pow(1024, 3)) {
-        double d_value = value / std::pow(1024, 2);
-        str = double_to_string(d_value, 1);
-        str += "MB";
-    }
-    else {
-        double d_value = value / std::pow(1024, 3);
-        str = double_to_string(d_value, 2);
-        str += "GB";
-    }
-    return str;
-}
-
 const std::string FileTransferSaveDir = "data/file_transfer/";
 
 FileTransferService::FileTransferService() {
@@ -383,7 +361,7 @@ void FileTransferService::default_method(net::HttpRequest* request,
                    << "\" download=\"" << meta_name << "\">" 
                    << meta_name << "</a></td>\n";
                 
-                os << "<td>" << format_file_size(std::stoi(meta_size)) << "</td>\n";
+                os << "<td>" << format_byte_size(std::stoi(meta_size)) << "</td>\n";
                 // os << "<td>" << meta_size << "</td>\n";
                 os << "<td>" << meta_date + ' ' + meta_time << "</td>\n";
                 os << "<td>" << meta_count << "</td>\n";

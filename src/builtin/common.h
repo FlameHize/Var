@@ -39,6 +39,8 @@ std::string double_to_string(double value, int decimal);
 std::string decimal_to_hex(int decimal);
 std::string decimal_to_binary(int decimal);
 
+std::string format_byte_size(size_t value);
+
 // Put inside <head></head> of html to work with Tabbed.
 const char* TabsHead();
 
