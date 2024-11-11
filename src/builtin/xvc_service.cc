@@ -55,7 +55,8 @@ struct XvcInfo {
     double         card_clk;
     net::Buffer    recv_buf;
     XvcState       state;
-    WindowEx<Adder<int>>* speed;
+    std::shared_ptr<WindowEx<Adder<long long>>> speed;
+
     XvcInfo(const std::string& cardname,
             const std::string& cardip,
             const std::string& userip,
@@ -67,7 +68,7 @@ struct XvcInfo {
         , card_port(cardport)
         , card_clk(cardclk) {
         state = kDisconnect;
-        speed = new WindowEx<Adder<int>>();
+        speed = std::make_shared<WindowEx<Adder<long long>>>();
         speed->expose_as("xvc", card_name);
     }
 };
@@ -284,7 +285,7 @@ private:
         std::string card_name;
         net::Buffer* buf = nullptr;
         XvcState* state = nullptr;
-        WindowEx<Adder<int>>* speed = nullptr;
+        std::shared_ptr<WindowEx<Adder<long long>>> speed;
         for(size_t i = 0; i < _info_list.size(); ++i) {
             XvcInfo& info = _info_list.at(i);
             if(info.card_ip == card_ip_str) {
