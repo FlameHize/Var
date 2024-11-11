@@ -79,6 +79,8 @@
         "stack": "cpp",
         "codecvt": "cpp",
         "forward_list": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "csignal": "cpp",
+        "regex": "cpp"
     }
 }

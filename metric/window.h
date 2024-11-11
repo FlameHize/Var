@@ -152,7 +152,6 @@ public:
         return _sampler->get_samples(_window_size, samples);
     }
 
-protected:
     int expose_impl(const std::string& prefix,
                     const std::string& name,
                     DisplayFilter display_filter) override {
@@ -302,6 +301,17 @@ public:
         } else {
             os << get_value();
         }
+    }
+
+    ///@cite bvar lost.
+    int describe_series(std::ostream& os) const {
+        return _window_ex_var.window.describe_series(os);
+    }
+    
+    int expose_impl(const std::string& prefix,
+                    const std::string& name,
+                    DisplayFilter display_filter) override {
+        return _window_ex_var.window.expose_impl(prefix, name, display_filter);
     }
 
     virtual ~WindowExAdapter() {
