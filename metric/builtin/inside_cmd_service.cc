@@ -772,6 +772,7 @@ void InsideCmdService::default_method(net::HttpRequest* request,
     }
 
     // User operation layer.
+    const std::string* user_name = request->header().url().GetQuery("username");
     if(use_html) {
         os << "<form id=\"form_user\" method=\"get\">\n" 
            << "<label for=\"selected-user\">选择用户</label>\n"
@@ -780,8 +781,14 @@ void InsideCmdService::default_method(net::HttpRequest* request,
         for(size_t i = 0; i < _user_list.size(); ++i) {
             InsideCmdStatusUser* tmp = _user_list.at(i);
             std::string display_name = tmp->name();
-            os << "<option value=\"" << display_name << "\">"
-               << display_name  << "</option>\n";
+            if(user_name != nullptr && *user_name == display_name) {
+                os << "<option value=\"" << display_name << "\" selected>"
+                   << display_name  << "</option>\n";
+            }
+            else {
+                os << "<option value=\"" << display_name << "\">"
+                   << display_name  << "</option>\n";
+            }
         }
         os << "</select>\n"
            << "<input type=\"submit\" value=\"确定\">\n";
@@ -794,7 +801,6 @@ void InsideCmdService::default_method(net::HttpRequest* request,
         os << "</form>\n";
     }
 
-    const std::string* user_name = request->header().url().GetQuery("username");
     if(!user_name) {
         response->set_body(os);
         return;
