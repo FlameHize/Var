@@ -20,6 +20,18 @@ metric/reducer.h
 net/http/http_header.h
 ../metric/builtin/net/http/http_header.h
 
+../metric/builtin/service.h
+metric/builtin/tabbed.h
+../metric/builtin/metric/builtin/tabbed.h
+net/http/http_context.h
+../metric/builtin/net/http/http_context.h
+net/base/Logging.h
+../metric/builtin/net/base/Logging.h
+memory
+-
+functional
+-
+
 ../metric/builtin/tabbed.h
 string
 -
@@ -159,8 +171,8 @@ metric/util/type_traits.h
 ../metric/metric/util/type_traits.h
 
 ../metric/server.h
-metric/service.h
-../metric/metric/service.h
+metric/builtin/service.h
+../metric/metric/builtin/service.h
 metric/builtin/tabbed.h
 ../metric/metric/builtin/tabbed.h
 net/http/http_server.h
@@ -169,18 +181,6 @@ net/base/Thread.h
 ../metric/net/base/Thread.h
 net/EventLoop.h
 ../metric/net/EventLoop.h
-
-../metric/service.h
-metric/builtin/tabbed.h
-../metric/metric/builtin/tabbed.h
-net/http/http_context.h
-../metric/net/http/http_context.h
-net/base/Logging.h
-../metric/net/base/Logging.h
-memory
--
-functional
--
 
 ../metric/status.h
 metric/variable.h
@@ -251,6 +251,8 @@ latency_recorder.h
 ../metric/latency_recorder.h
 window.h
 ../metric/window.h
+server.h
+../metric/server.h
 util/time.h
 ../metric/util/time.h
 

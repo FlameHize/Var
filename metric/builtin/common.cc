@@ -5,7 +5,6 @@
 
 namespace var {
 
-// 将十六进制字符转换为整数  
 int hexCharToInt(char c) {  
     if (std::isdigit(c)) {  
         return c - '0';  

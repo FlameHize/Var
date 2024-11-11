@@ -20,7 +20,7 @@
 #ifndef VAR_BUILTIN_XVC_SERVICE_H
 #define VAR_BUILTIN_XVC_SERVICE_H
 
-#include "metric/service.h"
+#include "metric/builtin/service.h"
 #include "net/base/Thread.h"
 
 namespace var {

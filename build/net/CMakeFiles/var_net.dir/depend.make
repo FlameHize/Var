@@ -267,8 +267,8 @@ net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o: ../net/base/Types.h
 net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o: ../net/base/copyable.h
 net/CMakeFiles/var_net.dir/base/ProcessInfo.cc.o: ../net/base/noncopyable.h
 
-net/CMakeFiles/var_net.dir/base/StringPrintf.cc.o: ../net/base/StringPrintf.h
 net/CMakeFiles/var_net.dir/base/StringPrintf.cc.o: ../net/base/StringPrintf.cc
+net/CMakeFiles/var_net.dir/base/StringPrintf.cc.o: ../net/base/StringPrintf.h
 
 net/CMakeFiles/var_net.dir/base/Thread.cc.o: ../net/base/Atomic.h
 net/CMakeFiles/var_net.dir/base/Thread.cc.o: ../net/base/Condition.h

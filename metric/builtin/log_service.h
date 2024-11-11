@@ -20,7 +20,7 @@
 #ifndef VAR_BUILTIN_LOG_SERVICE_H
 #define VAR_BUILTIN_LOG_SERVICE_H
 
-#include "metric/service.h"
+#include "metric/builtin/service.h"
 #include "net/base/LogFile.h"
 
 namespace var {

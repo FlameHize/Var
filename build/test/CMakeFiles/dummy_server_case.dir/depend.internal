@@ -4,6 +4,7 @@
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o
  ../metric/average_recorder.h
  ../metric/builtin/common.h
+ ../metric/builtin/service.h
  ../metric/builtin/tabbed.h
  ../metric/common.h
  ../metric/detail/agent_group.h
@@ -16,7 +17,6 @@ test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o
  ../metric/passive_status.h
  ../metric/reducer.h
  ../metric/server.h
- ../metric/service.h
  ../metric/status.h
  ../metric/util/bounded_queue.h
  ../metric/util/fast_rand.h

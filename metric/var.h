@@ -26,6 +26,7 @@
 #include "passive_status.h"
 #include "latency_recorder.h"
 #include "window.h"
+#include "server.h"
 #include "util/time.h"
 
 #endif // VAR_VAR_H

@@ -29,7 +29,7 @@ bool StartDummyServerAt(int port) {
             net::InetAddress addr(port);
             g_dummy_server = new Server(addr);
             g_dummy_server->Start();
-        });
+        }, "dummy_server");
         g_thread->start();
         return true;
     }
@@ -81,9 +81,9 @@ void Server::Start() {
     if(!AddBuiltinService("inside_status", new(std::nothrow) InsideStatusService)) {
         LOG_ERROR << "Failed to add InsideStatusService";
     }
-    if(!AddBuiltinService("xvc", new(std::nothrow) XvcService)) {
-        LOG_ERROR << "Failed to add XvcService";
-    }
+    // if(!AddBuiltinService("xvc", new(std::nothrow) XvcService)) {
+    //     LOG_ERROR << "Failed to add XvcService";
+    // }
     if(!AddBuiltinService("file_transfer", new(std::nothrow) FileTransferService)) {
         LOG_ERROR << "Failed to add FileTransferService";
     }

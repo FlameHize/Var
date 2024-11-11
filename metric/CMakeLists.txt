@@ -1,5 +1,4 @@
 add_library(var SHARED
-    service.cc
     server.cc
     variable.cc
     latency_recorder.cc
@@ -10,6 +9,7 @@ add_library(var SHARED
     util/tinyxml2.cpp
     util/json.hpp
     builtin/common.cc
+    builtin/service.cc
     builtin/jquery_min_js.cc
     builtin/flot_min_js.cc
     builtin/vars_service.cc
@@ -22,5 +22,5 @@ add_library(var SHARED
     builtin/file_transfer_service.cc
     builtin/xvc_service.cc)
 
-target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR}/metric)
+target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR})
 target_link_libraries(var var_net)

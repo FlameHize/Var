@@ -15,8 +15,8 @@
 // specific language governing permissions and limitations
 // under the License.
 
-#ifndef VAR_SERVICE_H
-#define VAR_SERVICE_H
+#ifndef VAR_BUILTIN_SERVICE_H
+#define VAR_BUILTIN_SERVICE_H
 
 #include "metric/builtin/tabbed.h"
 #include "net/http/http_context.h"
@@ -59,4 +59,4 @@ private:
 
 } // end namespace var
 
-#endif // VAR_SERVICE_H
+#endif // VAR_BUILTIN_SERVICE_H

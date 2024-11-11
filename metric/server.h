@@ -18,7 +18,7 @@
 #ifndef VAR_SERVER_H
 #define VAR_SERVER_H
 
-#include "metric/service.h"
+#include "metric/builtin/service.h"
 #include "metric/builtin/tabbed.h"
 #include "net/http/http_server.h"
 #include "net/base/Thread.h"

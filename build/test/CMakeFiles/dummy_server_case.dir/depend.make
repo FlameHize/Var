@@ -3,6 +3,7 @@
 
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/average_recorder.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/builtin/common.h
+test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/builtin/service.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/builtin/tabbed.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/common.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/detail/agent_group.h
@@ -15,7 +16,6 @@ test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/latency_
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/passive_status.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/reducer.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/server.h
-test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/service.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/status.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/util/bounded_queue.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/util/fast_rand.h

@@ -20,7 +20,7 @@
 #ifndef VAR_BUILTIN_INSIDE_STATUS_SERVICE_H
 #define VAR_BUILTIN_INSIDE_STATUS_SERVICE_H
 
-#include "metric/service.h"
+#include "metric/builtin/service.h"
 #include "metric/builtin/inside_cmd_status_user.h"
 #include <mutex>
 

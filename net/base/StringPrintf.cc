@@ -17,7 +17,7 @@
 
 #include <stdio.h>                               // vsnprintf
 #include <string.h>                              // strlen
-#include "net/base/StringPrintf.h"
+#include "StringPrintf.h"
 
 namespace var {
 

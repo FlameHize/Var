@@ -22,6 +22,7 @@
 #include "metric/reducer.h"
 #include "net/base/Logging.h"
 #include <unistd.h>
+#include <sys/prctl.h>
 
 namespace var {
 namespace detail {
@@ -111,6 +112,7 @@ private:
     }
 
     void run() {
+        ::prctl(PR_SET_NAME, "sampler thread");
         ::usleep(10000);
         LinkNode<Sampler> root;
         int consecutice_nosleep = 0;

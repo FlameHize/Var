@@ -18,7 +18,7 @@
 #ifndef VARS_BUILTIN_VARS_SERVICE_H
 #define VARS_BUILTIN_VARS_SERVICE_H
 
-#include "metric/service.h"
+#include "metric/builtin/service.h"
 
 namespace var {
 
