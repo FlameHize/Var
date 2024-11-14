@@ -21,7 +21,11 @@ add_library(var SHARED
     builtin/inside_cmd_service.cc
     builtin/file_transfer_service.cc
     builtin/xvc_service.cc
-    builtin/remote_sampler_service.cc)
+    builtin/remote_sampler_service.cc
+    builtin/tcmalloc_extension.cc
+    builtin/heap_profiler_service.cc)
 
 target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR})
-target_link_libraries(var var_net)
+target_link_libraries(var 
+                      var_net
+                      dl)

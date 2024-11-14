@@ -28,6 +28,7 @@ namespace var {
 class RemoteSamplerService : public Service {
 public:
     RemoteSamplerService();
+    ~RemoteSamplerService();
 
     void status(net::HttpRequest* request,
                 net::HttpResponse* response);

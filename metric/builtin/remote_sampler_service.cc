@@ -12,6 +12,25 @@ RemoteSamplerService::RemoteSamplerService() {
                 this, std::placeholders::_1, std::placeholders::_2));
 }
 
+RemoteSamplerService::~RemoteSamplerService() {
+    for(size_t i = 0; i < _status_metric_list.size(); ++i) {
+        Status<int64_t>* status = _status_metric_list.at(i);
+        if(status) {
+            delete status;
+            status = nullptr;
+        }
+    }
+    _status_metric_list.clear();
+    for(size_t i = 0; i < _latency_metric_list.size(); ++i) {
+        LatencyRecorder* latency = _latency_metric_list.at(i);
+        if(latency) {
+            delete latency;
+            latency = nullptr;
+        }
+    }
+    _latency_metric_list.clear();
+}
+
 void RemoteSamplerService::status(net::HttpRequest* request,
                                   net::HttpResponse* response) {
     std::string body_str = request->body().retrieveAllAsString();
