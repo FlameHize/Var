@@ -41,6 +41,8 @@ std::string decimal_to_binary(int decimal);
 
 std::string format_byte_size(size_t value);
 
+std::string program_work_dir(const std::string& filter_word);
+
 // Put inside <head></head> of html to work with Tabbed.
 const char* TabsHead();
 

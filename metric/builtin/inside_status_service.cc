@@ -9,7 +9,7 @@
 namespace var {
 
 static bool kInitFlag = false;
-const std::string InsideStatusXMLFileSaveDir = "data/inside_status/";
+const std::string InsideStatusXMLFileSaveDir = program_work_dir("bin") + "data/inside_status/";
 
 InsideStatusService::InsideStatusService() 
     : _data(std::make_shared<net::Buffer>()) {

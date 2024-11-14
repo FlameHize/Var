@@ -1,7 +1,10 @@
 #include "metric/builtin/common.h"
+#include "net/base/StringSplitter.h"
 #include <sstream>
 #include <iomanip>
 #include <cmath>
+#include <limits.h>
+#include <unistd.h>
 
 namespace var {
 
@@ -111,6 +114,31 @@ std::string format_byte_size(size_t value) {
         str += "GB";
     }
     return str;
+}
+
+std::string program_work_dir(const std::string& filter_word) {
+    char cwd[PATH_MAX];
+    if(!getcwd(cwd, sizeof(cwd))) {
+        return std::string();
+    }
+    std::string dir(cwd);
+    if(filter_word.empty()) {
+        return dir;
+    }
+    StringSplitter sp(dir, '/');
+    std::vector<std::string> dir_list;
+    for(; sp; sp++) {
+        dir_list.emplace_back(sp.field(), sp.length());
+    }
+    if(dir_list.back() == filter_word) {
+        dir_list.pop_back();
+    }
+    std::string filter_dir("/");
+    for(size_t i = 0; i < dir_list.size(); ++i) {
+        filter_dir += dir_list.at(i);
+        filter_dir += '/';
+    }
+    return filter_dir;
 }
 
 const char* TabsHead() {

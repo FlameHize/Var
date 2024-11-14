@@ -397,7 +397,7 @@ void VarsService::default_method(net::HttpRequest* request,
 void VarsService::GetTabInfo(TabInfoList* info_list) const {
     TabInfo* info = info_list->add();
     info->path = "/vars";
-    info->tab_name = "变量查询";
+    info->tab_name = "指标查询";
 }
 
 } // end namespace var

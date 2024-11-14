@@ -20,7 +20,8 @@ add_library(var SHARED
     builtin/inside_status_service.cc
     builtin/inside_cmd_service.cc
     builtin/file_transfer_service.cc
-    builtin/xvc_service.cc)
+    builtin/xvc_service.cc
+    builtin/remote_sampler_service.cc)
 
 target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR})
 target_link_libraries(var var_net)

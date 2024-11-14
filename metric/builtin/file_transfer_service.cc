@@ -29,7 +29,7 @@ void get_all_file(const std::string& dir_path,
     }
 }
 
-const std::string FileTransferSaveDir = "data/file_transfer/";
+const std::string FileTransferSaveDir = program_work_dir("bin") + "data/file_transfer/";
 
 FileTransferService::FileTransferService() {
     AddMethod("upload_file", std::bind(&FileTransferService::upload_file,

@@ -9,7 +9,7 @@
 namespace var {
 
 static bool kInitFlag = false;
-const std::string InsideCmdXMLFileSaveDir = "data/inside_cmd/";
+const std::string InsideCmdXMLFileSaveDir = program_work_dir("bin") + "data/inside_cmd/";
 
 void default_cmd_recv_process(const char* data, size_t len, size_t index) {
     LOG_INFO << "Cmd belong to chip index: " << index

@@ -7,6 +7,7 @@
 #include "metric/builtin/inside_cmd_service.h"
 #include "metric/builtin/xvc_service.h"
 #include "metric/builtin/file_transfer_service.h"
+#include "metric/builtin/remote_sampler_service.h"
 
 namespace var {
 
@@ -81,11 +82,14 @@ void Server::Start() {
     if(!AddBuiltinService("inside_status", new(std::nothrow) InsideStatusService)) {
         LOG_ERROR << "Failed to add InsideStatusService";
     }
-    // if(!AddBuiltinService("xvc", new(std::nothrow) XvcService)) {
-    //     LOG_ERROR << "Failed to add XvcService";
-    // }
+    if(!AddBuiltinService("xvc", new(std::nothrow) XvcService)) {
+        LOG_ERROR << "Failed to add XvcService";
+    }
     if(!AddBuiltinService("file_transfer", new(std::nothrow) FileTransferService)) {
         LOG_ERROR << "Failed to add FileTransferService";
+    }
+    if(!AddBuiltinService("remote_sampler", new (std::nothrow) RemoteSamplerService)) {
+        LOG_ERROR << "Failed to add RemoteSamplerService";
     }
     if(!AddBuiltinService("index", new (std::nothrow) IndexService)) {
         LOG_ERROR << "Failed to add IndexService";

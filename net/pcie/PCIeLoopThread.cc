@@ -189,31 +189,38 @@ void PCIeLoopThread::WriteInternal(const char* data, size_t len, uint type) {
     int sendLen = len + sizeof(T_PCIEHEAD);
     int temp_count = sendLen % ONCEBYTES;
     temp_count = temp_count == 0 ? sendLen / ONCEBYTES : sendLen / ONCEBYTES + 1;
-
-    char buffer[temp_count * ONCEBYTES];
-    memset(&buffer, 0, temp_count * ONCEBYTES);
+    int padding_count = temp_count * ONCEBYTES - sizeof(T_PCIEHEAD) - len;
     T_PCIEHEAD tPCIEHEAD;
     tPCIEHEAD.usType = type;
     tPCIEHEAD.uiLength = len;
-
-    memcpy(&buffer, (char*)&tPCIEHEAD, sizeof(tPCIEHEAD));
-    memcpy(&buffer + sizeof(tPCIEHEAD), data, len);
-
-    size_t h2c_seek_old =  h2c_seek_;
+    net::Buffer buf;
+    buf.append((char*)&tPCIEHEAD, sizeof(tPCIEHEAD));
+    buf.append(data, len);
+    char c = 0;
+    for(int i = 0; i < padding_count; ++i) {
+        buf.append((char*)&c, sizeof(c));
+    }
+    int expect_write_bytes = buf.readableBytes();
+    int actual_write_bytes = 0;
     while(temp_count) {
         if(h2c_seek_ >= write_end_ptr_) { 
             h2c_seek_ = write_start_ptr_;
         }
-
         ::lseek(h2c_handler_, h2c_seek_, SEEK_SET);
-        ::write(h2c_handler_, &buffer + already_write_bytes, ONCEBYTES * sizeof(char));
-
+        int n = ::write(h2c_handler_, buf.peek() + already_write_bytes, ONCEBYTES * sizeof(char));
+        actual_write_bytes += n;
         *(uint32_t*)((uint8_t*)user_map_ + WRITE_H2C_DDR_PTR) = h2c_seek_ + ONCEBYTES;
         msync((void*)user_map_, MAP_SIZE, MS_ASYNC);
-
         h2c_seek_ += ONCEBYTES;
         already_write_bytes += ONCEBYTES;
         temp_count--;
+    }
+    if(expect_write_bytes != actual_write_bytes) {
+        LOG_ERROR << "PCIe write error: expected write "
+                << expect_write_bytes
+                << " bytes but actual write " 
+                << actual_write_bytes
+                <<  " bytes"; 
     }
 }
 
