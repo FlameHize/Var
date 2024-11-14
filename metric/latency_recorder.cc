@@ -121,6 +121,7 @@ static int64_t get_recorder_qps(void* arg) {
 
 LatencyRecorderBase::LatencyRecorderBase(time_t window_size)
     : _latency_window(&_latency, window_size)
+    , _max_latency(0)
     , _max_latency_window(&_max_latency, window_size)
     , _latency_percentile_window(&_latency_percentile, window_size)
     , _latency_cdf(&_latency_percentile_window) 

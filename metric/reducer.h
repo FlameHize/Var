@@ -244,12 +244,8 @@ struct MaxTo {
         if(lhs < rhs) { lhs = rhs; }
     }
 };
-template<typename T>
-struct MinTo {
-    void operator()(T& lhs, typename var::add_cr_non_integral<T>::type rhs) const {
-        if(rhs < lhs) { lhs = rhs; }
-    }
-};
+// Forward declaration for LatencyRecorder init Maxer.
+class LatencyRecorderBase;
 } // end namespace detail
 
 template<typename T>
@@ -272,7 +268,30 @@ public:
     ~Maxer() {
         Variable::hide();
     }
+private:
+    friend class detail::LatencyRecorderBase;
+    // The following private function a now used in LatencyRecorder,
+    // it's dangerous so we don't make them public.
+    explicit Maxer(T default_value) : Base(default_value) {}
+    Maxer(T default_value, 
+          const std::string& prefix,
+          const std::string& name) 
+        : Base(default_value) {
+        this->expose_as(prefix, name);
+    }
+    Maxer(T default_value, const std::string& name) : Base(default_value) {
+        this->expose(name);
+    }
 };
+
+namespace detail {
+template<typename T>
+struct MinTo {
+    void operator()(T& lhs, typename var::add_cr_non_integral<T>::type rhs) const {
+        if(rhs < lhs) { lhs = rhs; }
+    }
+};
+} // end namespace detail
 
 template<typename T>
 class Miner : public Reducer<T, detail::MinTo<T>> {

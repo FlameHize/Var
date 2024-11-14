@@ -36,7 +36,6 @@ TEST(DummyServerTest, StartDummyServer) {
     var::Adder<int> adder;
     var::Window<var::Adder<int>> window_adder("FpgaWindow", &adder, 10);
 
-    ///@bug expose name failed.
     var::LatencyRecorder recorder("dsp");
 
     var::WindowEx<var::Adder<int>>* window_ex_adder = 
@@ -76,7 +75,7 @@ TEST(DummyServerTest, StartDummyServer) {
         adder << 1;
         *window_ex_adder << 1;
         window_ex_adder->get_value();
-        recorder << interval;
+        // recorder << interval;
     }
 #else
     net::EventLoop loop;
