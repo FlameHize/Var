@@ -15,7 +15,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// Date Oct Thur 10 13:54:01 CST 2024.
+// Date Nov Thur 14 14:23:35 CST 2024.
 
 #ifndef VAR_BUILTIN_REMOTE_SAMPLER_SERVICE_H
 #define VAR_BUILTIN_REMOTE_SAMPLER_SERVICE_H
@@ -32,6 +32,9 @@ public:
     void status(net::HttpRequest* request,
                 net::HttpResponse* response);
 
+    void latency(net::HttpRequest* request,
+                 net::HttpResponse* response);
+
     void default_method(net::HttpRequest* request,
                         net::HttpResponse* response) override;
 
@@ -39,6 +42,7 @@ public:
 
 private:
     std::vector< Status<int64_t>* > _status_metric_list;
+    std::vector< LatencyRecorder* > _latency_metric_list;
 };
 
 } // end namespace var

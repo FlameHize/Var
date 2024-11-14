@@ -75,7 +75,7 @@ TEST(DummyServerTest, StartDummyServer) {
         adder << 1;
         *window_ex_adder << 1;
         window_ex_adder->get_value();
-        // recorder << interval;
+        recorder << interval;
     }
 #else
     net::EventLoop loop;
