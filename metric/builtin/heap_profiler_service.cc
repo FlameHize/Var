@@ -2,6 +2,7 @@
 #include "metric/builtin/tcmalloc_extension.h"
 #include "metric/builtin/common.h"
 #include "metric/server.h"
+#include <stdlib.h>
 
 namespace var {
 
@@ -25,17 +26,28 @@ void HeapProfilerService::default_method(net::HttpRequest* request,
            << "</head><body>";
         server->PrintTabsBody(os, "堆内存分析");
     }
-    const char* extra_desc = "";
     bool enabled = IsHeapProfilerEnabled();
-    if(enabled && !has_TCMALLOC_SAMPLE_PARAMETER()) {
-        enabled = false;
-        extra_desc = " (no TCMALLOC_SAMPLE_PARAMETER in env)";
-    }
     if(!enabled) {
         os << "<pre>\n";
-        os << "Error: heap profiler is not enabled." << extra_desc << "\n";
+        os << "错误: 未找到或加载tcmalloc_and_profiler动态库, 请检查是否安装gperftools，"
+              "并确保CMake编译选项中设置-DLINK_TCMALLOC_AND_PROFILER=ON.\n";
         os << "</pre>\n";
+        os << "</pre></body></html>";
+        response->set_body(os);
+        return;
     }
+    // Default setting according to gperftools doc.
+    setenv("TCMALLOC_SAMPLE_PARAMETER", "524288", 0);
+    if(!has_TCMALLOC_SAMPLE_PARAMETER()) {
+        os << "<pre>\n";
+        os << "错误: 设置内存采样参数TCMALLOC_SAMPLE_PARAMETER失败\n";
+        os << "</pre>\n";
+        os << "</pre></body></html>";
+        response->set_body(os);
+        return;
+    }
+    char* value = getenv("TCMALLOC_SAMPLE_PARAMETER");
+    os << "<pre>启动成功，内存采样参数TCMALLOC_SAMPLE_PARAMETER=" << value << "</pre>\n";
     if(use_html) {
         os << "</pre></body></html>";
     }

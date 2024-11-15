@@ -97,6 +97,7 @@ dummy_server_case_EXTERNAL_OBJECTS =
 ../bin/dummy_server_case: /usr/local/lib/libgtest.a
 ../bin/dummy_server_case: ../lib/libvar.so
 ../bin/dummy_server_case: ../lib/libvar_net.so
+../bin/dummy_server_case: /usr/local/lib/libtcmalloc_and_profiler.so
 ../bin/dummy_server_case: test/CMakeFiles/dummy_server_case.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ../../bin/dummy_server_case"
 	cd /home/zgx/Var/build/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/dummy_server_case.dir/link.txt --verbose=$(VERBOSE)

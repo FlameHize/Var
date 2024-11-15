@@ -382,6 +382,7 @@ var_test_EXTERNAL_OBJECTS =
 ../bin/var_test: /usr/local/lib/libgtest.a
 ../bin/var_test: ../lib/libvar.so
 ../bin/var_test: ../lib/libvar_net.so
+../bin/var_test: /usr/local/lib/libtcmalloc_and_profiler.so
 ../bin/var_test: test/CMakeFiles/var_test.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Linking CXX executable ../../bin/var_test"
 	cd /home/zgx/Var/build/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/var_test.dir/link.txt --verbose=$(VERBOSE)

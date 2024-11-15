@@ -29,3 +29,18 @@ target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR})
 target_link_libraries(var 
                       var_net
                       dl)
+
+option(LINK_TCMALLOC_AND_PROFILER "Whether linked tcmalloc_and_profiler lib" ON)
+if(LINK_TCMALLOC_AND_PROFILER)
+    find_path(GPERFTOOLS_INCLUDE_DIR NAMES gperftools/heap-profiler.h)
+    find_library(GPERFTOOLS_LIBRARIES NAMES tcmalloc_and_profiler)
+    if((NOT GPERFTOOLS_INCLUDE_DIR) OR (NOT GPERFTOOLS_LIBRARIES))
+        message(FATAL_ERROR "Failed to find tcmalloc_and_profiler")
+    else()
+        message(STATUS "Found tcmalloc_and_profiler:" ${GPERFTOOLS_LIBRARIES})
+        target_include_directories(var PRIVATE ${GPERFTOOLS_INCLUDE_DIR})
+        target_link_libraries(var ${GPERFTOOLS_LIBRARIES})
+    endif()
+else()
+endif()
+# include_directories(${GPERFTOOLS_INCLUDE_DIR})

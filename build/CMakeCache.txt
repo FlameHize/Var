@@ -210,6 +210,12 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Path to a file.
+GPERFTOOLS_INCLUDE_DIR:PATH=/usr/local/include
+
+//Path to a library.
+GPERFTOOLS_LIBRARIES:FILEPATH=/usr/local/lib/libtcmalloc_and_profiler.so
+
+//Path to a file.
 GTEST_INCLUDE_DIR:PATH=/usr/local/include
 
 //Path to a library.
@@ -224,6 +230,9 @@ GTEST_MAIN_LIBRARY:FILEPATH=/usr/local/lib/libgtest_main.a
 //Path to a library.
 GTEST_MAIN_LIBRARY_DEBUG:FILEPATH=GTEST_MAIN_LIBRARY_DEBUG-NOTFOUND
 
+//Whether linked tcmalloc_and_profiler lib
+LINK_TCMALLOC_AND_PROFILER:BOOL=ON
+
 //Value Computed by CMake
 Var_BINARY_DIR:STATIC=/home/zgx/Var/build
 
@@ -231,7 +240,7 @@ Var_BINARY_DIR:STATIC=/home/zgx/Var/build
 Var_SOURCE_DIR:STATIC=/home/zgx/Var
 
 //Dependencies for the target
-var_LIB_DEPENDS:STATIC=general;var_net;general;dl;
+var_LIB_DEPENDS:STATIC=general;var_net;general;dl;general;/usr/local/lib/libtcmalloc_and_profiler.so;
 
 
 ########################
