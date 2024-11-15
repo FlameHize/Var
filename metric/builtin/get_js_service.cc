@@ -1,6 +1,7 @@
-#include "get_js_service.h"
-#include "jquery_min_js.h"
-#include "flot_min_js.h"
+#include "metric/builtin/get_js_service.h"
+#include "metric/builtin/jquery_min_js.h"
+#include "metric/builtin/viz_min_js.h"
+#include "metric/builtin/flot_min_js.h"
 
 namespace var {
 
@@ -24,6 +25,8 @@ static void SetExpires(net::HttpHeader* header, time_t seconds) {
 GetJsService::GetJsService() {
     AddMethod("jquery_min", std::bind(&GetJsService::jquery_min,
                 this, std::placeholders::_1, std::placeholders::_2));
+    AddMethod("viz_min", std::bind(&GetJsService::viz_min,
+                this, std::placeholders::_1, std::placeholders::_2));
     AddMethod("flot_min", std::bind(&GetJsService::flot_min,
                 this, std::placeholders::_1, std::placeholders::_2));
 }
@@ -41,9 +44,22 @@ void GetJsService::jquery_min(net::HttpRequest* request, net::HttpResponse* resp
     response->set_body(jquery_min_js_buf());
 }
 
+void GetJsService::viz_min(net::HttpRequest* request, net::HttpResponse* response) {
+    response->header().set_content_type("application/javascript");
+    SetExpires(&response->header(), 80000);
+    net::HttpHeader& request_header = request->header();
+    const std::string* ims = request_header.GetHeader("If-Modified-Since");
+    if(ims && *ims == g_last_modified) {
+        response->header().set_status_code(net::HTTP_STATUS_NOT_MODIFIED);
+        return;
+    }
+    response->header().SetHeader("Last-Modified", g_last_modified);
+    response->set_body(viz_min_js_buf());
+}
+
 void GetJsService::flot_min(net::HttpRequest* request, net::HttpResponse* response) {
     response->header().set_content_type("application/javascript");
-    SetExpires(&response->header(), 600);
+    SetExpires(&response->header(), 80000);
     net::HttpHeader& request_header = request->header();
     const std::string* ims = request_header.GetHeader("If-Modified-Since");
     if(ims && *ims == g_last_modified) {

@@ -11,6 +11,7 @@ add_library(var SHARED
     builtin/common.cc
     builtin/service.cc
     builtin/jquery_min_js.cc
+    builtin/viz_min_js.cc
     builtin/flot_min_js.cc
     builtin/vars_service.cc
     builtin/index_service.cc
@@ -23,7 +24,7 @@ add_library(var SHARED
     builtin/xvc_service.cc
     builtin/remote_sampler_service.cc
     builtin/tcmalloc_extension.cc
-    builtin/heap_profiler_service.cc)
+    builtin/profiler_service.cc)
 
 target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR})
 target_link_libraries(var 

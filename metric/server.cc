@@ -8,7 +8,7 @@
 #include "metric/builtin/xvc_service.h"
 #include "metric/builtin/file_transfer_service.h"
 #include "metric/builtin/remote_sampler_service.h"
-#include "metric/builtin/heap_profiler_service.h"
+#include "metric/builtin/profiler_service.h"
 
 namespace var {
 
@@ -86,8 +86,8 @@ void Server::Start() {
     if(!AddBuiltinService("xvc", new(std::nothrow) XvcService)) {
         LOG_ERROR << "Failed to add XvcService";
     }
-    if(!AddBuiltinService("heap_profiler", new(std::nothrow) HeapProfilerService)) {
-        LOG_ERROR << "Failed to add HeapProfilerService";
+    if(!AddBuiltinService("profiler", new(std::nothrow) ProfilerService)) {
+        LOG_ERROR << "Failed to add ProfilerService";
     }
     if(!AddBuiltinService("file_transfer", new(std::nothrow) FileTransferService)) {
         LOG_ERROR << "Failed to add FileTransferService";

@@ -26,6 +26,7 @@ class GetJsService : public Service {
 public:
     GetJsService();
     void jquery_min(net::HttpRequest* request, net::HttpResponse* response);
+    void viz_min(net::HttpRequest* request, net::HttpResponse* response);
     void flot_min(net::HttpRequest* request, net::HttpResponse* response);
 };
 
