@@ -55,6 +55,16 @@ private:
     void StartProfiling(net::HttpRequest* request,
                         net::HttpResponse* response,
                         ProfilingType type);
+
+    void DoProfiling(net::HttpRequest* request,
+                     net::HttpResponse* response,
+                     ProfilingType type);
+
+    void DisplayProfiling(net::HttpRequest* request,
+                          net::HttpResponse* response,
+                          const char* prof_name,
+                          net::Buffer& result_prefix,
+                          ProfilingType type);
 };
 
 } // end namespace var

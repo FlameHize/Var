@@ -32,7 +32,7 @@
 
 namespace var {
 
-ssize_t ReadCommandLine(char* buf, size_t len, bool with_args) {
+inline ssize_t ReadCommandLine(char* buf, size_t len, bool with_args) {
     fd_guard fd(open("/proc/self/cmdline", O_RDONLY));
     if(fd < 0) {
         LOG_ERROR << "Fail to open /proc/self/cmdline";
@@ -69,7 +69,7 @@ ssize_t ReadCommandLine(char* buf, size_t len, bool with_args) {
     }
 }
 
-ssize_t ReadCommandOutput(std::ostream& os, const char* cmd) {
+inline ssize_t ReadCommandOutput(std::ostream& os, const char* cmd) {
     FILE* pipe = popen(cmd, "r");
     if (pipe == NULL) {
         return -1;

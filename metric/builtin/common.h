@@ -43,6 +43,9 @@ std::string format_byte_size(size_t value);
 
 std::string program_work_dir(const std::string& filter_word);
 
+// Get name of current program.
+const char* program_name();
+
 // Put inside <head></head> of html to work with Tabbed.
 const char* TabsHead();
 

@@ -13,6 +13,8 @@ add_library(var SHARED
     builtin/jquery_min_js.cc
     builtin/viz_min_js.cc
     builtin/flot_min_js.cc
+    builtin/pprof_perl.cc
+    builtin/flamegraph_perl.cc
     builtin/vars_service.cc
     builtin/index_service.cc
     builtin/get_js_service.cc

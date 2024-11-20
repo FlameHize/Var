@@ -100,6 +100,7 @@ class DirReaderLinux {
     else {
       std::string path;
       for(size_t i = 0; i < paths.size(); ++i) {
+        path += '/';
         path += paths.at(i);
         if(!DirectoryExists(path.c_str())) {
           if(mkdir(path.c_str(), 0755) != 0) {
@@ -107,7 +108,6 @@ class DirReaderLinux {
             return false;
           }
         }
-        path += "/";
       }
       return true;
     }
@@ -182,6 +182,21 @@ class DirReaderLinux {
     }
     closedir(dir);
     return true;
+  }
+
+  static bool GetParentDirectory(const char* directory_path,
+                                 std::string& parent_dir_path) {
+    if(!directory_path) {
+      LOG_ERROR << "Parameter[directory_path] is NULL";
+      return false;
+    }
+    std::string path(directory_path);
+    size_t n = path.find_last_of("/");
+    if(n != std::string::npos) {
+      parent_dir_path = path.substr(0, n);
+      return true;  
+    }
+    return false;
   }
 
   // Move to the next entry returning false if the iteration is complete.

@@ -1,4 +1,5 @@
 #include "metric/builtin/common.h"
+#include "metric/util/cmd_reader_linux.h"
 #include "net/base/StringSplitter.h"
 #include <sstream>
 #include <iomanip>
@@ -19,17 +20,17 @@ int hexCharToInt(char c) {
 }  
 
 bool UseHTML(const net::HttpHeader& header) {
-const std::string* console = header.url().GetQuery(CONSOLE_STR);
-if (console != NULL) {
-    return atoi(console->c_str()) == 0;
-}
-// [curl header]
-// User-Agent: curl/7.12.1 (x86_64-redhat-linux-gnu) libcurl/7.12.1 ...
-const std::string* agent = header.GetHeader(USER_AGENT_STR);
-if (agent == NULL) {  // use text when user-agent is absent
-    return false;
-}
-return agent->find("curl/") == std::string::npos;
+    const std::string* console = header.url().GetQuery(CONSOLE_STR);
+    if (console != NULL) {
+        return atoi(console->c_str()) == 0;
+    }
+    // [curl header]
+    // User-Agent: curl/7.12.1 (x86_64-redhat-linux-gnu) libcurl/7.12.1 ...
+    const std::string* agent = header.GetHeader(USER_AGENT_STR);
+    if (agent == NULL) {  // use text when user-agent is absent
+        return false;
+    }
+    return agent->find("curl/") == std::string::npos;
 }
 
 std::string UrlEncode(const std::string& value) {
@@ -139,6 +140,22 @@ std::string program_work_dir(const std::string& filter_word) {
         filter_dir += '/';
     }
     return filter_dir;
+}
+
+static pthread_once_t create_program_name_once = PTHREAD_ONCE_INIT;
+static const char* s_program_name = "unknown";
+static char s_cmdline[256];
+static void CreateProgramName() {
+    const ssize_t nr = ReadCommandLine(s_cmdline, sizeof(s_cmdline) - 1, false);
+    if(nr > 0) {
+        s_cmdline[nr] = '\0';
+        s_program_name = s_cmdline;
+    }
+}
+
+const char* program_name() {
+    pthread_once(&create_program_name_once, CreateProgramName);
+    return s_program_name;
 }
 
 const char* TabsHead() {
