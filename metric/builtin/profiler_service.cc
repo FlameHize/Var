@@ -21,6 +21,7 @@ static const char* const FLAMEGRAPH_FILENAME = "flamegraph.pl";
 static std::once_flag g_written_pprof_perl;
 static std::once_flag g_written_flamegraph_perl;
 static int FLAMEGRAPH_DISPLAY_WIDTH = 1600;
+static int MAX_PROFILES_KEPT = 8;
 
 enum DisplayType {
     kUnknown,
@@ -74,6 +75,42 @@ static const char* ProfilingTypePathToString(ProfilingType type) {
         case PROFILING_IOBUF: return "iobuf";
     }
     return "unknown";
+}
+
+// NOTE: This function MUST be applied to all parameters finally passed to
+// system related functions (popen/system/exec ...) to avoid potential
+// injections from URL and other user inputs
+static bool VaildProfilePath(const std::string& path) {
+    auto starts_with = [](const std::string& lhs, const std::string& rhs) -> bool {
+        return ( lhs.length() >= rhs.length() && 
+        std::string::traits_type::compare(lhs.data(), rhs.data(), rhs.length()) == 0 );
+    };
+    if(!starts_with(path, ProfilerFileSaveDir)) {
+        // Must be under the directory.
+        return false;
+    }
+    int consecutive_dot_count = 0;
+    for(size_t i = 0; i < path.size(); ++i) {
+        const char c = path[i];
+        if(c == '.') {
+            ++consecutive_dot_count;
+            if(consecutive_dot_count >= 2) {
+                // Disallow consective dots to go to upper level directories.
+                return false;
+            }
+            else {
+                continue;
+            }
+        }
+        else {
+            consecutive_dot_count = 0;
+        }
+        if(!isalpha(c) && !isdigit(c) &&
+            c != '_' && c != '-' && c != '/') {
+            return false;
+        }
+    }
+    return true;
 }
 
 static int MakeCacheName(char* cache_name, size_t len,
@@ -192,24 +229,47 @@ void ProfilerService::DisplayProfiling(net::HttpRequest* request,
     
     const bool show_ccount = request->header().url().GetQuery("ccount");
     const std::string* view = request->header().url().GetQuery("view");
-    const std::string* base = request->header().url().GetQuery("base");
+    const std::string* base_name = request->header().url().GetQuery("base");
     const std::string* display_type_query = request->header().url().GetQuery("display_type");
-    DisplayType display_type = DisplayType::kText;
+    DisplayType display_type = DisplayType::kDot;
     if(display_type_query) {
         display_type = StringToDisplayType(*display_type_query);
         if(display_type == DisplayType::kUnknown) {
-            os << "<pre>显示类型无效(" << *display_type_query << ")</pre>\n";
+            os << "Invalid display type=" << *display_type_query;
+            response->header().set_status_code(net::HTTP_STATUS_INTERNAL_SERVER_ERROR);
             response->set_body(os);
             return; 
         }
     }
 
-    if(base) {
-        ///@todo 
+    if(base_name) {
+        if(!VaildProfilePath(*base_name)) {
+            os << "Invalid query 'base'";
+            response->header().set_status_code(net::HTTP_STATUS_INTERNAL_SERVER_ERROR);
+            response->set_body(os);
+            return;
+        }
+        FileReaderLinux base_file(base_name->c_str(), "r");
+        if(!base_file.get()) {
+            os << "The profile denoted by 'base' does not exist";
+            response->header().set_status_code(net::HTTP_STATUS_INTERNAL_SERVER_ERROR);
+            response->set_body(os);
+            return;
+        }
     }
 
-    ///@todo cache.
-
+    // Try to read cache first.
+    char expected_result_name[256];
+    MakeCacheName(expected_result_name, sizeof(expected_result_name),
+                  prof_name, GetBaseName(base_name),
+                  display_type, show_ccount);
+    std::string cache_result;
+    if(FileUtil::readFile<std::string>(expected_result_name, 
+        64 * 1024 * 1024, &cache_result) == 0) {
+        os << "<pre>" << cache_result << "</pre></body></html>";
+        response->set_body(os);
+        return;
+    }
 
     // Build cmd sub process.
     std::ostringstream cmd_builder;
@@ -218,8 +278,8 @@ void ProfilerService::DisplayProfiling(net::HttpRequest* request,
     cmd_builder << "perl " << pprof_tool_path
                 << DisplayTypeToPProfArgument(display_type)
                 << ((show_ccount || type == PROFILING_IOBUF) ? " --contention " : "");
-    if(base) {
-        cmd_builder << "--base " << *base << ' ';
+    if(base_name) {
+        cmd_builder << "--base " << *base_name << ' ';
     }
 
     cmd_builder << program_name() << " " << prof_name; 
@@ -249,7 +309,7 @@ void ProfilerService::DisplayProfiling(net::HttpRequest* request,
     // Cache result in file.
     char result_name[256];
     MakeCacheName(result_name, sizeof(result_name), prof_name,
-                    GetBaseName(base), display_type, show_ccount);
+                    GetBaseName(base_name), display_type, show_ccount);
 
     // Append the profile name as the visual reminder for what current profile is.
     net::Buffer before_label;
@@ -261,9 +321,9 @@ void ProfilerService::DisplayProfiling(net::HttpRequest* request,
     // Assume it's text, append before result directly.
     tmp.append("[");
     tmp.append(GetBaseName(prof_name));
-    if(base) {
+    if(base_name) {
         tmp.append(" - ");
-        tmp.append(GetBaseName(base));
+        tmp.append(GetBaseName(base_name));
     }
     tmp.append("]\n");
     tmp.append(prof_result);
@@ -272,16 +332,14 @@ void ProfilerService::DisplayProfiling(net::HttpRequest* request,
     net::Buffer prof_result_copy = prof_result;
     if(!WriteProfDataToFile(result_name, prof_result_copy.retrieveAllAsString())) {
         LOG_ERROR << "Failed to write " << result_name;
-        ///@todo delete file.
+        std::string cache_file_dir;
+        DirReaderLinux::GetParentDirectory(result_name, cache_file_dir);
+        DirReaderLinux::DeleteDirectory(cache_file_dir.c_str());
     }
-
     os.moveTo(resp);
-    if(use_html) {
-        resp.append("<pre>");
-    }
     resp.append(prof_result);
     if(use_html) {
-        resp.append("</pre></body></html>");
+        resp.append("</body></html>");
     }
     return;
 }
@@ -302,6 +360,25 @@ void ProfilerService::DoProfiling(net::HttpRequest* request,
         server->PrintTabsBody(os, ProfilingTypeNameToString(type));
     }
 
+    const std::string* view = request->header().url().GetQuery("view");
+    if(view) {
+        if(!VaildProfilePath(*view)) {
+            os << "Invalid query 'view'\n";
+            response->header().set_status_code(net::HTTP_STATUS_FORBIDDEN);
+            response->set_body(os);
+            return;
+        }
+        FileReaderLinux view_file(view->c_str(), "r");
+        if(!view_file.get()) {
+            os << "The profile denoted by 'view' does not existed";
+            response->header().set_status_code(net::HTTP_STATUS_FORBIDDEN);
+            response->set_body(os);
+            return;
+        }
+        DisplayProfiling(request, response, view->c_str(), os.buf(), type);
+        return;
+    }
+
     std::string prof_name = MakeProfName(type);
     LOG_INFO << prof_name;
     if(type == PROFILING_HEAP) {
@@ -311,17 +388,14 @@ void ProfilerService::DoProfiling(net::HttpRequest* request,
             if(malloc_ext) {
                 os << " (No TCMALLOC_SAMPLE_PARAMETER in env, please set it)";
             }
-            os << '.' << (use_html ? "</body></html>" : "\n");
             response->header().set_status_code(net::HTTP_STATUS_FORBIDDEN);
             response->set_body(os);
             return;
         }
         std::string obj;
         malloc_ext->GetHeapSample(&obj);
-        sleep(10);
         if(!WriteProfDataToFile(prof_name.c_str(), obj)) {
-            os << "Fail to write " << prof_name
-               << (use_html ? "</body></html>" : "\n");
+            os << "Fail to write " << prof_name;
             response->header().set_status_code(net::HTTP_STATUS_FORBIDDEN);
             response->set_body(os);
             return;
@@ -384,7 +458,16 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
             return;
         }
         char* value = getenv("TCMALLOC_SAMPLE_PARAMETER");
-        os << "<pre>设置内存采样参数TCMALLOC_SAMPLE_PARAMETER = " << value << "</pre>\n";
+        os << "<style>\n"
+        ".right-bottom {\n"
+        "   position: fixed;\n"
+        "   bottom: 0;\n"
+        "   left: 0;\n"
+        "   padding: 0px;\n"
+        "   z-index: 1000;\n"
+        "}\n"
+        "</style>\n";
+        os << "<div class=\"right-bottom\">系统内存采样参数TCMALLOC_SAMPLE_PARAMETER: " << value << "</div>\n";
     }
     else {
         ///@todo other profiling type.
@@ -431,7 +514,7 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
     const std::string* view = request->header().url().GetQuery("view");
     const std::string* base = request->header().url().GetQuery("base");
     const std::string* display_type_query = request->header().url().GetQuery("display_type");
-    DisplayType display_type = DisplayType::kFlameGraph;
+    DisplayType display_type = DisplayType::kDot;
     if(display_type_query) {
         display_type = StringToDisplayType(*display_type_query);
         if(display_type == DisplayType::kUnknown) {
@@ -473,11 +556,11 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
         }
         os << "  return targetURL;\n"
             "}\n"
-            "$(function() {\n"
+            // "$(function() {\n"
+            "function startProfiling() {\n"
             "  function onDataReceived(data) {\n";
         if(view == NULL) {
             os <<
-            "console.log(data.length);\n"
             "    var selEnd = data.indexOf('[addToProfEnd]');\n"
             "    if (selEnd != -1) {\n"
             "      var sel = document.getElementById('view_prof');\n"
@@ -513,10 +596,13 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
             "      var svg = Viz(data.substring(index), \"svg\");\n"
             "      $(\"#profiling-result\").html(svg);\n"
             "    }\n"
+            "    $(\"#profiling-prompt\").html('Profiling success');\n"
             "  }\n"
             "  function onErrorReceived(xhr, ajaxOptions, thrownError) {\n"
             "    $(\"#profiling-result\").html(xhr.responseText);\n"
+            "    $(\"#profiling-prompt\").html('Profiling fail');\n"
             "  }\n"
+            "  $(\"#profiling-prompt\").html('Generating profile ......');\n"
             "  $.ajax({\n"
             "    url: \"/profiler/" << type_path << "_internal?console=0";
         if(type == PROFILING_CPU || type == PROFILING_CONTENTION) {
@@ -541,7 +627,8 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
             "    success: onDataReceived,\n"
             "    error: onErrorReceived\n"
             "  });\n"
-            "});\n"
+            // "});\n"
+            "}\n"
             "function onSelectProf() {\n"
             "  window.location.href = generateURL();\n"
             "}\n"
@@ -553,48 +640,70 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
             "<body>\n";
     }
 
-    ///@todo Already existed file list.
     std::vector<std::string> past_profs;
+    std::string prof_dir(ProfilerFileSaveDir);
+    prof_dir.append(type_path);
+    DirReaderLinux::ListChildFiles(prof_dir.c_str(), past_profs);
 
-    os << "<pre style='display:inline'>View: </pre>"
-    "<select id='view_prof' onchange='onSelectProf()'>\n";
+    // Cached files in MAX_PROFILE_KEPT limit size if new profile coming.
+    if(!view && !past_profs.empty()) {
+        std::sort(past_profs.begin(), past_profs.end(), std::greater<std::string>());
+        size_t max_profiles = MAX_PROFILES_KEPT;
+        if(past_profs.size() >= max_profiles) {
+            LOG_TRACE << "Remove " << past_profs.size() - max_profiles << " profiles file";
+            for(size_t i = max_profiles - 1; i < past_profs.size(); ++i) {
+                remove(past_profs[i].c_str());
+                std::string prof_cache_file = past_profs[i];
+                prof_cache_file.append(".cache");
+                DirReaderLinux::DeleteDirectory(prof_cache_file.c_str());
+            }
+            past_profs.resize(max_profiles - 1);
+        }
+    }
+
+    os << "<pre style='display:inline'>视图: </pre>\n"
+    "<select id='view_prof' onchange='onSelectProf()'>\n"
+    "<option value=''>&lt;new profile&gt;</option>\n";
     for(size_t i = 0; i < past_profs.size(); ++i) {
         os << "<option value='" << past_profs[i] << "' ";
         if(view && past_profs[i] == *view) {
             os << "selected";
         }
-        os << '>' << past_profs[i] << "\n";
+        os << '>' << GetBaseName(past_profs[i].c_str()) << "\n";
     }
     os << "</select>\n";
 
-    os << "<div><pre style='display:inline'>Display: </pre>"
-    "<select id='display_type' onchange='onSelectProf()'>\n"
-    "<option value=dot" << (display_type == DisplayType::kDot ? "selected" : "") << ">dot</option>\n"
-    "option value=flame" << (display_type == DisplayType::kFlameGraph ? "selected" : "") << ">flame</option>\n"\
-    "option value=text" << (display_type == DisplayType::kText ? "selected" : "") << "text</option>\n";
-    os << "</select></div>\n";
-
-    os << "<div><pre style='display:inline'>Diff: </pre>"
+    os << "<pre style='display:inline'>基准: </pre>"
     "<select id='base_prof' onchange='onSelectProf()'>\n"
-    "<option value=''>&lt;none&gt;</option>\n";
+    "<option value=''>&lt;non profile&gt;</option>\n";
     for(size_t i = 0; i < past_profs.size(); ++i) {
-        os << "<option value='>" << past_profs[i] << "' ";
+        os << "<option value='" << past_profs[i] << "' ";
         if(base && past_profs[i] == *base) {
             os << "selected";
         }
-        os << '>' << past_profs[i] << "\n";
+        os << '>' << GetBaseName(past_profs[i].c_str()) << "\n";
     }
-    os << "</select></div>\n";
+    os << "</select>\n";
 
+    os << "<pre style='display:inline'>绘制方式: </pre>"
+    "<select id='display_type' onchange='onSelectProf()'>\n"
+        "<option value=dot" << (display_type == DisplayType::kDot ? " selected" : "") << ">拓扑图</option>\n"
+        "<option value=flame" << (display_type == DisplayType::kFlameGraph ? " selected" : "") << ">火焰图</option>\n"
+        "<option value=text" << (display_type == DisplayType::kText ? " selected" : "") << ">文本</option>\n";
+    os << "</select>\n";
+
+    os << "&nbsp;<button type=\"button\" onclick=\"startProfiling()\">快照</button>\n";
+
+    os << "<div id=\"profiling-prompt\"></div>\n";
     os << "<div id=\"profiling-result\"></div>\n";
+
     if(use_html) {
         if(display_type == DisplayType::kDot) {
-        // don't need viz.js in text mode.
+        // Only need viz.js in Dot mode.
         os << "<script language=\"javascript\" type=\"text/javascript\""
             " src=\"/js/viz_min\"></script>\n";
         }
     }
-
     if(use_html) {
         os << "</body></html>";
     }

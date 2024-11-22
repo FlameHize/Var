@@ -184,6 +184,39 @@ class DirReaderLinux {
     return true;
   }
 
+  static bool ListChildFiles(const char* directory_path,
+                             std::vector<std::string>& sub_file_paths) {
+    if(!directory_path) {
+      LOG_ERROR << "Parameter[directory_path] is NULL";
+      return false;
+    }
+    DIR* dir = opendir(directory_path);
+    if(!dir) {
+      LOG_ERROR << "Failed to open directory: " << directory_path;
+      return false;
+    }
+
+    struct dirent* entry;
+    while((entry = readdir(dir)) != nullptr) {
+      if(!std::string(entry->d_name).compare(".") || 
+         !std::string(entry->d_name).compare("..")) {
+        continue;
+      }
+      std::string child_path = std::string(directory_path);
+      child_path += std::string("/");
+      child_path += std::string(entry->d_name);
+      struct stat path_stat;
+      if(stat(child_path.c_str(), &path_stat) != 0) {
+        continue;
+      }
+      if(S_ISREG(path_stat.st_mode)) {
+        sub_file_paths.push_back(child_path);
+      }
+    }
+    closedir(dir);
+    return true;
+  }
+
   static bool GetParentDirectory(const char* directory_path,
                                  std::string& parent_dir_path) {
     if(!directory_path) {
