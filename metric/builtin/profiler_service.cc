@@ -67,7 +67,7 @@ static const char* ProfilingTypeNameToString(ProfilingType type) {
     switch (type) {
         case PROFILING_CPU: return "CPU性能分析";
         case PROFILING_HEAP: return "CPU内存分析";
-        case PROFILING_GROWTH: return "growth";
+        case PROFILING_GROWTH: return "CPU内存优化";
         case PROFILING_CONTENTION: return "contention";
         case PROFILING_IOBUF: return "iobuf";
     }
@@ -219,6 +219,10 @@ ProfilerService::ProfilerService() {
     AddMethod("cpu", std::bind(&ProfilerService::cpu,
         this, std::placeholders::_1, std::placeholders::_2));
     AddMethod("cpu_internal", std::bind(&ProfilerService::cpu_internal,
+        this, std::placeholders::_1, std::placeholders::_2));
+    AddMethod("growth", std::bind(&ProfilerService::growth,
+        this, std::placeholders::_1, std::placeholders::_2));
+    AddMethod("growth_internal", std::bind(&ProfilerService::growth_internal,
         this, std::placeholders::_1, std::placeholders::_2));
 }
 
@@ -388,7 +392,10 @@ void ProfilerService::DoProfiling(net::HttpRequest* request,
     }
 
     const std::string* seconds_str = request->header().url().GetQuery("seconds");
-    int seconds = std::stoi(*seconds_str);
+    int seconds = DEFAULT_PROFILING_SECONDS;
+    if(seconds_str) {
+        seconds = std::stoi(*seconds_str);
+    }
 
     std::string prof_name = MakeProfName(type);
     if(type == PROFILING_HEAP) {
@@ -411,9 +418,29 @@ void ProfilerService::DoProfiling(net::HttpRequest* request,
             return;
         }
     }
+    else if(type == PROFILING_GROWTH) {
+        MallocExtension* malloc_ext = MallocExtension::instance();
+        if(!malloc_ext || !has_TCMALLOC_SAMPLE_PARAMETER()) {
+            os << "Growth profiler is not enabled";
+            if(malloc_ext) {
+                os << " (No TCMALLOC_SAMPLE_PARAMETER in env, please set it)";
+            }
+            response->header().set_status_code(net::HTTP_STATUS_FORBIDDEN);
+            response->set_body(os);
+            return;
+        }
+        std::string obj;
+        malloc_ext->GetHeapGrowthStacks(&obj);
+        if(!WriteProfDataToFile(prof_name.c_str(), obj)) {
+            os << "Fail to write " << prof_name;
+            response->header().set_status_code(net::HTTP_STATUS_FORBIDDEN);
+            response->set_body(os);
+            return;
+        }
+    }
     else if(type == PROFILING_CPU) {
         if((void*)ProfilerStart == nullptr || (void*)ProfilerStop == nullptr) {
-            os << "Heap profiler is not enabled";
+            os << "CPU profiler is not enabled";
             response->header().set_status_code(net::HTTP_STATUS_INTERNAL_SERVER_ERROR);
             response->set_body(os);
             return;
@@ -453,18 +480,15 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
     }
     
     bool enabled = false;
-    const char* error_desc = "";
-    if(type == PROFILING_HEAP) {
+    const char* error_desc = "未找到或加载tcmalloc_and_profiler动态库, 请检查是否安装gperftools，"
+    "并确保CMake编译选项中设置-DLINK_TCMALLOC_AND_PROFILER=ON.";
+    if(type == PROFILING_HEAP || type == PROFILING_GROWTH) {
         // Default: export TCMALLOC_SAMPLE_PARAMETER=524288(512KB)
         enabled = IsHeapProfilerEnabled();
-        error_desc = "未找到或加载tcmalloc_and_profiler动态库, 请检查是否安装gperftools，"
-        "并确保CMake编译选项中设置-DLINK_TCMALLOC_AND_PROFILER=ON.";
     }
     else if(type == PROFILING_CPU) {
         // Default: export CPUPROFILE_FREQUENCY=100
         enabled = cpu_profiler_enabled;
-        error_desc = "未找到或加载tcmalloc_and_profiler动态库, 请检查是否安装gperftools，"
-        "并确保CMake编译选项中设置-DLINK_TCMALLOC_AND_PROFILER=ON.";
     }
     else {
         ///@todo other profiling type.
@@ -478,36 +502,51 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
     }
 
     // Env parameter setting.
-    if(type == PROFILING_HEAP || type == PROFILING_CPU) {
+    if(type == PROFILING_HEAP || type == PROFILING_CPU || type == PROFILING_GROWTH) {
         // Default setting value(512KB) according to gperftools doc.
         // setenv("TCMALLOC_SAMPLE_PARAMETER", "524288", 0);
         if(!has_TCMALLOC_SAMPLE_PARAMETER()) {
             os << "<pre>\n";
-            os << "错误: 设置内存采样参数TCMALLOC_SAMPLE_PARAMETER失败\n";
+            os << "错误: 未设置内存采样参数TCMALLOC_SAMPLE_PARAMETER，请设置(export TCMALLOC_SAMPLE_PARAMETER = 524288)\n";
             os << "</pre>\n";
             os << "</pre></body></html>";
             response->set_body(os);
             return;
         }
-        char* TCMALLOC_SAMPLE_PARAMETER = getenv("TCMALLOC_SAMPLE_PARAMETER");
-        char* CPUPROFILE_FREQUENCY = getenv("CPUPROFILE_FREQUENCY");
-        os << "<style>\n"
-        ".right-bottom {\n"
-        "   position: fixed;\n"
-        "   bottom: 0;\n"
-        "   left: 0;\n"
-        "   padding: 0px;\n"
-        "   z-index: 1000;\n"
-        "}\n"
-        "</style>\n";
-        os << "<div class=\"right-bottom\">\n";
-        os << "<p>TCMALLOC_SAMPLE_PARAMETER: " << TCMALLOC_SAMPLE_PARAMETER << "</p>\n";
-        os << "<p>CPUPROFILE_FREQUENCY: " << CPUPROFILE_FREQUENCY << "</p>\n";
-        os << "</div>\n";
+    }
+    else if(type == PROFILING_CPU) {
+        if(!getenv("CPUPROFILE_FREQUENCY")) {
+            os << "<pre>\n";
+            os << "错误: 未设置CPU采样频率CPUPROFILE_FREQUENCY，请设置(export CPUPROFILE_FREQUENCY = 100)\n";
+            os << "</pre>\n";
+            os << "</pre></body></html>";
+            response->set_body(os);
+            return;
+        }
     }
     else {
         ///@todo other profiling type.
     }
+
+    char* TCMALLOC_SAMPLE_PARAMETER = getenv("TCMALLOC_SAMPLE_PARAMETER");
+    char* CPUPROFILE_FREQUENCY = getenv("CPUPROFILE_FREQUENCY");
+    os << "<style>\n"
+    ".right-bottom {\n"
+    "   position: fixed;\n"
+    "   bottom: 0;\n"
+    "   left: 0;\n"
+    "   padding: 0px;\n"
+    "   z-index: 1000;\n"
+    "}\n"
+    "</style>\n";
+    os << "<div class=\"right-bottom\">\n";
+    if(TCMALLOC_SAMPLE_PARAMETER) {
+        os << "<p>TCMALLOC_SAMPLE_PARAMETER: " << TCMALLOC_SAMPLE_PARAMETER << "</p>\n";
+    }
+    if(CPUPROFILE_FREQUENCY) {
+        os << "<p>CPUPROFILE_FREQUENCY: " << CPUPROFILE_FREQUENCY << "</p>\n";
+    }
+    os << "</div>\n";
 
     // Written pprof.pl and flamegraph.pl file into profiler.
     bool pprof_tool_flag = true;
@@ -798,14 +837,28 @@ void ProfilerService::cpu_internal(net::HttpRequest* request,
     return DoProfiling(request, response, PROFILING_CPU);
 }
 
+void ProfilerService::growth(net::HttpRequest* request,
+                             net::HttpResponse* response) {
+    return StartProfiling(request, response, PROFILING_GROWTH);
+}
+
+void ProfilerService::growth_internal(net::HttpRequest* request,
+                                      net::HttpResponse* response) {
+    return DoProfiling(request, response, PROFILING_GROWTH);
+}
+
 void ProfilerService::GetTabInfo(TabInfoList* info_list) const {
     TabInfo* info = info_list->add();
+    info->path = "/profiler/cpu";
+    info->tab_name = ProfilingTypeNameToString(PROFILING_CPU);
+
+    info = info_list->add();
     info->path = "/profiler/heap";
     info->tab_name = ProfilingTypeNameToString(PROFILING_HEAP);
     
     info = info_list->add();
-    info->path = "/profiler/cpu";
-    info->tab_name = ProfilingTypeNameToString(PROFILING_CPU);
+    info->path = "/profiler/growth";
+    info->tab_name = ProfilingTypeNameToString(PROFILING_GROWTH);
 }
 
 } // end namespace var

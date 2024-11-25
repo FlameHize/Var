@@ -49,6 +49,12 @@ public:
     void cpu_internal(net::HttpRequest* request,
                       net::HttpResponse* response);
 
+    void growth(net::HttpRequest* request,
+                net::HttpResponse* response);
+
+    void growth_internal(net::HttpRequest* request,
+                         net::HttpResponse* response);
+
     void GetTabInfo(TabInfoList*) const override;
 
 private:

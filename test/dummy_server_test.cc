@@ -26,6 +26,10 @@ using namespace var;
 
 #define SERVER_ONLY true
 
+void memory_growth_leak_check(int size) {
+    char* temp = new char[size];
+}
+
 TEST(DummyServerTest, StartDummyServer) {
     net::InetAddress addr(8511);
     StartDummyServerAt(addr.port());
@@ -66,6 +70,9 @@ TEST(DummyServerTest, StartDummyServer) {
         for(size_t i = 0; i < 60 * 256; ++i) {
             buf.append((char*)&c, sizeof(c));
         }
+
+        // test for memory growth check.
+        // memory_growth_leak_check(1024 * 1024);
 
         timer.stop();
         int64_t interval = timer.u_elapsed();

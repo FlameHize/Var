@@ -588,3 +588,7 @@ metric/var.h
 metric/builtin/common.h
 /home/zgx/Var/test/metric/builtin/common.h
 
+/home/zgx/Var/test/main.cc
+gtest/gtest.h
+-
+
