@@ -12,6 +12,10 @@
 #include <unordered_map>
 #include <mutex>
 
+extern "C" {
+    int __attribute__((weak)) ProfilerStart(const char* fname);
+    void __attribute__((weak)) ProfilerStop();
+}
 
 namespace var {
 
@@ -22,6 +26,7 @@ static std::once_flag g_written_pprof_perl;
 static std::once_flag g_written_flamegraph_perl;
 static int FLAMEGRAPH_DISPLAY_WIDTH = 1600;
 static int MAX_PROFILES_KEPT = 8;
+static int DEFAULT_PROFILING_SECONDS = 10;
 
 // Set in ProfilerLinker.
 bool cpu_profiler_enabled = false;
@@ -60,8 +65,8 @@ static DisplayType StringToDisplayType(const std::string& str) {
 
 static const char* ProfilingTypeNameToString(ProfilingType type) {
     switch (type) {
-        case PROFILING_CPU: return "CPU分析";
-        case PROFILING_HEAP: return "堆内存分析";
+        case PROFILING_CPU: return "CPU性能分析";
+        case PROFILING_HEAP: return "CPU内存分析";
         case PROFILING_GROWTH: return "growth";
         case PROFILING_CONTENTION: return "contention";
         case PROFILING_IOBUF: return "iobuf";
@@ -382,8 +387,10 @@ void ProfilerService::DoProfiling(net::HttpRequest* request,
         return;
     }
 
+    const std::string* seconds_str = request->header().url().GetQuery("seconds");
+    int seconds = std::stoi(*seconds_str);
+
     std::string prof_name = MakeProfName(type);
-    LOG_INFO << prof_name;
     if(type == PROFILING_HEAP) {
         MallocExtension* malloc_ext = MallocExtension::instance();
         if(!malloc_ext || !has_TCMALLOC_SAMPLE_PARAMETER()) {
@@ -405,10 +412,25 @@ void ProfilerService::DoProfiling(net::HttpRequest* request,
         }
     }
     else if(type == PROFILING_CPU) {
-
+        if((void*)ProfilerStart == nullptr || (void*)ProfilerStop == nullptr) {
+            os << "Heap profiler is not enabled";
+            response->header().set_status_code(net::HTTP_STATUS_INTERNAL_SERVER_ERROR);
+            response->set_body(os);
+            return;
+        }
+        std::string cpu_path = ProfilerFileSaveDir + "cpu";
+        DirReaderLinux::CreateDirectoryIfNotExists(cpu_path.c_str());
+        if(!ProfilerStart(prof_name.c_str())) {
+            os << "Another profiler (not via /profiler/cpu) is running, try again later";
+            response->header().set_status_code(net::HTTP_STATUS_SERVICE_UNAVAILABLE);
+            response->set_body(os);
+            return;
+        }
+        usleep(seconds * 1000000L);
+        ProfilerStop();
     }
     else {
-
+        ///@todo other profiler type.
     }
     DisplayProfiling(request, response, prof_name.c_str(), os.buf(), type);
     return;
@@ -433,13 +455,16 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
     bool enabled = false;
     const char* error_desc = "";
     if(type == PROFILING_HEAP) {
+        // Default: export TCMALLOC_SAMPLE_PARAMETER=524288(512KB)
         enabled = IsHeapProfilerEnabled();
         error_desc = "未找到或加载tcmalloc_and_profiler动态库, 请检查是否安装gperftools，"
         "并确保CMake编译选项中设置-DLINK_TCMALLOC_AND_PROFILER=ON.";
     }
     else if(type == PROFILING_CPU) {
+        // Default: export CPUPROFILE_FREQUENCY=100
         enabled = cpu_profiler_enabled;
-        LOG_INFO << enabled;
+        error_desc = "未找到或加载tcmalloc_and_profiler动态库, 请检查是否安装gperftools，"
+        "并确保CMake编译选项中设置-DLINK_TCMALLOC_AND_PROFILER=ON.";
     }
     else {
         ///@todo other profiling type.
@@ -453,7 +478,7 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
     }
 
     // Env parameter setting.
-    if(type == PROFILING_HEAP) {
+    if(type == PROFILING_HEAP || type == PROFILING_CPU) {
         // Default setting value(512KB) according to gperftools doc.
         // setenv("TCMALLOC_SAMPLE_PARAMETER", "524288", 0);
         if(!has_TCMALLOC_SAMPLE_PARAMETER()) {
@@ -464,7 +489,8 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
             response->set_body(os);
             return;
         }
-        char* value = getenv("TCMALLOC_SAMPLE_PARAMETER");
+        char* TCMALLOC_SAMPLE_PARAMETER = getenv("TCMALLOC_SAMPLE_PARAMETER");
+        char* CPUPROFILE_FREQUENCY = getenv("CPUPROFILE_FREQUENCY");
         os << "<style>\n"
         ".right-bottom {\n"
         "   position: fixed;\n"
@@ -474,7 +500,10 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
         "   z-index: 1000;\n"
         "}\n"
         "</style>\n";
-        os << "<div class=\"right-bottom\">系统内存采样参数TCMALLOC_SAMPLE_PARAMETER: " << value << "</div>\n";
+        os << "<div class=\"right-bottom\">\n";
+        os << "<p>TCMALLOC_SAMPLE_PARAMETER: " << TCMALLOC_SAMPLE_PARAMETER << "</p>\n";
+        os << "<p>CPUPROFILE_FREQUENCY: " << CPUPROFILE_FREQUENCY << "</p>\n";
+        os << "</div>\n";
     }
     else {
         ///@todo other profiling type.
@@ -516,7 +545,6 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
     }
 
     const char* type_path = ProfilingTypePathToString(type);
-    const int seconds = 10;
     const bool show_ccount = request->header().url().GetQuery("ccount");
     const std::string* view = request->header().url().GetQuery("view");
     const std::string* base = request->header().url().GetQuery("base");
@@ -529,6 +557,12 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
             response->set_body(os);
             return; 
         }
+    }
+
+    const std::string* seconds_str = request->header().url().GetQuery("seconds");
+    int seconds = DEFAULT_PROFILING_SECONDS;
+    if(seconds_str) {
+        seconds = std::stoi(*seconds_str);
     }
 
     ///@todo ProfilingClient used to cache ProfilingResult in multi-thread env.
@@ -544,6 +578,9 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
             "  var base_prof_el = document.getElementById('base_prof');\n"
             "  var base_prof = base_prof_el != null ? base_prof_el.value : '';\n"
             "  var display_type = document.getElementById('display_type').value;\n";
+        if(type == PROFILING_CPU) {
+            os << "  var seconds = document.getElementById('seconds').value;\n";
+        }
         if(type == PROFILING_CONTENTION) {
             os << "  var show_ccount = document.getElementById('ccount_cb').checked;\n";
         }
@@ -555,6 +592,10 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
             "  if (base_prof != '') {\n"
             "    targetURL += '&base=' + base_prof;\n"
             "  }\n";
+        if(type == PROFILING_CPU) {
+            os <<
+            " targetURL += '&seconds=' + seconds;\n";
+        }
         if(type == PROFILING_CONTENTION) {
             os <<
             "  if (show_ccount) {\n"
@@ -609,7 +650,12 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
             "    $(\"#profiling-result\").html(xhr.responseText);\n"
             "    $(\"#profiling-prompt\").html('Profiling fail');\n"
             "  }\n"
-            "  $(\"#profiling-prompt\").html('Generating profile ......');\n"
+            "  $(\"#profiling-prompt\").html('Generating profile ";
+        if(type == PROFILING_CPU && !view) {
+            os << "for " << seconds << " seconds";
+        }
+        os << " ......');\n";
+        os << 
             "  $.ajax({\n"
             "    url: \"/profiler/" << type_path << "_internal?console=0";
         if(type == PROFILING_CPU || type == PROFILING_CONTENTION) {
@@ -650,8 +696,9 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
     std::vector<std::string> past_profs;
     std::string prof_dir(ProfilerFileSaveDir);
     prof_dir.append(type_path);
-    DirReaderLinux::ListChildFiles(prof_dir.c_str(), past_profs);
-
+    if(DirReaderLinux::DirectoryExists(prof_dir.c_str())) {
+        DirReaderLinux::ListChildFiles(prof_dir.c_str(), past_profs);
+    }
     // Cached files in MAX_PROFILE_KEPT limit size if new profile coming.
     if(!view && !past_profs.empty()) {
         std::sort(past_profs.begin(), past_profs.end(), std::greater<std::string>());
@@ -694,10 +741,24 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
 
     os << "<pre style='display:inline'>绘制方式: </pre>"
     "<select id='display_type' onchange='onSelectProf()'>\n"
-        "<option value=dot" << (display_type == DisplayType::kDot ? " selected" : "") << ">拓扑图</option>\n"
-        "<option value=flame" << (display_type == DisplayType::kFlameGraph ? " selected" : "") << ">火焰图</option>\n"
-        "<option value=text" << (display_type == DisplayType::kText ? " selected" : "") << ">文本</option>\n";
-    os << "</select>\n";
+    "<option value=dot" << (display_type == DisplayType::kDot ? " selected" : "") << ">拓扑图</option>\n"
+    "<option value=flame" << (display_type == DisplayType::kFlameGraph ? " selected" : "") << ">火焰图</option>\n"
+    "<option value=text" << (display_type == DisplayType::kText ? " selected" : "") << ">文本</option>\n"
+    "</select>\n";
+
+    if(type == PROFILING_CPU) {
+        std::vector<int> seconds_list = {10, 20, 30, 60};
+        os << "<pre style='display:inline'>时长: </pre>"
+        "<select id='seconds' onchange='onSelectProf()'>\n";
+        for(size_t i = 0; i < seconds_list.size(); ++i) {
+            os << "<option value='" << seconds_list[i] << "' ";
+            if(seconds == seconds_list[i]) {
+                os << "selected";
+            }
+            os << '>' << seconds_list[i] << "s" << "</option>\n";
+        }
+        os << "</select>\n";
+    }
 
     os << "&nbsp;<button type=\"button\" onclick=\"startProfiling()\">快照</button>\n";
 
