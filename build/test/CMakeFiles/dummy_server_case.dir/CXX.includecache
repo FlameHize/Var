@@ -20,6 +20,12 @@ metric/reducer.h
 net/http/http_header.h
 ../metric/builtin/net/http/http_header.h
 
+../metric/builtin/gperftools_profiler.h
+
+../metric/builtin/profiler_linker.h
+metric/builtin/gperftools_profiler.h
+../metric/builtin/metric/builtin/gperftools_profiler.h
+
 ../metric/builtin/service.h
 metric/builtin/tabbed.h
 ../metric/builtin/metric/builtin/tabbed.h
@@ -175,6 +181,8 @@ metric/builtin/service.h
 ../metric/metric/builtin/service.h
 metric/builtin/tabbed.h
 ../metric/metric/builtin/tabbed.h
+metric/builtin/profiler_linker.h
+../metric/metric/builtin/profiler_linker.h
 net/http/http_server.h
 ../metric/net/http/http_server.h
 net/base/Thread.h

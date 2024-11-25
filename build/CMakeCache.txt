@@ -240,7 +240,7 @@ Var_BINARY_DIR:STATIC=/home/zgx/Var/build
 Var_SOURCE_DIR:STATIC=/home/zgx/Var
 
 //Dependencies for the target
-var_LIB_DEPENDS:STATIC=general;var_net;general;dl;general;/usr/local/lib/libtcmalloc_and_profiler.so;
+var_LIB_DEPENDS:STATIC=general;/usr/local/lib/libtcmalloc_and_profiler.so;general;var_net;general;dl;
 
 
 ########################

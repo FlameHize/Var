@@ -23,6 +23,9 @@ static std::once_flag g_written_flamegraph_perl;
 static int FLAMEGRAPH_DISPLAY_WIDTH = 1600;
 static int MAX_PROFILES_KEPT = 8;
 
+// Set in ProfilerLinker.
+bool cpu_profiler_enabled = false;
+
 enum DisplayType {
     kUnknown,
     kDot,
@@ -434,6 +437,10 @@ void ProfilerService::StartProfiling(net::HttpRequest* request,
         error_desc = "未找到或加载tcmalloc_and_profiler动态库, 请检查是否安装gperftools，"
         "并确保CMake编译选项中设置-DLINK_TCMALLOC_AND_PROFILER=ON.";
     }
+    else if(type == PROFILING_CPU) {
+        enabled = cpu_profiler_enabled;
+        LOG_INFO << enabled;
+    }
     else {
         ///@todo other profiling type.
     }
@@ -733,11 +740,11 @@ void ProfilerService::cpu_internal(net::HttpRequest* request,
 void ProfilerService::GetTabInfo(TabInfoList* info_list) const {
     TabInfo* info = info_list->add();
     info->path = "/profiler/heap";
-    info->tab_name = "堆内存分析";
+    info->tab_name = ProfilingTypeNameToString(PROFILING_HEAP);
     
     info = info_list->add();
     info->path = "/profiler/cpu";
-    info->tab_name = "CPU分析";
+    info->tab_name = ProfilingTypeNameToString(PROFILING_CPU);
 }
 
 } // end namespace var

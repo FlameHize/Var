@@ -20,7 +20,7 @@ bool IsDummyServerRunning() {
     return g_dummy_server != nullptr;
 }
 
-bool StartDummyServerAt(int port) {
+bool StartDummyServerAt(int port, ProfilerLinker) {
     if(port < 0 || port >= 65536) {
         LOG_ERROR << "Invalid port=" << port;
         return false;

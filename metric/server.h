@@ -20,6 +20,7 @@
 
 #include "metric/builtin/service.h"
 #include "metric/builtin/tabbed.h"
+#include "metric/builtin/profiler_linker.h"
 #include "net/http/http_server.h"
 #include "net/base/Thread.h"
 #include "net/EventLoop.h"
@@ -70,7 +71,7 @@ bool IsDummyServerRunning();
 // NOTE: The second parameter(ProfilerLinker) is for linking a profiling
 // functions when corresponding macros are defined, just ignore it.
 // Return 0 on success, -1 otherwise.
-bool StartDummyServerAt(int port);
+bool StartDummyServerAt(int port, ProfilerLinker = ProfilerLinker());
 
 // *Used to update inside status data in builtin services.
 void UpdateInsideStatusData(const char* data, size_t len);

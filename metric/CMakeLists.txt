@@ -28,11 +28,6 @@ add_library(var SHARED
     builtin/tcmalloc_extension.cc
     builtin/profiler_service.cc)
 
-target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR})
-target_link_libraries(var 
-                      var_net
-                      dl)
-
 option(LINK_TCMALLOC_AND_PROFILER "Whether linked tcmalloc_and_profiler lib" ON)
 if(LINK_TCMALLOC_AND_PROFILER)
     find_path(GPERFTOOLS_INCLUDE_DIR NAMES gperftools/heap-profiler.h)
@@ -43,7 +38,10 @@ if(LINK_TCMALLOC_AND_PROFILER)
         message(STATUS "Found tcmalloc_and_profiler:" ${GPERFTOOLS_LIBRARIES})
         target_include_directories(var PRIVATE ${GPERFTOOLS_INCLUDE_DIR})
         target_link_libraries(var ${GPERFTOOLS_LIBRARIES})
+        target_compile_definitions(var PUBLIC VAR_ENABLE_CPU_PROFILER)
     endif()
 else()
 endif()
-# include_directories(${GPERFTOOLS_INCLUDE_DIR})
+
+target_include_directories(var PRIVATE ${PROJECT_SOURCE_DIR})
+target_link_libraries(var var_net dl)

@@ -4,6 +4,8 @@
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o
  ../metric/average_recorder.h
  ../metric/builtin/common.h
+ ../metric/builtin/gperftools_profiler.h
+ ../metric/builtin/profiler_linker.h
  ../metric/builtin/service.h
  ../metric/builtin/tabbed.h
  ../metric/common.h

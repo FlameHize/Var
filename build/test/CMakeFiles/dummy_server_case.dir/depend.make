@@ -3,6 +3,8 @@
 
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/average_recorder.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/builtin/common.h
+test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/builtin/gperftools_profiler.h
+test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/builtin/profiler_linker.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/builtin/service.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/builtin/tabbed.h
 test/CMakeFiles/dummy_server_case.dir/dummy_server_test.cc.o: ../metric/common.h

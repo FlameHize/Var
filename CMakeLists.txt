@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(Var)
 set(CMAKE_BUILD_TYPE DEBUG)
-set(CMAKE_CXX_FLAGS "-std=c++17 -g -Wall -fno-rtti")
+set(CMAKE_CXX_FLAGS "-std=c++17 -g -Wall -fno-rtti -fno-omit-frame-pointer")
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
