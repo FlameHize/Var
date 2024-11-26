@@ -78,7 +78,7 @@ size_t LogFilter::_limit = 1024;
 std::deque<std::string> LogFilter::_logs;
 LogFile* LogFilter::_file = nullptr;
 
-const std::string LogFileSaveDir = "data/log/";
+const std::string LogFileSaveDir = program_work_dir("bin") + "data/log/";
 const size_t LogFileLimitSize = 64 * 1024 * 1024;
 const size_t LogFlushTimeInterval = 3;
 const size_t LogFlushCheckEveryN = 10;
