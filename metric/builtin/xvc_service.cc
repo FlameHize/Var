@@ -708,7 +708,7 @@ void XvcService::default_method(net::HttpRequest* request,
            << "<script language=\"javascript\" type=\"text/javascript\" src=\"/js/jquery_min\"></script>\n"
            << TabsHead()
            << "</head><body>";
-        server->PrintTabsBody(os, "FPGA虚拟线缆调试");
+        server->PrintTabsBody(os, "FPGA远程调试");
     }
 
     // Card operation layer.
@@ -828,7 +828,7 @@ void XvcService::default_method(net::HttpRequest* request,
 void XvcService::GetTabInfo(TabInfoList* info_list) const {
     TabInfo* info = info_list->add();
     info->path = "/xvc";
-    info->tab_name = "FPGA虚拟线缆调试";
+    info->tab_name = "FPGA远程调试";
 }
 
 } // end namespace var

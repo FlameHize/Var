@@ -9,6 +9,7 @@
 #include "metric/builtin/file_transfer_service.h"
 #include "metric/builtin/remote_sampler_service.h"
 #include "metric/builtin/profiler_service.h"
+#include "metric/builtin/memory_service.h"
 
 namespace var {
 
@@ -94,6 +95,9 @@ void Server::Start() {
     }
     if(!AddBuiltinService("remote_sampler", new (std::nothrow) RemoteSamplerService)) {
         LOG_ERROR << "Failed to add RemoteSamplerService";
+    }
+    if(!AddBuiltinService("memory", new (std::nothrow) MemoryService)) {
+        LOG_ERROR << "Failed to add MemoryService";
     }
     if(!AddBuiltinService("index", new (std::nothrow) IndexService)) {
         LOG_ERROR << "Failed to add IndexService";

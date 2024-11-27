@@ -26,7 +26,8 @@ add_library(var SHARED
     builtin/xvc_service.cc
     builtin/remote_sampler_service.cc
     builtin/tcmalloc_extension.cc
-    builtin/profiler_service.cc)
+    builtin/profiler_service.cc
+    builtin/memory_service.cc)
 
 option(LINK_TCMALLOC_AND_PROFILER "Whether linked tcmalloc_and_profiler lib" ON)
 if(LINK_TCMALLOC_AND_PROFILER)

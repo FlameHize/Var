@@ -5,6 +5,19 @@
 
 namespace var {
 
+struct Path {
+    Path(const std::string& url_str, const std::string& html_addr_str)
+        : url(url_str), html_addr(html_addr_str) {}
+    const std::string url;
+    const std::string html_addr;
+};
+
+std::ostream& operator<<(std::ostream& os, const Path& link) {
+    os << "<a href=\"http://" << link.html_addr << link.url << "\">"
+       << link.url << "</a>";
+    return os;
+}
+
 void IndexService::default_method(net::HttpRequest* request, net::HttpResponse* response) {
     const Server* server = static_cast<Server*>(_owner);
     const bool use_html = UseHTML(request->header());
@@ -33,20 +46,27 @@ void IndexService::default_method(net::HttpRequest* request, net::HttpResponse* 
         if(server) {
             server->PrintTabsBody(os, "更多"); 
         }
-        os << "<pre>";
+        // os << "<pre>";
     }
-    os << logo();
+    // os << logo();
+    // if(use_html) {
+    //     os << "</pre>";
+    // }
+    // os << '\n';
+    // if(use_html) {
+    //     os << "<a href=\"https://github.com/apache/brpc\">github</a>";
+    // } 
+    // else {
+    //     os << "github : https://github.com/apache/brpc";
+    // }
+
     if(use_html) {
-        os << "</pre>";
+        std::string html_addr = request->header().url().host()
+            + ":" + std::to_string(request->header().url().port());
+        os << "<div>" << Path("/memory", html_addr) 
+           << " : Get malloc allocator information" << "</div>\n";
     }
-    os << '\n';
-    if(use_html) {
-        os << "<a href=\"https://github.com/apache/brpc\">github</a>";
-    } 
-    else {
-        os << "github : https://github.com/apache/brpc";
-    }
-    ///@todo body
+
     if(use_html) {
         os << "</body></html>";
     }

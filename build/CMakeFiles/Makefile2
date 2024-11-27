@@ -313,12 +313,12 @@ net/test/CMakeFiles/httpserver_test.dir/clean:
 net/test/CMakeFiles/udpserver_test.dir/all: net/CMakeFiles/var_net.dir/all
 	$(MAKE) -f net/test/CMakeFiles/udpserver_test.dir/build.make net/test/CMakeFiles/udpserver_test.dir/depend
 	$(MAKE) -f net/test/CMakeFiles/udpserver_test.dir/build.make net/test/CMakeFiles/udpserver_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=26,27 "Built target udpserver_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=25,26,27 "Built target udpserver_test"
 .PHONY : net/test/CMakeFiles/udpserver_test.dir/all
 
 # Build rule for subdir invocation for target.
 net/test/CMakeFiles/udpserver_test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/Var/build/CMakeFiles 37
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/Var/build/CMakeFiles 38
 	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/udpserver_test.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/Var/build/CMakeFiles 0
 .PHONY : net/test/CMakeFiles/udpserver_test.dir/rule
@@ -448,12 +448,12 @@ net/test/CMakeFiles/eventloop_test.dir/clean:
 net/test/CMakeFiles/timerqueue_test.dir/all: net/CMakeFiles/var_net.dir/all
 	$(MAKE) -f net/test/CMakeFiles/timerqueue_test.dir/build.make net/test/CMakeFiles/timerqueue_test.dir/depend
 	$(MAKE) -f net/test/CMakeFiles/timerqueue_test.dir/build.make net/test/CMakeFiles/timerqueue_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=23,24,25 "Built target timerqueue_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/zgx/Var/build/CMakeFiles --progress-num=23,24 "Built target timerqueue_test"
 .PHONY : net/test/CMakeFiles/timerqueue_test.dir/all
 
 # Build rule for subdir invocation for target.
 net/test/CMakeFiles/timerqueue_test.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/Var/build/CMakeFiles 38
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/Var/build/CMakeFiles 37
 	$(MAKE) -f CMakeFiles/Makefile2 net/test/CMakeFiles/timerqueue_test.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/zgx/Var/build/CMakeFiles 0
 .PHONY : net/test/CMakeFiles/timerqueue_test.dir/rule
