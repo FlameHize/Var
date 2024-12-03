@@ -186,7 +186,3 @@ tcp/TcpClient.h
 gtest/gtest.h
 -
 
-/home/zgx/Var/net/test/main.cc
-gtest/gtest.h
--
-

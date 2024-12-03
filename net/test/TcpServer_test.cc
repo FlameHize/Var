@@ -11,15 +11,15 @@ using namespace var::net;
 class TestEchoServer {
 public:
     inline TestEchoServer(EventLoop* loop, const InetAddress& listenAddr) 
-    : server_(loop, listenAddr, "TestEchoServer") {
-        server_.setConnectionCallback(
+    : _server(loop, listenAddr, "TestEchoServer") {
+        _server.setConnectionCallback(
             std::bind(&TestEchoServer::onConnection, this, _1));
-        server_.setMessageCallback(
+        _server.setMessageCallback(
             std::bind(&TestEchoServer::onMessage, this, _1, _2, _3));
     }
 
     inline void start() {
-        server_.start();
+        _server.start();
     }
 
 private:
@@ -37,7 +37,7 @@ private:
                  << "data received at " << time.toFormattedString();
         conn->send(msg);
     }
-    var::net::TcpServer server_;
+    var::net::TcpServer _server;
 };
 
 TEST(TcpServer, echo_test) 

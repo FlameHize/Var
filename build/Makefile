@@ -305,6 +305,32 @@ buffer_test/fast:
 	$(MAKE) -f net/test/CMakeFiles/buffer_test.dir/build.make net/test/CMakeFiles/buffer_test.dir/build
 .PHONY : buffer_test/fast
 
+#=============================================================================
+# Target rules for targets named tcp_throughput_measure_client
+
+# Build rule for target.
+tcp_throughput_measure_client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tcp_throughput_measure_client
+.PHONY : tcp_throughput_measure_client
+
+# fast build rule for target.
+tcp_throughput_measure_client/fast:
+	$(MAKE) -f example/tcp_measure/CMakeFiles/tcp_throughput_measure_client.dir/build.make example/tcp_measure/CMakeFiles/tcp_throughput_measure_client.dir/build
+.PHONY : tcp_throughput_measure_client/fast
+
+#=============================================================================
+# Target rules for targets named tcp_throughput_measure_server
+
+# Build rule for target.
+tcp_throughput_measure_server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tcp_throughput_measure_server
+.PHONY : tcp_throughput_measure_server
+
+# fast build rule for target.
+tcp_throughput_measure_server/fast:
+	$(MAKE) -f example/tcp_measure/CMakeFiles/tcp_throughput_measure_server.dir/build.make example/tcp_measure/CMakeFiles/tcp_throughput_measure_server.dir/build
+.PHONY : tcp_throughput_measure_server/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -328,6 +354,8 @@ help:
 	@echo "... inetaddress_test"
 	@echo "... channel_test"
 	@echo "... buffer_test"
+	@echo "... tcp_throughput_measure_client"
+	@echo "... tcp_throughput_measure_server"
 .PHONY : help
 
 

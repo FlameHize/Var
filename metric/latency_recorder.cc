@@ -145,18 +145,19 @@ int LatencyRecorder::expose(const std::string& prefix,
     }
     // User may add "_latency" as the suffix, remove it.
     std::string suffix = name;
-    size_t len = suffix.length();
-    if(len >= 7) {
-        size_t pos = len - 7;
-        if(suffix.compare(pos, len, "latency") || 
-           suffix.compare(pos, len, "Latency")) {
-            suffix.erase(pos);
-            if(suffix.empty()) {
-                LOG_ERROR << "Invalid name = " << name;
-                return -1; 
-            }
-        }
-    }
+    // size_t len = suffix.length();
+    // if(len >= 7) {
+    //     size_t pos = len - 7;
+    //     if(suffix.compare(pos, 7, "latency") || 
+    //        suffix.compare(pos, 7, "Latency")) {
+    //         suffix.erase(pos);
+    //         if(suffix.empty()) {
+    //             LOG_ERROR << "Invalid name = " << name;
+    //             return -1; 
+    //         }
+    //     }
+    // }
+
     std::string tmp;
     if(!prefix.empty()) {
         tmp.reserve(prefix.size() + suffix.size() + 1);
@@ -170,36 +171,36 @@ int LatencyRecorder::expose(const std::string& prefix,
     _latency.set_debug_name(suffix);
     _latency_percentile.set_debug_name(suffix);
 
-    if(_latency_window.expose_as(suffix, "latency") != 0) {
+    if(_latency_window.expose_as(suffix, "cur") != 0) {
         return -1;
     }
-    if(_max_latency_window.expose_as(suffix, "max_latency") != 0) {
+    if(_max_latency_window.expose_as(suffix, "max") != 0) {
         return -1;
     }
-    if(_latency_cdf.expose_as(suffix, "latency_cdf", DISPLAY_ON_HTML) != 0) {
+    if(_latency_cdf.expose_as(suffix, "percentile_cdf", DISPLAY_ON_HTML) != 0) {
         return -1;
     }
 
     char namebuf[32];
-    snprintf(namebuf, sizeof(namebuf), "latency_%d", (int)detail::var_latency_p1);
+    snprintf(namebuf, sizeof(namebuf), "%d", (int)detail::var_latency_p1);
     if(_latency_p1.expose_as(suffix, namebuf, DISPLAY_ON_PLAIN_TEXT) != 0) {
         return -1;
     }
-    snprintf(namebuf, sizeof(namebuf), "latency_%d", (int)detail::var_latency_p2);
+    snprintf(namebuf, sizeof(namebuf), "%d", (int)detail::var_latency_p2);
     if(_latency_p2.expose_as(suffix, namebuf, DISPLAY_ON_PLAIN_TEXT) != 0) {
         return -1;
     }
-    snprintf(namebuf, sizeof(namebuf), "latency_%u", (int)detail::var_latency_p3);
+    snprintf(namebuf, sizeof(namebuf), "%u", (int)detail::var_latency_p3);
     if(_latency_p3.expose_as(suffix, namebuf, DISPLAY_ON_PLAIN_TEXT) != 0) {
         return -1;
     }
-    if(_latency_999.expose_as(suffix, "latency_999", DISPLAY_ON_PLAIN_TEXT) != 0) {
+    if(_latency_999.expose_as(suffix, "percentile_999", DISPLAY_ON_PLAIN_TEXT) != 0) {
         return -1;
     }
-    if(_latency_9999.expose_as(suffix, "latency_9999", DISPLAY_ON_ALL) != 0) {
+    if(_latency_9999.expose_as(suffix, "percentile_9999", DISPLAY_ON_ALL) != 0) {
         return -1;
     }
-    if(_latency_percentiles.expose_as(suffix, "latency_percentiles", DISPLAY_ON_HTML) != 0) {
+    if(_latency_percentiles.expose_as(suffix, "percentiles", DISPLAY_ON_HTML) != 0) {
         return -1;
     }
     snprintf(namebuf, sizeof(namebuf), "%d%%,%d%%,%d%%,99.9%%",

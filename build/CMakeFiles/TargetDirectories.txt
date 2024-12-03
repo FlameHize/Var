@@ -23,3 +23,9 @@
 /home/zgx/Var/build/net/test/CMakeFiles/inetaddress_test.dir
 /home/zgx/Var/build/net/test/CMakeFiles/channel_test.dir
 /home/zgx/Var/build/net/test/CMakeFiles/buffer_test.dir
+/home/zgx/Var/build/example/CMakeFiles/rebuild_cache.dir
+/home/zgx/Var/build/example/CMakeFiles/edit_cache.dir
+/home/zgx/Var/build/example/tcp_measure/CMakeFiles/edit_cache.dir
+/home/zgx/Var/build/example/tcp_measure/CMakeFiles/rebuild_cache.dir
+/home/zgx/Var/build/example/tcp_measure/CMakeFiles/tcp_throughput_measure_client.dir
+/home/zgx/Var/build/example/tcp_measure/CMakeFiles/tcp_throughput_measure_server.dir
